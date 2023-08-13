@@ -1,12 +1,12 @@
 import React from 'react';
-import { SignIn } from '@clerk/clerk-react';
+import { SignUp } from '@clerk/clerk-react';
 
-const LogIn = () => {
+const Register = () => {
   return (
-    <section id='login'>
+    <section id='register'>
       <main className='h-screen w-screen relative'>
         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>
-          <SignIn />
+          <SignUp />
         </div>
         <div className='flex justify-center items-center'>
           <div className='w-1/2 h-screen bg-violet-800'></div>
@@ -14,7 +14,7 @@ const LogIn = () => {
         </div>
       </main>
     </section>
-  );
+  )
 }
 
-export default LogIn;
+export default Register;

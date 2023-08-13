@@ -1,4 +1,6 @@
-import Login from "./Login/Login";
-import SignUp from "./SignUp/SignUp";
+import LogIn from "./LogIn/LogIn";
+import Register from "./Register/Register";
+import LandingPage from "./LandingPage/LandingPage";
+import Dashboard from "./Dashboard/Dashboard";
 
-export { Login, SignUp }
+export { LogIn, Register, LandingPage, Dashboard };

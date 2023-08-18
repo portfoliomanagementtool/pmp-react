@@ -12,8 +12,8 @@ const LandingPage = () => {
     <div>
     <div className='flex justify-center'>
         <div>
-        <h1 className=' text-5xl md:text-7xl  font-bold text-center'>Your Wealth,<span className='text-[#473A6C]'>Our Priority<br></br>
-        Mutual Funds,</span>Amplified!</h1>
+        <h1 className=' text-5xl md:text-7xl  font-bold text-center'>Your Wealth,<span className='text-[#473A6C]'> Our Priority<br></br>
+        Mutual Funds, </span>Amplified!</h1>
         <div className='m-20'>
             <h1 className='w-[725px] text-[18px] flex items-center justify-center'>Experience data-driven personalized portfolios and expert guidance for a prosperous financial journey.</h1>
         </div>

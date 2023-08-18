@@ -3,7 +3,7 @@ import { SignIn } from '@clerk/clerk-react';
 import investing from "../../assets/auth/investing.svg";
 import predictiveAnalystics from "../../assets/auth/predictive_analytics.svg";
 
-const LogIn = () => {
+const Login = () => {
   return (
     <section id='login'>
       <main className='h-screen w-screen'>
@@ -30,4 +30,4 @@ const LogIn = () => {
   );
 }
 
-export default LogIn;
+export default Login;

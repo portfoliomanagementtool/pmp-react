@@ -2,6 +2,11 @@ import React from 'react'
 import { Icon } from '@iconify/react';
 // import person1 from '.../images/Person1.png'
 import person1 from '../../images/Person1.png'
+import person2 from '../../images/Person2.png'
+import photo1 from '../../images/Photo1.png'
+import photo2 from '../../images/Photo2.png'
+import photo3 from '../../images/Photo3.png'
+
 import Navbar from './Navbar';
 import Footer from './Footer';
 
@@ -31,8 +36,8 @@ const LandingPage = () => {
     <div className='w-[full] mx-20 h-[270px] bg-[#D9D9D9] mt-28'>
 
     </div>
-    <div className='flex sm:flex-col md:flex mx-60 mt-28 '>
-        <div className=''>
+    <div className='flex  md:flex mx-60 mt-28 '>
+        <div className='w-1/2'>
             <h1 className='text-[64px] font-bold text-[#263238]'>How <span className='text-[#473A6C]'>We</span> Work</h1>
             <h2 className='text-[18px] mt-12 w-[500px]'>Track your investments in PMP and let our mutual fund system analyze your user data to craft a personalized portfolio for future growth.</h2>
             <div className='flex items-center gap-10 mt-10'>
@@ -73,13 +78,16 @@ const LandingPage = () => {
             </div>
 
         </div>
-        <div className='w-1/2 h-auto bg-[#D9D9D950] rounded-lg '>
-  home 
+        <div className='w-1/2 h-auto bg-[#D9D9D950] rounded-lg flex justify-center items-center'>
+  
             {/* <img src='../images/Person1.png' alt="home"/> */}
+            <img src={photo1} alt='photo1'/>
         </div>
     </div>
     <div className='flex mx-60 mt-28 '>
-         <div className='w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg'></div>
+         <div className='w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg flex justify-center items-center'>
+            <img src={photo2} alt="photo2"/>
+         </div>
         <div className='w-1/2 ml-24 '>
             <h1 className='text-[64px] font-bold text-[#263238]'>Your <span className='text-[#473A6C]'>Pathway</span> to Future Investment</h1>
             <h2 className='text-[18px] mt-4 w-[500px]'>Unlock your future investment potential with our data-driven, personalized portfolios and expert guidance.</h2>
@@ -129,7 +137,9 @@ const LandingPage = () => {
            
 
         </div>
-        <div className='w-1/2 h-auto bg-[#D9D9D950] rounded-lg'></div>
+        <div className='w-1/2 h-auto bg-[#D9D9D950] rounded-lg flex justify-center items-center' >
+            <img src={photo3} alt='photo3'/>
+        </div>
     </div>
     <div className='flex justify-center mt-28'>
         <div>
@@ -143,19 +153,19 @@ const LandingPage = () => {
     </div>
     <div className='flex mx-60 gap-10'>
         <div className='w-full bg-[#D9D9D950] h-[377px] rounded-lg flex'>
-            <div className='w-[300px]'>
+            <div >
             <img src={person1} alt='homw'/>
             </div>
             <div>
-                <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu, mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac</h1>
+                <h1>Lorem ipsum dolor sit amet, , </h1>
             </div>
         </div>
         <div className='w-full bg-[#D9D9D950] h-[377px] rounded-lg flex'>
             <div className='w-[300px]'>
-            <img src='../src/images/Person1.png' alt='homw'/>
+            <img src={person2} alt='homw'/>
             </div>
             <div>
-                <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu, mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac</h1>
+                <h1>Lorem ipsum dolor sit amet, , </h1>
             </div>
         </div>
     </div>

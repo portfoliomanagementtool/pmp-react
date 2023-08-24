@@ -12,11 +12,11 @@ import Footer from "../../components/Footer";
 const LandingPage = () => {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div>
         <div className="flex justify-center">
           <div>
-            <h1 className=" text-3xl md:text-7xl mx-auto  font-bold text-center">
+            <h1 className=" text-5xl  md:text-7xl mx-auto  font-bold text-center">
               Your Wealth,
               <span className="text-lightPurple">
                 {" "}
@@ -35,7 +35,7 @@ const LandingPage = () => {
             <div className=" flex  justify-center my-4">
               <input
                 placeholder="Enter your email"
-                className="bg-[#D9D9D9] p-3 "
+                className="bg-[#D9D9D9] p-3 rounded-lg md:pr-32 md:py-6"
               />
               <button className="bg-lightPurple text-white rounded-md p-3 justify-end">
                 Get Started
@@ -45,14 +45,14 @@ const LandingPage = () => {
         </div>
         <div className="w-[full] mx-20 h-[270px] bg-[#D9D9D9] mt-28"></div>
         <div className="mx-auto mt-28">
-          <h1 className="text-4xl md:text-5xl font-bold text-center text-darkPurple">
+          <h1 className="text-4xl md:text-6xl font-bold text-center text-darkPurple">
             How <span className="text-lightPurple">We</span> Work
           </h1>
-          <h2 className="text-lg mt-8 md:mt-10 max-w-3xl mx-auto">
+          <h2 className="text-lg mt-8 md:mt-10 max-w-3xl mx-auto px-10 ">
             Track your investments in PMP and let our mutual fund system analyze
             your user data to craft a personalized portfolio for future growth.
           </h2>
-          <div className="flex md:flex-row flex-col items-center max-w-[80%] mx-auto text-center">
+          <div className="flex md:flex-row flex-col items-center max-w-[60%] mx-auto text-center">
             <div>
               <div className="justify-center">
                 <div className="flex items-center gap-6 md:gap-10 mt-10">
@@ -141,7 +141,7 @@ const LandingPage = () => {
         <div className="mx-auto mt-28 ">
           {/* <div className="w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg"></div> */}
           <div className="text-center mx-10">
-            <h1 className="text-4xl text-center md:text-5xl font-bold text-darkPurple">
+            <h1 className="text-4xl text-center md:text-6xl font-bold text-darkPurple">
               Your <span className="text-lightPurple">Pathway</span> to Future
               Investment
             </h1>
@@ -149,6 +149,19 @@ const LandingPage = () => {
               Unlock your future investment potential with our data-driven,
               personalized portfolios and expert guidance.
             </h2>
+            <div className="flex flex-col md:flex-row items-center mx-auto w-full justify-center">
+            <img
+                src={image3}
+                alt="how we work"
+                className=" mt-10 md:mr-10 w-[28rem] h-auto"
+              />
+          
+            <div>
+           
+            <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
+              <h1 className="text-xl text-darkPurple">What is PMP?</h1>
+              <Icon icon="mingcute:down-line" width="32" height="32" />
+            </div>
             <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
               <h1 className="text-xl text-darkPurple">What is PMP?</h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
@@ -170,11 +183,13 @@ const LandingPage = () => {
               </h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
             </div>
+            </div>
+            </div>
           </div>
         </div>
-        <div className="mx-auto mt-28 ">
+        <div className="mx-auto mt-40 md:mt-20 ">
           <div className="text-center mx-10 flex justify-center items-center h-screen flex-col">
-            <h1 className="text-4xl md:text-5xl font-bold text-darkPurple">
+            <h1 className="text-4xl md:text-6xl font-bold text-darkPurple">
               Why Choose
               <span className="text-lightPurple"> PMP </span>
             </h1>
@@ -182,7 +197,7 @@ const LandingPage = () => {
               Unlock the potential of your financial future with PMP's tailored
               investment strategies and client-focused approach.
             </h2>
-            <div className="flex flex-col justify-center md:flex-row">
+            <div className="flex flex-col justify-center items-center md:flex-row">
               <div>
                 <div className="flex items-center mt-10  gap-6 md:gap-10">
                   <div className="w-16 md:-20 h-16 md:-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
@@ -223,21 +238,21 @@ const LandingPage = () => {
                 className="mx-auto mt-10 md:ml-16 w-[28rem] h-auto"
               />
             </div>
-            <button className="bg-lightPurple px-4 md:px-5 md:py-3 py-2 border-lightPurple rounded-lg border-2 text-white mt-10">
+            <button className="bg-lightPurple px-4 md:px-10 md:py-6 py-2 border-lightPurple rounded-lg border-2 text-white mt-10">
               Learn More
             </button>
           </div>
         </div>
 
-        <div className="flex justify-center mt-28">
+        <div className="flex justify-center mt-40 md:mt-20">
           <div className="mx-10 text-center">
-            <h1 className="text-4xl md:text-5xl font-bold text-darkPurple">
+            <h1 className="text-4xl md:text-6xl font-bold text-darkPurple">
               What <span className="text-lightPurple">Customers</span> have to
               say
             </h1>
 
-            <div className=" my-8">
-              <h1 className=" text-[18px] flex items-center justify-center">
+            <div className=" my-8 flex justify-center">
+              <h1 className=" text-[18px]  max-w-2xl">
                 Discover why our clients love PMP. Read testimonials from
                 satisfied investors who have experienced success and exceptional
                 service.
@@ -245,38 +260,41 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-1 max-w-4xl md:grid-cols-2 mx-auto gap-10">
+        <div className="grid grid-cols-1 md:max-w-7xl w-4/5  md:grid-cols-2 mx-auto gap-10">
           <div className="w-full bg-[#D9D9D950] rounded-lg flex">
-            <div className="">
+            <div className="h-auto">
               <img src={customer1} alt="customer" />
             </div>
-            <div>
+            <div className="flex flex-col justify-between">
               <h1 className="justify-center mx-10 my-3">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu,
                 mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac
+                
               </h1>
+              <h2 className="justify-center mx-10 my-3">Mahek</h2>
             </div>
           </div>
-          <div className="w-full bg-[#D9D9D950] rounded-lg flex">
+          <div className="w-full bg-[#D9D9D950] rounded-lg flex  ">
             <div className="">
               <img src={customer2} alt="customer" />
             </div>
-            <div>
+            <div className="flex flex-col justify-between">
               <h1 className="justify-center mx-10 my-3">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu,
                 mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac
               </h1>
+              <h2 className="justify-center mx-10 my-3">Mahek</h2>
             </div>
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <button className="bg-lightPurple px-4 md:px-5 md:py-3 py-2 rounded-lg text-white mt-10">
+          <button className="bg-lightPurple px-4 md:px-10 md:py-6 py-2 rounded-lg text-white mt-10">
             View All
           </button>
         </div>
-        <div className=" bg-[#D9D9D950] py-20 px-32 my-20 flex items-center justify-center">
-          <div>
-            <h1 className="text-[40px] md:text-[56px] text-center mx-auto font-bold">
+        <div className="   flex items-center justify-center  ">
+          <div className=" bg-[#D9D9D950] py-8 px-16 md:py-20 md:px-32 my-20 w-4/5 rounded-lg" >
+            <h1 className="text-4xl md:text-6xl text-center mx-auto font-bold">
               Track your investments using{" "}
               <span className="text-lightPurple">PMP</span> and invest in your
               future

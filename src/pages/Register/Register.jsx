@@ -1,12 +1,12 @@
 import React from 'react';
-import { SignIn } from '@clerk/clerk-react';
+import { SignUp } from '@clerk/clerk-react';
 import investing from "../../assets/auth/investing.svg";
 import predictiveAnalystics from "../../assets/auth/predictive_analytics.svg";
 
-const Login = () => {
+const Register = () => {
   return (
-    <section id='login'>
-      <main className='h-screen w-screen'>
+    <section id='register'>
+      <main className='h-screen w-screen relative'>
         <h1 className='fixed text-center lg:text-left font-bold text-slate-100 text-2xl lg:pl-6 pt-6 container'>
           Portfolio Management
         </h1>
@@ -23,11 +23,11 @@ const Login = () => {
           </div>
         </div>
         <div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 py-4'>
-          <SignIn />
+          <SignUp />
         </div>
       </main>
     </section>
-  );
+  )
 }
 
-export default Login;
+export default Register;

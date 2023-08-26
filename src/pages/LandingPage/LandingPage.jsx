@@ -12,7 +12,7 @@ import Footer from "../../components/Footer";
 const LandingPage = () => {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <div>
         <div className="flex justify-center">
           <div>

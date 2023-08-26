@@ -16,7 +16,7 @@ const LandingPage = () => {
       <div>
         <div className="flex justify-center">
           <div>
-            <h1 className=" text-5xl  md:text-7xl mx-auto  font-bold text-center">
+            <h1 className=" text-3xl  md:text-7xl mx-auto mt-10 font-bold text-center">
               Your Wealth,
               <span className="text-lightPurple">
                 {" "}
@@ -26,13 +26,13 @@ const LandingPage = () => {
               </span>
               Amplified!
             </h1>
-            <div className="m-20">
-              <h1 className="text-lg md:text-2xl text-center max-w-2xl flex items-center justify-center">
+            <div className="m-10 md:m-20">
+              <h1 className="text-md md:text-2xl text-center max-w-2xl flex items-center justify-center">
                 Experience data-driven personalized portfolios and expert
                 guidance for a prosperous financial journey.
               </h1>
             </div>
-            <div className=" flex  justify-center my-4">
+            <div className=" flex  justify-center my-4 ">
               <input
                 placeholder="Enter your email"
                 className="bg-[#D9D9D9] p-3 rounded-lg md:pr-32 md:py-6"
@@ -43,8 +43,8 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="w-[full] mx-20 h-[270px] bg-[#D9D9D9] mt-28"></div>
-        <div className="mx-auto mt-28">
+        <div className="w-[full] mx-10 md:mx-20 h-[170px] md:h-[270px] bg-[#D9D9D9] mt-12 md:mt-28"></div>
+        <div className="mx-auto mt-12 md:mt-28">
           <h1 className="text-4xl md:text-6xl font-bold text-center text-darkPurple">
             How <span className="text-lightPurple">We</span> Work
           </h1>
@@ -138,7 +138,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-28 ">
+        <div className="mx-auto mt-12 md:mt-28 ">
           {/* <div className="w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg"></div> */}
           <div className="text-center mx-10">
             <h1 className="text-4xl text-center md:text-6xl font-bold text-darkPurple">
@@ -187,7 +187,7 @@ const LandingPage = () => {
             </div>
           </div>
         </div>
-        <div className="mx-auto mt-40 md:mt-20 ">
+        <div className="mx-auto mt-48 md:mt-20 ">
           <div className="text-center mx-10 flex justify-center items-center h-screen flex-col">
             <h1 className="text-4xl md:text-6xl font-bold text-darkPurple">
               Why Choose
@@ -244,7 +244,7 @@ const LandingPage = () => {
           </div>
         </div>
 
-        <div className="flex justify-center mt-40 md:mt-20">
+        <div className="flex justify-center mt-52 md:mt-20">
           <div className="mx-10 text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-darkPurple">
               What <span className="text-lightPurple">Customers</span> have to
@@ -288,13 +288,13 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <button className="bg-lightPurple px-4 md:px-10 md:py-6 py-2 rounded-lg text-white mt-10">
+          <button className="bg-lightPurple px-4 md:px-10 md:py-6 py-2 rounded-lg text-white mt-10 md:mt-20">
             View All
           </button>
         </div>
         <div className="   flex items-center justify-center  ">
-          <div className=" bg-[#D9D9D950] py-8 px-16 md:py-20 md:px-32 my-20 w-4/5 rounded-lg" >
-            <h1 className="text-4xl md:text-6xl text-center mx-auto font-bold">
+          <div className=" bg-[#D9D9D950] py-8 px-4 md:py-20 md:px-32 my-10 md:my-20 w-4/5 rounded-lg" >
+            <h1 className="text-3xl md:text-6xl text-center mx-auto font-bold">
               Track your investments using{" "}
               <span className="text-lightPurple">PMP</span> and invest in your
               future

@@ -16,7 +16,7 @@ const LandingPage = () => {
       <div>
         <div className="flex justify-center">
           <div>
-            <h1 className=" text-3xl  md:text-7xl mx-auto mt-10 font-bold text-center">
+            <h1 className=" text-3xl  md:text-5xl lg:text-7xl mx-auto mt-10 font-bold text-center">
               Your Wealth,
               <span className="text-lightPurple">
                 {" "}
@@ -32,12 +32,12 @@ const LandingPage = () => {
                 guidance for a prosperous financial journey.
               </h1>
             </div>
-            <div className=" flex  justify-center my-4 ">
+            <div className=" flex  justify-center my-4 mx-5 ">
               <input
                 placeholder="Enter your email"
-                className="bg-[#D9D9D9] p-3 rounded-lg md:pr-32 md:py-6"
+                className="bg-[#D9D9D9] p-1 rounded-lg  md:pr-32 md:py-6"
               />
-              <button className="bg-lightPurple text-white rounded-md p-3 justify-end">
+              <button className="bg-lightPurple text-white text-xs rounded-md p-2 justify-end">
                 Get Started
               </button>
             </div>
@@ -48,11 +48,11 @@ const LandingPage = () => {
           <h1 className="text-4xl md:text-6xl font-bold text-center text-darkPurple">
             How <span className="text-lightPurple">We</span> Work
           </h1>
-          <h2 className="text-lg mt-8 md:mt-10 max-w-3xl mx-auto px-10 ">
+          <h2 className="text-md md:text-xl mt-8 md:mt-10 max-w-3xl mx-auto px-10 ">
             Track your investments in PMP and let our mutual fund system analyze
             your user data to craft a personalized portfolio for future growth.
           </h2>
-          <div className="flex md:flex-row flex-col items-center max-w-[60%] mx-auto text-center">
+          <div className="flex md:flex-row flex-col items-center max-w-[80%] md:max-w-[60%] mx-auto text-center">
             <div>
               <div className="justify-center">
                 <div className="flex items-center gap-6 md:gap-10 mt-10">
@@ -141,11 +141,11 @@ const LandingPage = () => {
         <div className="mx-auto mt-12 md:mt-28 ">
           {/* <div className="w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg"></div> */}
           <div className="text-center mx-10">
-            <h1 className="text-4xl text-center md:text-6xl font-bold text-darkPurple">
+            <h1 className="text-3xl text-center md:text-6xl font-bold text-darkPurple">
               Your <span className="text-lightPurple">Pathway</span> to Future
               Investment
             </h1>
-            <h2 className="text-lg max-w-3xl mx-auto mt-8 md:mt-10 ">
+            <h2 className="text-md md:text-xl max-w-3xl mx-auto mt-8 md:mt-10 ">
               Unlock your future investment potential with our data-driven,
               personalized portfolios and expert guidance.
             </h2>
@@ -159,25 +159,25 @@ const LandingPage = () => {
             <div>
            
             <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
-              <h1 className="text-xl text-darkPurple">What is PMP?</h1>
+              <h1 className="text-md lg:text-xl text-darkPurple">What is PMP?</h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
             </div>
             <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
-              <h1 className="text-xl text-darkPurple">What is PMP?</h1>
+              <h1 className="text-md lg:text-xl text-darkPurple">What is PMP?</h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
             </div>
-            <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
-              <h1 className="text-xl text-darkPurple">
+            <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-5">
+              <h1 className="text-md lg:text-xl text-darkPurple">
                 Are there Any Fees for using PMP?
               </h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
             </div>
             <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
-              <h1 className="text-xl text-darkPurple">How Safe is PMP?</h1>
+              <h1 className="text-md lg:text-xl text-darkPurple">How Safe is PMP?</h1>
               <Icon icon="mingcute:down-line" width="32" height="32" />
             </div>
             <div className="bg-[#D9D9D950]  max-w-xl py-3 mx-auto rounded-lg my-8 flex items-center  justify-between px-10">
-              <h1 className="text-xl text-darkPurple">
+              <h1 className="text-md lg:text-xl text-darkPurple">
                 {" "}
                 What do I gain from using PMP?
               </h1>
@@ -193,41 +193,41 @@ const LandingPage = () => {
               Why Choose
               <span className="text-lightPurple"> PMP </span>
             </h1>
-            <h2 className="text-lg max-w-3xl mt-4 mx-auto">
+            <h2 className="text-md md:text-xl max-w-3xl mt-4 mx-auto">
               Unlock the potential of your financial future with PMP's tailored
               investment strategies and client-focused approach.
             </h2>
             <div className="flex flex-col justify-center items-center md:flex-row">
               <div>
                 <div className="flex items-center mt-10  gap-6 md:gap-10">
-                  <div className="w-16 md:-20 h-16 md:-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
+                  <div className="w-14 md:w-20 h-14 md:h-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
                     <h1 className="text-4xl text-lightPurple font-bold">1</h1>
                   </div>
-                  <h1 className="text-xl text-darkPurple font-semibold">
+                  <h1 className="text-xl  text-darkPurple text-start font-semibold">
                     Tailored Portfolios
                   </h1>
                 </div>
                 <div className="flex items-center mt-10  gap-6 md:gap-10">
-                  <div className="w-16 md:-20 h-16 md:-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
+                  <div className="w-14 md:w-20 h-14 md:h-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
                     <h1 className="text-4xl text-lightPurple font-bold">2</h1>
                   </div>
-                  <h1 className="text-xl text-darkPurple font-semibold">
+                  <h1 className="text-xl text-darkPurple text-start font-semibold">
                     Expert Guidance
                   </h1>
                 </div>
                 <div className="flex items-center mt-10  gap-6 md:gap-10">
-                  <div className="w-16 md:-20 h-16 md:-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
+                  <div className="w-14 md:w-20 h-14 md:h-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
                     <h1 className="text-4xl text-lightPurple font-bold">3</h1>
                   </div>
-                  <h1 className="text-xl text-darkPurple font-semibold">
+                  <h1 className="text-xl text-darkPurple text-start font-semibold">
                     Data-Driven Approach
                   </h1>
                 </div>
                 <div className="flex items-center mt-10  gap-6 md:gap-10">
-                  <div className="w-16 md:-20 h-16 md:-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
+                  <div className="w-14 md:w-20 h-14 md:h-20 rounded-full bg-[#D9D9D950] flex items-center justify-center">
                     <h1 className="text-4xl text-lightPurple font-bold">4</h1>
                   </div>
-                  <h1 className="text-xl text-darkPurple font-semibold">
+                  <h1 className="text-xl text-darkPurple text-start font-semibold">
                     Transparent and Secure
                   </h1>
                 </div>
@@ -252,7 +252,7 @@ const LandingPage = () => {
             </h1>
 
             <div className=" my-8 flex justify-center">
-              <h1 className=" text-[18px]  max-w-2xl">
+              <h1 className=" text-md md:text-xl  max-w-2xl">
                 Discover why our clients love PMP. Read testimonials from
                 satisfied investors who have experienced success and exceptional
                 service.
@@ -261,9 +261,9 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 md:max-w-7xl w-4/5  md:grid-cols-2 mx-auto gap-10">
-          <div className="w-full bg-[#D9D9D950] rounded-lg flex">
+          <div className="w-full bg-[#D9D9D950] rounded-lg flex flex-col md:flex-row">
             <div className="h-auto">
-              <img src={customer1} alt="customer" />
+              <img src={customer1} alt="customer"  className="w-32 h-32 m-5 rounded-full mx-auto object-cover md:w-64 md:h-full md:rounded-none md:m-0 "  />
             </div>
             <div className="flex flex-col justify-between">
               <h1 className="justify-center mx-10 my-3">
@@ -271,19 +271,19 @@ const LandingPage = () => {
                 mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac
                 
               </h1>
-              <h2 className="justify-center mx-10 my-3">Mahek</h2>
+              <h2 className="justify-center mx-10 my-3 text-center font-semibold">Mahek</h2>
             </div>
           </div>
-          <div className="w-full bg-[#D9D9D950] rounded-lg flex  ">
-            <div className="">
-              <img src={customer2} alt="customer" />
+          <div className="w-full bg-[#D9D9D950] rounded-lg flex flex-col md:flex-row  ">
+            <div   className="h-auto">
+              <img src={customer2} alt="customer" className="w-32 h-32 m-5 rounded-full mx-auto object-cover md:w-64 md:h-full md:rounded-none md:m-0 " />
             </div>
             <div className="flex flex-col justify-between">
               <h1 className="justify-center mx-10 my-3">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut eu,
                 mollis aenean sit dictum tincidunt. Ut arcu, suscipit ac
               </h1>
-              <h2 className="justify-center mx-10 my-3">Mahek</h2>
+              <h2 className="justify-center mx-10 my-3 text-center font-semibold">Mahek</h2>
             </div>
           </div>
         </div>

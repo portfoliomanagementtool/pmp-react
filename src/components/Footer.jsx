@@ -15,7 +15,7 @@ const Footer = () => {
           <p className="text-md font-light text-center my-1">
             Subscribe to stay tuned for updates.
           </p>
-          <div className=" flex my-4">
+          <div className=" flex flex-col md:flex-row my-4">
             <input placeholder="Enter your email" className="bg-[#E4E7E6] p-3 "/>
             <button className="bg-darkPurple text-white rounded-md p-3 justify-end">Subscribe</button>
           </div>

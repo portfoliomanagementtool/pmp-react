@@ -3,7 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: null,
   token: null,
-  role: null,
+  expiryTime: null,
+  // role: null,
 };
 
 export const authSlice = createSlice({
@@ -11,17 +12,35 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setLogin: (state, action) => {
-      state.user = action.payload.teacher;
+      state.user = action.payload.user;
       state.token = action.payload.token;
-      state.role = action.payload.role;
+      state.expiryTime = action.payload.expiryTime;
+      // state.role = action.payload.role;
     },
     setLogout: (state, action) => {
       state.user = null;
       state.token = null;
-      state.role = null;
+      // state.role = null;
     },
   },
 });
 
 export const { setLogin, setLogout } = authSlice.actions;
 export default authSlice.reducer;
+
+export const logIn = (data) => async (dispatch) => {
+  console.log(data)
+  try {
+    dispatch(setLogin(data));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const logOut = () => async (dispatch) => {
+  try {
+    dispatch(setLogout());
+  } catch (error) {
+    console.log(error);
+  }
+};

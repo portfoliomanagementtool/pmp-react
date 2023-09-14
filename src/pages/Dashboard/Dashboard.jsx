@@ -1,5 +1,6 @@
-import React from 'react';
-import { UserButton, useUser } from '@clerk/clerk-react';
+import React from "react";
+import { UserButton, useUser } from "@clerk/clerk-react";
+import Sidebar from "../../components/Sidebar";
 
 const Dashboard = () => {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -8,14 +9,18 @@ const Dashboard = () => {
     return null;
   }
 
-  console.log(user)
+  console.log(user);
 
   return (
-    <section>
+    <div className="flex">
+      <Sidebar />
+      <section className="flex-grow">
         <div>Dashboard</div>
+
         <UserButton />
-    </section>
-  )
-}
+      </section>
+    </div>
+  );
+};
 
 export default Dashboard;

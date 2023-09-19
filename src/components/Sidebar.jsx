@@ -27,7 +27,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen w-auto bg-[#DBDFE0] flex flex-col px-10 py-20 justify-between">
+    <div className="h-screen w-auto bg-[#DBDFE0] flex flex-col fixed px-10 py-20 justify-between">
       <div>
         <p className="font-extrabold text-5xl text-darkPurple">Portfolio</p>
       </div>

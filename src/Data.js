@@ -30,7 +30,6 @@ export const UserData = {
       userGain: 4300,
       userLost: 234,
     },
-    // Add more daily data here...
   ],
   week: [
     {
@@ -63,7 +62,6 @@ export const UserData = {
       userGain: 4300,
       userLost: 234,
     },
-    // Add more weekly data here...
   ],
   month: [
     {
@@ -108,7 +106,6 @@ export const UserData = {
       userGain: 16586,
       userLost: 1000,
     },
-    // Add more monthly data here...
   ],
   // year: [
   //   {

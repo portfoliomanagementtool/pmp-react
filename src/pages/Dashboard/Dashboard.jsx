@@ -9,6 +9,7 @@ import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
 import LineChart from "./components/LineChart";
 import { UserData } from "../../Data";
+import D3_Chart from "./components/D3_Chart";
 
 Chart.register(CategoryScale);
 
@@ -109,6 +110,9 @@ const Dashboard = () => {
           <div style={{ width: 900 }} className="font-poppins">
             <LineChart chartData={chartData} interval={interval} />
           </div>
+        </div>
+        <div>
+          <D3_Chart/>
         </div>
       </section>
     </div>

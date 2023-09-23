@@ -10,6 +10,7 @@ import { CategoryScale } from "chart.js";
 import LineChart from "./components/LineChart";
 import { UserData } from "../../Data";
 import D3_Chart from "./components/D3_Chart";
+import HighCharts_Chart from "./components/HighCharts_Chart";
 
 Chart.register(CategoryScale);
 
@@ -113,6 +114,9 @@ const Dashboard = () => {
         </div>
         <div>
           <D3_Chart/>
+        </div>
+        <div>
+          <HighCharts_Chart/>
         </div>
       </section>
     </div>

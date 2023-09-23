@@ -10,6 +10,7 @@ import { CategoryScale } from "chart.js";
 import LineChart from "./components/LineChart";
 import { UserData } from "../../Data";
 import D3_Chart from "./components/D3_Chart";
+import SipCalculator from "./components/SipCalculator";
 
 Chart.register(CategoryScale);
 
@@ -112,8 +113,12 @@ const Dashboard = () => {
           </div>
         </div>
         <div>
+          <SipCalculator/>
+        </div>
+        <div className="m-10">
           <D3_Chart/>
         </div>
+       
       </section>
     </div>
   );

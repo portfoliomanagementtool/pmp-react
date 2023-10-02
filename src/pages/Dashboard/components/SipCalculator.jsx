@@ -40,7 +40,7 @@ const SipCalculator = () => {
     setValue(newValue);
   };
   return (
-    <div>
+    <div className="font-Poppins">
       <h1 className="text-3xl font-semibold text-[#7A7A7A] my-3">
         CALCULATE INVESTMENTS
       </h1>

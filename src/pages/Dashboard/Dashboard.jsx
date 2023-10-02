@@ -61,68 +61,8 @@ const Dashboard = () => {
   return (
     <div className="flex font-poppins">
       <Sidebar className="left-0 h-full" />
-      <UserButton />
-      <section className="pl-[18rem]">
-        {/* <div>Dashboard</div> */}
-        <div className="mx-10">
-          <h1 className="text-3xl font-semibold text-[#7A7A7A] my-3">
-            TOP PERFORMERS
-          </h1>
-          <div className="overflow-x-auto bg-[#F7F9FD] rounded-2xl max-w-screen-lg">
-            <div className="flex">
-              {cardData.map((data, index) => (
-                <div key={index} className="mr-4">
-                  <PerformerCard title={data.title} />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div style={{ width: 900 }} className="mt-20">
-          <div>
-            <button
-              className={`interval-button mx-3 text-xl ${
-                interval === "day" ? "selected underline " : ""
-              }`}
-              onClick={() => handleIntervalChange("day")}
-            >
-              Day
-            </button>
-            <span className="divider">|</span>
-            <button
-              className={`interval-button mx-3 text-xl  ${
-                interval === "week" ? "selected underline" : ""
-              }`}
-              onClick={() => handleIntervalChange("week")}
-            >
-              Week
-            </button>
-            <span className="divider">|</span>
-            <button
-              className={`interval-button mx-3 text-xl  ${
-                interval === "month" ? "selected underline" : ""
-              }`}
-              onClick={() => handleIntervalChange("month")}
-            >
-              Month
-            </button>
-          </div>
-
-          <div style={{ width: 900 }} className="font-poppins">
-            <LineChart chartData={chartData} interval={interval} />
-          </div>
-        </div>
-        <div>
-          <SipCalculator />
-        </div>
-        <div className="m-10">
-          <D3_Chart />
-        </div>
-        <div>
-          <HighCharts_Chart />
-        </div>
-      </section>
+      {/* <UserButton /> */}
+      
     </div>
   );
 };

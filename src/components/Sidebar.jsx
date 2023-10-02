@@ -5,60 +5,79 @@ import {
   BiSolidUser,
   BiCog,
   BiLock,
-  BiMoon,
+  BiLogOut
 } from "react-icons/bi";
 import { MdAnalytics } from "react-icons/md";
+import { FaMoneyBill } from "react-icons/fa";
 
 const Sidebar = () => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   const listItems = [
-    { name: "Dashboard", icon: <BiSolidDashboard /> },
-    { name: "Analytics", icon: <MdAnalytics /> },
-    { name: "My Portfolio", icon: <BiBriefcase /> },
-    { name: "Accounts", icon: <BiSolidUser /> },
-    { name: "Settings", icon: <BiCog /> },
-    { name: "Security", icon: <BiLock /> },
-    { name: "Dark Mode", icon: <BiMoon /> },
+    { name: "Dashboard", icon: <BiSolidDashboard size={24} /> },
+    { name: "My Portfolio", icon: <BiBriefcase size={24} /> },
+    { name: "Assets", icon: <FaMoneyBill size={24} /> },
+    { name: "Analytics", icon: <MdAnalytics size={24} /> },
+    { name: "Logout", icon: <BiLogOut size={24} /> },
   ];
 
-  const handleItemClick = (item) => {
-    setSelectedItem(item === selectedItem ? null : item);
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   return (
-    <div className="h-screen w-auto bg-[#DBDFE0] flex flex-col fixed px-10 py-20 justify-between">
-      <div>
-        <p className="font-extrabold text-5xl text-darkPurple">Portfolio</p>
+    <div
+      className={`h-screen w-auto bg-[#DBDFE0] mx-auto flex flex-col fixed px-10 py-20 justify-between font-Poppins ${
+        isSidebarOpen ? "" : "collapsed-sidebar"
+      }`}
+    >
+      <div className="flex items-center font-extrabold text-3xl text-darkPurple">
+        <button className="menu-button mx-auto" onClick={toggleSidebar}>
+          {isSidebarOpen ? (
+            <span className="icon">&#9776;</span>
+          ) : (
+            <span className="icon mx-auto">&#10006;</span>
+          )}
+        </button>
+        <p className="ml-1">{isSidebarOpen ? "Portfolio" : ""}</p>
       </div>
-      <div className="flex-grow py-10">
-        <ul>
+      <div className="flex-grow py-12 font-Poppins">
+        <ul className="">
           {listItems.map((item) => (
             <li
               key={item.name}
               className={`cursor-pointer text-center my-4 text-lg flex items-center ${
-                selectedItem === item.name
-                  ? "bg-darkPurple text-white rounded-lg py-2 px-2"
+                isSidebarOpen && isSidebarOpen === item.name
+                  ? "bg-darkPurple text-white rounded-lg py-4 px-2"
                   : "text-darkPurple"
               }`}
-              onClick={() => handleItemClick(item.name)}
+              onClick={() => toggleSidebar(item.name)}
             >
-              {item.icon}
-              <span className="ml-2">{item.name}</span>
+              {isSidebarOpen ? (
+                <div className="icon-container flex my-2">
+                  {item.icon}
+                  <span className="ml-2 font-medium text-lg">{item.name}</span>
+                </div>
+              ) : (
+                <div className="icon-container mx-auto my-2">{item.icon}</div>
+              )}
             </li>
           ))}
         </ul>
       </div>
-      <div className="flex items-center gap-3">
-        <div className="w-12 h-12 rounded-full bg-slate-600" />
-        <div className="flex flex-col">
-          <p className="font-bold text-xl">Kunal Shah</p>
-          <p className="font-medium text-lg">Investor</p>
+      {isSidebarOpen ? (
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-full bg-slate-600" />
+          <div className="flex flex-col">
+            <p className="font-bold text-xl">Kunal Shah</p>
+            <p className="font-medium text-lg">Investor</p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="w-10 h-10 rounded-full bg-slate-600" />
+      )}
     </div>
   );
 };
 
 export default Sidebar;
-

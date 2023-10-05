@@ -14,6 +14,7 @@ import SipCalculator from "./components/SipCalculator";
 import HighCharts_Chart from "./components/HighCharts_Chart";
 import ProfitLossCard from "./components/ProfitLossCard";
 import TransactionHistory from "./components/TransactionHistory";
+import Navbar from "../../components/Navbar";
 
 Chart.register(CategoryScale);
 
@@ -70,10 +71,12 @@ const Dashboard = () => {
     },
   ];
   return (
+    
     <div className="flex font-poppins bg-[#F3F4F9]">
       <Sidebar className="left-0 h-full" />
       {/* <UserButton /> */}
-      <div className="w-full glex flex-col">
+      <div className="w-full flex flex-col">
+        <Navbar/>
         <div className="grid grid-cols-3  ">
           {/* {ProfitData?.map(obj=>{
         

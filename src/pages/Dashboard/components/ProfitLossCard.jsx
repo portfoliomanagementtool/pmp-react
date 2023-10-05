@@ -6,7 +6,7 @@ const percentageValue = parseFloat(percentage.match(/[-+]?[\d.]+/)[0]);
 console.log(percentageValue);
 const isPositive = percentageValue >= 0;
   return (
-    <div className="border-2 h-28 m-5 flex items-center justify-center rounded-3xl shadow-xl font-Poppins bg-white">
+    <div className="border-2 h-28 m-5 flex items-center justify-center rounded-xl shadow-xl font-Poppins bg-white">
       <div className="">
         <h1 className="text-3xl font-bold  text-darkPurple">{title}</h1>
         <div className="flex justify-center py-1">

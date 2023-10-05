@@ -13,6 +13,7 @@ import D3_Chart from "./components/D3_Chart";
 import SipCalculator from "./components/SipCalculator";
 import HighCharts_Chart from "./components/HighCharts_Chart";
 import ProfitLossCard from "./components/ProfitLossCard";
+import TransactionHistory from "./components/TransactionHistory";
 
 Chart.register(CategoryScale);
 
@@ -60,27 +61,30 @@ const Dashboard = () => {
   ];
 
   const ProfitData = [
-    {title:"Market Value",Amount:"123456",percentage:"-90.56(-0.47%)"},
-    {title:"Day P/L",Amount:"+2456",percentage:"2456(+0.27%)"},
-    {title:"Overall P/L",Amount:"4556456",percentage:"-12222.56(-3.47%)"}
-  ]
+    { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
+    { title: "Day P/L", Amount: "+2456", percentage: "2456(+0.27%)" },
+    {
+      title: "Overall P/L",
+      Amount: "4556456",
+      percentage: "-12222.56(-3.47%)",
+    },
+  ];
   return (
-    <div className="flex font-poppins">
+    <div className="flex font-poppins bg-[#F3F4F9]">
       <Sidebar className="left-0 h-full" />
       {/* <UserButton /> */}
-      <div className="grid grid-cols-3 w-full ">
-        {/* {ProfitData?.map(obj=>{
+      <div className="w-full glex flex-col">
+        <div className="grid grid-cols-3  ">
+          {/* {ProfitData?.map(obj=>{
         
           <ProfitLossCard key={obj?.title} {...obj}/>
         
         })} */}
-            {ProfitData?.map(obj => {
-          return (
-            
-              <ProfitLossCard key={obj?.title} {...obj} />
-          
-          );
-        })}
+          {ProfitData?.map((obj) => {
+            return <ProfitLossCard key={obj?.title} {...obj} />;
+          })}
+        </div>
+        <TransactionHistory/>
       </div>
     </div>
   );

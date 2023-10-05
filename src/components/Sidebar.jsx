@@ -5,7 +5,7 @@ import {
   BiSolidUser,
   BiCog,
   BiLock,
-  BiLogOut
+  BiLogOut,
 } from "react-icons/bi";
 import { MdAnalytics } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
@@ -25,21 +25,37 @@ const Sidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  // Define a separate handler for clicking menu button
+  const handleMenuButtonClick = () => {
+    toggleSidebar();
+  };
+
   return (
     <div
-      className={`h-screen w-auto bg-[#DBDFE0]  flex flex-col  px-10 py-20 justify-between font-Poppins ${
+      className={`h-screen shadow-md bg-white mx-auto flex flex-col px-5 py-20 justify-between font-Poppins ${
         isSidebarOpen ? "" : "collapsed-sidebar"
       }`}
     >
-      <div className="flex items-center font-extrabold text-3xl text-darkPurple">
-        <button className="menu-button mx-auto" onClick={toggleSidebar}>
+      <div className="flex items-center mx-auto font-extrabold text-3xl text-darkPurple">
+        <button className="menu-button mx-auto" onClick={handleMenuButtonClick}>
           {isSidebarOpen ? (
             <span className="icon">&#9776;</span>
           ) : (
             <span className="icon mx-auto">&#10006;</span>
           )}
         </button>
-        <p className="ml-1">{isSidebarOpen ? "Portfolio" : ""}</p>
+        <p
+          className={`ml-2 ${
+            isSidebarOpen ? "" : "w-0 overflow-hidden"
+          }`}
+          onClick={() => {
+            if (isSidebarOpen) {
+              toggleSidebar();
+            }
+          }}
+        >
+          {isSidebarOpen ? "Portfolio" : ""}
+        </p>
       </div>
       <div className="flex-grow py-12 font-Poppins">
         <ul className="">
@@ -51,22 +67,21 @@ const Sidebar = () => {
                   ? "bg-darkPurple text-white rounded-lg py-4 px-2"
                   : "text-darkPurple"
               }`}
-              onClick={() => toggleSidebar(item.name)}
             >
               {isSidebarOpen ? (
-                <div className="icon-container flex my-2">
+                <div className="icon-container flex my-2 ">
                   {item.icon}
                   <span className="ml-2 font-medium text-lg">{item.name}</span>
                 </div>
               ) : (
-                <div className="icon-container mx-auto my-2">{item.icon}</div>
+                <div className="icon-container mx-auto my-2" >{item.icon}</div>
               )}
             </li>
           ))}
         </ul>
       </div>
       {isSidebarOpen ? (
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-[200px]">
           <div className="w-10 h-10 rounded-full bg-slate-600" />
           <div className="flex flex-col">
             <p className="font-bold text-xl">Kunal Shah</p>

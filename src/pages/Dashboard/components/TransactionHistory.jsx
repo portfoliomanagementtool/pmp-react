@@ -3,8 +3,8 @@ import { Card } from "@mui/material";
 
 const TransactionHistory = () => {
   return (
-    <div className="font-Poppins rounded shadow-xl mx-auto max-w-2xl"> 
-      <Card sx={{ padding: "2rem" }}>
+    <div className="font-Poppins rounded shadow-xl"> 
+      <div>
         <h5 className="font-bold text-xl text-gray-600">Transaction History</h5>
 
         <table className="w-full">
@@ -39,7 +39,7 @@ const TransactionHistory = () => {
             ))}
           </tbody>
         </table>
-      </Card>
+      </div>
     </div>
   );
 };

@@ -16,6 +16,7 @@ import ProfitLossCard from "./components/ProfitLossCard";
 
 import TransactionHistory from "./components/TransactionHistory";
 import RecentlyVisited from "./components/RecentlyVisited";
+import Navbar from "../../components/Navbar";
 
 
 Chart.register(CategoryScale);
@@ -78,6 +79,7 @@ const Dashboard = () => {
       <Sidebar className="left-0 h-full" />
       {/* <UserButton /> */}
       <div className="w-full glex flex-col">
+        <Navbar/>
         <div className="grid grid-cols-3  ">
           {ProfitData?.map((obj) => {
             return <ProfitLossCard key={obj?.title} {...obj} />;

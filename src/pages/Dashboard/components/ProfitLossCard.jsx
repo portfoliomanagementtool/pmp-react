@@ -11,7 +11,7 @@ const isPositive = percentageValue >= 0;
         <h1 className="text-3xl font-bold  text-darkPurple">{title}</h1>
         <div className="flex justify-center py-1">
           <div >
-            <h2 className="text-xl font-semibold text-lightPurple">{Amount}</h2>
+            <h2 className="text-xl font-semibold text-lightPurple">${Amount}</h2>
           </div>
         </div>
         <div className={`flex justify-center ${isPositive ? 'text-green-600' : 'text-red-600'}`}>

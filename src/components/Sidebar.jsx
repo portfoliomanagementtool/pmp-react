@@ -11,8 +11,8 @@ import { MdAnalytics } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 
 const Sidebar = () => {
+  const [selectedItem, setSelectedItem] = useState("Dashboard"); // Initially, no item is selected
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
   const listItems = [
     { name: "Dashboard", icon: <BiSolidDashboard size={24} /> },
     { name: "My Portfolio", icon: <BiBriefcase size={24} /> },
@@ -30,14 +30,18 @@ const Sidebar = () => {
     toggleSidebar();
   };
 
+  const handleListItemClick = (itemName) => {
+    setSelectedItem(itemName);
+  };
+
   return (
     <div
-      className={`h-screen shadow-md bg-white mx-auto flex flex-col px-5 py-20 justify-between font-Poppins ${
+      className={`h-screen shadow-md bg-darkPurple  flex flex-col px-5 py-20 justify-between font-Poppins ${
         isSidebarOpen ? "" : "collapsed-sidebar"
       }`}
     >
-      <div className="flex items-center mx-auto font-extrabold text-3xl text-darkPurple">
-        <button className="menu-button mx-auto" onClick={handleMenuButtonClick}>
+      <div className="flex items-center font-extrabold text-4xl ml-1 text-white">
+        <button className="menu-button " onClick={handleMenuButtonClick}>
           {isSidebarOpen ? (
             <span className="icon">&#9776;</span>
           ) : (
@@ -45,9 +49,7 @@ const Sidebar = () => {
           )}
         </button>
         <p
-          className={`ml-2 ${
-            isSidebarOpen ? "" : "w-0 overflow-hidden"
-          }`}
+          className={`ml-3 ${isSidebarOpen ? "" : "w-0 overflow-hidden"}`}
           onClick={() => {
             if (isSidebarOpen) {
               toggleSidebar();
@@ -57,31 +59,35 @@ const Sidebar = () => {
           {isSidebarOpen ? "Portfolio" : ""}
         </p>
       </div>
-      <div className="flex-grow py-12 font-Poppins">
+      <div className="py-12 font-Poppins">
         <ul className="">
           {listItems.map((item) => (
             <li
               key={item.name}
-              className={`cursor-pointer text-center my-4 text-lg flex items-center ${
-                isSidebarOpen && isSidebarOpen === item.name
-                  ? "bg-darkPurple text-white rounded-lg py-4 px-2"
-                  : "text-darkPurple"
+              className={`cursor-pointer text-center my-5 px-3 text-lg flex items-center ${
+                isSidebarOpen && selectedItem === item.name
+                  ? "bg-white text-darkPurple rounded-lg "
+                  : "text-white"
               }`}
+              onClick={() => {
+                handleListItemClick(item.name);
+                // Add your logic here for what should happen when a list item is clicked
+              }}
             >
               {isSidebarOpen ? (
                 <div className="icon-container flex my-2 ">
                   {item.icon}
-                  <span className="ml-2 font-medium text-lg">{item.name}</span>
+                  <span className="ml-4 font-medium text-lg">{item.name}</span>
                 </div>
               ) : (
-                <div className="icon-container mx-auto my-2" >{item.icon}</div>
+                <div className="icon-container mx-auto my-2">{item.icon}</div>
               )}
             </li>
           ))}
         </ul>
       </div>
       {isSidebarOpen ? (
-        <div className="flex items-center gap-3 w-[200px]">
+        <div className="flex items-center gap-3 w-[200px] text-white">
           <div className="w-10 h-10 rounded-full bg-slate-600" />
           <div className="flex flex-col">
             <p className="font-bold text-xl">Kunal Shah</p>

@@ -3,7 +3,7 @@ import { Card } from "@mui/material";
 
 const TransactionHistory = () => {
   return (
-    <div className="font-Poppins rounded shadow-xl h-[360px] mx-auto max-w-2xl m-5"> 
+    <div className="font-Poppins rounded shadow-xl h-[380px] mx-auto max-w-2xl m-5"> 
       <Card sx={{ padding: "2rem" }}>
         <h5 className="font-bold text-xl text-gray-600">Transaction History</h5>
 
@@ -47,44 +47,51 @@ const TransactionHistory = () => {
 const historyList = [
   {
     transId: "#JY7685",
-    asset: "Nike Air max 170",
+    asset: "ETH",
     price: 5660,
-    date: 325,
-    time: "2.31pm",
+    date: "11/12/2321",
+    time: "02.31pm",
   },
   {
     transId: "#JY7686",
-    asset: "Cactus Plant",
+    asset: "TECL",
     price: 120,
-    date: 40,
-    time: "1.22.45pm",
+    date: "21/12/2321",
+    time: "01.45pm",
   },
   {
     transId: "#JY7687",
-    asset: "Minimal Pot",
+    asset: "BIL",
     price: 654,
-    date: 57,
-    time: "1.15pm",
+    date: "1/5/2321",
+    time: "01.15pm",
   },
   {
     transId: "#JY7688",
-    asset: "Adidas Blaze",
+    asset: "IJH",
     price: 1260,
-    date: 125,
+    date: "14/12/2002",
     time: "12.50am"
   },
   {
     transId: "#JY7688",
-    asset: "Adidas Blaze",
+    asset: "GOVZ",
     price: 1260,
-    date: 125,
+    date: "11/12/2321",
     time: "12.50am"
   },
   {
     transId: "#JY7688",
-    asset: "Adidas Blaze",
+    asset: "GUSH",
     price: 1260,
-    date: 125,
+    date: "19/3/2321",
+    time: "12.50am"
+  },
+  {
+    transId: "#JY7688",
+    asset: "GUSH",
+    price: 1260,
+    date: "19/3/2321",
     time: "12.50am"
   },
 

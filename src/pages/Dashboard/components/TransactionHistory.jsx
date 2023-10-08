@@ -3,7 +3,7 @@ import { Card } from "@mui/material";
 
 const TransactionHistory = () => {
   return (
-    <div className="font-Poppins rounded shadow-xl h-[380px] mx-auto max-w-2xl m-5"> 
+    <div className="font-Poppins rounded shadow-xl h-[380px]  max-w-2xl m-5"> 
       <Card sx={{ padding: "2rem" }}>
         <h5 className="font-bold text-xl text-gray-600">Transaction History</h5>
 
@@ -45,13 +45,7 @@ const TransactionHistory = () => {
 };
 
 const historyList = [
-  {
-    transId: "#JY7685",
-    asset: "ETH",
-    price: 5660,
-    date: "11/12/2321",
-    time: "02.31pm",
-  },
+
   {
     transId: "#JY7686",
     asset: "TECL",

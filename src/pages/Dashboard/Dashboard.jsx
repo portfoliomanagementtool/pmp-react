@@ -17,7 +17,8 @@ import ProfitLossCard from "./components/ProfitLossCard";
 import TransactionHistory from "./components/TransactionHistory";
 import RecentlyVisited from "./components/RecentlyVisited";
 import Navbar from "../../components/Navbar";
-
+import Graphs from "./components/CryptoGraph";
+import MonthlyInvestment from "./components/MonthlyInvestment";
 
 Chart.register(CategoryScale);
 
@@ -65,7 +66,6 @@ const Dashboard = () => {
   ];
 
   const ProfitData = [
-
     { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
     { title: "Day P/L", Amount: "2456", percentage: "+2456(+0.27%)" },
     {
@@ -75,29 +75,31 @@ const Dashboard = () => {
     },
   ];
   return (
-    <div className="flex font-poppins bg-[#F3F4F9]">
+    <div className="flex font-poppins bg-[#F3F4F9] ">
       <Sidebar className="left-0 h-full" />
       {/* <UserButton /> */}
-      <div className="w-full glex flex-col">
-        <Navbar/>
-        <div className="grid grid-cols-3  ">
+      <div className="w-full glex flex-col pl-[16.5%]">
+        <Navbar />
+        <div className="grid grid-cols-3 pt-20  ">
           {ProfitData?.map((obj) => {
             return <ProfitLossCard key={obj?.title} {...obj} />;
           })}
         </div>
-        
+
         <div className="grid grid-cols-2">
-          <TransactionHistory/>
-          <RecentlyVisited/>
+          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins ">
+            <Graphs />
+          </div>
+          <RecentlyVisited />
+        </div>
+        <div className="grid grid-cols-2">
+          <TransactionHistory />
+          <div className="">
+            <MonthlyInvestment />
+          </div>
+        </div>
       </div>
-
-      </div>
-    
-      <div>
-
-      </div>
-      </div>
-  
+    </div>
   );
 };
 

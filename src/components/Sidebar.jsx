@@ -9,6 +9,7 @@ import {
 } from "react-icons/bi";
 import { MdAnalytics } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
+import { UserButton } from "@clerk/clerk-react";
 
 const Sidebar = () => {
   const [selectedItem, setSelectedItem] = useState("Dashboard"); // Initially, no item is selected
@@ -36,7 +37,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`h-screen shadow-md bg-darkPurple  flex flex-col px-5 py-20 justify-between font-Poppins ${
+      className={`h-screen shadow-md bg-darkPurple w-1/6 fixed  flex flex-col px-5 py-20 justify-between font-Poppins ${
         isSidebarOpen ? "" : "collapsed-sidebar"
       }`}
     >
@@ -88,7 +89,9 @@ const Sidebar = () => {
       </div>
       {isSidebarOpen ? (
         <div className="flex items-center gap-3 w-[200px] text-white">
-          <div className="w-10 h-10 rounded-full bg-slate-600" />
+          <div className="w-8 h-8 rounded-full bg-slate-600">
+            <UserButton/>
+          </div>
           <div className="flex flex-col">
             <p className="font-bold text-xl">Kunal Shah</p>
             <p className="font-medium text-lg">Investor</p>

@@ -18,7 +18,7 @@ const RecentlyVisited = () => {
   return (
     <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins  ">
         <h1 className="font-bold text-xl text-gray-600  p-5">Recently Visited</h1>
-        <div className="h-[350px] overflow-y-auto">
+        <div  className="h-[350px] overflow-y-auto remove-scroll">
         {AssetCard?.map(obj=>{
             return(
                 <Asset key={obj?.title} {...obj}/>

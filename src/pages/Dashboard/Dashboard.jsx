@@ -260,7 +260,7 @@ const Dashboard = () => {
             <MonthlyInvestment />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center bg-gray-100">
+        <div className="flex flex-col items-center justify-center py-4 bg-gray-100">
           <SellBuyTable
             rows={rows}
             deleteRow={handleDeleteRow}
@@ -283,7 +283,7 @@ const Dashboard = () => {
                 setRowToEdit(null);
               }}
               onSubmit={handleSubmit}
-              defaultValue={rowToEdit !== null && rows[rowToEdit] } 
+              defaultValue={rowToEdit !== null && rows[rowToEdit]}
             />
           )}
         </div>

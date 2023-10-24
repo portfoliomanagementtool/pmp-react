@@ -19,6 +19,8 @@ import RecentlyVisited from "./components/RecentlyVisited";
 import Navbar from "../../components/Navbar";
 import Graphs from "./components/CryptoGraph";
 import MonthlyInvestment from "./components/MonthlyInvestment";
+import Metrics from "./components/Metrics";
+import ProfitLossGraph from "./components/ProfitLossGraph";
 
 Chart.register(CategoryScale);
 
@@ -86,16 +88,27 @@ const Dashboard = () => {
           })}
         </div>
 
-        <div className="grid grid-cols-2">
-          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins ">
+        <div className="grid grid-cols-3">
+          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins col-span-2 ">
             <Graphs />
           </div>
           <RecentlyVisited />
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-3">
           <TransactionHistory />
-          <div className="">
+          <div className="col-span-2">
             <MonthlyInvestment />
+          </div>
+        </div>
+        <div className="grid grid-cols-3">
+            <div className="border-2 m-5  justify-center rounded-xl shadow-xl font-Poppins bg-white col-span-1">
+              <div className="text-3xl font-bold  text-darkPurple m-5">Metrics</div>
+            {ProfitData?.map((obj) => {
+            return <Metrics key={obj?.title} {...obj} />;
+          })}
+          </div>
+            <div className="border-2 m-5 rounded shadow-xl bg-white font-Poppins col-span-2  ">
+            <ProfitLossGraph/>
           </div>
         </div>
       </div>

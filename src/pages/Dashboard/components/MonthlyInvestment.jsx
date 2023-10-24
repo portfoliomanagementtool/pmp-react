@@ -28,7 +28,7 @@ const MonthlyInvestment = () => {
     ],
   };
   return (
-    <div className="font-Poppins bg-white rounded shadow-xl w-full mx-auto max-w-2xl m-5 p-8 ">
+    <div className="font-Poppins bg-white rounded shadow-xl  m-5 p-8 ">
       <h5 className="font-bold text-xl text-gray-600">Monthly Investment</h5>
       <Bar data={data} className="p-2"/>
     </div>

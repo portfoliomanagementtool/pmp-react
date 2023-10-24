@@ -15,6 +15,8 @@ import RecentlyVisited from "./components/RecentlyVisited";
 import Navbar from "../../components/Navbar";
 import Graphs from "./components/CryptoGraph";
 import MonthlyInvestment from "./components/MonthlyInvestment";
+import Metrics from "./components/Metrics";
+import ProfitLossGraph from "./components/ProfitLossGraph";
 import SellBuyTable from "../Portfolio/components/SellBuyTable";
 import Modal from "../Portfolio/components/Modal";
 
@@ -248,16 +250,29 @@ const Dashboard = () => {
           })}
         </div>
 
-        <div className="grid grid-cols-2">
-          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins ">
+        <div className="grid grid-cols-3">
+          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins col-span-2 ">
             <Graphs />
           </div>
           <RecentlyVisited />
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-3">
           <TransactionHistory />
-          <div className="">
+          <div className="col-span-2">
             <MonthlyInvestment />
+          </div>
+        </div>
+        <div className="grid grid-cols-3">
+          <div className="border-2 m-5  justify-center rounded-xl shadow-xl font-Poppins bg-white col-span-1">
+            <div className="text-3xl font-bold  text-darkPurple m-5">
+              Metrics
+            </div>
+            {ProfitData?.map((obj) => {
+              return <Metrics key={obj?.title} {...obj} />;
+            })}
+          </div>
+          <div className="border-2 m-5 rounded shadow-xl bg-white font-Poppins col-span-2  ">
+            <ProfitLossGraph />
           </div>
         </div>
         <div className="flex flex-col items-center justify-center py-4 bg-gray-100">
@@ -275,7 +290,6 @@ const Dashboard = () => {
           >
             Add
           </button>
-
           {modalOpen && (
             <Modal
               closeModal={() => {

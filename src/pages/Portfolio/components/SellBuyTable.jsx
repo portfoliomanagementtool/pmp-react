@@ -4,6 +4,7 @@ import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 const SellBuyTable = ({ rows, deleteRow, editRow }) => {
   return (
     <div className="w-full font-Poppins">
+      <h1 className="font-bold text-xl text-gray-600  p-5">My assets</h1>
       <table className="block overflow-hidden table-auto border-collapse shadow-[#ccc] shadow-xl whitespace-nowrap rounded-xl m-auto w-full overflow-x-auto px-3">
         <thead className="bg-gray-300 text-gray-900">
           <tr>

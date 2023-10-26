@@ -10,23 +10,23 @@ import {
 import { MdAnalytics } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import { UserButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [selectedItem, setSelectedItem] = useState("Dashboard"); // Initially, no item is selected
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const listItems = [
-    { name: "Dashboard", icon: <BiSolidDashboard size={24} /> },
-    { name: "My Portfolio", icon: <BiBriefcase size={24} /> },
-    { name: "Assets", icon: <FaMoneyBill size={24} /> },
-    { name: "Analytics", icon: <MdAnalytics size={24} /> },
-    { name: "Logout", icon: <BiLogOut size={24} /> },
+    { name: "Dashboard", icon: <BiSolidDashboard size={24} />, path:"/dashboard" },
+    { name: "My Portfolio", icon: <BiBriefcase size={24} />,path:"/portfolio" },
+    { name: "Assets", icon: <FaMoneyBill size={24} />, path:"/assets" },
+    { name: "Analytics", icon: <MdAnalytics size={24}/> ,path:"/analytics" },
+    { name: "Logout", icon: <BiLogOut size={24} />, path:"/logout" },
   ];
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  // Define a separate handler for clicking menu button
   const handleMenuButtonClick = () => {
     toggleSidebar();
   };
@@ -63,6 +63,7 @@ const Sidebar = () => {
       <div className="py-12 font-Poppins">
         <ul className="">
           {listItems.map((item) => (
+            
             <li
               key={item.name}
               className={`cursor-pointer text-center my-5 px-3 text-lg flex items-center ${
@@ -72,9 +73,9 @@ const Sidebar = () => {
               }`}
               onClick={() => {
                 handleListItemClick(item.name);
-                // Add your logic here for what should happen when a list item is clicked
               }}
             >
+              <Link to= {item.path}>
               {isSidebarOpen ? (
                 <div className="icon-container flex my-2 ">
                   {item.icon}
@@ -83,7 +84,9 @@ const Sidebar = () => {
               ) : (
                 <div className="icon-container mx-auto my-2">{item.icon}</div>
               )}
+            </Link>
             </li>
+            
           ))}
         </ul>
       </div>

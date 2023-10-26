@@ -43,6 +43,7 @@ const config = {
     type: 'line',
     data: data,
     options: {
+      maintainAspectRatio: false,
       responsive: true,
       interaction: {
         mode: 'index',
@@ -75,7 +76,7 @@ const config = {
     },
   };
   return (
-    <div className=''>
+    <div className='h-72 '>
       <h1 className="font-bold text-xl text-gray-600  p-5">Profit/Loss</h1>
       <canvas ref={chartRef}></canvas>
     </div>

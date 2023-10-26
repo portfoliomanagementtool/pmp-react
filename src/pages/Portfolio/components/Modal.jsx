@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { AiOutlineClose } from "react-icons/ai";
 const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
@@ -39,6 +39,9 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
 
+  const handleClose = (e) => {
+    closeModal();
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
@@ -50,7 +53,12 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   return (
     <div className="font-Poppins fixed top-0 left-0 w-full h-full bg-black z-[1] bg-opacity-40 flex items-center justify-center">
       <div className="bg-white rounded p-4 md:p-8 w-full md:w-2/5">
-        <h1 className="text-xl font-medium mb-3 mx-auto">Fill in The Details</h1>
+        <div className="flex items-center justify-center">
+          <h1 className="text-xl font-medium mb-3 mx-auto">
+            Fill in The Details
+          </h1>
+          <button onClick={handleClose}><AiOutlineClose size={24}/></button>
+        </div>
         <form>
           <div className="grid grid-cols-2 gap-3">
             <div className="mb-4 flex flex-col">

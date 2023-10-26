@@ -3,14 +3,14 @@ import { Card } from "@mui/material";
 
 const TransactionHistory = () => {
   return (
-    <div className="font-Poppins rounded shadow-xl h-[380px]  max-w-2xl m-5"> 
+    <div className="font-Poppins rounded m-4"> 
       <Card sx={{ padding: "2rem" }}>
         <h5 className="font-bold text-xl text-gray-600">Transaction History</h5>
 
         <table className="w-full">
           <thead>
             <tr>
-              <th className="px-4 py-2">Transaction ID</th>
+              <th className="px-4 py-2">Trans ID</th>
               <th className="px-4 py-2">Asset</th>
               <th className="px-4 py-2">Price</th>
               <th className="px-4 py-2">Date</th>

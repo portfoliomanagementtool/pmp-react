@@ -7,6 +7,7 @@ import {
   SignedIn,
   SignedOut,
 } from "@clerk/clerk-react";
+import Portfolio from './pages/Portfolio/Portfolio';
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -40,6 +41,19 @@ function ClerkProviderWithRoutes() {
           <>
             <SignedIn>
               <Dashboard />
+            </SignedIn>
+             <SignedOut>
+              <LandingPage />
+           </SignedOut>
+          </>
+          }
+        />
+        <Route
+          path="/portfolio"
+          element={
+          <>
+            <SignedIn>
+              <Portfolio />
             </SignedIn>
              <SignedOut>
               <LandingPage />

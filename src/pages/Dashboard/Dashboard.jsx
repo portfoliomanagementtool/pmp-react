@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { UserButton, useUser } from "@clerk/clerk-react";
-import Sidebar from "../../components/Sidebar";
+// import Sidebar from "../../components/Sidebar";
 import PerformerCard from "./components/PerformerCard";
 import Chart from "chart.js/auto";
 import { CategoryScale } from "chart.js";
@@ -12,7 +12,7 @@ import HighCharts_Chart from "./components/HighCharts_Chart";
 import ProfitLossCard from "./components/ProfitLossCard";
 import TransactionHistory from "./components/TransactionHistory";
 import RecentlyVisited from "./components/RecentlyVisited";
-import Navbar from "../../components/Navbar";
+// import Navbar from "../../components/Navbar";
 import Graphs from "./components/CryptoGraph";
 import MonthlyInvestment from "./components/MonthlyInvestment";
 import Metrics from "./components/Metrics";
@@ -76,26 +76,28 @@ const Dashboard = () => {
   ];
   return (
     <div className="flex font-poppins bg-[#F3F4F9] ">
-      <Sidebar className="left-0 h-full" />
+      {/* <Sidebar className="left-0 h-full" /> */}
       {/* <UserButton /> */}
       <div className="w-full flex flex-col pl-[16.5%]">
-        <Navbar />
-        <div className="grid grid-cols-3 pt-20  ">
-          {ProfitData?.map((obj) => {
-            return <ProfitLossCard key={obj?.title} {...obj} />;
-          })}
-        </div>
-
-        <div className="grid grid-cols-3">
-          <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins col-span-2 ">
-            <Graphs />
+        {/* <Navbar /> */}
+        <section className="container mx-auto">
+          <div className="grid grid-cols-3 pt-20  ">
+            {ProfitData?.map((obj) => {
+              return <ProfitLossCard key={obj?.title} {...obj} />;
+            })}
           </div>
-          <RecentlyVisited />
-        </div>
-        <div className="flex ">
-          <TransactionHistory />
-          <MonthlyInvestment />
-        </div>
+
+          <div className="grid grid-cols-3">
+            <div className="border-2 m-5  rounded shadow-xl bg-white font-Poppins col-span-2 ">
+              <Graphs />
+            </div>
+            <RecentlyVisited />
+          </div>
+          <div className="flex ">
+            <TransactionHistory />
+            <MonthlyInvestment />
+          </div>
+        </section>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import image2 from "../../images/image-02.png";
 import image3 from "../../images/image-03.png";
 
 import Navbar from "./Navbar";
-import Footer from "../../components/Footer";
+import Footer from "./Footer";
 
 const LandingPage = () => {
   return (

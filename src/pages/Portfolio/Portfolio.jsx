@@ -3,8 +3,6 @@ import SellBuyTable from "./components/SellBuyTable";
 import Modal from "./components/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
-// import Sidebar from "../../components/Sidebar";
-// import Navbar from "../../components/Navbar";
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -180,11 +178,8 @@ const Portfolio = () => {
         );
   };
   return (
-    <div className="flex font-poppins bg-[#F3F4F9]">
-      {/* <Sidebar className="left-0 h-full" /> */}
-      <div className="w-full flex flex-col pl-[16.5%]">
-        {/* <Navbar /> */}
-        <div className="pt-16">
+    <div className="flex font-poppins">
+      <div className="w-full flex flex-col">
         <div className="grid grid-cols-3 ">
           <div className="border-2 m-5  justify-center rounded-xl shadow-xl font-Poppins bg-white col-span-1">
           <h1 className="font-bold text-xl text-gray-600  p-5">Metrics</h1>
@@ -222,7 +217,6 @@ const Portfolio = () => {
               defaultValue={rowToEdit !== null && rows[rowToEdit]}
             />
           )}
-        </div>
         </div>
       </div>
     </div>

@@ -9,6 +9,8 @@ import {
 } from "@clerk/clerk-react";
 import Portfolio from './pages/Portfolio/Portfolio';
 import routes from './routes';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -70,6 +72,18 @@ function ClerkProviderWithRoutes() {
 }
 
 function App() {
+  const mode = useSelector((state) => state.config.mode);
+
+  useEffect(() => {
+    if(mode === "dark") {
+      const html = document.querySelector('html');
+      html.classList.add('dark');
+    } else if (mode === "light") {
+      const html = document.querySelector('html');
+      html.classList.remove('dark');
+    }
+  }, [mode])
+
   return (
     <BrowserRouter>
       <ClerkProviderWithRoutes />

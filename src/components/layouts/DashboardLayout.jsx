@@ -26,7 +26,6 @@ const DashboardLayout = () => {
           </div>
         </main>
       }
-      <div className="drawer-portal"></div>
     </>
   )
 }

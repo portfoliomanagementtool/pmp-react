@@ -7,9 +7,9 @@ const Footer = () => {
       <div className="flex items-center justify-between flex-auto w-full">
         <span>Copyright @ 2023 <span className="semi-bold">PMP</span> All rights reserved.</span>
         <div>
-          <Link to="" className='text-gray'>Terms & Conditions</Link>
+          <Link to="#" className='text-gray'>Terms & Conditions</Link>
           <span className="mx-2 text-muted"></span>
-          <Link to="" className='text-gray'>Privacy & Policy</Link>
+          <Link to="#" className='text-gray'>Privacy & Policy</Link>
         </div>
       </div>
     </footer>

@@ -7,6 +7,10 @@ import Line from "../Dashboard/components/Charts/Line";
 import EditTicker from "./components/EditTicker";
 // import Link from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Statistic from "./components/Charts/Statistic";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import Donut from "./components/Charts/Donut";
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -168,7 +172,6 @@ const Portfolio = () => {
   };
 
   const handleEditRow = (idx) => {
-
     setRowToEdit(idx);
     // const rowToEdit = rows[idx];
     setModalOpen(true);
@@ -187,36 +190,90 @@ const Portfolio = () => {
         );
   };
   return (
-    <div className="flex font-poppins">
-      <div className="w-full flex flex-col">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {/* <div className="border-2 m-5  justify-center rounded-xl shadow-xl font-Poppins bg-white col-span-1">
-          <h1 className="font-bold text-xl text-gray-600  p-5">Metrics</h1>
-            {ProfitData?.map((obj) => {
-              return <Metrics key={obj?.title} {...obj} />;
-            })}
-          </div>
-          <div className="border-2 m-5 rounded shadow-xl bg-black font-Poppins col-span-2  ">
-            <ProfitLossGraph />
-          </div> */}
-          <div class="card col-span-2 card-border" role="presentation">
-            <div class="card-body">
-              <div class="flex items-center justify-between">
+    <div classNameName="flex font-poppins">
+      <div classNameName="w-full flex flex-col">
+        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
+          <div
+            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <div className="flex items-center justify-between">
                 <h4>Profit/Loss</h4>
-                <button class="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                   Export Report
                 </button>
               </div>
-              <div className="chartRef">
-                <div class="min-h-[395px]">
+              <div classNameName="chartRef">
+                <div className="min-h-[395px]">
                   <Line />
                 </div>
               </div>
             </div>
           </div>
+
+          <div
+            className="card 2xl:col-span-3 xl:col-span-4 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>My Assets</h4>
+
+              <div className="grid grid-cols-1">
+                <div>
+                  <div class="mt-6">
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(79, 70, 229);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Bitcoin</h6>
+                          <p>0.5832112 BTC</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$15032</span>
+                    </div>
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(59, 130, 246);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Ethereum</h6>
+                          <p>1.7294746 ETH</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$11246</span>
+                    </div>
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(16, 185, 129);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Solana</h6>
+                          <p>196.9766 SOL</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$8273</span>
+                    </div>
+                  </div>
+                </div>
+                <div classNameName="chartRef">
+                <div>
+                  <Donut />
+                </div>
+              </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* <div className="flex flex-col items-center justify-center py-4 bg-gray-100">
+        {/* <div classNameName="flex flex-col items-center justify-center py-4 bg-gray-100">
           <SellBuyTable
             rows={rows}
             deleteRow={handleDeleteRow}
@@ -227,7 +284,7 @@ const Portfolio = () => {
               setModalOpen(true);
               setRowToEdit(null);
             }}
-            className="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
+            classNameName="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
           >
             Add
           </button>
@@ -242,21 +299,21 @@ const Portfolio = () => {
             />
           )}
         </div> */}
-        <div class="page-container relative h-full flex flex-auto flex-col px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:px-8">
-          <div class="card h-full border-0 card-border" role="presentation">
-            <div class="card-body card-gutterless h-full">
-              <div class="lg:flex items-center justify-between mb-4">
-                <h3 class="mb-4 lg:mb-0">My assets</h3>
-                <div class="flex flex-col lg:flex-row lg:items-center">
-                  <span class="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
-                    <div class="input-suffix-start">
+        <div className="page-container relative h-full flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8">
+          <div className="card h-full border-0 card-border" role="presentation">
+            <div className="card-body card-gutterless h-full">
+              <div className="lg:flex items-center justify-between mb-4">
+                <h3 className="mb-4 lg:mb-0">My assets</h3>
+                <div className="flex flex-col lg:flex-row lg:items-center">
+                  <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
+                    <div className="input-suffix-start">
                       <svg
                         stroke="currentColor"
                         fill="none"
                         stroke-width="2"
                         viewBox="0 0 24 24"
                         aria-hidden="true"
-                        class="text-lg"
+                        className="text-lg"
                         height="1em"
                         width="1em"
                         xmlns="http://www.w3.org/2000/svg"
@@ -269,13 +326,14 @@ const Portfolio = () => {
                       </svg>{" "}
                     </div>
                     <input
-                      class="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
-                      type="text"                      placeholder="Search product"
+                      className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
+                      type="text"
+                      placeholder="Search product"
                     />
                   </span>
-                  <button class="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
-                    <span class="flex items-center justify-center">
-                      <span class="text-lg">
+                  <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
+                    <span className="flex items-center justify-center">
+                      <span className="text-lg">
                         <svg
                           stroke="currentColor"
                           fill="none"
@@ -293,18 +351,18 @@ const Portfolio = () => {
                           ></path>
                         </svg>
                       </span>
-                      <span class="ltr:ml-1 rtl:mr-1">Filter</span>
+                      <span className="ltr:ml-1 rtl:mr-1">Filter</span>
                     </span>
                   </button>
                   <a
                     download=""
-                    class="block lg:inline-block md:mx-2 md:mb-0 mb-4"
+                    className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
                     href="/data/product-list.csv"
                     target="_blank"
                   >
-                    <button class="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
-                      <span class="flex items-center justify-center">
-                        <span class="text-lg">
+                    <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
+                      <span className="flex items-center justify-center">
+                        <span className="text-lg">
                           <svg
                             stroke="currentColor"
                             fill="currentColor"
@@ -322,17 +380,17 @@ const Portfolio = () => {
                             ></path>
                           </svg>
                         </span>
-                        <span class="ltr:ml-1 rtl:mr-1">Export</span>
+                        <span className="ltr:ml-1 rtl:mr-1">Export</span>
                       </span>
                     </button>
                   </a>
                   <a
-                    class="block lg:inline-block md:mb-0 mb-4"
+                    className="block lg:inline-block md:mb-0 mb-4"
                     href="/app/funds/ticker-new"
                   >
-                    <button class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
-                      <span class="flex items-center justify-center">
-                        <span class="text-lg">
+                    <button className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
+                      <span className="flex items-center justify-center">
+                        <span className="text-lg">
                           <svg
                             stroke="currentColor"
                             fill="currentColor"
@@ -350,21 +408,21 @@ const Portfolio = () => {
                             ></path>
                           </svg>
                         </span>
-                        <span class="ltr:ml-1 rtl:mr-1">Add Product</span>
+                        <span className="ltr:ml-1 rtl:mr-1">Add Product</span>
                       </span>
                     </button>
                   </a>
                 </div>
               </div>
-              <div class="">
-                <div class="overflow-x-auto">
-                  <table class="table-default table-hover">
-                    <thead class="">
-                      <tr class="">
-                        <th class="" colspan="1">
-                          <div class="cursor-pointer select-none point">
-                          Category
-                            <div class="inline-flex">
+              <div className="">
+                <div className="overflow-x-auto">
+                  <table className="table-default table-hover">
+                    <thead className="">
+                      <tr className="">
+                        <th className="" colspan="1">
+                          <div className="cursor-pointer select-none point">
+                            Category
+                            <div className="inline-flex">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -379,10 +437,10 @@ const Portfolio = () => {
                             </div>
                           </div>
                         </th>
-                        <th class="" colspan="1">
-                          <div class="cursor-pointer select-none point">
+                        <th className="" colspan="1">
+                          <div className="cursor-pointer select-none point">
                             Ticker
-                            <div class="inline-flex">
+                            <div className="inline-flex">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -397,10 +455,10 @@ const Portfolio = () => {
                             </div>
                           </div>
                         </th>
-                        <th class="" colspan="1">
-                          <div class="cursor-pointer select-none point">
+                        <th className="" colspan="1">
+                          <div className="cursor-pointer select-none point">
                             Quantity
-                            <div class="inline-flex">
+                            <div className="inline-flex">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -415,10 +473,10 @@ const Portfolio = () => {
                             </div>
                           </div>
                         </th>
-                        <th class="" colspan="1">
-                          <div class="cursor-pointer select-none point">
+                        <th className="" colspan="1">
+                          <div className="cursor-pointer select-none point">
                             Actions
-                            <div class="inline-flex">
+                            <div className="inline-flex">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -433,10 +491,10 @@ const Portfolio = () => {
                             </div>
                           </div>
                         </th>
-                        <th class="" colspan="1">
-                          <div class="cursor-pointer select-none point">
+                        <th className="" colspan="1">
+                          <div className="cursor-pointer select-none point">
                             Price
-                            <div class="inline-flex">
+                            <div className="inline-flex">
                               <svg
                                 stroke="currentColor"
                                 fill="currentColor"
@@ -451,92 +509,97 @@ const Portfolio = () => {
                             </div>
                           </div>
                         </th>
-                        <th class="" colspan="1">
-                          <div class=""></div>
+                        <th className="" colspan="1">
+                          <div className=""></div>
                         </th>
                       </tr>
                     </thead>
-                    <tbody class="">
-                    {rows.map((row, idx) => {
-                      return(<tr class="" id={idx}>
-                      <td class="">
-                        <div class="flex items-center">
-                          <span class="ml-2 rtl:mr-2 font-semibold">
-                          {row.category}
-                          </span>
-                        </div>
-                      </td>
-                      <td class="">
-                        <span class="capitalize">{row.ticker}</span>
-                      </td>
-                      <td class="">{row.qty}</td>
-                      <td class="">
-                        <div class="flex items-center gap-2">
-                          <span class="badge-dot bg-emerald-500"></span>
-                          <span class="capitalize font-semibold text-emerald-500">
-                            In Stock
-                          </span>
-                        </div>
-                      </td>
-                      <td class="">
-                        <span>${row.price}</span>
-                      </td>
-                      <td class="">
-                        <div class="flex justify-end text-lg">
-                          <span class="cursor-pointer p-2 hover:text-indigo-600" onClick={() => {
-              setModalOpen(true);
-              setRowToEdit(null);
-            }} >
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-width="2"
-                              viewBox="0 0 24 24"
-                              aria-hidden="true"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
-                              ></path>
-                            </svg>
+                    <tbody className="">
+                      {rows.map((row, idx) => {
+                        return (
+                          <tr className="" id={idx}>
+                            <td className="">
+                              <div className="flex items-center">
+                                <span className="ml-2 rtl:mr-2 font-semibold">
+                                  {row.category}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="">
+                              <span className="capitalize">{row.ticker}</span>
+                            </td>
+                            <td className="">{row.qty}</td>
+                            <td className="">
+                              <div className="flex items-center gap-2">
+                                <span className="badge-dot bg-emerald-500"></span>
+                                <span className="capitalize font-semibold text-emerald-500">
+                                  In Stock
+                                </span>
+                              </div>
+                            </td>
+                            <td className="">
+                              <span>${row.price}</span>
+                            </td>
+                            <td className="">
+                              <div className="flex justify-end text-lg">
+                                <span
+                                  className="cursor-pointer p-2 hover:text-indigo-600"
+                                  onClick={() => {
+                                    setModalOpen(true);
+                                    setRowToEdit(null);
+                                  }}
+                                >
+                                  <svg
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                    height="1em"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+                                    ></path>
+                                  </svg>
+                                </span>
 
-                          </span>
-                                    
-                          <span class="cursor-pointer p-2 hover:text-red-500" onClick={() => handleDeleteRow(idx)}>
-                            <svg
-                              stroke="currentColor"
-                              fill="none"
-                              stroke-width="2"
-                              viewBox="0 0 24 24"
-                              aria-hidden="true"
-                              height="1em"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                              ></path>
-                            </svg>
-                          </span>
-                        </div>
-                      </td>
-                      
-                    </tr>);})}
-                    
+                                <span
+                                  className="cursor-pointer p-2 hover:text-red-500"
+                                  onClick={() => handleDeleteRow(idx)}
+                                >
+                                  <svg
+                                    stroke="currentColor"
+                                    fill="none"
+                                    stroke-width="2"
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                    height="1em"
+                                    width="1em"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      stroke-linecap="round"
+                                      stroke-linejoin="round"
+                                      d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                    ></path>
+                                  </svg>
+                                </span>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
-                  
                 </div>
-                <div class="flex items-center justify-between mt-4">
-                  <div class="pagination">
+                <div className="flex items-center justify-between mt-4">
+                  <div className="pagination">
                     <span
-                      class="pagination-pager pagination-pager-prev pagination-pager-disabled"
+                      className="pagination-pager pagination-pager-prev pagination-pager-disabled"
                       role="presentation"
                     >
                       <svg
@@ -559,20 +622,20 @@ const Portfolio = () => {
                     </span>
                     <ul>
                       <li
-                        class="pagination-pager text-indigo-600 bg-indigo-50 hover:bg-indigo-50 dark:bg-indigo-600 dark:text-gray-100"
+                        className="pagination-pager text-indigo-600 bg-indigo-50 hover:bg-indigo-50 dark:bg-indigo-600 dark:text-gray-100"
                         role="presentation"
                       >
                         1
                       </li>
                       <li
-                        class="pagination-pager pagination-pager-inactive"
+                        className="pagination-pager pagination-pager-inactive"
                         role="presentation"
                       >
                         2
                       </li>
                     </ul>
                     <span
-                      class="pagination-pager pagination-pager-next pagination-pager-inactive"
+                      className="pagination-pager pagination-pager-next pagination-pager-inactive"
                       role="presentation"
                     >
                       <svg
@@ -593,21 +656,21 @@ const Portfolio = () => {
                       </svg>
                     </span>
                   </div>
-                  <div class="min-w-[130px]">
-                    <div class="select select-sm css-b62m3t-container">
+                  <div className="min-w-[130px]">
+                    <div className="select select-sm css-b62m3t-container">
                       <span
                         id="react-select-4-live-region"
-                        class="css-7pg0cj-a11yText"
+                        className="css-7pg0cj-a11yText"
                       ></span>
                       <span
                         aria-live="polite"
                         aria-atomic="false"
                         aria-relevant="additions text"
-                        class="css-7pg0cj-a11yText"
+                        className="css-7pg0cj-a11yText"
                       ></span>
-                      <div class="select__control css-1nndncl-control">
-                        <div class="select__value-container select__value-container--has-value css-hlgwow">
-                          <div class="select__single-value css-yr46hd-singleValue">
+                      <div className="select__control css-1nndncl-control">
+                        <div className="select__value-container select__value-container--has-value css-hlgwow">
+                          <div className="select__single-value css-yr46hd-singleValue">
                             10 / page
                           </div>
                           <input
@@ -619,12 +682,12 @@ const Portfolio = () => {
                             aria-haspopup="true"
                             role="combobox"
                             aria-readonly="true"
-                            class="css-1hac4vs-dummyInput"
+                            className="css-1hac4vs-dummyInput"
                             value=""
                           />
                         </div>
-                        <div class="select__indicators css-1wy0on6">
-                          <div class="select-dropdown-indicator">
+                        <div className="select__indicators css-1wy0on6">
+                          <div className="select-dropdown-indicator">
                             <svg
                               stroke="currentColor"
                               fill="currentColor"
@@ -644,6 +707,121 @@ const Portfolio = () => {
                           </div>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
+          <div
+            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>Statistic</h4>
+              <div className="mt-4">
+                <div className="chartRef min-h-[365px]">
+                  <div>
+                    <Statistic />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="card 2xl:col-span-3 xl:col-span-4 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <div className="flex items-center justify-between">
+                <h4>Recent Transaction</h4>
+              </div>
+              <div className="mt-6">
+                <div className="mb-6">
+                  <p className="mb-4">June 3, 2022</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <AiOutlineShoppingCart />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Buy BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.0383522 BTC
+                      </p>
+                      <p className="text-xs">+ 1161.5 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Received BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.0754234 BTC
+                      </p>
+                      <p className="text-xs">+ 2284.2 USD</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-4">June 2, 2022</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <AiOutlineShoppingCart />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Buy ETH</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        3.1754361 ETH
+                      </p>
+                      <p className="text-xs">+ 5779.13 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Sent ETH</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-red-600">
+                        0.2821331 ETH
+                      </p>
+                      <p className="text-xs">- 513.47 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Received BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.1376231 BTC
+                      </p>
+                      <p className="text-xs">+ 4163.84 USD</p>
                     </div>
                   </div>
                 </div>

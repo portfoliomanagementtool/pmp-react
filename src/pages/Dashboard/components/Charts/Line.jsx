@@ -5,7 +5,11 @@ const Line = () => {
   const series = [
     {
       name: "Profit",
-      data: [10, 41, 35, 51, 49, 62, 69, 91, 148],
+      data: [10, 41, 35, 51, 49, 62, 69, 91, 48],
+    },
+    {
+      name: "Loss",
+      data: [40, 11, 25, 21, 89, 42, 19, 12, 38],
     },
   ];
   const options = {

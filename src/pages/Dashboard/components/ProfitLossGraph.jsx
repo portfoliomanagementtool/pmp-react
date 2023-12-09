@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
-import Utils from "./../helper/Utils"
+import Utils from "../helper/Utils"
 
 const ProfitLossGraph = () => {
     const chartRef = useRef(null);

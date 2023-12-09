@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Chart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 
 const Donut = () => {
+  // const mode = useSelector((state) => state.config.mode);
   const series = [55, 27, 18];
 
   const options = {
@@ -44,6 +46,14 @@ const Donut = () => {
       ],
     },
   };
+
+  // useEffect(() => {
+  //   if(mode === "dark") {
+  //     setOptions((options) => ({...options, theme: { mode: 'dark' }}))
+  //   } else if(mode === "light") {
+  //     setOptions((options) => ({...options, theme: { mode: 'light' }}))
+  //   }
+  // }, [mode, setOptions]);
   return (
     <div className='fit-content' id="equity">
       <Chart options={options} series={series} type="donut" height={278.7} width={279} />

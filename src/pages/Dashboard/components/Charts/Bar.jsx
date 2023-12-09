@@ -1,7 +1,9 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
+import { useSelector } from 'react-redux';
 
 const Bar = () => {
+  const mode = useSelector((state) => state.config.mode);
   const series = [{
     name: 'Investment',
     data: [23, 44, 55, 57, 56, 61, 58, 63, 60, 66, 69, 73]
@@ -14,6 +16,9 @@ const Bar = () => {
       toolbar: {
         show: false,
       }
+    },
+    theme: {
+      mode: mode === "light" ? 'light' : 'dark',
     },
     plotOptions: {
       bar: {

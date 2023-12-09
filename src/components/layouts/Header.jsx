@@ -6,9 +6,9 @@ import { FiSettings } from "react-icons/fi";
 import { HiOutlineBell } from "react-icons/hi";
 import { useUser } from "@clerk/clerk-react";
 
-const Header = () => {
+const Header = ({ openModal }) => {
   const { user } = useUser();
-  const Collapsed = false
+  const Collapsed = false;
 
   return (
     <header className='header border-b border-gray-200 dark:border-gray-700'>
@@ -33,7 +33,7 @@ const Header = () => {
               </div>
             </div>
           </div>
-          <div className="text-2xl header-action-item header-action-item-hoverable">
+          <div onClick={openModal} className="text-2xl header-action-item header-action-item-hoverable">
             <FiSettings />
           </div>
           <div>

@@ -1,6 +1,6 @@
-import React,{useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
-const EditTicker = ({defaultValue }) => {
+const EditTicker = ({ defaultValue }) => {
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -49,7 +49,10 @@ const EditTicker = ({defaultValue }) => {
                           placeholder="Category"
                           value={formState.category}
                           onChange={(e) =>
-                            setFormState({ ...formState, category: e.target.value })
+                            setFormState({
+                              ...formState,
+                              category: e.target.value,
+                            })
                           }
                         />
                       </div>
@@ -476,7 +479,6 @@ const EditTicker = ({defaultValue }) => {
                         </div>
                       </div>
                     </div>
-                    
                   </div>
                 </div>
                 {/* <div

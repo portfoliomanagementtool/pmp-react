@@ -3,9 +3,18 @@ import SellBuyTable from "./components/SellBuyTable";
 import Modal from "./components/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
+import Line from "../Dashboard/components/Charts/Line";
+import EditTicker from "./components/EditTicker";
+// import Link from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Statistic from "./components/Charts/Statistic";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import Donut from "./components/Charts/Donut";
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
   const [rows, setRows] = useState([
     {
       category: "Technology",
@@ -161,9 +170,12 @@ const Portfolio = () => {
   const handleDeleteRow = (targetIndex) => {
     setRows(rows.filter((_, idx) => idx !== targetIndex));
   };
+
   const handleEditRow = (idx) => {
     setRowToEdit(idx);
+    // const rowToEdit = rows[idx];
     setModalOpen(true);
+    // navigate("/portfolio/editticker", { defaultValue: rowToEdit });
   };
 
   const handleSubmit = (newRow) => {
@@ -178,21 +190,90 @@ const Portfolio = () => {
         );
   };
   return (
-    <div className="flex font-poppins">
-      <div className="w-full flex flex-col">
-        <div className="grid grid-cols-3 ">
-          <div className="border-2 m-5  justify-center rounded-xl shadow-xl font-Poppins bg-white col-span-1">
-          <h1 className="font-bold text-xl text-gray-600  p-5">Metrics</h1>
-            {ProfitData?.map((obj) => {
-              return <Metrics key={obj?.title} {...obj} />;
-            })}
+    <div classNameName="flex font-poppins">
+      <div classNameName="w-full flex flex-col">
+        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
+          <div
+            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <div className="flex items-center justify-between">
+                <h4>Profit/Loss</h4>
+                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+                  Export Report
+                </button>
+              </div>
+              <div classNameName="chartRef">
+                <div className="min-h-[395px]">
+                  <Line />
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="border-2 m-5 rounded shadow-xl bg-white font-Poppins col-span-2  ">
-            <ProfitLossGraph />
+
+          <div
+            className="card 2xl:col-span-3 xl:col-span-4 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>My Assets</h4>
+
+              <div className="grid grid-cols-1">
+                <div>
+                  <div class="mt-6">
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(79, 70, 229);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Bitcoin</h6>
+                          <p>0.5832112 BTC</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$15032</span>
+                    </div>
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(59, 130, 246);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Ethereum</h6>
+                          <p>1.7294746 ETH</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$11246</span>
+                    </div>
+                    <div class="flex justify-between mb-6">
+                      <div class="flex gap-1">
+                        <span
+                          class="badge-dot mt-1.5"
+                          // style="background-color: rgb(16, 185, 129);"
+                        ></span>
+                        <div>
+                          <h6 class="font-bold text-sm">Solana</h6>
+                          <p>196.9766 SOL</p>
+                        </div>
+                      </div>
+                      <span class="font-semibold self-end">$8273</span>
+                    </div>
+                  </div>
+                </div>
+                <div classNameName="chartRef">
+                  <div>
+                    <Donut />
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col items-center justify-center py-4 bg-gray-100">
+        <div classNameName="flex flex-col items-center justify-center bg-gray-100">
           <SellBuyTable
             rows={rows}
             deleteRow={handleDeleteRow}
@@ -203,12 +284,12 @@ const Portfolio = () => {
               setModalOpen(true);
               setRowToEdit(null);
             }}
-            className="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
+            classNameName="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
           >
             Add
           </button>
           {modalOpen && (
-            <Modal
+            <Modal 
               closeModal={() => {
                 setModalOpen(false);
                 setRowToEdit(null);
@@ -217,6 +298,122 @@ const Portfolio = () => {
               defaultValue={rowToEdit !== null && rows[rowToEdit]}
             />
           )}
+        </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
+          <div
+            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>Statistic</h4>
+              <div className="mt-4">
+                <div className="chartRef min-h-[365px]">
+                  <div>
+                    <Statistic />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            className="card 2xl:col-span-3 xl:col-span-4 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <div className="flex items-center justify-between">
+                <h4>Recent Transaction</h4>
+              </div>
+              <div className="mt-6">
+                <div className="mb-6">
+                  <p className="mb-4">June 3, 2022</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <AiOutlineShoppingCart />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Buy BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.0383522 BTC
+                      </p>
+                      <p className="text-xs">+ 1161.5 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Received BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.0754234 BTC
+                      </p>
+                      <p className="text-xs">+ 2284.2 USD</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="mb-6">
+                  <p className="mb-4">June 2, 2022</p>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <AiOutlineShoppingCart />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Buy ETH</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        3.1754361 ETH
+                      </p>
+                      <p className="text-xs">+ 5779.13 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Sent ETH</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-red-600">
+                        0.2821331 ETH
+                      </p>
+                      <p className="text-xs">- 513.47 USD</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
+                        <span className="avatar-icon avatar-icon-md">
+                          <FaArrowRightArrowLeft />
+                        </span>
+                      </span>
+                      <h6 className="text-sm font-bold">Received BTC</h6>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-gray-900 dark:text-gray-100">
+                        0.1376231 BTC
+                      </p>
+                      <p className="text-xs">+ 4163.84 USD</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

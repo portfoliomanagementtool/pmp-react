@@ -1,7 +1,6 @@
 import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, Analytics } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
-import EditTicker from './pages/Portfolio/components/EditTicker'
 
 const routes = [
   {

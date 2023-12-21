@@ -4,7 +4,6 @@ import Modal from "./components/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
 import Line from "../Dashboard/components/Charts/Line";
-import EditTicker from "./components/EditTicker";
 // import Link from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import Statistic from "./components/Charts/Statistic";
@@ -175,7 +174,6 @@ const Portfolio = () => {
     setRowToEdit(idx);
     // const rowToEdit = rows[idx];
     setModalOpen(true);
-    // navigate("/portfolio/editticker", { defaultValue: rowToEdit });
   };
 
   const handleSubmit = (newRow) => {
@@ -190,8 +188,8 @@ const Portfolio = () => {
         );
   };
   return (
-    <div classNameName="flex font-poppins">
-      <div classNameName="w-full flex flex-col">
+    <div className="flex font-poppins">
+      <div className="w-full flex flex-col">
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
           <div
             className="card 2xl:col-span-8 xl:col-span-7 card-border"
@@ -204,7 +202,7 @@ const Portfolio = () => {
                   Export Report
                 </button>
               </div>
-              <div classNameName="chartRef">
+              <div className="chartRef">
                 <div className="min-h-[395px]">
                   <Line />
                 </div>
@@ -263,8 +261,8 @@ const Portfolio = () => {
                     </div>
                   </div>
                 </div>
-                <div classNameName="chartRef">
-                  <div>
+                <div className="chartRef">
+                  <div className=" mx-auto w-[250px]">
                     <Donut />
                   </div>
                 </div>
@@ -273,21 +271,22 @@ const Portfolio = () => {
           </div>
         </div>
 
-        <div classNameName="flex flex-col items-center justify-center bg-gray-100">
+        
+        {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
           <SellBuyTable
             rows={rows}
             deleteRow={handleDeleteRow}
             editRow={handleEditRow}
           />
-          <button
+          {/* <button
             onClick={() => {
               setModalOpen(true);
               setRowToEdit(null);
             }}
-            classNameName="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
+            className="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
           >
             Add
-          </button>
+          </button> */}
           {modalOpen && (
             <Modal 
               closeModal={() => {
@@ -298,7 +297,8 @@ const Portfolio = () => {
               defaultValue={rowToEdit !== null && rows[rowToEdit]}
             />
           )}
-        </div>
+        {/* </div> */}
+        
 
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
           <div

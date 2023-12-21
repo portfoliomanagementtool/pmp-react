@@ -1,34 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { PiCaretUpDownFill } from "react-icons/pi";
+import addProduct from "../../../components/svg/add.svg";
+import { IoIosAddCircle } from "react-icons/io";
+import { RiDownloadLine } from "react-icons/ri";
+import { CiFilter } from "react-icons/ci";
+import { FiSearch } from "react-icons/fi";
+import { GoGraph } from "react-icons/go";
 
 const SellBuyTable = ({ rows, deleteRow, editRow }) => {
+  const [expandedRow, setExpandedRow] = useState(null);
+
+  const toggleRow = (idx) => {
+    if (expandedRow === idx) {
+      setExpandedRow(null);
+    } else {
+      setExpandedRow(idx);
+    }
+  };
+
   return (
-    <div className="page-container relative h-full flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8">
+    <div
+      className="card 2xl:col-span-3 mt-4 xl:col-span-4 card-border"
+      role="presentation"
+    >
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
           <div className="lg:flex items-center justify-between mb-4">
             <h3 className="mb-4 lg:mb-0">My assets</h3>
             <div className="flex flex-col lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
-                <div className="input-suffix-start">
-                  <svg
-                    stroke="currentColor"
-                    fill="none"
-                    stroke-width="2"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                    className="text-lg"
-                    height="1em"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    ></path>
-                  </svg>{" "}
+                <div className="input-suffix-start ml-2">
+                  <FiSearch />
                 </div>
+
                 <input
                   className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
                   type="text"
@@ -38,22 +43,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">
-                    <svg
-                      stroke="currentColor"
-                      fill="none"
-                      stroke-width="2"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      height="1em"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"
-                      ></path>
-                    </svg>
+                    <CiFilter />
                   </span>
                   <span className="ltr:ml-1 rtl:mr-1">Filter</span>
                 </span>
@@ -67,22 +57,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                 <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
                   <span className="flex items-center justify-center">
                     <span className="text-lg">
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 20 20"
-                        aria-hidden="true"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
+                      <RiDownloadLine />
                     </span>
                     <span className="ltr:ml-1 rtl:mr-1">Export</span>
                   </span>
@@ -94,23 +69,8 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
               >
                 <button className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
                   <span className="flex items-center justify-center">
-                    <span className="text-lg">
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 20 20"
-                        aria-hidden="true"
-                        height="1em"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fill-rule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z"
-                          clip-rule="evenodd"
-                        ></path>
-                      </svg>
+                    <span className="text-lg mr-1">
+                      <IoIosAddCircle />
                     </span>
                     <span className="ltr:ml-1 rtl:mr-1">Add Product</span>
                   </span>
@@ -124,92 +84,42 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                 <thead className="">
                   <tr className="">
                     <th className="" colspan="1">
-                      <div className="cursor-pointer select-none point">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Category
-                        <div className="inline-flex">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path>
-                          </svg>
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
                     <th className="" colspan="1">
-                      <div className="cursor-pointer select-none point">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Ticker
-                        <div className="inline-flex">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path>
-                          </svg>
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
                     <th className="" colspan="1">
-                      <div className="cursor-pointer select-none point">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Quantity
-                        <div className="inline-flex">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path>
-                          </svg>
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
                     <th className="" colspan="1">
-                      <div className="cursor-pointer select-none point">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Actions
-                        <div className="inline-flex">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path>
-                          </svg>
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
                     <th className="" colspan="1">
-                      <div className="cursor-pointer select-none point">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Price
-                        <div className="inline-flex">
-                          <svg
-                            stroke="currentColor"
-                            fill="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 320 512"
-                            height="1em"
-                            width="1em"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path>
-                          </svg>
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
@@ -221,45 +131,94 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                 <tbody className="">
                   {rows.map((row, idx) => {
                     return (
-                      <tr className="" id={idx}>
-                        <td className="">
-                          <div className="flex items-center">
-                            <span className="ml-2 rtl:mr-2 font-semibold">
-                              {row.category}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="">
-                          <span className="capitalize">{row.ticker}</span>
-                        </td>
-                        <td className="">{row.qty}</td>
-                        <td className="">
-                          <div className="flex items-center gap-2">
-                            <span className="badge-dot bg-emerald-500"></span>
-                            <span className="capitalize font-semibold text-emerald-500">
-                              In Stock
-                            </span>
-                          </div>
-                        </td>
-                        <td className="">
-                          <span>${row.price}</span>
-                        </td>
-                        <td className="">
-                          <div className="flex justify-end text-lg">
-                            <span
-                              className="cursor-pointer p-2 hover:text-indigo-600"
-                            >
-                              <BsFillPencilFill onClick={() => editRow(idx)}/>
-                            </span>
-
-                            <span
-                              className="cursor-pointer p-2 hover:text-red-500"
-                            >
-                              <BsFillTrashFill onClick={() => deleteRow(idx)}/>
-                            </span>
-                          </div>
-                        </td>
-                      </tr>
+                      <React.Fragment key={idx}>
+                        <tr
+                          className={`cursor-pointer ${
+                            expandedRow === idx
+                              ? "bg-gray-200 text-black rounded-md"
+                              : ""
+                          }`}
+                          onClick={() => toggleRow(idx)}
+                        >
+                          <td className="py-2">
+                            <div className="flex items-center">
+                              <span className="ml-2 rtl:mr-2 font-semibold">
+                                {row.category}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span className="capitalize">{row.ticker}</span>
+                          </td>
+                          <td className="py-2">{row.qty}</td>
+                          <td className="py-2">
+                            <div className="flex items-center gap-2">
+                              <span className="badge-dot bg-emerald-500"></span>
+                              <span className="capitalize font-semibold text-emerald-500">
+                                In Stock
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span>${row.price}</span>
+                          </td>
+                          <td className="py-2">
+                            <div className="flex justify-end text-lg">
+                              <span className="cursor-pointer p-2 hover:text-indigo-600">
+                                <BsFillPencilFill
+                                  onClick={() => editRow(idx)}
+                                />
+                              </span>
+                              <span className="cursor-pointer p-2 hover:text-red-500">
+                                <BsFillTrashFill
+                                  onClick={() => deleteRow(idx)}
+                                />
+                              </span>
+                            </div>
+                          </td>
+                        </tr>
+                        <tr
+                          className={`expanded-view ${
+                            expandedRow === idx ? "bg-gray-100 " : "hidden"
+                          }`}
+                        >
+                          <td colSpan="6">
+                            <div className="expanded-content  p-4">
+                              <table className="w-full mx-auto items-center">
+                                <thead className="bg-transparent ">
+                                  <th className="p-2 rounded-lg">
+                                    Current Market Value
+                                  </th>
+                                  <th>Percent Change</th>
+                                  <th>Historical Performance</th>
+                                  <th>Asset Allocation</th>
+                                  <th>Expected Return</th>
+                                </thead>
+                                <tbody className="mx-auto divide-x-">
+                                  <tr className="">
+                                    <td className="text-center">739.34</td>
+                                    <td className="text-center">2.36%</td>
+                                    <td className="text-lg font-extrabold text-green-500">
+                                      <GoGraph className="mx-auto"/>
+                                    </td>
+                                    <td className="text-center">Bonds</td>
+                                    <td className="text-center">10.2%</td>
+                                  </tr>
+                                  <tr className="">
+                                    <td className="text-center">739.34</td>
+                                    <td className="text-center">2.36%</td>
+                                    <td className="text-lg font-extrabold text-green-500">
+                                      <GoGraph className="mx-auto"/>
+                                    </td>
+                                    <td className="text-center">Bonds</td>
+                                    <td className="text-center">10.2%</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </td>
+                        </tr>
+                      </React.Fragment>
                     );
                   })}
                 </tbody>
@@ -281,7 +240,6 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                     width="1em"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <EditTicker />
                     <path
                       fill-rule="evenodd"
                       d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"

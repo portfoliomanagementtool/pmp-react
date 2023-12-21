@@ -262,7 +262,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div>
+                  <div className=" mx-auto w-[250px]">
                     <Donut />
                   </div>
                 </div>

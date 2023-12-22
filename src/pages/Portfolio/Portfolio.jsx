@@ -10,6 +10,7 @@ import Statistic from "./components/Charts/Statistic";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import Donut from "./components/Charts/Donut";
+import { EditAsset } from "../pages";
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -171,7 +172,7 @@ const Portfolio = () => {
   };
 
   const handleEditRow = (idx) => {
-    setRowToEdit(idx);
+    setRowToEdit(rows[idx]);
     // const rowToEdit = rows[idx];
     setModalOpen(true);
   };
@@ -288,13 +289,13 @@ const Portfolio = () => {
             Add
           </button> */}
           {modalOpen && (
-            <Modal 
+            <EditAsset 
               closeModal={() => {
                 setModalOpen(false);
                 setRowToEdit(null);
               }}
               onSubmit={handleSubmit}
-              defaultValue={rowToEdit !== null && rows[rowToEdit]}
+              defaultValue={rowToEdit}
             />
           )}
         {/* </div> */}

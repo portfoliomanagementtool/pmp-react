@@ -5,5 +5,16 @@ import Dashboard from "./Dashboard/Dashboard";
 import Portfolio from "./Portfolio/Portfolio";
 import Assets from "./Assets/Assets";
 import Analytics from "./Analytics/Analytics";
-
-export { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, Analytics };
+import Profile from "./Profile";
+import EditAsset from "./EditAssetPage/EditAsset";
+export {
+  LogIn,
+  Register,
+  LandingPage,
+  Dashboard,
+  Portfolio,
+  Assets,
+  Analytics,
+  Profile,
+  EditAsset,
+};

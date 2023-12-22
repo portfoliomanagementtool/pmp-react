@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
@@ -10,6 +10,11 @@ import { GoGraph } from "react-icons/go";
 
 const SellBuyTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+  useEffect(() =>{
+    console.log(document.readyState);
+  })
+  
+
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {

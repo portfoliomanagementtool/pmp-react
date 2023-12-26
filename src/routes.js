@@ -1,4 +1,4 @@
-import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, Analytics } from './pages/pages';
+import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 
@@ -19,52 +19,62 @@ const routes = [
   {
     path: '/app',
     exact: true,
-    element: <DashboardLayout />,
+    element: <>
+      <SignedIn>
+        <DashboardLayout />
+      </SignedIn>
+      <SignedOut>
+        <LandingPage />
+      </SignedOut>
+    </>,
     children: [
       {
         path: 'dashboard',
-        element: <>
-          <SignedIn>
-            <Dashboard />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Dashboard />
       },
       {
         path: 'portfolio',
-        element: <>
-          <SignedIn>
-            <Portfolio />
-          </SignedIn>
-          
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Portfolio />
       },
       {
         path: 'assets',
-        element: <>
-          <SignedIn>
-            <Assets />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Assets />
+      },
+      {
+        path: 'asset/all',
+        element: <EditAsset />
+      },
+      {
+        path: 'asset/buy',
+        element: <EditAsset />
+      },
+      {
+        path: 'asset/sell',
+        element: <EditAsset />
+      },
+      {
+        path: 'asset/edit',
+        element: <EditAsset />
       },
       {
         path: 'analytics',
-        element: <>
-          <SignedIn>
-            <Analytics />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Analytics />
+      },
+      {
+        path: 'profile',
+        element: <></>
+      },
+      {
+        path: 'settings',
+        element: <></>
+      },
+      {
+        path: 'change-password',
+        element: <></>
+      },
+      {
+        path: 'logout',
+        element: <></>
       }
     ]
   },

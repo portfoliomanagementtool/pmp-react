@@ -5,16 +5,19 @@ import { IoSearchSharp } from "react-icons/io5";
 import { FiSettings } from "react-icons/fi";
 import { HiOutlineBell } from "react-icons/hi";
 import { useUser } from "@clerk/clerk-react";
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleCollapsed } from '../../state/slices/configSlice';
 
 const Header = ({ openModal }) => {
   const { user } = useUser();
-  const Collapsed = false;
+  const dispatch = useDispatch();
+  const Collapsed = useSelector((state) => state.config.collapsed);
 
   return (
     <header className='header border-b border-gray-200 dark:border-gray-700'>
       <div className="header-wrapper h-16">
         <div className="header-action header-action-start">
-          <div className="header-action-item header-action-item-hoverable text-2xl">
+          <div onClick={() => { dispatch(toggleCollapsed(!Collapsed)) }} className="cursor-pointer header-action-item header-action-item-hoverable text-2xl">
             {Collapsed ? <RxHamburgerMenu /> : <HiOutlineMenuAlt2 />}
           </div>
           <div className="header-action-item header-action-item-hoverable text-2xl">

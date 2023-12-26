@@ -83,7 +83,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
               <table className="table-default table-hover">
                 <thead className="">
                   <tr className="">
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Category
                         <div className=" font-bold text-base items-center">
@@ -91,7 +91,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                         </div>
                       </div>
                     </th>
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Ticker
                         <div className=" font-bold text-base items-center">
@@ -99,7 +99,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                         </div>
                       </div>
                     </th>
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Quantity
                         <div className=" font-bold text-base items-center">
@@ -107,7 +107,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                         </div>
                       </div>
                     </th>
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Actions
                         <div className=" font-bold text-base items-center">
@@ -115,7 +115,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                         </div>
                       </div>
                     </th>
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Price
                         <div className=" font-bold text-base items-center">
@@ -123,7 +123,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                         </div>
                       </div>
                     </th>
-                    <th className="" colspan="1">
+                    <th className="" colSpan="1">
                       <div className=""></div>
                     </th>
                   </tr>
@@ -183,16 +183,19 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                           }`}
                         >
                           <td colSpan="6">
-                            <div className="expanded-content  p-4">
+                            <div className="expanded-content p-4">
                               <table className="w-full mx-auto items-center">
                                 <thead className="bg-transparent ">
-                                  <th className="p-2 rounded-lg">
-                                    Current Market Value
-                                  </th>
-                                  <th>Percent Change</th>
-                                  <th>Historical Performance</th>
-                                  <th>Asset Allocation</th>
-                                  <th>Expected Return</th>
+                                  <tr>
+                                    {/* <th className="p-2 rounded-lg"> */}
+                                    <th>
+                                      Current Market Value
+                                    </th>
+                                    <th>Percent Change</th>
+                                    <th>Historical Performance</th>
+                                    <th>Asset Allocation</th>
+                                    <th>Expected Return</th>
+                                  </tr>
                                 </thead>
                                 <tbody className="mx-auto divide-x-">
                                   <tr className="">

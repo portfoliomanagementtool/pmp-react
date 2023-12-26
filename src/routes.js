@@ -36,13 +36,13 @@ const routes = [
         path: 'portfolio',
         element: <Portfolio />
       },
-      {
-        path: 'assets',
-        element: <Assets />
-      },
+      // {
+      //   path: 'assets',
+      //   element: <Assets />
+      // },
       {
         path: 'asset/all',
-        element: <EditAsset />
+        element: <Assets />
       },
       {
         path: 'asset/buy',

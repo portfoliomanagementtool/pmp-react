@@ -59,7 +59,7 @@ const Bar = () => {
   }
 
   return (
-    <div id="monthly-investment">
+    <div className='object-contain' id="monthly-investment">
       <Chart options={options} series={series} type="bar" height={380} />
     </div>
   )

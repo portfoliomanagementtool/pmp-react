@@ -219,45 +219,45 @@ const Portfolio = () => {
 
               <div className="grid grid-cols-1">
                 <div>
-                  <div class="mt-6">
-                    <div class="flex justify-between mb-6">
-                      <div class="flex gap-1">
+                  <div className="mt-6">
+                    <div className="flex justify-between mb-6">
+                      <div className="flex gap-1">
                         <span
-                          class="badge-dot mt-1.5"
+                          className="badge-dot mt-1.5"
                           // style="background-color: rgb(79, 70, 229);"
                         ></span>
                         <div>
-                          <h6 class="font-bold text-sm">Bitcoin</h6>
+                          <h6 className="font-bold text-sm">Bitcoin</h6>
                           <p>0.5832112 BTC</p>
                         </div>
                       </div>
-                      <span class="font-semibold self-end">$15032</span>
+                      <span className="font-semibold self-end">$15032</span>
                     </div>
-                    <div class="flex justify-between mb-6">
-                      <div class="flex gap-1">
+                    <div className="flex justify-between mb-6">
+                      <div className="flex gap-1">
                         <span
-                          class="badge-dot mt-1.5"
+                          className="badge-dot mt-1.5"
                           // style="background-color: rgb(59, 130, 246);"
                         ></span>
                         <div>
-                          <h6 class="font-bold text-sm">Ethereum</h6>
+                          <h6 className="font-bold text-sm">Ethereum</h6>
                           <p>1.7294746 ETH</p>
                         </div>
                       </div>
-                      <span class="font-semibold self-end">$11246</span>
+                      <span className="font-semibold self-end">$11246</span>
                     </div>
-                    <div class="flex justify-between mb-6">
-                      <div class="flex gap-1">
+                    <div className="flex justify-between mb-6">
+                      <div className="flex gap-1">
                         <span
-                          class="badge-dot mt-1.5"
+                          className="badge-dot mt-1.5"
                           // style="background-color: rgb(16, 185, 129);"
                         ></span>
                         <div>
-                          <h6 class="font-bold text-sm">Solana</h6>
+                          <h6 className="font-bold text-sm">Solana</h6>
                           <p>196.9766 SOL</p>
                         </div>
                       </div>
-                      <span class="font-semibold self-end">$8273</span>
+                      <span className="font-semibold self-end">$8273</span>
                     </div>
                   </div>
                 </div>

@@ -55,7 +55,7 @@ const Donut = () => {
   //   }
   // }, [mode, setOptions]);
   return (
-    <div className='fit-content' id="equity">
+    <div className='object-contain flex justify-center' id="equity">
       <Chart options={options} series={series} type="donut" height={278.7} width={279} />
     </div>
   )

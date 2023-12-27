@@ -7,6 +7,7 @@ import Assets from "./Assets/Assets";
 import Analytics from "./Analytics/Analytics";
 import Profile from "./Profile";
 import EditAsset from "./EditAssetPage/EditAsset";
+import AddAsset from "./EditAssetPage/AddAsset";
 export {
   LogIn,
   Register,
@@ -17,4 +18,5 @@ export {
   Analytics,
   Profile,
   EditAsset,
+  AddAsset,
 };

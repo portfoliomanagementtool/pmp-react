@@ -41,7 +41,7 @@ const SideNav = () => {
         {
           name: "Edit An Asset",
           icon: <MdOutlineEdit />,
-          path: "/app/assets/:id",
+          path: "/app/assets/edit/:id",
           dropDown: false,
         },
         {

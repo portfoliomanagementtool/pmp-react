@@ -1,11 +1,11 @@
 import React from 'react'
 
-const EditAsset = () => {
+const AssetListing = () => {
   return (
     <div>
-      hi
+      
     </div>
   )
 }
 
-export default EditAsset
+export default AssetListing

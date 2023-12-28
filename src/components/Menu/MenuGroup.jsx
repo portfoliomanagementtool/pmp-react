@@ -8,7 +8,7 @@ const MenuGroup = ({ item }) => {
 
   return (
     <div className="menu-group">
-      {!collapsed && <div className="menu-title menu-title-transparent">{item.menuTitle}</div>}
+      {!collapsed && <div className="menu-title menu-title-transparent">{item.groupTitle}</div>}
       <ul>
         {item.menuCollapsableItems.map((menuItem, index) => {
           if(collapsed) return (

@@ -50,7 +50,7 @@ const Assets = () => {
                   Export Report
                 </button>
               </div>
-              <div classNameName="chartRef">
+              <div className="chartRef">
                 <div className="min-h-[395px]">
                   <Candle />
                 </div>

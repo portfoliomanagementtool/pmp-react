@@ -194,9 +194,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                 <thead className="bg-transparent ">
                                   <tr>
                                     {/* <th className="p-2 rounded-lg"> */}
-                                    <th>
-                                      Current Market Value
-                                    </th>
+                                    <th>Current Market Value</th>
                                     <th>Percent Change</th>
                                     <th>Historical Performance</th>
                                     <th>Asset Allocation</th>
@@ -208,7 +206,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                     <td className="text-center">739.34</td>
                                     <td className="text-center">2.36%</td>
                                     <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto"/>
+                                      <GoGraph className="mx-auto" />
                                     </td>
                                     <td className="text-center">Bonds</td>
                                     <td className="text-center">10.2%</td>
@@ -217,7 +215,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                     <td className="text-center">739.34</td>
                                     <td className="text-center">2.36%</td>
                                     <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto"/>
+                                      <GoGraph className="mx-auto" />
                                     </td>
                                     <td className="text-center">Bonds</td>
                                     <td className="text-center">10.2%</td>

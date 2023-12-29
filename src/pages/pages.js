@@ -6,5 +6,18 @@ import Portfolio from "./Portfolio/Portfolio";
 import Assets from "./Assets/Assets";
 import Analytics from "./Analytics/Analytics";
 import EditAsset from "./Assets/EditAsset";
+import Profile from "./Profile";
 
-export { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics };
+import AddAsset from "./EditAssetPage/AddAsset";
+export {
+  LogIn,
+  Register,
+  LandingPage,
+  Dashboard,
+  Portfolio,
+  Assets,
+  Analytics,
+  Profile,
+  EditAsset,
+  AddAsset,
+};

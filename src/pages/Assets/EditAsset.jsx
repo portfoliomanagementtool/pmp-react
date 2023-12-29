@@ -2,10 +2,8 @@ import React from 'react'
 
 const EditAsset = () => {
   return (
-    <div>
-      hi
-    </div>
+    <div>Edit Asset</div>
   )
 }
 
-export default EditAsset
+export default EditAsset;

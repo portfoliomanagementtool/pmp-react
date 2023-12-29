@@ -216,50 +216,50 @@ const Dashboard = () => {
                   </div>
                 </div> */}
                 {/* Table */}
-                <div class="relative overflow-x-auto">
-                  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <div className="relative overflow-x-auto">
+                  <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Trans ID
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Status
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Date
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Asset
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Price
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {history.map((obj) => {
+                      {history.map((obj, index) => {
                         return (
-                          <tr class="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+                          <tr key={index} className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
                             <th
                               scope="row"
-                              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
                               <span className="cursor-pointer select-none font-semibold hover:text-orange-600">{obj.transId}</span>
                             </th>
-                            <td class="px-6 py-4 flex justify-center">
+                            <td className="px-6 py-4 flex justify-center">
                               {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
                               <span className={`font-semibold text-2xl ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}>
                                 <AiOutlineStock />
                               </span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td className="px-6 py-4">
                               <span>{obj.date}</span>
                             </td>
-                            <td class="px-6 py-4">
+                            <td className="px-6 py-4">
                               {obj.asset}
                             </td>
-                            <td class="px-6 py-4">
+                            <td className="px-6 py-4">
                               <span>₹ {obj.price}</span>
                             </td>
                           </tr>
@@ -278,29 +278,29 @@ const Dashboard = () => {
                     View all
                   </button>
                 </div>
-                <div class="relative overflow-x-auto">
-                  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <div className="relative overflow-x-auto">
+                  <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                       <tr>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Trans ID
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" className="px-6 py-3">
                           Status
                         </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {history.map((obj) => {
+                      {history.map((obj, index) => {
                         return (
-                          <tr class="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+                          <tr key={index} className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
                             <th
                               scope="row"
-                              class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
                               <span className="cursor-pointer select-none font-semibold hover:text-orange-600">{obj.transId}</span>
                             </th>
-                            <td class="px-6 py-4 flex justify-center">
+                            <td className="px-6 py-4 flex justify-center">
                               {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
                               <span className={`font-semibold text-2xl ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}>
                                 <AiOutlineStock />

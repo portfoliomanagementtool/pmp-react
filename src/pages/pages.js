@@ -5,8 +5,9 @@ import Dashboard from "./Dashboard/Dashboard";
 import Portfolio from "./Portfolio/Portfolio";
 import Assets from "./Assets/Assets";
 import Analytics from "./Analytics/Analytics";
+import EditAsset from "./Assets/EditAsset";
 import Profile from "./Profile";
-import EditAsset from "./EditAssetPage/EditAsset";
+
 import AddAsset from "./EditAssetPage/AddAsset";
 export {
   LogIn,

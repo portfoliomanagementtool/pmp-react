@@ -81,3 +81,8 @@
 .menu-item-link {
   @apply flex w-full h-full items-center;
 }
+
+.menu-item .menu-item-transparent {
+  --tw-text-opacity: 1;
+  color: rgb(75 85 99 / var(--tw-text-opacity));
+}

@@ -1,4 +1,4 @@
-import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, Analytics, Profile, EditAsset, AddAsset } from './pages/pages';
+import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics, Profile } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 
@@ -19,86 +19,63 @@ const routes = [
   {
     path: '/app',
     exact: true,
-    element: <DashboardLayout />,
+    element: <>
+      <SignedIn>
+        <DashboardLayout />
+      </SignedIn>
+      <SignedOut>
+        <LandingPage />
+      </SignedOut>
+    </>,
     children: [
       {
         path: 'dashboard',
-        element: <>
-          <SignedIn>
-            <Dashboard />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Dashboard />
       },
       {
         path: 'portfolio',
-        element: <>
-          <SignedIn>
-            <Portfolio />
-          </SignedIn>
-          
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Portfolio />
+      },
+      // {
+      //   path: 'assets',
+      //   element: <Assets />
+      // },
+      {
+        path: 'asset/all',
+        element: <Assets />
       },
       {
-        path: 'assets',
-        element: <>
-          <SignedIn>
-            <Assets />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        path: 'asset/buy',
+        element: <EditAsset />
+      },
+      {
+        path: 'asset/sell',
+        element: <EditAsset />
+      },
+      {
+        path: 'asset/edit/:id',
+        element: <EditAsset />
       },
       {
         path: 'analytics',
-        element: <>
-          <SignedIn>
-            <Analytics />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Analytics />
       },
       {
         path: 'profile',
-        element: <>
-          <SignedIn>
-            <Profile />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        element: <Profile/>
       },
       {
-        path: 'assets/edit/:id',
-        element: <>
-          <SignedIn>
-            <EditAsset />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        path: 'settings',
+        element: <></>
       },
       {
-        path: 'assets/add',
-        element: <>
-          <SignedIn>
-            <AddAsset />
-          </SignedIn>
-          <SignedOut>
-            <LandingPage />
-          </SignedOut>
-        </>
+        path: 'change-password',
+        element: <></>
       },
+      {
+        path: 'logout',
+        element: <></>
+      }
     ]
   },
 ];

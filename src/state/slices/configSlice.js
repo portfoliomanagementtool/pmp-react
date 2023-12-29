@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mode: "light",
+  collapsed: false,
+  active: "dashboard",
 };
 
 export const configSlice = createSlice({
@@ -11,8 +13,14 @@ export const configSlice = createSlice({
     setMode: (state, action) => {
       state.mode = state.mode === "light" ? "dark" : "light";
     },
+    toggleCollapsed: (state, action) => {
+      state.collapsed = !state.collapsed;
+    },
+    setActive(state, action) {
+      state.active = action.payload;
+    }
   },
 });
 
-export const { setMode } = configSlice.actions;
+export const { setMode, toggleCollapsed, setActive } = configSlice.actions;
 export default configSlice.reducer;

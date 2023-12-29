@@ -12,12 +12,13 @@ import { MdAnalytics, MdOutlineEdit } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import MenuGroup from '../Menu/MenuGroup';
 import { useSelector } from 'react-redux';
+import SideNavModal from '../Modals/SideNavModal';
 
 const SideNav = () => {
   const collapsed = useSelector((state) => state.config.collapsed);
 
   const menu = [{
-    menuTitle: "Pages",
+    groupTitle: "Pages",
     menuCollapsableItems: [{
       id: "dashboard",
       name: "Dashboard",
@@ -51,7 +52,7 @@ const SideNav = () => {
     }]
   }, {
     id: "account",
-    menuTitle: "Account",
+    groupTitle: "Account",
     menuCollapsableItems: [{
       id: "profile",
       name: "Profile",
@@ -81,45 +82,48 @@ const SideNav = () => {
   }];
 
   return (
-    <div
-      className="side-nav side-nav-transparent side-nav-expand"
-      style={collapsed ? { width: "80px", minWidth: "80px" }: { width: "290px", minWidth: "290px" }}
-    >
-      <div className='side-nav-header'>
-        <h1 className="logo flex flex-col justify-center px-6 h-16 font-bold text-[#022352]" style={{ width: "auto" }}>
-          {collapsed ? (
-            <div className='flex justify-center'>P</div>
-          ) : "Portfolio"}
-        </h1>
+    <>
+      <div
+        className="hidden md:block side-nav side-nav-transparent side-nav-expand"
+        style={collapsed ? { width: "80px", minWidth: "80px" }: { width: "290px", minWidth: "290px" }}
+      >
+        <div className='side-nav-header'>
+          <h1 className="logo flex flex-col justify-center px-6 h-16 font-bold text-[#022352]" style={{ width: "auto" }}>
+            {collapsed ? (
+              <div className='flex justify-center'>P</div>
+            ) : "Portfolio"}
+          </h1>
+        </div>
+        {!collapsed ? (
+            <div className='side-nav-content'>
+              <Scrollbars autoHide>
+                <nav className='menu menu-transparent px-4 pb-4'>
+                  {
+                    menu.map((item, index) => {
+                      return(
+                        <MenuGroup item={item} key={index} />
+                      )
+                    })
+                  }
+                </nav>
+              </Scrollbars>
+            </div>
+          ) : (
+            <nav className="menu menu-transparent px-4 pb-4">
+              {
+                menu.map((item, index) => {
+                  return(
+                    <MenuGroup item={item} key={index} />
+                  )
+                })
+              }
+            </nav>
+          )
+        }
       </div>
-      {!collapsed ? (
-          <div className='side-nav-content'>
-            <Scrollbars autoHide>
-              <nav className='menu menu-transparent px-4 pb-4'>
-                {
-                  menu.map((item, index) => {
-                    return(
-                      <MenuGroup item={item} key={index} />
-                    )
-                  })
-                }
-              </nav>
-            </Scrollbars>
-          </div>
-        ) : (
-          <nav className="menu menu-transparent px-4 pb-4">
-            {
-              menu.map((item, index) => {
-                return(
-                  <MenuGroup item={item} key={index} />
-                )
-              })
-            }
-          </nav>
-        )
-      }
-    </div>
-  );
-};
+      <SideNavModal menu={menu}/>
+    </>
+  )
+}
 
 export default SideNav;

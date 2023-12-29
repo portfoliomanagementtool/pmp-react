@@ -8,7 +8,7 @@ import {
   BiLock,
   BiLogOut,
 } from "react-icons/bi";
-import { MdAnalytics } from "react-icons/md";
+import { MdAnalytics, MdOutlineEdit } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import MenuGroup from '../Menu/MenuGroup';
 import { useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const SideNav = () => {
         { id: "all-asset", name: "All Asset", path: "/app/asset/all" },
         { id: "buy-asset", name: "Buy Asset", path: "/app/asset/buy" },
         { id: "sell-asset", name: "Sell Asset", path: "/app/asset/sell" },
-        { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
+        { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit/:id" },
       ]
     }, {
       id: "analytics",

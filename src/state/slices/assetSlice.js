@@ -1,10 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  loading:true,
-  assetlist:[],
   edit: {},
-  errmessage: '',
 };
 
 export const configSlice = createSlice({

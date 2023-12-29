@@ -7,8 +7,13 @@ import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
+import { useDispatch } from "react-redux";
+import { saveEditAsset } from "../../../state/slices/assetSlice";
+import { useNavigate } from "react-router-dom";
 
-const SellBuyTable = ({ rows, deleteRow, editRow }) => {
+const SellBuyTable = ({ rows, deleteRow }) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState(null);
 
   const toggleRow = (idx) => {
@@ -18,6 +23,11 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
       setExpandedRow(idx);
     }
   };
+
+  const editRow = ({ category, price, qty, ticker, action="BUY" }) => {
+    dispatch(saveEditAsset({ category, price, qty, ticker, action }));
+    navigate("/app/asset/edit");
+  }
 
   return (
     <div
@@ -45,7 +55,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                   <span className="text-lg">
                     <CiFilter />
                   </span>
-                  <span className="ltr:ml-1 rtl:mr-1">Filter</span>
+                  <span className="ml-1 rtl:mr-1">Filter</span>
                 </span>
               </button>
               <a
@@ -59,7 +69,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                     <span className="text-lg">
                       <RiDownloadLine />
                     </span>
-                    <span className="ltr:ml-1 rtl:mr-1">Export</span>
+                    <span className="ml-1 rtl:mr-1">Export</span>
                   </span>
                 </button>
               </a>
@@ -72,7 +82,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                     <span className="text-lg mr-1">
                       <IoIosAddCircle />
                     </span>
-                    <span className="ltr:ml-1 rtl:mr-1">Add Product</span>
+                    <span className="ml-1 rtl:mr-1">Add Product</span>
                   </span>
                 </button>
               </a>
@@ -164,15 +174,11 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                           </td>
                           <td className="py-2">
                             <div className="flex justify-end text-lg">
-                              <span className="cursor-pointer p-2 hover:text-indigo-600">
-                                <BsFillPencilFill
-                                  onClick={() => editRow(idx)}
-                                />
+                              <span onClick={() => editRow(row)} className="cursor-pointer p-2 hover:text-indigo-600">
+                                <BsFillPencilFill />
                               </span>
-                              <span className="cursor-pointer p-2 hover:text-red-500">
-                                <BsFillTrashFill
-                                  onClick={() => deleteRow(idx)}
-                                />
+                              <span onClick={() => deleteRow(row)} className="cursor-pointer p-2 hover:text-red-500">
+                                <BsFillTrashFill />
                               </span>
                             </div>
                           </td>

@@ -7,9 +7,12 @@ import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
+import ViewAsset from "./ViewAsset";
+import { useNavigate } from 'react-router-dom';
 
-const SellBuyTable = ({ rows, deleteRow, editRow }) => {
+const AssetTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+  const navigate = useNavigate();
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -17,6 +20,13 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
     } else {
       setExpandedRow(idx);
     }
+  };
+  const handleRowClick = (idx) => {
+    // Get the selected asset details based on the index
+    const selectedAsset = rows[idx];
+
+    // Navigate to the ViewAsset component with the selected asset details
+    navigate(`/ViewAsset/${idx}`, { state: { asset: selectedAsset } });
   };
 
   return (
@@ -27,7 +37,7 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
           <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">My Assets</h3>
+            <h3 className="mb-4 lg:mb-0">All Assets</h3>
             <div className="flex flex-col lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
                 <div className="input-suffix-start ml-2">
@@ -129,100 +139,46 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {rows.map((row, idx) => {
-                    return (
-                      <React.Fragment key={idx}>
-                        <tr
-                          className={`cursor-pointer ${
-                            expandedRow === idx
-                              ? "bg-gray-200 text-black rounded-md"
-                              : ""
-                          }`}
-                          onClick={() => toggleRow(idx)}
-                        >
-                          <td className="py-2">
-                            <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.category}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span className="capitalize">{row.ticker}</span>
-                          </td>
-                          <td className="py-2">{row.qty}</td>
-                          <td className="py-2">
-                            <div className="flex items-center gap-2">
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="capitalize font-semibold text-emerald-500">
-                                In Stock
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span>${row.price}</span>
-                          </td>
-                          <td className="py-2">
-
-                            <div className="flex justify-end text-lg">
-                              <span className="cursor-pointer p-2 hover:text-indigo-600">
-                                <BsFillPencilFill
-                                  onClick={() => editRow(idx)}
-                                />
-                              </span>
-                              <span className="cursor-pointer p-2 hover:text-red-500">
-                                <BsFillTrashFill
-                                  onClick={() => deleteRow(idx)}
-                                />
-                              </span>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr
-                          className={`expanded-view ${
-                            expandedRow === idx ? "bg-gray-100 " : "hidden"
-                          }`}
-                        >
-                          <td colSpan="6">
-                            <div className="expanded-content p-4">
-                              <table className="w-full mx-auto items-center">
-                                <thead className="bg-transparent ">
-                                  <tr>
-                                    {/* <th className="p-2 rounded-lg"> */}
-                                    <th>Current Market Value</th>
-                                    <th>Percent Change</th>
-                                    <th>Historical Performance</th>
-                                    <th>Asset Allocation</th>
-                                    <th>Expected Return</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="mx-auto divide-x-">
-                                  <tr className="">
-                                    <td className="text-center">739.34</td>
-                                    <td className="text-center">2.36%</td>
-                                    <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto" />
-                                    </td>
-                                    <td className="text-center">Bonds</td>
-                                    <td className="text-center">10.2%</td>
-                                  </tr>
-                                  <tr className="">
-                                    <td className="text-center">739.34</td>
-                                    <td className="text-center">2.36%</td>
-                                    <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto" />
-                                    </td>
-                                    <td className="text-center">Bonds</td>
-                                    <td className="text-center">10.2%</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    );
-                  })}
+                  {rows.map((row, idx) => (
+                    <React.Fragment key={idx}>
+                      <tr className="cursor-pointer"
+                     onClick={() => handleRowClick(idx)}
+                      >
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="ml-2 rtl:mr-2 font-semibold">
+                              {row.category}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2">
+                          <span className="capitalize">{row.ticker}</span>
+                        </td>
+                        <td className="py-2">{row.qty}</td>
+                        <td className="py-2">
+                          <div className="flex items-center gap-2">
+                            <span className="badge-dot bg-emerald-500"></span>
+                            <span className="capitalize font-semibold text-emerald-500">
+                              In Stock
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2">
+                          <span>${row.price}</span>
+                        </td>
+                        <td className="py-2">
+                          <div className="flex justify-end text-lg">
+                            <span className="cursor-pointer p-2 hover:text-indigo-600">
+                              <BsFillPencilFill onClick={() => editRow(idx)} />
+                            </span>
+                            <span className="cursor-pointer p-2 hover:text-red-500">
+                              <BsFillTrashFill onClick={() => deleteRow(idx)} />
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -346,4 +302,4 @@ const SellBuyTable = ({ rows, deleteRow, editRow }) => {
   );
 };
 
-export default SellBuyTable;
+export default AssetTable;

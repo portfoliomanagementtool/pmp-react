@@ -263,7 +263,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto w-[250px]">
+                  <div className=" mx-auto w-[250px]">  
                     <Donut />
                   </div>
                 </div>
@@ -278,6 +278,7 @@ const Portfolio = () => {
             rows={rows}
             deleteRow={handleDeleteRow}
             editRow={handleEditRow}
+           
           />
           {/* <button
             onClick={() => {

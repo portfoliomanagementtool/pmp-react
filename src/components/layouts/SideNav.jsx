@@ -41,7 +41,7 @@ const SideNav = () => {
         { id: "all-asset", name: "All Asset", path: "/app/asset/all" },
         { id: "buy-asset", name: "Buy Asset", path: "/app/asset/buy" },
         { id: "sell-asset", name: "Sell Asset", path: "/app/asset/sell" },
-        { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit/:id" },
+        { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
       ]
     }, {
       id: "analytics",

@@ -235,7 +235,7 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div class="mt-4 ltr:text-right">
+          <div class="mt-4 ">
             <button
               class="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-11 px-8 py-2 mx-2"
               type="button"

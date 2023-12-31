@@ -6,7 +6,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
       category: "",
       ticker: "",
       price: 0,
-      qty: 0,
+      quantity: 0,
     }
   );
 

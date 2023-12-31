@@ -2,8 +2,6 @@ import React from "react";
 import Chart from "react-apexcharts";
 
 const Candle = () => {
-  
-
     const series= [{
         data:[{
             x: new Date(1538778600000),

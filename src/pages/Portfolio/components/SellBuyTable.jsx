@@ -24,10 +24,10 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     }
   };
 
-  const editRow = ({ category, price, qty, ticker, action="BUY" }) => {
-    dispatch(saveEditAsset({ category, price, qty, ticker, action }));
+  const editRow = ({ category, price, quantity, ticker, action = "BUY" }) => {
+    dispatch(saveEditAsset({ category, price, quantity, ticker, action }));
     navigate("/app/asset/edit");
-  }
+  };
 
   return (
     <div
@@ -50,18 +50,18 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                   placeholder="Search product"
                 />
               </span>
-              <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
+              {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">
                     <CiFilter />
                   </span>
-                  <span className="ml-1 rtl:mr-1">Filter</span>
+                  <span className="ml-1 ">Filter</span>
                 </span>
-              </button>
+              </button> */}
               <a
                 download=""
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
-                href="/data/product-list.csv"
+                href="/data/assets.csv"
                 target="_blank"
               >
                 <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
@@ -69,7 +69,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <span className="text-lg">
                       <RiDownloadLine />
                     </span>
-                    <span className="ml-1 rtl:mr-1">Export</span>
+                    <span className="ml-1 ">Export</span>
                   </span>
                 </button>
               </a>
@@ -82,7 +82,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <span className="text-lg mr-1">
                       <IoIosAddCircle />
                     </span>
-                    <span className="ml-1 rtl:mr-1">Add Product</span>
+                    <span className="ml-1 ">Add Product</span>
                   </span>
                 </button>
               </a>
@@ -160,7 +160,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2">
                             <span className="capitalize">{row.ticker}</span>
                           </td>
-                          <td className="py-2">{row.qty}</td>
+                          <td className="py-2">{row.quantity}</td>
                           <td className="py-2">
                             <div className="flex items-center gap-2">
                               <span className="badge-dot bg-emerald-500"></span>
@@ -174,11 +174,11 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           </td>
                           <td className="py-2">
                             <div className="flex justify-end text-lg">
-                              <span onClick={() => editRow(row)} className="cursor-pointer p-2 hover:text-indigo-600">
+                              <span
+                                onClick={() => editRow(row)}
+                                className="cursor-pointer p-2 hover:text-indigo-600"
+                              >
                                 <BsFillPencilFill />
-                              </span>
-                              <span onClick={() => deleteRow(row)} className="cursor-pointer p-2 hover:text-red-500">
-                                <BsFillTrashFill />
                               </span>
                             </div>
                           </td>

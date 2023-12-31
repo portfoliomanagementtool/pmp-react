@@ -53,7 +53,7 @@ const routes = [
         element: <EditAsset />
       },
       {
-        path: 'asset/edit/:id',
+        path: 'asset/edit',
         element: <EditAsset />
       },
       {

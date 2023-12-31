@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   edit: {
     ticker: "",
-    qty: null,
+    quantity: null,
     price: null,
     category: "",
     action: "",

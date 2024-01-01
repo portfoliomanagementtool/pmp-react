@@ -13,12 +13,12 @@ const Register = () => {
         <div className='flex justify-center items-center'>
           <div className='lg:w-1/2 w-full h-screen bg-violet-800'>
             <div className="lg:flex hidden justify-end flex-col h-full pl-16">
-              <img src={predictiveAnalystics} alt="Predictive Analytics" width="350px" />
+              <img src={predictiveAnalystics} alt="Predictive Analytics" width="350px" draggable={false} />
             </div>
           </div>
           <div className='lg:w-1/2 h-screen bg-white'>
             <div className="lg:flex justify-end pt-16 pr-16 hidden">
-              <img src={investing} alt="Investing" width="350px" />
+              <img src={investing} alt="Investing" width="350px" draggable={false} />
             </div>
           </div>
         </div>

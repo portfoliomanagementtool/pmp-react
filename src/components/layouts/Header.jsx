@@ -1,18 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleCollapsed } from '../../state/slices/configSlice';
-import { Link } from 'react-router-dom';
+import { setMode, toggleCollapsed } from '../../state/slices/configSlice';
+import { Link, useNavigate } from 'react-router-dom';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { HiOutlineMenuAlt2, HiOutlineBell, HiOutlineUser, HiOutlineMailOpen } from "react-icons/hi";
 import { IoSearchSharp, IoLogOutOutline } from "react-icons/io5";
 import { FiSettings, FiActivity } from "react-icons/fi";
 import Scrollbars from 'react-custom-scrollbars-2';
 import { Tooltip } from 'react-tooltip';
+import { setDefaultEditAsset } from '../../state/slices/assetSlice';
 
 const Header = ({ openModal }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { user } = useUser();
+  const { signOut } = useClerk();
   const { mode, collapsed } = useSelector((state) => state.config);
   const [userDropdown, showUserDropdown] = useState(false);
   const [notifyDropdown, showNotifyDropdown] = useState(false);
@@ -106,6 +109,17 @@ const Header = ({ openModal }) => {
       };
     }
   }, [userDropdown, notifyDropdown]);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+      dispatch(setMode('light'));
+      dispatch(setDefaultEditAsset());
+      navigate('/');
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  }
 
   return (
     <header className='header border-b border-gray-200 dark:border-gray-700'>
@@ -241,7 +255,7 @@ const Header = ({ openModal }) => {
                     </Link>
                   </li>
                   <li className="menu-item-divider"></li>
-                  <li className={`menu-item menu-item-${mode} menu-item-hoverable gap-2"`} style={{ height: "35px" }}>
+                  <li onClick={handleSignOut} className={`menu-item menu-item-${mode} menu-item-hoverable gap-2"`} style={{ height: "35px" }}>
                     <span className="text-xl opacity-50">
                       <IoLogOutOutline />
                     </span>

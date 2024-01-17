@@ -4,6 +4,7 @@ import { BiSolidPencil } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import Candlestick from "./components/Charts/Candlestick";
+import Line from "./components/Charts/Line";
 
 const EditAsset = () => {
   const { edit } = useSelector((state) => state.asset);
@@ -45,8 +46,8 @@ const EditAsset = () => {
             </div>
           )}
           <div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+              <div className="lg:col-span-3">
                 <div
                   className="card mb-4 border-0 border-b pb-6 py-4 md:border-gray-200 md:dark:border-gray-600 rounded-br-none rounded-bl-none card-border"
                   role="presentation"
@@ -129,13 +130,21 @@ const EditAsset = () => {
                   </div>
                 </div>
               </div>
-              <div className="card card-border" role="presentation">
+              <div
+                className="card card-border flex flex-col lg:col-span-2"
+                role="presentation"
+              >
                 <div className="card-body">
                   <div className="flex items-center justify-between mb-6">
                     <h4>View Asset History</h4>
                     <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                       View all
                     </button>
+                  </div>
+                  <div className="chartRef">
+                    <div className="min-h-[395px]">
+                      <Line />
+                    </div>
                   </div>
                   <div className="relative ">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">

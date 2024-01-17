@@ -1,18 +1,19 @@
+import dayjs from "dayjs";
 import React from "react";
 import Chart from "react-apexcharts";
 
 const Candle = () => {
     const series= [{
         data:[{
-            x: new Date(1538778600000),
+            x: new Date(15387786),
             y: [6629.81, 6650.5, 6623.04, 6633.33]
           },
           {
-            x: new Date(1538780400000),
+            x: new Date(15387804),
             y: [6632.01, 6643.59, 6620, 6630.11]
           },
           {
-            x: new Date(1538782200000),
+            x: new Date(15387827),
             y: [6630.71, 6648.95, 6623.34, 6635.65]
           },
           {
@@ -250,18 +251,47 @@ const Candle = () => {
   
   
     const options = {
-        plotOptions: {
-          candlestick: {
-            colors: {
-              upward: '#3C90EB',
-              downward: '#DF7D46'
-            },
-            wick: {
-              useFillColor: true,
+      chart: {
+        height: 350,
+        type: 'candlestick',
+      },
+      annotations: {
+        xaxis: [
+          {
+            x: 'Oct 06 14:00',
+            borderColor: '#00E396',
+            label: {
+              borderColor: '#00E396',
+              style: {
+                fontSize: '12px',
+                color: '#fff',
+                background: '#00E396'
+              },
+              orientation: 'horizontal',
+              offsetY: 7,
+              
             }
           }
+        ]
+      },
+      tooltip: {
+        enabled: true,
+      },
+      xaxis: {
+        type: 'category',
+        labels: {
+          formatter: function(val) {
+            return dayjs(val).format('MMM DD HH:mm')
+          }
         }
-      };
+      },
+      yaxis: {
+        tooltip: {
+          enabled: true
+        }
+      }
+    }
+      
 
   return (
     <div id="profit-loss">

@@ -3,7 +3,6 @@ import { AiOutlineStock } from "react-icons/ai";
 import { BiSolidPencil } from "react-icons/bi";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import Candlestick from "./components/Charts/Candlestick";
 import Line from "./components/Charts/Line";
 
 const EditAsset = () => {

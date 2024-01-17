@@ -39,8 +39,7 @@ const SideNav = () => {
       dropDown: true,
       subMenu: [
         { id: "all-asset", name: "All Asset", path: "/app/asset/all" },
-        { id: "buy-asset", name: "Buy Asset", path: "/app/asset/buy" },
-        { id: "sell-asset", name: "Sell Asset", path: "/app/asset/sell" },
+        { id: "view-asset", name: "View Asset", path: "/app/asset/view" },
         { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
       ]
     }, {

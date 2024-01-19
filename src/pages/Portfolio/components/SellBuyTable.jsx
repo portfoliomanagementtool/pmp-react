@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { BsFillTrashFill, BsFillPencilFill, BsThreeDotsVertical } from "react-icons/bs";
+import {
+  BsFillTrashFill,
+  BsFillPencilFill,
+  BsThreeDotsVertical,
+} from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
@@ -28,8 +32,10 @@ const SellBuyTable = ({ rows, deleteRow }) => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
 
-  const openModal = (rowData) => {
+  const openModal = (e, rowData) => {
+    setClickPosition({ top: e.clientY, left: e.clientX });
     setModalOpen(true);
     setSelectedRowData(rowData);
   };
@@ -189,7 +195,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2 flex">
                             <div className="flex justify-end text-lg">
                               <span
-                                onClick={() => editRow(row)}
+                                onClick={(e) => editRow(e, row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
@@ -197,7 +203,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             </div>
                             <div className="flex justify-end text-lg">
                               <span
-                                onClick={() => openModal(row)}
+                                onClick={(e) => openModal(e, row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsThreeDotsVertical />
@@ -257,6 +263,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 onSubmit={closeModal}
                 closeModal={closeModal}
                 defaultValue={selectedRowData}
+                position={clickPosition}
               />
             )}
             {/* <div className="flex items-center justify-between mt-4">

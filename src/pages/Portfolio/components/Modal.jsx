@@ -5,9 +5,9 @@ import { MdOutlineReadMore, MdChecklistRtl } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import BuySellModal from "./BuySellModal";
 
-const Modal = ({ onSubmit, closeModal, defaultValue }) => {
+const Modal = ({ onSubmit, closeModal, defaultValue, position }) => {
   const navigate = useNavigate();
-  
+
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -59,7 +59,6 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
     }
   };
 
-  
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -80,7 +79,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
-      <div className="modal bg-white w-56 p-6 rounded-md z-10 -mr-[55%]">
+      <div className="modal bg-white w-56 p-6 rounded-md z-10 ">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">Asset Details</h3>
           <button
@@ -117,7 +116,6 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
               defaultValue={defaultValue}
             />
           )}
-
         </div>
         <div>
           <div className="w-full  mx-auto">

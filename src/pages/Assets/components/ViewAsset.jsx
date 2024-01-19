@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import { Box, Button, } from "@mui/material";
-import Candle from "./Charts/Candle";
 import Card from "./card/Card"
-
+import Candle from "./Charts/Candle"
 const ViewAsset = () => {
   const metrics = [
     {
@@ -193,7 +192,7 @@ const ViewAsset = () => {
                 </button>
               </div>
               <div className="chartRef">
-                <div className="min-h-[425px]">
+                <div className="h-auto">
                   <Candle />
                 </div>
               </div>

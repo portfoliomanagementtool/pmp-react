@@ -10,6 +10,7 @@ import { GoGraph } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Modal";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -22,6 +23,19 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     } else {
       setExpandedRow(idx);
     }
+  };
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState(null);
+
+  const openModal = (rowData) => {
+    setModalOpen(true);
+    setSelectedRowData(rowData);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setSelectedRowData(null);
   };
 
   const editRow = ({ category, price, quantity, ticker, action = "BUY" }) => {
@@ -50,14 +64,14 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                   placeholder="Search product"
                 />
               </span>
-              {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
+              <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">
                     <CiFilter />
                   </span>
                   <span className="ml-1 ">Filter</span>
                 </span>
-              </button> */}
+              </button>
               <a
                 download=""
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
@@ -148,7 +162,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               ? "bg-gray-200 text-black rounded-md"
                               : ""
                           }`}
-                          onClick={() => toggleRow(idx)}
+                          onClick={() => {
+                            openModal(row);
+                          }}
                         >
                           <td className="py-2">
                             <div className="flex items-center">
@@ -173,7 +189,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             <span>${row.price}</span>
                           </td>
                           <td className="py-2">
-
                             <div className="flex justify-end text-lg">
                               <span
                                 onClick={() => editRow(row)}
@@ -184,7 +199,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             </div>
                           </td>
                         </tr>
-                        <tr
+                        {/* <tr
                           className={`expanded-view ${
                             expandedRow === idx ? "bg-gray-100 " : "hidden"
                           }`}
@@ -194,7 +209,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               <table className="w-full mx-auto items-center">
                                 <thead className="bg-transparent ">
                                   <tr>
-                                    {/* <th className="p-2 rounded-lg"> */}
                                     <th>Current Market Value</th>
                                     <th>Percent Change</th>
                                     <th>Historical Performance</th>
@@ -225,13 +239,20 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               </table>
                             </div>
                           </td>
-                        </tr>
+                        </tr> */}
                       </React.Fragment>
                     );
                   })}
                 </tbody>
               </table>
             </div>
+            {isModalOpen && (
+              <Modal
+                onSubmit={closeModal}
+                closeModal={closeModal}
+                defaultValue={selectedRowData}
+              />
+            )}
             {/* <div className="flex items-center justify-between mt-4">
               <div className="pagination">
                 <span

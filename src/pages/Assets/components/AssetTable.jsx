@@ -8,7 +8,7 @@ import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import ViewAsset from "./ViewAsset";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -26,7 +26,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
     const selectedAsset = rows[idx];
 
     // Navigate to the ViewAsset component with the selected asset details
-    navigate(`/ViewAsset/${idx}`, { state: { asset: selectedAsset } });
+    navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
   return (
@@ -141,8 +141,9 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                 <tbody className="">
                   {rows.map((row, idx) => (
                     <React.Fragment key={idx}>
-                      <tr className="cursor-pointer"
-                     onClick={() => handleRowClick(idx)}
+                      <tr
+                        className="cursor-pointer"
+                        onClick={() => handleRowClick(idx)}
                       >
                         <td className="py-2">
                           <div className="flex items-center">

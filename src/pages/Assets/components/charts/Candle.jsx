@@ -252,7 +252,6 @@ const Candle = () => {
   
     const options = {
       chart: {
-        height: 350,
         type: 'candlestick',
       },
       annotations: {

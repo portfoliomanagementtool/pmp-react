@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import { BsFillTrashFill, BsFillPencilFill, BsThreeDotsVertical } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
@@ -188,13 +188,21 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2">
                             <span>${row.price}</span>
                           </td>
-                          <td className="py-2">
+                          <td className="py-2 flex">
                             <div className="flex justify-end text-lg">
                               <span
                                 onClick={() => editRow(row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
+                              </span>
+                            </div>
+                            <div className="flex justify-end text-lg">
+                              <span
+                                onClick={() => openModal(row)}
+                                className="cursor-pointer p-2 hover:text-indigo-600"
+                              >
+                                <BsThreeDotsVertical />
                               </span>
                             </div>
                           </td>

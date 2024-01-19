@@ -5,7 +5,7 @@ import { MdOutlineReadMore, MdChecklistRtl } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import BuySellModal from "./BuySellModal";
 
-const Modal = ({ onSubmit, closeModal, defaultValue }) => {
+const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
   const navigate = useNavigate();
   
   const [formState, setFormState] = useState(

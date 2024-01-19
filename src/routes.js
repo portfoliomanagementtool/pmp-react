@@ -2,6 +2,7 @@ import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, 
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 import ViewAsset from './pages/Assets/components/ViewAsset';
+import Watchlist from './pages/Watchlist/Watchlist';
 
 const routes = [
   {
@@ -56,6 +57,10 @@ const routes = [
       {
         path: 'analytics',
         element: <Analytics />
+      },
+      {
+        path:'watchlist',
+        element:<Watchlist/>
       },
       {
         path: 'profile',

@@ -4,9 +4,88 @@ import { AiOutlineStock } from "react-icons/ai";
 import { Card, Bar, Donut, Calendar } from "./components/components";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
+import TopListing from "../Analytics/components/TopListing";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [rows2, setRows2] = useState([
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:-12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:-12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:-12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:-12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:-12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+  ]);
+  const [rows, setRows] = useState([
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change:12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+  ]);
+  const [rowToEdit, setRowToEdit] = useState(null);
+  const handleDeleteRow = (targetIndex) => {
+    setRows(rows.filter((_, idx) => idx !== targetIndex));
+  };
   const metrics = [
     {
       title: "Current Value",
@@ -117,7 +196,7 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div onClick={showCalendar}>Calendar</div>
+              <button onClick={showCalendar} className="cursor-pointer button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">Calendar</button>
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">
@@ -214,6 +293,10 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-5">
+      <TopListing name={"Top Gainers"} rows={rows} />
+      <TopListing name={"Top losers"} rows={rows2} />
+    </div>
           
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card lg:col-span-2 card-border" role="presentation">

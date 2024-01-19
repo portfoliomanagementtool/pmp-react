@@ -3,9 +3,11 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useNavigate } from "react-router";
 import { MdOutlineReadMore, MdChecklistRtl } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
+import BuySellModal from "./BuySellModal";
 
 const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   const navigate = useNavigate();
+  
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -31,9 +33,14 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
 
   const [errors, setErrors] = useState("");
   const [activeTab, setActiveTab] = useState("buy");
-
+  const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
+  const closeBuySellModal = () => {
+    setSellBuyModalOpen(false);
+    // setSelectedRowData(null);
+  };
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    setSellBuyModalOpen(true);
   };
 
   const validateForm = () => {
@@ -52,6 +59,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
     }
   };
 
+  
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -85,7 +93,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
         <div className="flex mx-auto justify-center items-center mt-4">
           <button
             className={`${
-              activeTab === "buy" ? "bg-green-500" : "bg-gray-300"
+              activeTab === "buy" ? "bg-red-500" : "bg-gray-300"
             } text-white px-4 py-2 rounded-l cursor-pointer`}
             onClick={() => handleTabClick("buy")}
           >
@@ -93,7 +101,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
           </button>
           <button
             className={`${
-              activeTab === "sell" ? "bg-red-500" : "bg-gray-300"
+              activeTab === "sell" ? "bg-green-500" : "bg-gray-300"
             } text-white px-4 py-2 rounded-r cursor-pointer`}
             onClick={() => handleTabClick("sell")}
           >
@@ -101,13 +109,15 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
           </button>
         </div>
         <div>
-          {/* Conditional rendering based on the active tab */}
-          {activeTab === "buy" && (
-            <BuyModal onSubmit={handleClose} handleClose={handleClose} />
+          {sellBuyModalOpen && (
+            <BuySellModal
+              onSubmit={handleClose}
+              closeModal={closeBuySellModal}
+              initialChecked={activeTab === "sell"}
+              defaultValue={defaultValue}
+            />
           )}
-          {activeTab === "sell" && (
-            <SellModal onSubmit={handleClose} handleClose={handleClose} />
-          )}
+
         </div>
         <div>
           <div className="w-full  mx-auto">
@@ -141,14 +151,6 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
       </div>
     </div>
   );
-};
-
-const BuyModal = ({ onSubmit, handleClose }) => {
-  return <div>Buy Modal </div>;
-};
-
-const SellModal = ({ onSubmit, handleClose }) => {
-  return <div>Sell Modal </div>;
 };
 
 export default Modal;

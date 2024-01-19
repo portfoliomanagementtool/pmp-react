@@ -3,7 +3,7 @@ import Slider from "@mui/material/Slider";
 import { Box, Button, } from "@mui/material";
 
 import Card from "./card/Card"
-import Candle from "./charts/Candle";
+import Candle from "./Charts/Candle";
 
 const ViewAsset = () => {
   const metrics = [

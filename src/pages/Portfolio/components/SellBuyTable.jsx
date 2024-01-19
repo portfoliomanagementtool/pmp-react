@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
 import BuySellModal from "./BuySellModal";
+import Modal from "./Modal";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -162,9 +163,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               ? "bg-gray-200 text-black rounded-md"
                               : ""
                           }`}
-                          onClick={() => {
-                            openModal(row);
-                          }}
                         >
                           <td className="py-2">
                             <div className="flex items-center">
@@ -255,7 +253,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
               </table>
             </div>
             {isModalOpen && (
-              <BuySellModal
+              <Modal
                 onSubmit={closeModal}
                 closeModal={closeModal}
                 defaultValue={selectedRowData}

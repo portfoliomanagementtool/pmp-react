@@ -194,7 +194,7 @@ const ViewAsset = () => {
                 </button>
               </div>
               <div className="chartRef">
-                <div className="min-h-[425px]">
+                <div className="h-auto">
                   <Candle />
                 </div>
               </div>

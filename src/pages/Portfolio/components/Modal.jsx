@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router";
+
 const Modal = ({ onSubmit, closeModal, defaultValue }) => {
+  const navigate = useNavigate();
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -9,6 +12,16 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
       quantity: 0,
     }
   );
+  const history = [
+    {
+      category: "Bonds",
+      value: "10.2%",
+    },
+    {
+      category: "Market Value",
+      value: "287 USD",
+    },
+  ];
 
   const [errors, setErrors] = useState("");
 
@@ -35,128 +48,55 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   const handleClose = (e) => {
     closeModal();
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       onSubmit(formState);
       closeModal();
+      navigate("/app/asset/edit");
     }
   };
 
   return (
-    <div className="">
-      <div className="page-container relative h-full flex flex-auto flex-col px-4 sm:px-6 md:px-8 py-4 sm:py-6 md:px-8">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <h3>Edit Asset</h3>
-          </div>
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
+      <div className="modal bg-white w-96 p-6 rounded-md z-10">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-semibold">Asset Details</h3>
+          <button
+            className="text-gray-600 font-bold hover:text-gray-800"
+            onClick={handleClose}
+          >
+            <AiOutlineClose />
+          </button>
         </div>
-        <form>
-          <div className="grid grid-cols-2 gap-3"></div>
-          {errors && (
-            <div className="bg-red-200 text-red-600 rounded p-2 mb-4">
-              {`Please include: ${errors}`}
-            </div>
-          )}
-          <div className="form-container vertical">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              <div className="lg:col-span-2">
-                <div
-                  className="card mb-4 border-0 border-b pb-6 py-4 md:border-gray-200 md:dark:border-gray-600 rounded-br-none rounded-bl-none card-border"
-                  role="presentation"
+        <div>
+          <div className="w-full  mx-auto">
+            {history.map((obj, index) => {
+              return (
+                <tr
+                  key={index}
+                  className="w-full flex justify-between bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
                 >
-                  <div className="card-body card-gutterless">
-                    <h5>Basic Information</h5>
-                    <p className="mb-6">
-                      Section to config basic product information
-                    </p>
-                    <div className="form-item vertical">
-                      <label className="form-label mb-2">Category</label>
-                      <div className="">
-                        <input
-                          className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                          name="category"
-                          onChange={handleChange}
-                          value={formState.category}
-                        />
-                      </div>
-                    </div>
-                    <div className="form-item vertical">
-                      <label className="form-label mb-2">Code</label>
-                      <div className="">
-                        <input
-                          className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                          type="text"
-                          name="productCode"
-                          autocomplete="off"
-                          placeholder="Code"
-                          value="BIS-012"
-                        />
-                      </div>
-                    </div>
+                  <div className="px-6 py-4 font-medium justify-start text-gray-900 dark:text-white">
+                    <span className=" cursor-pointer select-none font-semibold hover:text-orange-600">
+                      {obj.category}
+                    </span>
                   </div>
-                </div>
-                <div
-                  className="card mb-4 border-0 border-b pb-6 py-4 md:border-gray-200 md:dark:border-gray-600 rounded-br-none rounded-bl-none card-border"
-                  role="presentation"
-                >
-                  <div className="card-body card-gutterless">
-                    <h5>Pricing</h5>
-                    <p className="mb-6">
-                      Section to config product sales information
-                    </p>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="col-span-1">
-                        <div className="form-item vertical">
-                          <label className="form-label mb-2">SKU</label>
-                          <div className="">
-                            <input
-                              className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                              type="text"
-                              name="stock"
-                              autocomplete="off"
-                              placeholder="Stock"
-                              value={formState.price}
-                              inputmode="numeric"
-                              onChange={handleChange}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="col-span-1">
-                        <div className="form-item vertical">
-                          <label className="form-label mb-2">Price</label>
-                          <div className="">
-                            <span className="input-wrapper undefined">
-                              <div className="input-suffix-start"> $</div>
-                              <input
-                                className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[1.5625rem]"
-                                type="text"
-                                name="price"
-                                autocomplete="off"
-                                placeholder="Price"
-                                value={formState.price}
-                                inputmode="numeric"
-                                onChange={handleChange}
-                              />
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+                  <td className="px-6 py-4 flex ">{obj.value}</td>
+                </tr>
+              );
+            })}
           </div>
           <button
             type="submit"
-            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md block mx-auto"
+            className="bg-blue-600 flex mx-auto text-white px-4 py-2 mt-3 rounded cursor-pointer"
             onClick={handleSubmit}
           >
-            Submit
+            Edit 
           </button>
-        </form>
+        </div>
       </div>
     </div>
   );

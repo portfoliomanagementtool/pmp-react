@@ -1,6 +1,7 @@
 import colorLib from '@kurkle/color';
 import {DateTime} from 'luxon';
 import 'chartjs-adapter-luxon';
+import dayjs from 'dayjs';
 // import {valueOrDefault} from '../../dist/helpers.js';
 
 // Adapted from http://indiegamr.com/generate-repeatable-random-numbers-in-js/
@@ -102,6 +103,7 @@ export function months(config) {
 
   return values;
 }
+
 
 const COLORS = [
   '#4dc9f6',

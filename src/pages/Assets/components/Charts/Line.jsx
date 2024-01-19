@@ -1,7 +1,9 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import { useSelector } from 'react-redux';
 
 const Line = () => {
+  const mode = useSelector((state) => state.config.mode);
   const series = [{
     name: "Details",
     data: [40, 11, 25, 21, 89, 42, 19, 12, 38],
@@ -18,19 +20,15 @@ const Line = () => {
         enabled: false,
       },
     },
+    theme: {
+      mode: mode === "light" ? 'light' : 'dark',
+    },
     dataLabels: {
       enabled: false,
     },
     stroke: {
         width: 3,
       curve: "smooth",
-    },
-
-    grid: {
-      row: {
-        colors: ["#f3f3f3", "transparent"],
-        opacity: 0.5,
-      },
     },
     xaxis: {
       categories: [
@@ -44,6 +42,9 @@ const Line = () => {
         "Aug",
         "Sep",
       ],
+    },
+    fill: {
+      opacity: 1
     },
   };
 

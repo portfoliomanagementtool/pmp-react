@@ -10,7 +10,7 @@ import { GoGraph } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
-import Modal from "./Modal";
+import BuySellModal from "./BuySellModal";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -255,7 +255,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
               </table>
             </div>
             {isModalOpen && (
-              <Modal
+              <BuySellModal
                 onSubmit={closeModal}
                 closeModal={closeModal}
                 defaultValue={selectedRowData}

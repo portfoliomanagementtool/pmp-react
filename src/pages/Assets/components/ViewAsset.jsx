@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import Slider from "@mui/material/Slider";
 import { Box, Button, } from "@mui/material";
-import Candle from "./Charts/Candle";
+
 import Card from "./card/Card"
+import Candle from "./charts/Candle";
 
 const ViewAsset = () => {
   const metrics = [

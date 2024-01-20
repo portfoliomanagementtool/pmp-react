@@ -189,7 +189,7 @@ const Portfolio = () => {
         );
   };
   return (
-    <div className="flex font-poppins">
+    <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
           <div

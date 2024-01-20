@@ -8,7 +8,7 @@ import {
   BiLock,
   BiLogOut,
 } from "react-icons/bi";
-import { MdAnalytics, MdOutlineEdit } from "react-icons/md";
+import { MdAnalytics, MdChecklistRtl, MdOutlineEdit } from "react-icons/md";
 import { FaMoneyBill } from "react-icons/fa";
 import MenuGroup from '../Menu/MenuGroup';
 import { useSelector } from 'react-redux';
@@ -43,10 +43,10 @@ const SideNav = () => {
         { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
       ]
     }, {
-      id: "analytics",
-      name: "Analytics",
-      icon: <MdAnalytics />,
-      path: "/app/analytics",
+      id: "watchlist",
+      name: "Watchlist",
+      icon: <MdChecklistRtl />,
+      path: "/app/watchlist",
       dropDown: false,
     }]
   }, {

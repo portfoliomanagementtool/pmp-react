@@ -71,9 +71,13 @@ const Calendar = ({ onClose }) => {
               <div
                 key={date.format("YYYY-MM-DD")}
                 className={`rounded-full text-center p-2 cursor-pointer border ${
-                  date.isSame(selectedDate, "day") ? "bg-gray-500 text-white" : ""
+                  date.isSame(selectedDate, "day")
+                    ? "bg-gray-500 text-white"
+                    : ""
                 }${
-                  date.isSame(today, "day") ? " border-2 bg-red-500 text-white" : ""
+                  date.isSame(today, "day")
+                    ? " border-2 bg-red-500 text-white"
+                    : ""
                 }`}
                 onClick={() => handleDateClick(date)}
               >
@@ -98,9 +102,19 @@ const Calendar = ({ onClose }) => {
     //         Close
     //       </button>
     //     </div>
-        <>
-          {renderCalendar()}
-        </>
+    <>
+      <div
+        className="absolute w-80 p-3 top-12 left-0 bg-white shadow-lg border "
+        style={{
+          transform: "translate(829.6px, 78.4px);",
+          zIndex: "40",
+          willChange: "transform",
+          borderRadius: "0.5rem"
+        }}
+      >
+        {renderCalendar()}
+      </div>
+    </>
     //   </div>
     // </div>
   );

@@ -41,8 +41,6 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
     },
   ];
 
-
-
   const [errors, setErrors] = useState("");
   const [activeTab, setActiveTab] = useState("buy");
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
@@ -155,7 +153,8 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
           </div>
           {moreDetailsModalOpen && (
             <MoreDetailsModal
-              closeModal={() => setMoreDetailsModalOpen(false) } defaultValue={defaultValue}
+              closeModal={() => setMoreDetailsModalOpen(false)}
+              defaultValue={defaultValue}
             />
           )}
         </div>

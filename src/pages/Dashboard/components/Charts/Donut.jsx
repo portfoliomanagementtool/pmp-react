@@ -22,27 +22,6 @@ const Donut = () => {
         size: 100,
         donut: {
           size: '80%',
-          labels: {
-            show: true,
-            total: {
-              show: true,
-              showAlways: true,
-              label: '',                           
-              formatter: function (w) {
-                return "Equity"
-                // let sum = 0;
-                // return w.globals.seriesTotals.reduce((a, b) => {
-                //     return `${a}/${b}`
-                // })
-              }
-            },
-            value:{
-              offsetY: -8, // -8 worked for me
-              color:'#000',
-              fontSize: '20px',
-              fontWeight: 'semi-bold',
-            }
-          },
         },
       },
     },

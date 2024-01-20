@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { AiOutlineStock } from "react-icons/ai";
-import { MdClose } from "react-icons/md";
+import { MdClose } from 'react-icons/md';
 import { Card, Bar, Donut, Calendar } from "./components/components";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -9,10 +9,10 @@ import TopListing from "../Analytics/components/TopListing";
 import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const calendarRef = useRef(null);
   const [showCalendar, setShowCalendar] = useState(false);
-
-  const navigate = useNavigate();
+  const [activeButton, setActiveButton] = useState("monthly");
   const [rows2, setRows2] = useState([
     {
       ticker: "AAPL",
@@ -87,10 +87,12 @@ const Dashboard = () => {
       // status: "live",
     },
   ]);
+
   const [rowToEdit, setRowToEdit] = useState(null);
   const handleDeleteRow = (targetIndex) => {
     setRows(rows.filter((_, idx) => idx !== targetIndex));
   };
+
   const metrics = [
     {
       title: "Current Value",
@@ -174,6 +176,11 @@ const Dashboard = () => {
     },
   ];
 
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+    // Handle other logic based on the button type if needed
+  };
+
   const handleClickOutside = (event) => {
     event.preventDefault();
 
@@ -192,23 +199,6 @@ const Dashboard = () => {
       };
     }
   }, [showCalendar]);
-
-  const [isCalendarVisible, setCalendarVisible] = useState(false);
-
-  const showCalendar = () => {
-    setCalendarVisible(true);
-  };
-
-  const closeCalendar = () => {
-    setCalendarVisible(false);
-  };
-
-  const [activeButton, setActiveButton] = useState("monthly");
-
-  const handleButtonClick = (buttonType) => {
-    setActiveButton(buttonType);
-    // Handle other logic based on the button type if needed
-  };
 
   return (
     <>
@@ -238,10 +228,10 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </span>
-                {/* {showCalendar && (
+                {showCalendar && (
                   // Put calendar component here
-
-                )} */}
+                  <Calendar />
+                )}
               </div>
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                 <span className="flex items-center justify-center">
@@ -508,7 +498,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            {isCalendarVisible && <Calendar onClose={closeCalendar} />}
           </div>
         </div>
       </main>

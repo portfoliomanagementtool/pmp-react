@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { AiOutlineStock } from "react-icons/ai";
+import { MdClose } from "react-icons/md";
 import { Card, Bar, Donut } from "./components/components";
 
 const Dashboard = () => {
+  const calendarRef = useRef(null);
+  const [showCalendar, setShowCalendar] = useState(false);
+
   const metrics = [
     {
       title: "Current Value",
@@ -87,6 +91,25 @@ const Dashboard = () => {
     },
   ];
 
+  const handleClickOutside = (event) => {
+    event.preventDefault();
+
+    if(calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  }
+
+  useEffect(() => {
+    if (showCalendar) {
+      document.addEventListener('click', handleClickOutside);
+
+      // Clean up the event listener when the component unmounts
+      return () => {
+        document.removeEventListener('click', handleClickOutside);
+      };
+    }
+  }, [showCalendar]);
+
   return (
     <>
       <main>
@@ -97,7 +120,29 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div>Calendar</div>
+              <div ref={calendarRef}>
+                <span className="input-wrapper">
+                  <input 
+                    onClick={() => setShowCalendar(!showCalendar)}
+                    type="text" 
+                    placeholder="Select Date Range"
+                    className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                    readOnly={true}
+                    autoComplete="off"
+                    value="Oct 02, 2023 ~ Jan 02, 2024"
+                    style={{ paddingRight: "2rem" }}
+                  />
+                  <div className="input-suffix-end">
+                    <span className="close-btn text-base" role="button">
+                      <MdClose />
+                    </span>
+                  </div>
+                </span>
+                {/* {showCalendar && (
+                  // Put calendar component here
+
+                )} */}
+              </div>
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">

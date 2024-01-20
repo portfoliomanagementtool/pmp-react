@@ -87,20 +87,22 @@ const Calendar = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="modal bg-white w-96 p-6 rounded-md">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold">Calendar</h3>
-          <button
-            className="text-gray-600 hover:text-gray-800"
-            onClick={onClose}
-          >
-            Close
-          </button>
-        </div>
-        {renderCalendar()}
-      </div>
-    </div>
+    // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    //   <div className="modal bg-white w-96 p-6 rounded-md">
+    //     <div className="flex justify-between items-center mb-4">
+    //       <h3 className="text-xl font-semibold">Calendar</h3>
+    //       <button
+    //         className="text-gray-600 hover:text-gray-800"
+    //         onClick={onClose}
+    //       >
+    //         Close
+    //       </button>
+    //     </div>
+        <>
+          {renderCalendar()}
+        </>
+    //   </div>
+    // </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { AiOutlineStock } from "react-icons/ai";
-import { MdClose } from 'react-icons/md';
+import { MdClose } from "react-icons/md";
 import { Card, Bar, Donut, Calendar } from "./components/components";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
@@ -184,18 +184,18 @@ const Dashboard = () => {
   const handleClickOutside = (event) => {
     event.preventDefault();
 
-    if(calendarRef.current && !calendarRef.current.contains(event.target)) {
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
       setShowCalendar(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (showCalendar) {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
 
       // Clean up the event listener when the component unmounts
       return () => {
-        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener("click", handleClickOutside);
       };
     }
   }, [showCalendar]);
@@ -210,11 +210,11 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div ref={calendarRef}>
+              <div ref={calendarRef} className="relative">
                 <span className="input-wrapper">
-                  <input 
+                  <input
                     onClick={() => setShowCalendar(!showCalendar)}
-                    type="text" 
+                    type="text"
                     placeholder="Select Date Range"
                     className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                     readOnly={true}
@@ -329,7 +329,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5"> 
             <TopListing name={"Top Gainers"} rows={rows} />
             <TopListing name={"Top losers"} rows={rows2} />
           </div>

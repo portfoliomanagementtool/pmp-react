@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SellBuyTable from "./components/SellBuyTable";
-import Modal from "./components/Modal";
+import Modal from "./components/Modals/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
 import Line from "../Dashboard/components/Charts/Line";
@@ -21,7 +21,7 @@ const Portfolio = () => {
       ticker: "AAPL",
       price: 150.5,
       avgBasis: 140.25,
-      qty: 100,
+      quantity: 100,
       marketValue: 15050.0,
       costBasis: 14025.0,
       profitLoss: 1025.0,
@@ -35,7 +35,7 @@ const Portfolio = () => {
       ticker: "GS",
       price: 380.75,
       avgBasis: 375.5,
-      qty: 50,
+      quantity: 50,
       marketValue: 19037.5,
       costBasis: 18775.0,
       profitLoss: 262.5,
@@ -49,7 +49,7 @@ const Portfolio = () => {
       ticker: "PFE",
       price: 45.2,
       avgBasis: 47.1,
-      qty: 200,
+      quantity: 200,
       marketValue: 9040.0,
       costBasis: 9420.0,
       profitLoss: -380.0,
@@ -63,7 +63,7 @@ const Portfolio = () => {
       ticker: "XOM",
       price: 62.85,
       avgBasis: 64.2,
-      qty: 150,
+      quantity: 150,
       marketValue: 9427.5,
       costBasis: 9630.0,
       profitLoss: -202.5,
@@ -77,7 +77,7 @@ const Portfolio = () => {
       ticker: "TSLA",
       price: 750.2,
       avgBasis: 740.0,
-      qty: 60,
+      quantity: 60,
       marketValue: 45012.0,
       costBasis: 44400.0,
       profitLoss: 612.0,
@@ -91,7 +91,7 @@ const Portfolio = () => {
       ticker: "DAL",
       price: 42.65,
       avgBasis: 40.75,
-      qty: 130,
+      quantity: 130,
       marketValue: 5544.5,
       costBasis: 5307.5,
       profitLoss: 237.0,
@@ -105,7 +105,7 @@ const Portfolio = () => {
       ticker: "GOOGL",
       price: 2600.75,
       avgBasis: 2650.25,
-      qty: 30,
+      quantity: 30,
       marketValue: 78022.5,
       costBasis: 79507.5,
       profitLoss: -1485.0,
@@ -119,7 +119,7 @@ const Portfolio = () => {
       ticker: "JPM",
       price: 160.4,
       avgBasis: 156.75,
-      qty: 80,
+      quantity: 80,
       marketValue: 12832.0,
       costBasis: 12540.0,
       profitLoss: 292.0,
@@ -133,7 +133,7 @@ const Portfolio = () => {
       ticker: "MRNA",
       price: 300.6,
       avgBasis: 290.75,
-      qty: 40,
+      quantity: 40,
       marketValue: 12024.0,
       costBasis: 11630.0,
       profitLoss: 394.0,
@@ -147,7 +147,7 @@ const Portfolio = () => {
       ticker: "CVX",
       price: 104.5,
       avgBasis: 105.75,
-      qty: 100,
+      quantity: 100,
       marketValue: 10450.0,
       costBasis: 10575.0,
       profitLoss: -125.0,
@@ -189,7 +189,7 @@ const Portfolio = () => {
         );
   };
   return (
-    <div className="flex font-poppins">
+    <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
           <div
@@ -263,7 +263,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto w-[250px]">
+                  <div className=" mx-auto w-[250px]">  
                     <Donut />
                   </div>
                 </div>
@@ -276,8 +276,6 @@ const Portfolio = () => {
         {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
           <SellBuyTable
             rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow}
           />
           {/* <button
             onClick={() => {
@@ -288,7 +286,7 @@ const Portfolio = () => {
           >
             Add
           </button> */}
-          {modalOpen && (
+          {/* {modalOpen && (
             <EditAsset 
               closeModal={() => {
                 setModalOpen(false);
@@ -297,7 +295,7 @@ const Portfolio = () => {
               onSubmit={handleSubmit}
               defaultValue={rowToEdit}
             />
-          )}
+          )} */}
         {/* </div> */}
         
 

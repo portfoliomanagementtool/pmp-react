@@ -1,12 +1,97 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { AiOutlineStock } from "react-icons/ai";
-import { MdClose } from "react-icons/md";
-import { Card, Bar, Donut } from "./components/components";
+import { MdClose } from 'react-icons/md';
+import { Card, Bar, Donut, Calendar } from "./components/components";
+import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
+import TopListing from "../Analytics/components/TopListing";
+import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const calendarRef = useRef(null);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [activeButton, setActiveButton] = useState("monthly");
+  const [rows2, setRows2] = useState([
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: -12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: -12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: -12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: -12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: -12.7,
+      categoryPercent: -10.2,
+      // status: "live",
+    },
+  ]);
+  const [rows, setRows] = useState([
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: 12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: 12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: 12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: 12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      ticker: "AAPL",
+      price: 150.5,
+      change: 12.7,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+  ]);
+
+  const [rowToEdit, setRowToEdit] = useState(null);
+  const handleDeleteRow = (targetIndex) => {
+    setRows(rows.filter((_, idx) => idx !== targetIndex));
+  };
 
   const metrics = [
     {
@@ -91,6 +176,11 @@ const Dashboard = () => {
     },
   ];
 
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+    // Handle other logic based on the button type if needed
+  };
+
   const handleClickOutside = (event) => {
     event.preventDefault();
 
@@ -138,10 +228,10 @@ const Dashboard = () => {
                     </span>
                   </div>
                 </span>
-                {/* {showCalendar && (
+                {showCalendar && (
                   // Put calendar component here
-
-                )} */}
+                  <Calendar />
+                )}
               </div>
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                 <span className="flex items-center justify-center">
@@ -162,15 +252,39 @@ const Dashboard = () => {
             <div className="card col-span-2 card-border" role="presentation">
               <div className="card-body">
                 <div className="flex items-center justify-between">
-                  <h4>Monthly Investment</h4>
-                  <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-                    <span className="flex items-center justify-center">
-                      <span className="text-lg">
-                        <HiOutlineFilter />
-                      </span>
-                      <span className="ml-2">Filter</span>
-                    </span>
-                  </button>
+                  <h4 className="text-xl font-semibold">Monthly Investment</h4>
+                  <div className="segment flex">
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-200 active:text-gray-700 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "monthly"
+                          ? "segment-item-active bg-gray-200 text-gray-700"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("monthly")}
+                    >
+                      Monthly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "weekly"
+                          ? "segment-item-active bg-gray-200 text-gray-700"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("weekly")}
+                    >
+                      Weekly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "daily"
+                          ? "segment-item-active bg-gray-200 text-gray-700"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("daily")}
+                    >
+                      Daily
+                    </button>
+                  </div>
                 </div>
                 <div className="chartRef">
                   <div style={{ minHeight: "395px" }}>
@@ -215,6 +329,11 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-5">
+            <TopListing name={"Top Gainers"} rows={rows} />
+            <TopListing name={"Top losers"} rows={rows2} />
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card lg:col-span-2 card-border" role="presentation">
               <div className="card-body">
@@ -285,30 +404,39 @@ const Dashboard = () => {
                     <tbody>
                       {history.map((obj, index) => {
                         return (
-                          <tr key={index} className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+                          <tr
+                            key={index}
+                            className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
+                          >
                             <th
                               scope="row"
                               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              <span className="cursor-pointer select-none font-semibold hover:text-orange-600">{obj.transId}</span>
+                              <span className="cursor-pointer select-none font-semibold hover:text-orange-600">
+                                {obj.transId}
+                              </span>
                             </th>
                             <td className="px-6 py-4 flex justify-center">
                               {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
-                              <span className={`font-semibold text-2xl ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}>
+                              <span
+                                className={`font-semibold text-2xl ${
+                                  obj.status === "green"
+                                    ? "text-emerald-500"
+                                    : "text-red-500"
+                                }`}
+                              >
                                 <AiOutlineStock />
                               </span>
                             </td>
                             <td className="px-6 py-4">
                               <span>{obj.date}</span>
                             </td>
-                            <td className="px-6 py-4">
-                              {obj.asset}
-                            </td>
+                            <td className="px-6 py-4">{obj.asset}</td>
                             <td className="px-6 py-4">
                               <span>₹ {obj.price}</span>
                             </td>
                           </tr>
-                        )
+                        );
                       })}
                     </tbody>
                   </table>
@@ -338,21 +466,32 @@ const Dashboard = () => {
                     <tbody>
                       {history.map((obj, index) => {
                         return (
-                          <tr key={index} className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+                          <tr
+                            key={index}
+                            className="bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
+                          >
                             <th
                               scope="row"
                               className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                             >
-                              <span className="cursor-pointer select-none font-semibold hover:text-orange-600">{obj.transId}</span>
+                              <span className="cursor-pointer select-none font-semibold hover:text-orange-600">
+                                {obj.transId}
+                              </span>
                             </th>
                             <td className="px-6 py-4 flex justify-center">
                               {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
-                              <span className={`font-semibold text-2xl ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}>
+                              <span
+                                className={`font-semibold text-2xl ${
+                                  obj.status === "green"
+                                    ? "text-emerald-500"
+                                    : "text-red-500"
+                                }`}
+                              >
                                 <AiOutlineStock />
                               </span>
                             </td>
                           </tr>
-                        )
+                        );
                       })}
                     </tbody>
                   </table>

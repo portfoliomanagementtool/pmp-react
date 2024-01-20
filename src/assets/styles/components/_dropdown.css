@@ -27,7 +27,7 @@
   }
 
   &.bottom-end {
-    @apply ltr:right-0 rtl:left-0 top-full origin-top right-0;
+    @apply ltr:right-0 rtl:left-0 top-full origin-top;
   }
 
   &.middle-start-top {

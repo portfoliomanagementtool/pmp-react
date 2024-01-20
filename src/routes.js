@@ -1,6 +1,8 @@
 import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics, Profile } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
+import ViewAsset from './pages/Assets/components/ViewAsset';
+import Watchlist from './pages/Watchlist/Watchlist';
 
 const routes = [
   {
@@ -23,9 +25,9 @@ const routes = [
       <SignedIn>
         <DashboardLayout />
       </SignedIn>
-      {/* <SignedOut>
+      <SignedOut>
         <LandingPage />
-      </SignedOut> */}
+      </SignedOut>
     </>,
     children: [
       {
@@ -45,20 +47,20 @@ const routes = [
         element: <Assets />
       },
       {
-        path: 'asset/buy',
-        element: <EditAsset />
+        path: 'asset/view',
+        element: <ViewAsset />
       },
       {
-        path: 'asset/sell',
-        element: <EditAsset />
-      },
-      {
-        path: 'asset/edit/:id',
+        path: 'asset/edit',
         element: <EditAsset />
       },
       {
         path: 'analytics',
         element: <Analytics />
+      },
+      {
+        path:'watchlist',
+        element:<Watchlist/>
       },
       {
         path: 'profile',

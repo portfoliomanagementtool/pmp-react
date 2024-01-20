@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  BsFillTrashFill,
-  BsFillPencilFill,
-  BsThreeDotsVertical,
-} from "react-icons/bs";
+import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
@@ -11,16 +7,12 @@ import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
-import { useDispatch } from "react-redux";
-import { saveEditAsset } from "../../../state/slices/assetSlice";
+import ViewAsset from "./ViewAsset";
 import { useNavigate } from "react-router-dom";
-import BuySellModal from "./Modals/BuySellModal";
-import Modal from "./Modals/Modal";
 
-const SellBuyTable = ({ rows, deleteRow }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const AssetTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+  const navigate = useNavigate();
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -29,25 +21,12 @@ const SellBuyTable = ({ rows, deleteRow }) => {
       setExpandedRow(idx);
     }
   };
+  const handleRowClick = (idx) => {
+    // Get the selected asset details based on the index
+    const selectedAsset = rows[idx];
 
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
-  const [selectedRowID, setSelectedRowID] = useState(null);
-
-  const openModal = (e, rowData, idx) => {
-    setModalOpen(true);
-    setSelectedRowData(rowData);
-  };
-
-  const closeModal = () => {
-    setModalOpen(false);
-    setSelectedRowData(null);
-  };
-
-  const editRow = ({ ticker, quantity, price, category, action = "BUY" }) => {
-    dispatch(saveEditAsset({ ticker, quantity, price, category, action }));
-    navigate("/app/asset/edit");
+    // Navigate to the ViewAsset component with the selected asset details
+    navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
   return (
@@ -58,7 +37,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
           <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">My Assets</h3>
+            <h3 className="mb-4 lg:mb-0">All Assets</h3>
             <div className="flex flex-col lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
                 <div className="input-suffix-start ml-2">
@@ -76,13 +55,13 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                   <span className="text-lg">
                     <CiFilter />
                   </span>
-                  <span className="ml-1 ">Filter</span>
+                  <span className="ltr:ml-1 rtl:mr-1">Filter</span>
                 </span>
               </button>
               <a
                 download=""
                 className="block lg:inline-block md:mx-2 md:mb-0 mb-4"
-                href="/data/assets.csv"
+                href="/data/product-list.csv"
                 target="_blank"
               >
                 <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
@@ -90,7 +69,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <span className="text-lg">
                       <RiDownloadLine />
                     </span>
-                    <span className="ml-1 ">Export</span>
+                    <span className="ltr:ml-1 rtl:mr-1">Export</span>
                   </span>
                 </button>
               </a>
@@ -103,7 +82,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <span className="text-lg mr-1">
                       <IoIosAddCircle />
                     </span>
-                    <span className="ml-1 ">Add Product</span>
+                    <span className="ltr:ml-1 rtl:mr-1">Add Product</span>
                   </span>
                 </button>
               </a>
@@ -160,126 +139,51 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {rows.map((row, idx) => {
-                    return (
-                      <React.Fragment key={row.id}>
-                        <tr
-                          className={`cursor-pointer ${
-                            expandedRow === idx
-                              ? "bg-gray-200 text-black rounded-md"
-                              : ""
-                          }`}
-                        >
-                          <td className="py-2">
-                            <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.category}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span className="capitalize">{row.ticker}</span>
-                          </td>
-                          <td className="py-2">{row.quantity}</td>
-                          <td className="py-2">
-                            <div className="flex items-center gap-2">
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="capitalize font-semibold text-emerald-500">
-                                In Stock
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span>${row.price}</span>
-                          </td>
-                          <td className="py-2 flex">
-                            <div className="flex justify-end text-lg">
-                              <span
-                                onClick={() => editRow(row)}
-                                className="cursor-pointer p-2 hover:text-indigo-600"
-                              >
-                                <BsFillPencilFill />
-                              </span>
-                            </div>
-                            <div className="flex justify-end text-lg">
-                              <span
-                                onClick={(e) => openModal(e, row, row.id)}
-                                className="cursor-pointer p-2 hover:text-indigo-600"
-                              >
-                                <BsThreeDotsVertical />
-                              </span>
-                            </div>
-                          </td>
-                        </tr>
-                      </React.Fragment>
-                    );
-                  })}
+                  {rows.map((row, idx) => (
+                    <React.Fragment key={idx}>
+                      <tr
+                        className="cursor-pointer"
+                        onClick={() => handleRowClick(idx)}
+                      >
+                        <td className="py-2">
+                          <div className="flex items-center">
+                            <span className="ml-2 rtl:mr-2 font-semibold">
+                              {row.category}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2">
+                          <span className="capitalize">{row.ticker}</span>
+                        </td>
+                        <td className="py-2">{row.qty}</td>
+                        <td className="py-2">
+                          <div className="flex items-center gap-2">
+                            <span className="badge-dot bg-emerald-500"></span>
+                            <span className="capitalize font-semibold text-emerald-500">
+                              In Stock
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-2">
+                          <span>${row.price}</span>
+                        </td>
+                        <td className="py-2">
+                          <div className="flex justify-end text-lg">
+                            <span className="cursor-pointer p-2 hover:text-indigo-600">
+                              <BsFillPencilFill onClick={() => editRow(idx)} />
+                            </span>
+                            <span className="cursor-pointer p-2 hover:text-red-500">
+                              <BsFillTrashFill onClick={() => deleteRow(idx)} />
+                            </span>
+                          </div>
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
                 </tbody>
-                {isModalOpen && (
-                  <Modal
-                    onSubmit={closeModal}
-                    closeModal={closeModal}
-                    defaultValue={selectedRowData}
-                    position={clickPosition}
-                  />
-                )}
               </table>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default SellBuyTable;
-
-{
-  /* <tr
-                          className={`expanded-view ${
-                            expandedRow === idx ? "bg-gray-100 " : "hidden"
-                          }`}
-                        >
-                          <td colSpan="6">
-                            <div className="expanded-content p-4">
-                              <table className="w-full mx-auto items-center">
-                                <thead className="bg-transparent ">
-                                  <tr>
-                                    <th>Current Market Value</th>
-                                    <th>Percent Change</th>
-                                    <th>Historical Performance</th>
-                                    <th>Asset Allocation</th>
-                                    <th>Expected Return</th>
-                                  </tr>
-                                </thead>
-                                <tbody className="mx-auto divide-x-">
-                                  <tr className="">
-                                    <td className="text-center">739.34</td>
-                                    <td className="text-center">2.36%</td>
-                                    <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto" />
-                                    </td>
-                                    <td className="text-center">Bonds</td>
-                                    <td className="text-center">10.2%</td>
-                                  </tr>
-                                  <tr className="">
-                                    <td className="text-center">739.34</td>
-                                    <td className="text-center">2.36%</td>
-                                    <td className="text-lg font-extrabold text-green-500">
-                                      <GoGraph className="mx-auto" />
-                                    </td>
-                                    <td className="text-center">Bonds</td>
-                                    <td className="text-center">10.2%</td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          </td>
-                        </tr> */
-}
-
-{
-  /* <div className="flex items-center justify-between mt-4">
+            {/* <div className="flex items-center justify-between mt-4">
               <div className="pagination">
                 <span
                   className="pagination-pager pagination-pager-prev pagination-pager-disabled"
@@ -391,5 +295,12 @@ export default SellBuyTable;
                   </div>
                 </div>
               </div>
-            </div> */
-}
+            </div> */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AssetTable;

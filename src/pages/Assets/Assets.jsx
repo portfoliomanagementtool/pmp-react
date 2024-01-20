@@ -1,10 +1,8 @@
-import React from 'react'
-import Line from "../Dashboard/components/Charts/Line";
-import Candle from '../Dashboard/components/Charts/Candle';
-import { Card } from "../Dashboard/components/components";
-
+import React, { useState } from "react";
+import AssetTable from "./components/AssetTable";
 
 const Assets = () => {
+  const [modalOpen, setModalOpen] = useState(false);
   const metrics = [
     {
       title: "Current Value",
@@ -35,38 +33,192 @@ const Assets = () => {
       percentage: "20",
     },
   ];
+  const [rows, setRows] = useState([
+    {
+      category: "Technology",
+      ticker: "AAPL",
+      price: 150.5,
+      avgBasis: 140.25,
+      qty: 100,
+      marketValue: 15050.0,
+      costBasis: 14025.0,
+      profitLoss: 1025.0,
+      percentPL: 7.32,
+      portfolioPercent: 12.5,
+      categoryPercent: 10.2,
+      // status: "live",
+    },
+    {
+      category: "Finance",
+      ticker: "GS",
+      price: 380.75,
+      avgBasis: 375.5,
+      qty: 50,
+      marketValue: 19037.5,
+      costBasis: 18775.0,
+      profitLoss: 262.5,
+      percentPL: 1.4,
+      portfolioPercent: 8.3,
+      categoryPercent: 9.1,
+      // status: "draft",
+    },
+    {
+      category: "Healthcare",
+      ticker: "PFE",
+      price: 45.2,
+      avgBasis: 47.1,
+      qty: 200,
+      marketValue: 9040.0,
+      costBasis: 9420.0,
+      profitLoss: -380.0,
+      percentPL: -4.03,
+      portfolioPercent: 9.7,
+      categoryPercent: 11.8,
+      // status: "error",
+    },
+    {
+      category: "Energy",
+      ticker: "XOM",
+      price: 62.85,
+      avgBasis: 64.2,
+      qty: 150,
+      marketValue: 9427.5,
+      costBasis: 9630.0,
+      profitLoss: -202.5,
+      percentPL: -2.1,
+      portfolioPercent: 7.1,
+      categoryPercent: 8.5,
+      // status: "live",
+    },
+    {
+      category: "Consumer Goods",
+      ticker: "TSLA",
+      price: 750.2,
+      avgBasis: 740.0,
+      qty: 60,
+      marketValue: 45012.0,
+      costBasis: 44400.0,
+      profitLoss: 612.0,
+      percentPL: 1.38,
+      portfolioPercent: 10.2,
+      categoryPercent: 10.2,
+      // status: "draft",
+    },
+    {
+      category: "Transportation",
+      ticker: "DAL",
+      price: 42.65,
+      avgBasis: 40.75,
+      qty: 130,
+      marketValue: 5544.5,
+      costBasis: 5307.5,
+      profitLoss: 237.0,
+      percentPL: 4.47,
+      portfolioPercent: 6.2,
+      categoryPercent: 7.3,
+      // status: "live",
+    },
+    {
+      category: "Technology",
+      ticker: "GOOGL",
+      price: 2600.75,
+      avgBasis: 2650.25,
+      qty: 30,
+      marketValue: 78022.5,
+      costBasis: 79507.5,
+      profitLoss: -1485.0,
+      percentPL: -1.87,
+      portfolioPercent: 18.3,
+      categoryPercent: 10.1,
+      // status: "error",
+    },
+    {
+      category: "Finance",
+      ticker: "JPM",
+      price: 160.4,
+      avgBasis: 156.75,
+      qty: 80,
+      marketValue: 12832.0,
+      costBasis: 12540.0,
+      profitLoss: 292.0,
+      percentPL: 2.32,
+      portfolioPercent: 5.5,
+      categoryPercent: 9.9,
+      // status: "live",
+    },
+    {
+      category: "Healthcare",
+      ticker: "MRNA",
+      price: 300.6,
+      avgBasis: 290.75,
+      qty: 40,
+      marketValue: 12024.0,
+      costBasis: 11630.0,
+      profitLoss: 394.0,
+      percentPL: 3.39,
+      portfolioPercent: 4.7,
+      categoryPercent: 10.9,
+      // status: "draft",
+    },
+    {
+      category: "Energy",
+      ticker: "CVX",
+      price: 104.5,
+      avgBasis: 105.75,
+      qty: 100,
+      marketValue: 10450.0,
+      costBasis: 10575.0,
+      profitLoss: -125.0,
+      percentPL: -1.18,
+      portfolioPercent: 3.8,
+      categoryPercent: 7.8,
+      // status: "error",
+    },
+  ]);
+  const ProfitData = [
+    { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
+    { title: "Day P/L", Amount: "2456", percentage: "+2456(+0.27%)" },
+    {
+      title: "Overall P/L",
+      Amount: "4556456",
+      percentage: "-12222.56(-3.47%)",
+    },
+  ];
+  const [rowToEdit, setRowToEdit] = useState(null);
+  const handleDeleteRow = (targetIndex) => {
+    setRows(rows.filter((_, idx) => idx !== targetIndex));
+  };
+
+  const handleEditRow = (idx) => {
+    setRowToEdit(rows[idx]);
+    // const rowToEdit = rows[idx];
+    setModalOpen(true);
+  };
+
+  const handleSubmit = (newRow) => {
+    rowToEdit === null
+      ? setRows([...rows, newRow])
+      : setRows(
+          rows.map((currRow, idx) => {
+            if (idx !== rowToEdit) return currRow;
+
+            return newRow;
+          })
+        );
+  };
   return (
     <>
-    <div className='grid grid-cols-3'>
-        <div className='col-span-3 row-span-2'>
-        <div
-            className="card 2xl:col-span-8 xl:col-span-7 card-border"
-            role="presentation"
-          > 
-         <div className="card-body">
-              <div className="flex items-center justify-between">
-                <h4>ASSETS</h4>
-                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-                  Export Report
-                </button>
-              </div>
-              <div className="chartRef">
-                <div className="min-h-[395px]">
-                  <Candle />
-                </div>
-              </div>
-            </div>
-            </div>
-            </div>
-            </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
-            {metrics.map((metric) => (
-              <Card key={metric.title} {...metric} />
-            ))}
-          </div>
+        <AssetTable
+            rows={rows}
+            deleteRow={handleDeleteRow}
+            editRow={handleEditRow} 
+          />
+
           </>
   
   )
 }
 
 export default Assets
+
+

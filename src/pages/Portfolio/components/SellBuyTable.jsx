@@ -14,8 +14,8 @@ import { GoGraph } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
-import BuySellModal from "./BuySellModal";
-import Modal from "./Modal";
+import BuySellModal from "./Modals/BuySellModal";
+import Modal from "./Modals/Modal";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();

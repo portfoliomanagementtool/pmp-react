@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SellBuyTable from "./components/SellBuyTable";
-import Modal from "./components/Modal";
+import Modal from "./components/Modals/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
 import Line from "../Dashboard/components/Charts/Line";

@@ -276,9 +276,6 @@ const Portfolio = () => {
         {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
           <SellBuyTable
             rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow}
-           
           />
           {/* <button
             onClick={() => {

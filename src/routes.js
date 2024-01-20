@@ -25,9 +25,9 @@ const routes = [
       <SignedIn>
         <DashboardLayout />
       </SignedIn>
-      <SignedOut>
+      {/* <SignedOut>
         <LandingPage />
-      </SignedOut>
+      </SignedOut> */}
     </>,
     children: [
       {

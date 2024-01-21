@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import TopListing from "../Analytics/components/TopListing";
 import { CiCalendar } from "react-icons/ci";
+import Statistic from "../Portfolio/components/Charts/Statistic";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -130,15 +131,15 @@ const Dashboard = () => {
     //   percentage: "20%",
     // },
     {
-      title: "Day P/L",
-      value: "₹ 20,000",
-      type: "red",
+      title: "Invested Value",
+      value: "₹ 1,00,000",
+      type: "green",
       relativeValue: "₹ 20K",
       percentage: "20",
     },
     {
-      title: "Total P/L",
-      value: "₹ 1,00,000",
+      title: "Day P/L",
+      value: "₹ 20,000",
       type: "red",
       relativeValue: "₹ 20K",
       percentage: "20",
@@ -268,50 +269,21 @@ const Dashboard = () => {
             ))}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="card col-span-2 card-border" role="presentation">
-              <div className="card-body">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-semibold">Monthly Investment</h4>
-                  <div className="segment flex">
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-200 active:text-gray-700 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "monthly"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("monthly")}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "weekly"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("weekly")}
-                    >
-                      Weekly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "daily"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("daily")}
-                    >
-                      Daily
-                    </button>
-                  </div>
-                </div>
-                <div className="chartRef">
-                  <div style={{ minHeight: "395px" }}>
-                    <Bar />
+          <div
+            className="card col-span-2 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>Statistic</h4>
+              <div className="mt-4">
+                <div className="chartRef min-h-[365px]">
+                  <div>
+                    <Statistic />
                   </div>
                 </div>
               </div>
             </div>
+          </div>
             <div className="card card-border" role="presentation">
               <div className="card-body">
                 <h4>Equity Distribution</h4>

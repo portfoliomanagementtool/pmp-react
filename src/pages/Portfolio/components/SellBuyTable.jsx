@@ -14,8 +14,8 @@ import { GoGraph } from "react-icons/go";
 import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
-import BuySellModal from "./BuySellModal";
-import Modal from "./Modal";
+import BuySellModal from "./Modals/BuySellModal";
+import Modal from "./Modals/Modal";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -36,10 +36,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const [selectedRowID, setSelectedRowID] = useState(null);
 
   const openModal = (e, rowData, idx) => {
-    setSelectedRowID(idx);
-    setClickPosition({ top: e.clientY, left: e.clientX });
     setModalOpen(true);
-
     setSelectedRowData(rowData);
   };
 
@@ -48,8 +45,8 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     setSelectedRowData(null);
   };
 
-  const editRow = ({ category, price, quantity, ticker, action = "BUY" }) => {
-    dispatch(saveEditAsset({ category, price, quantity, ticker, action }));
+  const editRow = ({ ticker, quantity, price, category, action = "BUY" }) => {
+    dispatch(saveEditAsset({ ticker, quantity, price, category, action }));
     navigate("/app/asset/edit");
   };
 
@@ -198,13 +195,13 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2 flex">
                             <div className="flex justify-end text-lg">
                               <span
-                                onClick={(e) => editRow(e, row)}
+                                onClick={() => editRow(row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
                               </span>
                             </div>
-                            <div className="flex  justify-end text-lg">
+                            <div className="flex justify-end text-lg">
                               <span
                                 onClick={(e) => openModal(e, row, row.id)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
@@ -218,13 +215,12 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     );
                   })}
                 </tbody>
-                {isModalOpen && selectedRowID !== null && (
+                {isModalOpen && (
                   <Modal
                     onSubmit={closeModal}
                     closeModal={closeModal}
                     defaultValue={selectedRowData}
                     position={clickPosition}
-                    rowID={selectedRowID}
                   />
                 )}
               </table>

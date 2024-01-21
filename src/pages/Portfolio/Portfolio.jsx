@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import SellBuyTable from "./components/SellBuyTable";
-import Modal from "./components/Modal";
+import Modal from "./components/Modals/Modal";
 import Metrics from "../Dashboard/components/Metrics";
 import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
 import Line from "../Dashboard/components/Charts/Line";
@@ -366,9 +366,6 @@ const Portfolio = () => {
         {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
           <SellBuyTable
             rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow}
-           
           />
           {/* <button
             onClick={() => {

@@ -71,9 +71,13 @@ const Calendar = ({ onClose }) => {
               <div
                 key={date.format("YYYY-MM-DD")}
                 className={`rounded-full text-center p-2 cursor-pointer border ${
-                  date.isSame(selectedDate, "day") ? "bg-gray-500 text-white" : ""
+                  date.isSame(selectedDate, "day")
+                    ? "bg-gray-500 text-white"
+                    : ""
                 }${
-                  date.isSame(today, "day") ? " border-2 bg-red-500 text-white" : ""
+                  date.isSame(today, "day")
+                    ? " border-2 bg-red-500 text-white"
+                    : ""
                 }`}
                 onClick={() => handleDateClick(date)}
               >
@@ -87,20 +91,32 @@ const Calendar = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="modal bg-white w-96 p-6 rounded-md">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-semibold">Calendar</h3>
-          <button
-            className="text-gray-600 hover:text-gray-800"
-            onClick={onClose}
-          >
-            Close
-          </button>
-        </div>
+    // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+    //   <div className="modal bg-white w-96 p-6 rounded-md">
+    //     <div className="flex justify-between items-center mb-4">
+    //       <h3 className="text-xl font-semibold">Calendar</h3>
+    //       <button
+    //         className="text-gray-600 hover:text-gray-800"
+    //         onClick={onClose}
+    //       >
+    //         Close
+    //       </button>
+    //     </div>
+    <>
+      <div
+        className="absolute w-80 p-3 top-12 left-0 bg-white shadow-lg border "
+        style={{
+          transform: "translate(829.6px, 78.4px);",
+          zIndex: "40",
+          willChange: "transform",
+          borderRadius: "0.5rem"
+        }}
+      >
         {renderCalendar()}
       </div>
-    </div>
+    </>
+    //   </div>
+    // </div>
   );
 };
 

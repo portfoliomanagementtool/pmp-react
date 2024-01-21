@@ -4,10 +4,11 @@ import { useNavigate } from "react-router";
 import { MdOutlineReadMore, MdChecklistRtl } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import BuySellModal from "./BuySellModal";
+import MoreDetailsModal from "./MoreDetailsModal";
 
 const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
   const navigate = useNavigate();
-
+  const [moreDetailsModalOpen, setMoreDetailsModalOpen] = useState(false);
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -20,17 +21,23 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
     {
       icon: <MdOutlineReadMore />,
       category: "More Details",
-      goesTo: ""
+      goesTo: () => {
+        setMoreDetailsModalOpen(true);
+      },
     },
     {
       icon: <FiSearch />,
       category: "View Asset",
-      goesTo: "/app/asset/view"
+      goesTo: () => {
+        navigate("/app/asset/view");
+      },
     },
     {
       icon: <MdChecklistRtl />,
       category: "Add to Watchlist",
-      goesTo: "/app/watchlist"
+      goesTo: () => {
+        navigate("/app/watchlist");
+      },
     },
   ];
 
@@ -134,20 +141,22 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
                   >
                     {obj.icon}
                   </td>
-                  <span className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600" >
-                    <a href={obj.goesTo}>{obj.category}</a>
+                  <span
+                    className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600"
+                    onClick={obj.goesTo}
+                  >
+                    {obj.category}
                   </span>
                 </tr>
               );
             })}
           </div>
-          {/* <button
-            type="submit"
-            className="bg-blue-600 flex mx-auto text-white px-4 py-2 mt-3 rounded cursor-pointer"
-            onClick={handleSubmit}
-          >
-            Edit
-          </button> */}
+          {moreDetailsModalOpen && (
+            <MoreDetailsModal
+              closeModal={() => setMoreDetailsModalOpen(false)}
+              defaultValue={defaultValue}
+            />
+          )}
         </div>
       </div>
     </div>

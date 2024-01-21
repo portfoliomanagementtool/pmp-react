@@ -228,7 +228,7 @@ const Portfolio = () => {
     // Handle other logic based on the button type if needed
   };
   return (
-    <div className="flex font-poppins">
+    <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {metrics.map((metric) => (

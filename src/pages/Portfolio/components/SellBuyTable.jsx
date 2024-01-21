@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { BsFillTrashFill, BsFillPencilFill, BsThreeDotsVertical } from "react-icons/bs";
+import {
+  BsFillTrashFill,
+  BsFillPencilFill,
+  BsThreeDotsVertical,
+} from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
@@ -28,9 +32,14 @@ const SellBuyTable = ({ rows, deleteRow }) => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
+  const [selectedRowID, setSelectedRowID] = useState(null);
 
-  const openModal = (rowData) => {
+  const openModal = (e, rowData, idx) => {
+    setSelectedRowID(idx);
+    setClickPosition({ top: e.clientY, left: e.clientX });
     setModalOpen(true);
+
     setSelectedRowData(rowData);
   };
 
@@ -156,7 +165,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 <tbody className="">
                   {rows.map((row, idx) => {
                     return (
-                      <React.Fragment key={idx}>
+                      <React.Fragment key={row.id}>
                         <tr
                           className={`cursor-pointer ${
                             expandedRow === idx
@@ -189,15 +198,15 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2 flex">
                             <div className="flex justify-end text-lg">
                               <span
-                                onClick={() => editRow(row)}
+                                onClick={(e) => editRow(e, row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
                               </span>
                             </div>
-                            <div className="flex justify-end text-lg">
+                            <div className="flex  justify-end text-lg">
                               <span
-                                onClick={() => openModal(row)}
+                                onClick={(e) => openModal(e, row, row.id)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsThreeDotsVertical />
@@ -205,7 +214,32 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             </div>
                           </td>
                         </tr>
-                        {/* <tr
+                      </React.Fragment>
+                    );
+                  })}
+                </tbody>
+                {isModalOpen && selectedRowID !== null && (
+                  <Modal
+                    onSubmit={closeModal}
+                    closeModal={closeModal}
+                    defaultValue={selectedRowData}
+                    position={clickPosition}
+                    rowID={selectedRowID}
+                  />
+                )}
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SellBuyTable;
+
+{
+  /* <tr
                           className={`expanded-view ${
                             expandedRow === idx ? "bg-gray-100 " : "hidden"
                           }`}
@@ -245,21 +279,11 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               </table>
                             </div>
                           </td>
-                        </tr> */}
-                      </React.Fragment>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-            {isModalOpen && (
-              <Modal
-                onSubmit={closeModal}
-                closeModal={closeModal}
-                defaultValue={selectedRowData}
-              />
-            )}
-            {/* <div className="flex items-center justify-between mt-4">
+                        </tr> */
+}
+
+{
+  /* <div className="flex items-center justify-between mt-4">
               <div className="pagination">
                 <span
                   className="pagination-pager pagination-pager-prev pagination-pager-disabled"
@@ -371,12 +395,5 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                   </div>
                 </div>
               </div>
-            </div> */}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default SellBuyTable;
+            </div> */
+}

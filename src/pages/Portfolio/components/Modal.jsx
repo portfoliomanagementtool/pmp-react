@@ -5,9 +5,9 @@ import { MdOutlineReadMore, MdChecklistRtl } from "react-icons/md";
 import { FiSearch } from "react-icons/fi";
 import BuySellModal from "./BuySellModal";
 
-const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
+const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
   const navigate = useNavigate();
-  
+
   const [formState, setFormState] = useState(
     defaultValue || {
       category: "",
@@ -20,14 +20,17 @@ const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
     {
       icon: <MdOutlineReadMore />,
       category: "More Details",
+      goesTo: ""
     },
     {
       icon: <FiSearch />,
       category: "View Asset",
+      goesTo: "/app/asset/view"
     },
     {
       icon: <MdChecklistRtl />,
       category: "Add to Watchlist",
+      goesTo: "/app/watchlist"
     },
   ];
 
@@ -59,7 +62,6 @@ const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
     }
   };
 
-  
   const handleChange = (e) => {
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
@@ -78,9 +80,9 @@ const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
+    <div className="absolute overflow-x-hidden inset-0 z-50 flex items-center justify-center left-[55%] mt-6">
       <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
-      <div className="modal bg-white w-56 p-6 rounded-md z-10 -mr-[55%]">
+      <div className="modal bg-white w-56 p-6 rounded-md z-10 ">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">Asset Details</h3>
           <button
@@ -117,7 +119,6 @@ const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
               defaultValue={defaultValue}
             />
           )}
-
         </div>
         <div>
           <div className="w-full  mx-auto">
@@ -128,13 +129,13 @@ const   Modal = ({ onSubmit, closeModal, defaultValue }) => {
                   className="w-full flex justify-start bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
                 >
                   <td
-                    className="py-4 pr-6 flex text-xl font-bold text-gray-900 dark:text-white"
+                    className="py-4 pr-6 pl-2 flex text-xl font-bold text-gray-900 dark:text-white"
                     size={36}
                   >
                     {obj.icon}
                   </td>
-                  <span className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600">
-                    {obj.category}
+                  <span className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600" >
+                    <a href={obj.goesTo}>{obj.category}</a>
                   </span>
                 </tr>
               );

@@ -5,7 +5,12 @@ import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 
-const BuySellModal = ({ onSubmit, closeModal, defaultValue, initialChecked }) => {
+const BuySellModal = ({
+  onSubmit,
+  closeModal,
+  defaultValue,
+  initialChecked,
+}) => {
   const navigate = useNavigate();
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
@@ -96,7 +101,7 @@ const BuySellModal = ({ onSubmit, closeModal, defaultValue, initialChecked }) =>
             SELL
           </div>
         </div>
-        <div className="capitalize text-2xl ml-3">{formState.category}</div>
+        <h3 className="text-xl font-semibold">{formState.category}</h3>
         <div className="mt-5">
           <Box
             component="form"

@@ -7,6 +7,7 @@ import BuySellModal from "./BuySellModal";
 import MoreDetailsModal from "./MoreDetailsModal";
 
 const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
+  console.log(defaultValue);
   const navigate = useNavigate();
   const [moreDetailsModalOpen, setMoreDetailsModalOpen] = useState(false);
   const [formState, setFormState] = useState(
@@ -38,7 +39,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
       icon: <MdChecklistRtl />,
       category: "Add to Watchlist",
       goesTo: () => {
-        navigate("/app/watchlist");
+        navigate("/app/watchlist", { state: { defaultValue:formState } });
       },
     },
   ];

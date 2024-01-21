@@ -18,6 +18,8 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
       quantity: 0,
     }
   );
+  const [renderWatchlist, setRenderWatchlist] = useState(false);
+
   console.log("hi")
 
   const history = [

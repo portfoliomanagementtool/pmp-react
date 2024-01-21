@@ -38,21 +38,21 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const [isRowModalOpen, setRowModalOpen] = useState(false);
   const [rowModalData, setRowModalData] = useState(null);
 
-  const handleRowMouseEnter = (e, rowData) => {
-    console.log("Mouse Enter Triggered");
-    const rect = e.target.getBoundingClientRect();
-    setRowModalData(rowData);
-    setRowModalOpen(true);
-    setClickPosition({
-      top: rect.top + window.scrollY,
-      left: rect.left + window.scrollX,
-    });
-  };
+  // const handleRowMouseEnter = (e, rowData) => {
+  //   console.log("Mouse Enter Triggered");
+  //   const rect = e.target.getBoundingClientRect();
+  //   setRowModalData(rowData);
+  //   setRowModalOpen(true);
+  //   setClickPosition({
+  //     top: rect.top + window.scrollY,
+  //     left: rect.left + window.scrollX,
+  //   });
+  // };
 
-  const handleRowMouseLeave = () => {
-    setRowModalOpen(false);
-    setRowModalData(null);
-  };
+  // const handleRowMouseLeave = () => {
+  //   setRowModalOpen(false);
+  //   setRowModalData(null);
+  // };
 
   const openModal = (e, rowData, idx) => {
     setModalOpen(true);
@@ -222,10 +222,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             </div>
                             <div className="flex justify-end text-lg">
                               <span
-                                onMouseEnter={(e) =>
-                                  handleRowMouseEnter(e, row)
-                                }
-                                onMouseLeave={handleRowMouseLeave}
+                                onClick={(e)=>openModal(e,row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsThreeDotsVertical />
@@ -240,7 +237,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 {isModalOpen && (
                   <Modal
                     onSubmit={closeModal}
-                    closeModal={handleRowMouseLeave}
+                    closeModal={closeModal}
                     defaultValue={selectedRowData}
                     position={clickPosition}
                   />

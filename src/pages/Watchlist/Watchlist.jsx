@@ -7,12 +7,23 @@ const Watchlist = () => {
   const [watchlist, setWatchlist] = useState([]);
 
   useEffect(() => {
-    console.log(watchlist)
+    // Load watchlist from local storage on component mount
+    const storedWatchlist = JSON.parse(localStorage.getItem('watchlist')) || [];
+    setWatchlist(storedWatchlist);
+  }, []);
+
+  useEffect(() => {
+    // Update local storage whenever watchlist changes
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+  }, [watchlist]);
+
+  useEffect(() => {
+    // Append defaultValue to watchlist when it changes
     if (defaultValue) {
       setWatchlist((prevWatchlist) => [...prevWatchlist, defaultValue]);
     }
-  }, [defaultValue]);
-
+  }, [defaultValue]); 
+  
   return (
     <div className="card card-border" role="presentation">
       <div className="card h-full border-0 card-border" role="presentation">

@@ -17,11 +17,12 @@ import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
 
+
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState(null);
-
+  
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
       setExpandedRow(null);
@@ -34,6 +35,24 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
   const [selectedRowID, setSelectedRowID] = useState(null);
+  const [isRowModalOpen, setRowModalOpen] = useState(false);
+  const [rowModalData, setRowModalData] = useState(null);
+
+  const handleRowMouseEnter = (e, rowData) => {
+    console.log("Mouse Enter Triggered");
+    const rect = e.target.getBoundingClientRect();
+    setRowModalData(rowData);
+    setRowModalOpen(true);
+    setClickPosition({
+      top: rect.top + window.scrollY,
+      left: rect.left + window.scrollX,
+    });
+  };
+
+  const handleRowMouseLeave = () => {
+    setRowModalOpen(false);
+    setRowModalData(null);
+  };
 
   const openModal = (e, rowData, idx) => {
     setModalOpen(true);
@@ -203,7 +222,10 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             </div>
                             <div className="flex justify-end text-lg">
                               <span
-                                onClick={(e) => openModal(e, row, row.id)}
+                                onMouseEnter={(e) =>
+                                  handleRowMouseEnter(e, row)
+                                }
+                                onMouseLeave={handleRowMouseLeave}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsThreeDotsVertical />
@@ -218,7 +240,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 {isModalOpen && (
                   <Modal
                     onSubmit={closeModal}
-                    closeModal={closeModal}
+                    closeModal={handleRowMouseLeave}
                     defaultValue={selectedRowData}
                     position={clickPosition}
                   />

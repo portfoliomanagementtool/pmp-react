@@ -109,7 +109,6 @@ const Candle = () => {
        
         ]
       },
-      // Add more data points as needed
     ];
   
   

@@ -4,18 +4,7 @@ import Chart from "react-apexcharts";
 
 const Candle = () => {
     const series= [{
-        data:[{
-            x: new Date(15387786),
-            y: [6629.81, 6650.5, 6623.04, 6633.33]
-          },
-          {
-            x: new Date(15387804),
-            y: [6632.01, 6643.59, 6620, 6630.11]
-          },
-          {
-            x: new Date(15387827),
-            y: [6630.71, 6648.95, 6623.34, 6635.65]
-          },
+        data:[
           {
             x: new Date(1538784000000),
             y: [6635.65, 6651, 6629.67, 6638.24]
@@ -246,7 +235,6 @@ const Candle = () => {
           },
         ]
       },
-      // Add more data points as needed
     ];
   
   
@@ -277,12 +265,7 @@ const Candle = () => {
         enabled: true,
       },
       xaxis: {
-        type: 'category',
-        labels: {
-          formatter: function(val) {
-            return dayjs(val).format('MMM DD HH:mm')
-          }
-        }
+        type: 'datetime',
       },
       yaxis: {
         tooltip: {

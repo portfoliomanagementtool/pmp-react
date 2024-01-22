@@ -11,13 +11,9 @@ const Card = ({ title, type, value, relativeValue, percentage }) => {
             <h3 className="font-bold">
               <span>{value}</span>
             </h3>
-            <p>
-              from <span className="font-semibold">Start Date</span> to{" "}
-              <span className="font-semibold">Current Date</span>
-            </p>
           </div>
           {type === "green" ? (
-            <div className="tag gap-1 font-bold border-0 text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 dark:text-emerald-100">
+            <div className="tag gap-1 font-bold border-0 text-emerald-600 bg-emerald-100 dark:bg-emerald-500/20 dark:text-emerald-100">
               <span>
                 <FaArrowUp />
               </span>
@@ -26,7 +22,7 @@ const Card = ({ title, type, value, relativeValue, percentage }) => {
               </span>
             </div>
           ) : (
-            <div className="tag gap-1 font-bold border-0 text-red-600 dark:text-red-500 bg-red-100 dark:bg-red-500/20 dark:text-red-100">
+            <div className="tag gap-1 font-bold border-0 text-red-600 bg-red-100 dark:bg-red-500/20 dark:text-red-100">
               <span>
                 <FaArrowDown />
               </span>

@@ -10,8 +10,8 @@ const ViewAsset = () => {
   const { edit } = useSelector((state) => state.asset);
   const metrics = [
     {
-      title: "Current Price",
-      value: "₹ 1,20,000",
+      title: "AVERAGE PRICE",
+      value: "₹138",
       type: "green",
       relativeValue: "₹ 20K",
       percentage: "20",
@@ -24,14 +24,14 @@ const ViewAsset = () => {
     //   percentage: "20%",
     // },
     {
-      title: "Day P/L",
+      title: "CURRENT VALUE",
       value: "₹ 20,000",
       type: "red",
       relativeValue: "₹ 20K",
       percentage: "20",
     },
     {
-      title: "Total P/L",
+      title: "UNREALISED P&L",
       value: "₹ 1,00,000",
       type: "red",
       relativeValue: "₹ 20K",

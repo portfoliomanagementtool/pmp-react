@@ -11,42 +11,42 @@ const Watchlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const defaultValue = location.state?.defaultValue || {};
-  const [watch, setWatch] = useState([]);
+  const [watchAsset, setWatchAsset] = useState([]);
   const [rowToEdit, setRowToEdit] = useState(null);
 
   useEffect(() => {
     try {
-      const storedWatchlist = JSON.parse(localStorage.getItem("watch")) || [];
-      setWatch(storedWatchlist);
+      const storedWatchlist = JSON.parse(localStorage.getItem("watchAsset")) || [];
+      setWatchAsset(storedWatchlist);
     } catch (error) {
       console.error("Error parsing watchlist from local storage:", error);
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("watch", JSON.stringify(watch));
-  }, [watch]);
+    localStorage.setItem("watchAsset", JSON.stringify(watchAsset));
+  }, [watchAsset]);
 
   useEffect(() => {
-    if (defaultValue && !watch.includes(defaultValue)) {
-      setWatch((prevWatchlist) => [...prevWatchlist, defaultValue]);
+    if (defaultValue && !watchAsset.includes(defaultValue)) {
+      setWatchAsset((prevWatchlist) => [...prevWatchlist, defaultValue]);
     }
   }, [defaultValue]);
 
   const handleRowClick = (idx) => {
-    const selectedAsset = watch[idx];
+    const selectedAsset = watchAsset[idx];
 
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
-  console.log(watch);
+  // console.log(watch);
 
   const deleteRow = (targetIndex) => {
-    setWatch(watch.filter((_, idx) => idx !== targetIndex));
+    setWatchAsset(watchAsset.filter((_, idx) => idx !== targetIndex));
   };
 
   const editRow = (idx) => {
-    setRowToEdit(watch[idx]);
+    setRowToEdit(watchAsset[idx]);
   };
 
   return (
@@ -156,7 +156,7 @@ const Watchlist = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {watch.map((row, idx) => (
+                  {watchAsset.map((row, idx) => (
                     <tr
                       key={idx}
                       className="cursor-pointer"

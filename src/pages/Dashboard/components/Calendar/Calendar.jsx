@@ -2,9 +2,32 @@ import React, { useState } from "react";
 import dayjs from "dayjs";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 
-const Calendar = ({ onClose }) => {
+const Calendar = ({ onClose, onSelectDateRange }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const today = dayjs();
+
+  const handleMonthChange = (monthsToAdd) => {
+    setSelectedDate(selectedDate.add(monthsToAdd, "month"));
+  };
+
+  const handleDateClick = (date) => {
+    if (!selectedStartDate) {
+      setSelectedStartDate(date);
+      setSelectedEndDate(null);
+    } else if (!selectedEndDate || date.isBefore(selectedStartDate)) {
+      setSelectedEndDate(date);
+    } else {
+      setSelectedStartDate(date);
+      setSelectedEndDate(null);
+    }
+  };
+
+  const handleSubmit = () => {
+    onSelectDateRange(selectedStartDate, selectedEndDate);
+    onClose();
+  };
 
   const generateMonthMatrix = (date) => {
     const startOfMonth = date.startOf("month").startOf("week");
@@ -27,15 +50,6 @@ const Calendar = ({ onClose }) => {
     }
 
     return matrix;
-  };
-
-  const handleDateClick = (date) => {
-    setSelectedDate(date);
-    // Handle date selection logic here
-  };
-
-  const handleMonthChange = (monthsToAdd) => {
-    setSelectedDate(selectedDate.add(monthsToAdd, "month"));
   };
 
   const renderCalendar = () => {
@@ -75,8 +89,13 @@ const Calendar = ({ onClose }) => {
                     ? "bg-gray-500 text-white"
                     : ""
                 }${
-                  date.isSame(today, "day")
-                    ? " border-2 bg-red-500 text-white"
+                  (selectedStartDate &&
+                    selectedEndDate &&
+                    date.isAfter(selectedStartDate, "day") &&
+                    date.isBefore(selectedEndDate, "day")) ||
+                  date.isSame(selectedStartDate, "day") ||
+                  date.isSame(selectedEndDate, "day")
+                    ? "bg-blue-200"
                     : ""
                 }`}
                 onClick={() => handleDateClick(date)}
@@ -86,22 +105,20 @@ const Calendar = ({ onClose }) => {
             ))
           )}
         </div>
+        <div className="mt-4 flex justify-center">
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            onClick={handleSubmit}
+            disabled={!selectedStartDate || !selectedEndDate}
+          >
+            OK
+          </button>
+        </div>
       </div>
     );
   };
 
   return (
-    // <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-    //   <div className="modal bg-white w-96 p-6 rounded-md">
-    //     <div className="flex justify-between items-center mb-4">
-    //       <h3 className="text-xl font-semibold">Calendar</h3>
-    //       <button
-    //         className="text-gray-600 hover:text-gray-800"
-    //         onClick={onClose}
-    //       >
-    //         Close
-    //       </button>
-    //     </div>
     <>
       <div
         className="absolute w-80 p-3 top-12 left-0 bg-white shadow-lg border "
@@ -109,14 +126,12 @@ const Calendar = ({ onClose }) => {
           transform: "translate(829.6px, 78.4px);",
           zIndex: "40",
           willChange: "transform",
-          borderRadius: "0.5rem"
+          borderRadius: "0.5rem",
         }}
       >
         {renderCalendar()}
       </div>
     </>
-    //   </div>
-    // </div>
   );
 };
 

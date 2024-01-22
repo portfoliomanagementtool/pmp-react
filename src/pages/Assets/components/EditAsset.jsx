@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import Line from "./charts/Line";
 
-
 const EditAsset = () => {
   const { edit } = useSelector((state) => state.asset);
   const [errors, setErrors] = useState("");

@@ -13,6 +13,7 @@ import { FaMoneyBill } from "react-icons/fa";
 import MenuGroup from '../Menu/MenuGroup';
 import { useSelector } from 'react-redux';
 import SideNavModal from '../Modals/SideNavModal';
+import { HiOutlineDocumentReport } from "react-icons/hi";
 
 const SideNav = () => {
   const collapsed = useSelector((state) => state.config.collapsed);
@@ -42,7 +43,18 @@ const SideNav = () => {
         { id: "view-asset", name: "View Asset", path: "/app/asset/view" },
         { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
       ]
-    }, {
+    },{
+      id: "reports",
+      name: "Reports",
+      icon: <HiOutlineDocumentReport />,
+      path: "/app/reports",
+      dropDown: true,
+      subMenu: [
+        { id: "order-asset", name: "Orders", path: "/app/reports/orders" },
+        { id: "positions-asset", name: "Positions", path: "/app/reports/positions" },
+      ]
+    },
+     {
       id: "watchlist",
       name: "Watchlist",
       icon: <MdChecklistRtl />,

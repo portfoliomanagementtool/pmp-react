@@ -7,6 +7,7 @@ import BuySellModal from "./BuySellModal";
 import MoreDetailsModal from "./MoreDetailsModal";
 
 const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
+  console.log(defaultValue);
   const navigate = useNavigate();
   const [moreDetailsModalOpen, setMoreDetailsModalOpen] = useState(false);
   const [formState, setFormState] = useState(
@@ -17,6 +18,10 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
       quantity: 0,
     }
   );
+  const [renderWatchlist, setRenderWatchlist] = useState(false);
+
+  console.log("hi")
+
   const history = [
     {
       icon: <MdOutlineReadMore />,
@@ -36,7 +41,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
       icon: <MdChecklistRtl />,
       category: "Add to Watchlist",
       goesTo: () => {
-        navigate("/app/watchlist");
+        navigate("/app/watchlist", { state: { defaultValue:formState } });
       },
     },
   ];
@@ -44,10 +49,11 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
   const [errors, setErrors] = useState("");
   const [activeTab, setActiveTab] = useState("buy");
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
+
   const closeBuySellModal = () => {
     setSellBuyModalOpen(false);
-    // setSelectedRowData(null);
   };
+
   const handleTabClick = (tab) => {
     setActiveTab(tab);
     setSellBuyModalOpen(true);
@@ -87,9 +93,8 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
   };
 
   return (
-    <div className="absolute overflow-x-hidden inset-0 z-50 flex items-center justify-center left-[55%] mt-6">
-      <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
-      <div className="modal bg-white w-56 p-6 rounded-md z-10 ">
+    <div className="fixed overflow-x-hidden inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="modal bg-white w-72 p-6 rounded-md z-10">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">Asset Details</h3>
           <button
@@ -128,28 +133,23 @@ const Modal = ({ onSubmit, closeModal, defaultValue, position, idx }) => {
           )}
         </div>
         <div>
-          <div className="w-full  mx-auto">
-            {history.map((obj, index) => {
-              return (
-                <tr
-                  key={index}
-                  className="w-full flex justify-start bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
+          <div className="w-full mx-auto">
+            {history.map((obj, index) => (
+              <div
+                key={index}
+                className="w-full flex justify-start bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700"
+              >
+                <div className="py-4 pr-6 pl-2 flex text-xl font-bold text-gray-900 dark:text-white">
+                  {obj.icon}
+                </div>
+                <span
+                  className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600"
+                  onClick={obj.goesTo}
                 >
-                  <td
-                    className="py-4 pr-6 pl-2 flex text-xl font-bold text-gray-900 dark:text-white"
-                    size={36}
-                  >
-                    {obj.icon}
-                  </td>
-                  <span
-                    className="py-4 justify-start text-gray-900 dark:text-white cursor-pointer select-none font-semibold hover:text-gray-600"
-                    onClick={obj.goesTo}
-                  >
-                    {obj.category}
-                  </span>
-                </tr>
-              );
-            })}
+                  {obj.category}
+                </span>
+              </div>
+            ))}
           </div>
           {moreDetailsModalOpen && (
             <MoreDetailsModal

@@ -9,7 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 
 import { useNavigate } from "react-router-dom";
-import OrderStatusChip from "./OrderStatusChip";
+import OrderStatusChip from "./card/OrderStatusChip";
 
 const OrdersTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);

@@ -6,17 +6,17 @@ const OrderStatusChip = ({ status }) => {
 
   switch (status) {
     case "PURCHASED":
-      tagColor = "bg-emerald-500 ";
+      tagColor = "tag gap-1 font-bold border-0 text-emerald-600  bg-emerald-100 dark:bg-emerald-500/20 dark:text-emerald-100";
       arrowIcon = <FaArrowUp />;
       title = "Purchased";
       break;
     case "PENDING":
-      tagColor = "bg-yellow-500";
+      tagColor = "tag gap-1 font-bold border-0 text-yellow-500  bg-yellow-100 dark:bg-yellow-500/20 dark:text-yellow-100";
       arrowIcon = <FaArrowDown />;
       title = "Pending";
       break;
     case "SOLD":
-      tagColor = "bg-red-500";
+      tagColor = "bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-100";
       arrowIcon = <FaArrowDown />;
       title = "Sold";
       break;
@@ -31,7 +31,7 @@ const OrderStatusChip = ({ status }) => {
    
       <div className="card-body">
         <div className="flex justify-between items-center">
-          <div className={`tag gap-1 font-bold border-0 text-white flex items-center justify-center ${tagColor} w-[100px]`}>
+          <div className={`tag gap-1 font-bold border-0  flex items-center justify-center  ${tagColor} w-[100px]`}>
             <span className=''>{title}</span>
           </div>
         </div>

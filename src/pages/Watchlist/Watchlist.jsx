@@ -11,38 +11,42 @@ const Watchlist = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const defaultValue = location.state?.defaultValue || {};
-  const [watch, setWatch] = useState([]);
+  const [watchAsset, setWatchAsset] = useState([]);
   const [rowToEdit, setRowToEdit] = useState(null);
+
   useEffect(() => {
-    const storedWatchlist = JSON.parse(localStorage.getItem("watch")) || [];
-    setWatch(storedWatchlist);
+    try {
+      const storedWatchlist = JSON.parse(localStorage.getItem("watchAsset")) || [];
+      setWatchAsset(storedWatchlist);
+    } catch (error) {
+      console.error("Error parsing watchlist from local storage:", error);
+    }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("watchlist", JSON.stringify(watch));
-  }, [watch]);
+    localStorage.setItem("watchAsset", JSON.stringify(watchAsset));
+  }, [watchAsset]);
 
   useEffect(() => {
-    if (defaultValue && !watch.includes(defaultValue)) {
-      setWatch((prevWatchlist) => [...prevWatchlist, defaultValue]);
+    if (defaultValue && !watchAsset.includes(defaultValue)) {
+      setWatchAsset((prevWatchlist) => [...prevWatchlist, defaultValue]);
     }
-  }, [defaultValue, watch]);
+  }, [defaultValue]);
 
   const handleRowClick = (idx) => {
-    const selectedAsset = watch[idx];
+    const selectedAsset = watchAsset[idx];
 
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
-  console.log(watch);
+  // console.log(watch);
+
   const deleteRow = (targetIndex) => {
-    setWatch(watch.filter((_, idx) => idx !== targetIndex));
+    setWatchAsset(watchAsset.filter((_, idx) => idx !== targetIndex));
   };
 
   const editRow = (idx) => {
-    setRowToEdit(watch[idx]);
-    // const rowToEdit = watchlist[idx];
-    // setModalOpen(true);
+    setRowToEdit(watchAsset[idx]);
   };
 
   return (
@@ -152,7 +156,7 @@ const Watchlist = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {watch.map((row, idx) => (
+                  {watchAsset.map((row, idx) => (
                     <tr
                       key={idx}
                       className="cursor-pointer"
@@ -203,45 +207,3 @@ const Watchlist = () => {
 };
 
 export default Watchlist;
-
-// import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
-
-// const Watchlist = () => {
-//   const location = useLocation();
-//   const defaultValue = location.state?.defaultValue || {};
-//   const [watch, setWatchlist] = useState([]);
-
-//   useEffect(() => {
-//     const storedWatchlist = JSON.parse(localStorage.getItem('watch')) || [];
-//     setWatchlist(storedWatchlist);
-//   }, []);
-
-//   useEffect(() => {
-//     localStorage.setItem('watch', JSON.stringify(watch));
-//   }, [watch]);
-
-//   useEffect(() => {
-//     if (defaultValue) {
-//       setWatchlist((prevWatchlist) => [...prevWatchlist, defaultValue]);
-//     }
-//   }, []);
-
-//   return (
-//     <div className="card card-border" role="presentation">
-//       <div className="card h-full border-0 card-border" role="presentation">
-//         <div className="card-body card-gutterless h-full">
-//           <h3 className="mb-4 lg:mb-0">My Watchlist</h3>
-//           {watch.map((asset, index) => (
-//             <div key={index}>
-//               <h1>{asset.quantity}</h1>
-//               hello
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Watchlist;

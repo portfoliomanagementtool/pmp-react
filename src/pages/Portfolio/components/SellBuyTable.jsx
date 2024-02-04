@@ -17,12 +17,11 @@ import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
 
-
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState(null);
-  
+
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
       setExpandedRow(null);
@@ -211,7 +210,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2">
                             <span>${row.price}</span>
                           </td>
-                          <td className="py-2 flex">
+                          <td className="py-2 flex relative">
                             <div className="flex justify-end text-lg">
                               <span
                                 onClick={() => editRow(row)}
@@ -220,11 +219,12 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                 <BsFillPencilFill />
                               </span>
                             </div>
-                            <div className="flex justify-end text-lg">
-                              <span
-                                onClick={(e)=>openModal(e,row)}
-                                className="cursor-pointer p-2 hover:text-indigo-600"
-                              >
+                            <div
+                              className="flex  justify-end text-lg"
+                              onMouseEnter={(e) => openModal(e, row)}
+                              onMouseLeave={closeModal}
+                            >
+                              <span className="cursor-pointer p-2  hover:text-indigo-600">
                                 <BsThreeDotsVertical />
                               </span>
                             </div>

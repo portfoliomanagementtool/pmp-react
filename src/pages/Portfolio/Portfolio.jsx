@@ -13,7 +13,6 @@ import Donut from "./components/Charts/Donut";
 import { EditAsset } from "../pages";
 import { Bar, Card } from "../Dashboard/components/components";
 
-
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -230,11 +229,11 @@ const Portfolio = () => {
   return (
     <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {metrics.map((metric) => (
-              <Card key={metric.title} {...metric} />
-            ))}
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {metrics.map((metric) => (
+            <Card key={metric.title} {...metric} />
+          ))}
+        </div>
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
           {/* <div
             className="card 2xl:col-span-8 xl:col-span-7 card-border"
@@ -255,51 +254,54 @@ const Portfolio = () => {
               </div>
             </div>
           </div> */}
-        
-          <div className="card 2xl:col-span-8 xl:col-span-7 card-border" role="presentation">
-              <div className="card-body">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-semibold">Monthly Investment</h4>
-                  <div className="segment flex">
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "monthly"
-                          ? "segment-item-active bg-gray-500 text-white"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("monthly")}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "weekly"
-                          ? "segment-item-active bg-gray-500 text-white"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("weekly")}
-                    >
-                      Weekly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "daily"
-                          ? "segment-item-active bg-gray-500 text-white"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("daily")}
-                    >
-                      Daily
-                    </button>
-                  </div>
+
+          <div
+            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <div className="flex items-center justify-between">
+                <h4 className="text-xl font-semibold">Monthly Investment</h4>
+                <div className="segment flex">
+                  <button
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                      activeButton === "monthly"
+                        ? "segment-item-active text-gray-100 bg-gray-600"
+                        : "hover:text-gray-600"
+                    }`}
+                    onClick={() => handleButtonClick("monthly")}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                      activeButton === "weekly"
+                        ? "segment-item-active text-gray-100 bg-gray-600"
+                        : "hover:text-gray-600"
+                    }`}
+                    onClick={() => handleButtonClick("weekly")}
+                  >
+                    Weekly
+                  </button>
+                  <button
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                      activeButton === "daily"
+                        ? "segment-item-active text-gray-100 bg-gray-600"
+                        : "hover:text-gray-600"
+                    }`}
+                    onClick={() => handleButtonClick("daily")}
+                  >
+                    Daily
+                  </button>
                 </div>
-                <div className="chartRef">
-                  <div style={{ minHeight: "395px" }}>
-                    <Bar />
-                  </div>
+              </div>
+              <div className="chartRef">
+                <div style={{ minHeight: "395px" }}>
+                  <Bar />
                 </div>
               </div>
             </div>
+          </div>
           <div
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"
@@ -352,22 +354,18 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto w-[250px]">  
+                  <div className=" mx-auto w-[250px]">
                     <Donut />
                   </div>
                 </div>
-           
               </div>
             </div>
           </div>
         </div>
 
-        
         {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
-          <SellBuyTable
-            rows={rows}
-          />
-          {/* <button
+        <SellBuyTable rows={rows} />
+        {/* <button
             onClick={() => {
               setModalOpen(true);
               setRowToEdit(null);
@@ -376,7 +374,7 @@ const Portfolio = () => {
           >
             Add
           </button> */}
-          {/* {modalOpen && (
+        {/* {modalOpen && (
             <EditAsset 
               closeModal={() => {
                 setModalOpen(false);
@@ -387,10 +385,8 @@ const Portfolio = () => {
             />
           )} */}
         {/* </div> */}
-        
 
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-         
           <div
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"

@@ -208,17 +208,13 @@ const Assets = () => {
   };
   return (
     <>
-        <AssetTable
-            rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow} 
-          />
+      <AssetTable
+        rows={rows}
+        deleteRow={handleDeleteRow}
+        editRow={handleEditRow}
+      />
+    </>
+  );
+};
 
-          </>
-  
-  )
-}
-
-export default Assets
-
-
+export default Assets;

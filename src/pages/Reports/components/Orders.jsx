@@ -2,10 +2,9 @@ import React, { useState } from "react";
 import AssetTable from "../../Assets/components/AssetTable";
 import OrdersTable from "./OrdersTable";
 
-
 const Orders = () => {
   const [modalOpen, setModalOpen] = useState(false);
-  
+
   const [rows, setRows] = useState([
     {
       category: "Technology",
@@ -181,17 +180,13 @@ const Orders = () => {
   };
   return (
     <>
-        <OrdersTable
-            rows={rows}
-            deleteRow={handleDeleteRow}
-            editRow={handleEditRow} 
-          />
+      <OrdersTable
+        rows={rows}
+        deleteRow={handleDeleteRow}
+        editRow={handleEditRow}
+      />
+    </>
+  );
+};
 
-          </>
-  
-  )
-}
-
-export default Orders
-
-
+export default Orders;

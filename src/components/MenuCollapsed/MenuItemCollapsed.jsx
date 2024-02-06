@@ -26,14 +26,15 @@ const MenuItemCollapsed = ({ item }) => {
             </Link>
           </div>
           <Tooltip
-          anchorSelect={"#" + item.id} 
-          wrapper="span"
-          className="tooltip !bg-gray-800 dark:!bg-slate-100"
-          content={item.name} 
-          place="right"
-          variant={mode === "light" ? "dark" : "light"}
-        />
-      </>
+            anchorSelect={"#" + item.id} 
+            wrapper="span"
+            // className="tooltip !bg-gray-800 dark:!bg-slate-100"
+            className="tooltip !bg-gray-800 dark:!bg-black"
+            content={item.name} 
+            place="right"
+            // variant={mode === "light" ? "dark" : "light"}
+          />
+        </>
       ) : (
         <div 
           className="dropdown"

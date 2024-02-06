@@ -7,6 +7,8 @@ import Assets from "./Assets/Assets";
 import Analytics from "./Analytics/Analytics";
 import Profile from "./Profile";
 import EditAsset from "./Assets/components/EditAsset";
+import Reports from "./Reports/Reports";
+
 
 export {
   LogIn,
@@ -17,5 +19,6 @@ export {
   Assets,
   Analytics,
   Profile,
-  EditAsset
+  EditAsset,
+  Reports,
 };

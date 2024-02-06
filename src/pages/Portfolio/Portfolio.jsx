@@ -11,6 +11,8 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import Donut from "./components/Charts/Donut";
 import { EditAsset } from "../pages";
+import { Bar, Card } from "../Dashboard/components/components";
+
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -157,6 +159,37 @@ const Portfolio = () => {
       // status: "error",
     },
   ]);
+  const metrics = [
+    {
+      title: "Current Value",
+      value: "₹ 1,20,000",
+      type: "green",
+      relativeValue: "₹ 20K",
+      percentage: "20",
+    },
+    // {
+    //   title: "Total Investment",
+    //   value: "₹ 1,00,000",
+    //   type: "green",
+    //   relativeValue: "+₹ 20,000",
+    //   percentage: "20%",
+    // },
+    {
+      title: "Invested Value",
+      value: "₹ 1,00,000",
+      type: "green",
+      relativeValue: "₹ 20K",
+      percentage: "20",
+    },
+
+    {
+      title: "Realised P/L",
+      value: "₹ 20,000",
+      type: "red",
+      relativeValue: "₹ 20K",
+      percentage: "20",
+    },
+  ];
   const ProfitData = [
     { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
     { title: "Day P/L", Amount: "2456", percentage: "+2456(+0.27%)" },
@@ -188,14 +221,26 @@ const Portfolio = () => {
           })
         );
   };
+  const [activeButton, setActiveButton] = useState("monthly");
+
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+    // Handle other logic based on the button type if needed
+  };
   return (
     <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+            {metrics.map((metric) => (
+              <Card key={metric.title} {...metric} />
+            ))}
+          </div>
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-          <div
+          {/* <div
             className="card 2xl:col-span-8 xl:col-span-7 card-border"
             role="presentation"
           >
+            
             <div className="card-body">
               <div className="flex items-center justify-between">
                 <h4>Profit/Loss</h4>
@@ -209,8 +254,52 @@ const Portfolio = () => {
                 </div>
               </div>
             </div>
-          </div>
-
+          </div> */}
+        
+          <div className="card 2xl:col-span-8 xl:col-span-7 card-border" role="presentation">
+              <div className="card-body">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xl font-semibold">Monthly Investment</h4>
+                  <div className="segment flex">
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "monthly"
+                          ? "segment-item-active bg-gray-500 text-white"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("monthly")}
+                    >
+                      Monthly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "weekly"
+                          ? "segment-item-active bg-gray-500 text-white"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("weekly")}
+                    >
+                      Weekly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "daily"
+                          ? "segment-item-active bg-gray-500 text-white"
+                          : "hover:bg-gray-300"
+                      }`}
+                      onClick={() => handleButtonClick("daily")}
+                    >
+                      Daily
+                    </button>
+                  </div>
+                </div>
+                <div className="chartRef">
+                  <div style={{ minHeight: "395px" }}>
+                    <Bar />
+                  </div>
+                </div>
+              </div>
+            </div>
           <div
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"
@@ -228,7 +317,7 @@ const Portfolio = () => {
                           // style="background-color: rgb(79, 70, 229);"
                         ></span>
                         <div>
-                          <h6 className="font-bold text-sm">Bitcoin</h6>
+                          <h6 className="font-bold text-sm">Crypto</h6>
                           <p>0.5832112 BTC</p>
                         </div>
                       </div>
@@ -241,7 +330,7 @@ const Portfolio = () => {
                           // style="background-color: rgb(59, 130, 246);"
                         ></span>
                         <div>
-                          <h6 className="font-bold text-sm">Ethereum</h6>
+                          <h6 className="font-bold text-sm">Index</h6>
                           <p>1.7294746 ETH</p>
                         </div>
                       </div>
@@ -254,7 +343,7 @@ const Portfolio = () => {
                           // style="background-color: rgb(16, 185, 129);"
                         ></span>
                         <div>
-                          <h6 className="font-bold text-sm">Solana</h6>
+                          <h6 className="font-bold text-sm">Innovation</h6>
                           <p>196.9766 SOL</p>
                         </div>
                       </div>
@@ -267,6 +356,7 @@ const Portfolio = () => {
                     <Donut />
                   </div>
                 </div>
+           
               </div>
             </div>
           </div>
@@ -300,26 +390,12 @@ const Portfolio = () => {
         
 
         <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-          <div
-            className="card 2xl:col-span-8 xl:col-span-7 card-border"
-            role="presentation"
-          >
-            <div className="card-body">
-              <h4>Statistic</h4>
-              <div className="mt-4">
-                <div className="chartRef min-h-[365px]">
-                  <div>
-                    <Statistic />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+         
           <div
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"
           >
-            <div className="card-body">
+            {/* <div className="card-body">
               <div className="flex items-center justify-between">
                 <h4>Recent Transaction</h4>
               </div>
@@ -411,7 +487,7 @@ const Portfolio = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

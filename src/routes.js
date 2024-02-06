@@ -3,6 +3,8 @@ import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 import ViewAsset from './pages/Assets/components/ViewAsset';
 import Watchlist from './pages/Watchlist/Watchlist';
+import Orders from './pages/Reports/components/Orders';
+import Positions from './pages/Reports/components/Positions';
 
 const routes = [
   {
@@ -77,6 +79,14 @@ const routes = [
       {
         path: 'logout',
         element: <></>
+      },
+      {
+        path: 'reports/orders',
+        element:<Orders/>
+      },
+      {
+        path: 'reports/positions',
+        element: <Positions/>
       }
     ]
   },

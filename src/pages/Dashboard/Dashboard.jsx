@@ -1,18 +1,45 @@
 import React, { useEffect, useRef, useState } from "react";
 import { HiOutlineFilter } from "react-icons/hi";
 import { AiOutlineStock } from "react-icons/ai";
-import { MdClose } from 'react-icons/md';
+import { MdClose } from "react-icons/md";
 import { Card, Bar, Donut, Calendar } from "./components/components";
 import { useNavigate } from "react-router";
 import { Link } from "react-router-dom";
 import TopListing from "../Analytics/components/TopListing";
 import { CiCalendar } from "react-icons/ci";
+import Statistic from "../Portfolio/components/Charts/Statistic";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const calendarRef = useRef(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [activeButton, setActiveButton] = useState("monthly");
+  const [rowToEdit, setRowToEdit] = useState(null);
+  const [selectedDateRange, setSelectedDateRange] = useState({
+    startDate: null,
+    endDate: null,
+  });
+
+  const handleCalendarClose = () => {
+    setShowCalendar(false);
+  };
+
+  const handleDeleteRow = (targetIndex) => {
+    setRows(rows.filter((_, idx) => idx !== targetIndex));
+  };
+
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+  };
+
+  const handleClickOutside = (event) => {
+    event.preventDefault();
+
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
+
   const [rows2, setRows2] = useState([
     {
       ticker: "AAPL",
@@ -88,11 +115,6 @@ const Dashboard = () => {
     },
   ]);
 
-  const [rowToEdit, setRowToEdit] = useState(null);
-  const handleDeleteRow = (targetIndex) => {
-    setRows(rows.filter((_, idx) => idx !== targetIndex));
-  };
-
   const metrics = [
     {
       title: "Current Value",
@@ -109,15 +131,15 @@ const Dashboard = () => {
     //   percentage: "20%",
     // },
     {
-      title: "Day P/L",
-      value: "₹ 20,000",
-      type: "red",
+      title: "Invested Value",
+      value: "₹ 1,00,000",
+      type: "green",
       relativeValue: "₹ 20K",
       percentage: "20",
     },
     {
-      title: "Total P/L",
-      value: "₹ 1,00,000",
+      title: "Day P/L",
+      value: "₹ 20,000",
       type: "red",
       relativeValue: "₹ 20K",
       percentage: "20",
@@ -176,26 +198,12 @@ const Dashboard = () => {
     },
   ];
 
-  const handleButtonClick = (buttonType) => {
-    setActiveButton(buttonType);
-    // Handle other logic based on the button type if needed
-  };
-
-  const handleClickOutside = (event) => {
-    event.preventDefault();
-
-    if(calendarRef.current && !calendarRef.current.contains(event.target)) {
-      setShowCalendar(false);
-    }
-  }
-
   useEffect(() => {
     if (showCalendar) {
-      document.addEventListener('click', handleClickOutside);
+      document.addEventListener("click", handleClickOutside);
 
-      // Clean up the event listener when the component unmounts
       return () => {
-        document.removeEventListener('click', handleClickOutside);
+        document.removeEventListener("click", handleClickOutside);
       };
     }
   }, [showCalendar]);
@@ -210,16 +218,24 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div ref={calendarRef}>
+              <div ref={calendarRef} className="relative">
                 <span className="input-wrapper">
-                  <input 
+                  <input
                     onClick={() => setShowCalendar(!showCalendar)}
-                    type="text" 
+                    type="text"
                     placeholder="Select Date Range"
                     className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                     readOnly={true}
                     autoComplete="off"
-                    value="Oct 02, 2023 ~ Jan 02, 2024"
+                    value={
+                      selectedDateRange.startDate && selectedDateRange.endDate
+                        ? `${selectedDateRange.startDate.format(
+                            "MMM DD, YYYY"
+                          )} ~ ${selectedDateRange.endDate.format(
+                            "MMM DD, YYYY"
+                          )}`
+                        : ""
+                    }
                     style={{ paddingRight: "2rem" }}
                   />
                   <div className="input-suffix-end">
@@ -229,8 +245,12 @@ const Dashboard = () => {
                   </div>
                 </span>
                 {showCalendar && (
-                  // Put calendar component here
-                  <Calendar />
+                  <Calendar
+                    onClose={handleCalendarClose}
+                    onSelectDateRange={(startDate, endDate) =>
+                      setSelectedDateRange({ startDate, endDate })
+                    }
+                  />
                 )}
               </div>
               <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
@@ -249,50 +269,21 @@ const Dashboard = () => {
             ))}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            <div className="card col-span-2 card-border" role="presentation">
-              <div className="card-body">
-                <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-semibold">Monthly Investment</h4>
-                  <div className="segment flex">
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-200 active:text-gray-700 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "monthly"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("monthly")}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "weekly"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("weekly")}
-                    >
-                      Weekly
-                    </button>
-                    <button
-                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
-                        activeButton === "daily"
-                          ? "segment-item-active bg-gray-200 text-gray-700"
-                          : "hover:bg-gray-300"
-                      }`}
-                      onClick={() => handleButtonClick("daily")}
-                    >
-                      Daily
-                    </button>
-                  </div>
-                </div>
-                <div className="chartRef">
-                  <div style={{ minHeight: "395px" }}>
-                    <Bar />
+          <div
+            className="card col-span-2 card-border"
+            role="presentation"
+          >
+            <div className="card-body">
+              <h4>Statistic</h4>
+              <div className="mt-4">
+                <div className="chartRef min-h-[365px]">
+                  <div>
+                    <Statistic />
                   </div>
                 </div>
               </div>
             </div>
+          </div>
             <div className="card card-border" role="presentation">
               <div className="card-body">
                 <h4>Equity Distribution</h4>
@@ -329,7 +320,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <TopListing name={"Top Gainers"} rows={rows} />
             <TopListing name={"Top losers"} rows={rows2} />
           </div>

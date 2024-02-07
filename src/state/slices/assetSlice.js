@@ -17,9 +17,12 @@ export const configSlice = createSlice({
     saveEditAsset: (state, action) => {
       state.edit = { ...state.edit, ...action.payload};
     },
+    setDefaultEditAsset: (state) => {
+      state.edit = initialState.edit;
+    },
   },
 });
 
-export const { saveEditAsset } = configSlice.actions;
+export const { saveEditAsset, setDefaultEditAsset } = configSlice.actions;
 export default configSlice.reducer;
 

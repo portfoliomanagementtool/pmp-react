@@ -11,7 +11,8 @@ export const configSlice = createSlice({
   initialState,
   reducers: {
     setMode: (state, action) => {
-      state.mode = state.mode === "light" ? "dark" : "light";
+      // state.mode = state.mode === "light" ? "dark" : "light";
+      state.mode = action.payload;
     },
     toggleCollapsed: (state, action) => {
       state.collapsed = !state.collapsed;

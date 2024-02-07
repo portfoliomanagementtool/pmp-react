@@ -224,8 +224,9 @@ const Portfolio = () => {
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
-    // Handle other logic based on the button type if needed
+    console.log("Active button:", buttonType);
   };
+
   return (
     <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
@@ -262,32 +263,32 @@ const Portfolio = () => {
             <div className="card-body">
               <div className="flex items-center justify-between">
                 <h4 className="text-xl font-semibold">Monthly Investment</h4>
-                <div className="segment flex">
+                <div className="segment flex gap-2">
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "monthly"
-                        ? "segment-item-active text-gray-100 bg-gray-600"
-                        : "hover:text-gray-600"
+                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        : ""
                     }`}
                     onClick={() => handleButtonClick("monthly")}
                   >
                     Monthly
                   </button>
                   <button
-                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "weekly"
-                        ? "segment-item-active text-gray-100 bg-gray-600"
-                        : "hover:text-gray-600"
+                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        : ""
                     }`}
                     onClick={() => handleButtonClick("weekly")}
                   >
                     Weekly
                   </button>
                   <button
-                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "daily"
-                        ? "segment-item-active text-gray-100 bg-gray-600"
-                        : "hover:text-gray-600"
+                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        : ""
                     }`}
                     onClick={() => handleButtonClick("daily")}
                   >
@@ -354,7 +355,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto w-[250px]">
+                  <div className=" mx-auto items-center w-[70%]">
                     <Donut />
                   </div>
                 </div>
@@ -391,99 +392,6 @@ const Portfolio = () => {
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"
           >
-            {/* <div className="card-body">
-              <div className="flex items-center justify-between">
-                <h4>Recent Transaction</h4>
-              </div>
-              <div className="mt-6">
-                <div className="mb-6">
-                  <p className="mb-4">June 3, 2022</p>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
-                        <span className="avatar-icon avatar-icon-md">
-                          <AiOutlineShoppingCart />
-                        </span>
-                      </span>
-                      <h6 className="text-sm font-bold">Buy BTC</h6>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">
-                        0.0383522 BTC
-                      </p>
-                      <p className="text-xs">+ 1161.5 USD</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
-                        <span className="avatar-icon avatar-icon-md">
-                          <FaArrowRightArrowLeft />
-                        </span>
-                      </span>
-                      <h6 className="text-sm font-bold">Received BTC</h6>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">
-                        0.0754234 BTC
-                      </p>
-                      <p className="text-xs">+ 2284.2 USD</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="mb-6">
-                  <p className="mb-4">June 2, 2022</p>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="avatar avatar-rounded avatar-md bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-100">
-                        <span className="avatar-icon avatar-icon-md">
-                          <AiOutlineShoppingCart />
-                        </span>
-                      </span>
-                      <h6 className="text-sm font-bold">Buy ETH</h6>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">
-                        3.1754361 ETH
-                      </p>
-                      <p className="text-xs">+ 5779.13 USD</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="avatar avatar-rounded avatar-md bg-red-100 text-red-600 dark:bg-red-500/20 dark:text-red-100">
-                        <span className="avatar-icon avatar-icon-md">
-                          <FaArrowRightArrowLeft />
-                        </span>
-                      </span>
-                      <h6 className="text-sm font-bold">Sent ETH</h6>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-red-600">
-                        0.2821331 ETH
-                      </p>
-                      <p className="text-xs">- 513.47 USD</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <span className="avatar avatar-rounded avatar-md bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-100">
-                        <span className="avatar-icon avatar-icon-md">
-                          <FaArrowRightArrowLeft />
-                        </span>
-                      </span>
-                      <h6 className="text-sm font-bold">Received BTC</h6>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900 dark:text-gray-100">
-                        0.1376231 BTC
-                      </p>
-                      <p className="text-xs">+ 4163.84 USD</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 
 const Donut = () => {
-  // const mode = useSelector((state) => state.config.mode);
+  const mode = useSelector((state) => state.config.mode);
   const series = [55, 27, 18];
 
   const options = {
@@ -17,11 +17,33 @@ const Donut = () => {
     legend: {
       show: false,
     },
+    colors:['#008FFB', '#00A76D', '#E91E63'],
     plotOptions: {
       pie: {
         size: 100,
         donut: {
           size: '80%',
+          labels: {
+            show: true,
+            total: {
+              show: true,
+              showAlways: true,
+              label: '',                           
+              formatter: function (w) {
+                return "Equity"
+                // let sum = 0;
+                // return w.globals.seriesTotals.reduce((a, b) => {
+                //     return `${a}/${b}`
+                // })
+              }
+            },
+            value:{
+              offsetY: -8, // -8 worked for me
+              color: mode === "light" ? '#000' : "#fff",
+              fontSize: '20px',
+              fontWeight: 'semi-bold',
+            }
+          },
         },
       },
     },

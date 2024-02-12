@@ -25,3 +25,4 @@ export const configSlice = createSlice({
 
 export const { saveEditAsset, setDefaultEditAsset } = configSlice.actions;
 export default configSlice.reducer;
+

@@ -17,6 +17,7 @@ const Donut = () => {
     legend: {
       show: false,
     },
+    colors:['#008FFB', '#00A76D', '#E91E63'],
     plotOptions: {
       pie: {
         size: 100,

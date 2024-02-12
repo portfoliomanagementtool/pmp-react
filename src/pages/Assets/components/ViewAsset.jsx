@@ -3,11 +3,28 @@ import Slider from "@mui/material/Slider";
 import { Box, Button } from "@mui/material";
 
 import Card from "./card/Card";
-import Candle from "./charts/Candle";
+import Candle from "./Charts/Candle";
 import { useSelector } from "react-redux";
+import CustomSlider from "./CustomSlider";
+import Area from "./Charts/Area";
+import BuySellModal from "./BuySellModal";
 
 const ViewAsset = () => {
   const { edit } = useSelector((state) => state.asset);
+  const [showCandlestick, setShowCandlestick] = useState(true);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState('BUY'); 
+
+  const openModal = (type) => {
+    setModalType(type);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const metrics = [
     {
       title: "AVERAGE PRICE",
@@ -16,13 +33,6 @@ const ViewAsset = () => {
       relativeValue: "₹ 20K",
       percentage: "20",
     },
-    // {
-    //   title: "Total Investment",
-    //   value: "₹ 1,00,000",
-    //   type: "green",
-    //   relativeValue: "+₹ 20,000",
-    //   percentage: "20%",
-    // },
     {
       title: "CURRENT VALUE",
       value: "₹ 20,000",
@@ -50,13 +60,28 @@ const ViewAsset = () => {
             <div className="card-body">
               <div className="flex items-center justify-between">
                 <h4 className="">ASSETS</h4>
-                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-                  Export Report
-                </button>
+                <div className="">
+                  <button
+                    className={`button ${
+                      showCandlestick ? "bg-gray-300" : "bg-white"
+                    } border mx-2 border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm`}
+                    onClick={() => setShowCandlestick(true)}
+                  >
+                    Candlestick
+                  </button>
+                  <button
+                    className={`button ${
+                      !showCandlestick ? "bg-gray-300" : "bg-white"
+                    } border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm`}
+                    onClick={() => setShowCandlestick(false)}
+                  >
+                    Area
+                  </button>
+                </div>
               </div>
               <div className="chartRef">
                 <div className="h-auto">
-                  <Candle />
+                  {showCandlestick ? <Candle /> : <Area />}
                 </div>
               </div>
             </div>
@@ -101,15 +126,7 @@ const ViewAsset = () => {
                     <h6>$650</h6>
                     <h6>$700</h6>
                   </div>
-                  <Box sx={{ width: 200 }}>
-                    <Slider
-                      size="small"
-                      defaultValue={70}
-                      aria-label="Small"
-                      valueLabelDisplay="auto"
-                      disabled
-                    />
-                  </Box>
+                  <CustomSlider value={70} disabled />
                 </div>
               </div>
               <div className="flex justify-between items-center">
@@ -119,15 +136,7 @@ const ViewAsset = () => {
                     <h6>$650</h6>
                     <h6>$700</h6>
                   </div>
-                  <Box sx={{ width: 200 }}>
-                    <Slider
-                      size="small"
-                      defaultValue={20}
-                      aria-label="Small"
-                      valueLabelDisplay="auto"
-                      disabled
-                    />
-                  </Box>
+                  <CustomSlider value={20} disabled />
                 </div>
               </div>
               <div className="flex justify-between items-center">
@@ -139,15 +148,7 @@ const ViewAsset = () => {
                     <h6>$650</h6>
                     <h6>$700</h6>
                   </div>
-                  <Box sx={{ width: 200 }}>
-                    <Slider
-                      size="small"
-                      defaultValue={50}
-                      aria-label="Small"
-                      valueLabelDisplay="auto"
-                      disabled
-                    />
-                  </Box>
+                  <CustomSlider value={50} disabled />
                 </div>
               </div>
             </div>
@@ -155,10 +156,11 @@ const ViewAsset = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <div
           className="card card-border mt-4 bg-red-500 text-center cursor-pointer hover:bg-red-600"
           role="presentation"
+          onClick={() => openModal('BUY')}
         >
           <div className="card-body">
             <h6 className="text-white">BUY</h6>
@@ -168,12 +170,22 @@ const ViewAsset = () => {
         <div
           className="card card-border mt-4 bg-green-600 text-center cursor-pointer hover:bg-green-700"
           role="presentation"
+          onClick={() => openModal('SELL')}
         >
           <div className="card-body text-white">
             <h6 className="text-white">SELL</h6>
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <BuySellModal
+          onSubmit={console.log} 
+          closeModal={closeModal}
+          defaultValue={null} 
+          initialChecked={modalType === 'SELL'}
+        />
+      )}
     </>
   );
 };

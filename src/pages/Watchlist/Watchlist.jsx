@@ -6,55 +6,21 @@ import { IoIosAddCircle } from "react-icons/io";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import { RiDownloadLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Watchlist = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const defaultValue = location.state?.defaultValue || {};
-  const [watchAsset, setWatchAsset] = useState([]);
-  const [rowToEdit, setRowToEdit] = useState(null);
-
-  useEffect(() => {
-    try {
-      const storedWatchlist = JSON.parse(localStorage.getItem("watchAsset")) || [];
-      setWatchAsset(storedWatchlist);
-    } catch (error) {
-      console.error("Error parsing watchlist from local storage:", error);
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("watchAsset", JSON.stringify(watchAsset));
-  }, [watchAsset]);
-
-  useEffect(() => {
-    if (defaultValue && !watchAsset.includes(defaultValue)) {
-      setWatchAsset((prevWatchlist) => [...prevWatchlist, defaultValue]);
-    }
-  }, [defaultValue]);
-
-  const handleRowClick = (idx) => {
-    const selectedAsset = watchAsset[idx];
-
-    navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
-  };
-
-  // console.log(watch);
-
-  const deleteRow = (targetIndex) => {
-    setWatchAsset(watchAsset.filter((_, idx) => idx !== targetIndex));
-  };
-
-  const editRow = (idx) => {
-    setRowToEdit(watchAsset[idx]);
-  };
-
+  const { watchlist } = useSelector((state) => state.watchlist);
+  const handleRowClick = () => {};
+  console.log(watchlist);
   return (
-    <div className="card card-border" role="presentation">
+    <div
+      className="card 2xl:col-span-3 mt-4 xl:col-span-4 card-border"
+      role="presentation"
+    >
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
           <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">My Watchlist</h3>
+            <h3 className="mb-4 lg:mb-0">All Assets</h3>
             <div className="flex flex-col lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
                 <div className="input-suffix-start ml-2">
@@ -156,23 +122,22 @@ const Watchlist = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  {watchAsset.map((row, idx) => (
+                  <React.Fragment>
                     <tr
-                      key={idx}
                       className="cursor-pointer"
-                      // onClick={() => handleRowClick(idx)}
+                      onClick={() => handleRowClick()}
                     >
                       <td className="py-2">
                         <div className="flex items-center">
                           <span className="ml-2 rtl:mr-2 font-semibold">
-                            {row.category}
+                            {watchlist.category}
                           </span>
                         </div>
                       </td>
                       <td className="py-2">
-                        <span className="capitalize">{row.ticker}</span>
+                        <span className="capitalize">{watchlist.ticker}</span>
                       </td>
-                      <td className="py-2">{row.quantity}</td>
+                      <td className="py-2">{watchlist.quantity}</td>
                       <td className="py-2">
                         <div className="flex items-center gap-2">
                           <span className="badge-dot bg-emerald-500"></span>
@@ -182,20 +147,10 @@ const Watchlist = () => {
                         </div>
                       </td>
                       <td className="py-2">
-                        <span>${row.price}</span>
-                      </td>
-                      <td className="py-2">
-                        <div className="flex justify-end text-lg">
-                          <span className="cursor-pointer p-2 hover:text-indigo-600">
-                            <BsFillPencilFill onClick={() => editRow(idx)} />
-                          </span>
-                          <span className="cursor-pointer p-2 hover:text-red-500">
-                            <BsFillTrashFill onClick={() => deleteRow(idx)} />
-                          </span>
-                        </div>
+                        <span>${watchlist.price}</span>
                       </td>
                     </tr>
-                  ))}
+                  </React.Fragment>
                 </tbody>
               </table>
             </div>

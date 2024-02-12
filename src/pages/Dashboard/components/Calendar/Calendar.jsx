@@ -27,6 +27,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   const handleSubmit = () => {
     onSelectDateRange(selectedStartDate, selectedEndDate);
     onClose();
+    console.log('hi')
   };
 
   const generateMonthMatrix = (date) => {
@@ -109,7 +110,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
           <button
             className="bg-blue-500 text-white px-4 py-2 rounded-md"
             onClick={handleSubmit}
-            disabled={!selectedStartDate || !selectedEndDate}
+            // disabled={!selectedStartDate || !selectedEndDate}
           >
             OK
           </button>

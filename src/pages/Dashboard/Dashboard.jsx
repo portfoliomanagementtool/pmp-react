@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import TopListing from "../Analytics/components/TopListing";
 import { CiCalendar } from "react-icons/ci";
 import Statistic from "../Portfolio/components/Charts/Statistic";
+import dayjs from "dayjs";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ const Dashboard = () => {
   const [activeButton, setActiveButton] = useState("monthly");
   const [rowToEdit, setRowToEdit] = useState(null);
   const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: null,
-    endDate: null,
+    startDate: dayjs(), 
+    endDate: dayjs().add(3, 'month') 
   });
 
   const handleCalendarClose = () => {
@@ -269,21 +270,18 @@ const Dashboard = () => {
             ))}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          <div
-            className="card col-span-2 card-border"
-            role="presentation"
-          >
-            <div className="card-body">
-              <h4>Statistic</h4>
-              <div className="mt-4">
-                <div className="chartRef min-h-[365px]">
-                  <div>
-                    <Statistic />
+            <div className="card col-span-2 card-border" role="presentation">
+              <div className="card-body">
+                <h4>Statistic</h4>
+                <div className="mt-4">
+                  <div className="chartRef min-h-[365px]">
+                    <div>
+                      <Statistic />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
             <div className="card card-border" role="presentation">
               <div className="card-body">
                 <h4>Equity Distribution</h4>
@@ -325,7 +323,7 @@ const Dashboard = () => {
             <TopListing name={"Top losers"} rows={rows2} />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card lg:col-span-2 card-border" role="presentation">
               <div className="card-body">
                 <div className="flex items-center justify-between mb-6">
@@ -334,43 +332,7 @@ const Dashboard = () => {
                     View History
                   </button>
                 </div>
-                {/* <div className="overflow-x-auto">
-                  <div className="table-default table-hover">
-                    <thead>
-                      <tr>
-                        <th colSpan={1}>Trans ID</th>
-                        <th colSpan={1}>Status</th>
-                        <th colSpan={1}>Date</th>
-                        <th colSpan={1}>Asset</th>
-                        <th colSpan={1}>Price</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {history.map((obj) => {
-                        return (
-                          <tr key={obj.transId}>
-                            <td colSpan={1}>
-                              <span className="cursor-pointer select-none font-semibold hover:text-orange-600">{obj.transId}</span>
-                              </td>
-                            <td colSpan={1}>
-                              <span className={`badge-dot ${obj.status === "green" ? "bg-green-500" : "bg-red-500"}`}></span>
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="ml-2 rtl:mr-2 capitalize font-semibold text-emerald-500">{obj.status}</span>
-                            </td>
-                            <td colSpan={1}>
-                              <span> {obj.date}</span>
-                            </td>
-                            <td colSpan={1}>{obj.asset}</td>
-                            <td colSpan={1}>
-                              <span>₹ {obj.price}</span>
-                            </td>
-                          </tr>
-                        )}
-                      )}
-                    </tbody>
-                  </div>
-                </div> */}
-                {/* Table */}
+
                 <div className="relative overflow-x-auto">
                   <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -408,7 +370,6 @@ const Dashboard = () => {
                               </span>
                             </th>
                             <td className="px-6 py-4 flex justify-center">
-                              {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
                               <span
                                 className={`font-semibold text-2xl ${
                                   obj.status === "green"
@@ -470,7 +431,6 @@ const Dashboard = () => {
                               </span>
                             </th>
                             <td className="px-6 py-4 flex justify-center">
-                              {/* <span className={`ml-2 rtl:mr-2 capitalize font-semibold ${ obj.status === "green" ? "text-emerald-500" : "text-red-500" }`}> */}
                               <span
                                 className={`font-semibold text-2xl ${
                                   obj.status === "green"
@@ -489,7 +449,7 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </main>
     </>

@@ -3,10 +3,10 @@ import Slider from "@mui/material/Slider";
 import { Box, Button } from "@mui/material";
 
 import Card from "./card/Card";
-import Candle from "./Charts/Candle";
+import Candle from "./charts/Candle";
 import { useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
-import Area from "./Charts/Area";
+import Area from "./charts/Area";
 import BuySellModal from "./BuySellModal";
 
 const ViewAsset = () => {
@@ -14,7 +14,7 @@ const ViewAsset = () => {
   const [showCandlestick, setShowCandlestick] = useState(true);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('BUY'); 
+  const [modalType, setModalType] = useState("BUY");
 
   const openModal = (type) => {
     setModalType(type);
@@ -156,11 +156,11 @@ const ViewAsset = () => {
         </div>
       )}
 
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <div
           className="card card-border mt-4 bg-red-500 text-center cursor-pointer hover:bg-red-600"
           role="presentation"
-          onClick={() => openModal('BUY')}
+          onClick={() => openModal("BUY")}
         >
           <div className="card-body">
             <h6 className="text-white">BUY</h6>
@@ -170,7 +170,7 @@ const ViewAsset = () => {
         <div
           className="card card-border mt-4 bg-green-600 text-center cursor-pointer hover:bg-green-700"
           role="presentation"
-          onClick={() => openModal('SELL')}
+          onClick={() => openModal("SELL")}
         >
           <div className="card-body text-white">
             <h6 className="text-white">SELL</h6>
@@ -180,10 +180,10 @@ const ViewAsset = () => {
 
       {isModalOpen && (
         <BuySellModal
-          onSubmit={console.log} 
+          onSubmit={console.log}
           closeModal={closeModal}
-          defaultValue={null} 
-          initialChecked={modalType === 'SELL'}
+          defaultValue={null}
+          initialChecked={modalType === "SELL"}
         />
       )}
     </>

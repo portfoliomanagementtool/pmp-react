@@ -63,7 +63,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
           <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">All Assets</h3>
+            <h3 className="mb-4 lg:mb-0">My Orders</h3>
             <div className="flex flex-col lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
                 <div className="input-suffix-start ml-2">

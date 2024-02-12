@@ -113,22 +113,6 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Quantity
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Actions
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
                         Price
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -137,9 +121,25 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Actions
+                        Change
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
                       </div>
                     </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                        %Change
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
+                      </div>
+                    </th>
+                    {/* <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                        View Asset
+                      </div>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="">
@@ -159,19 +159,32 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                         <td className="py-2">
                           <span className="capitalize">{row.ticker}</span>
                         </td>
-                        <td className="py-2">{row.qty}</td>
-                        <td className="py-2">
-                          <div className="flex items-center gap-2">
+                        <td className="py-2">${row.price}</td>
+                        <td
+                          className={`py-2 ${
+                            row.change >= 0
+                              ? "text-emerald-500"
+                              : "text-red-500"
+                          }`}
+                        >
+                          ${row.change}
+                          {/* <div className="flex items-center gap-2">
                             <span className="badge-dot bg-emerald-500"></span>
                             <span className="capitalize font-semibold text-emerald-500">
                               In Stock
                             </span>
-                          </div>
+                          </div> */}
                         </td>
-                        <td className="py-2">
-                          <span>${row.price}</span>
+                        <td
+                          className={`py-2 ${
+                            row.change >= 0
+                              ? "text-emerald-500"
+                              : "text-red-500"
+                          }`}
+                        >
+                          <span>{row.percentchange}%</span>
                         </td>
-                        <td className="py-2">
+                        {/* <td className="py-2">
                           <div className="flex text-lg">
                             <span className="cursor-pointer p-2 hover:text-indigo-600">
                               <BsFillPencilFill onClick={() => editRow(idx)} />
@@ -180,7 +193,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                               <BsFillTrashFill onClick={() => deleteRow(idx)} />
                             </span>
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     </React.Fragment>
                   ))}

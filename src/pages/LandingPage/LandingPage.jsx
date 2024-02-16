@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import { Icon } from "@iconify/react";
 import customer1 from "../../images/customer-01.png";
 import customer2 from "../../images/customer-02.png";
 import image1 from "../../images/image-01.png";
 import image2 from "../../images/image-02.png";
 import image3 from "../../images/image-03.png";
-
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const LandingPage = () => {
+  const navigate = useNavigate();
+  const { user } = useUser();
+
+  useEffect(() => {
+    if(user) {
+      navigate('/app/dashboard');
+    }
+  }, [user, navigate]);
+
   return (
     <>
       <Navbar />

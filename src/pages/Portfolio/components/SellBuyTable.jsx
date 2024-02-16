@@ -16,11 +16,17 @@ import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
+import DropdownMenu from "./Modals/DropdownMenu";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
+
+  const handleThreeDotsClick = (idx) => {
+    setDetail(idx === detail ? null : idx);
+  };
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -224,26 +230,34 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             <div className="flex  justify-end text-lg">
                               <span
                                 className="cursor-pointer p-2  hover:text-indigo-600"
-                                onMouseEnter={(e) => openModal(e, row)}
-                                onMouseLeave={closeModal}
+                                onClick={() => handleThreeDotsClick(idx)}
                               >
                                 <BsThreeDotsVertical />
                               </span>
                             </div>
                           </td>
                         </tr>
+                        {detail === idx && (
+                          <div>
+                            <td colSpan="6">
+                              <div className="justify-end bg-green-500 p-2 text-white">
+                                Hello
+                              </div>
+                            </td>
+                          </div>
+                        )}
                       </React.Fragment>
                     );
                   })}
                 </tbody>
-                {isModalOpen && (
+                {/* {isModalOpen && (
                   <Modal
                     onSubmit={closeModal}
                     closeModal={closeModal}
                     defaultValue={selectedRowData}
                     position={clickPosition}
                   />
-                )}
+                )} */}
               </table>
             </div>
           </div>

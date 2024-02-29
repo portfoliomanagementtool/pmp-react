@@ -83,18 +83,6 @@ function App() {
       const html = document.querySelector('html');
       html.classList.remove('dark');
     }
-
-    const fetchWatchlist = async () => {
-      try {
-        const { data } = await getAllWatchlist();
-        console.log(data)
-        // setWatchlist(data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    fetchWatchlist();
   }, [mode])
 
   return (

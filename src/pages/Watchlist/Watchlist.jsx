@@ -18,9 +18,9 @@ const Watchlist = () => {
   useEffect(() => {
     const fetchWatchlist = async () => {
       try {
-        const { data } = await getAllWatchlist();
-        console.log(data)
-        setWatchlist(data);
+        const result = await getAllWatchlist();
+        console.log(result)
+        // setWatchlist(data);
       } catch (error) {
         console.log(error.message);
       }

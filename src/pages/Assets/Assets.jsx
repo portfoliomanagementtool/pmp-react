@@ -1,8 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AssetTable from "./components/AssetTable";
+import { getAllAssets } from "../../api";
 
 const Assets = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  // const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchAssets = async () => {
+      try {
+        const result = await getAllAssets();
+        console.log(result);
+        // setRows(result.data);
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    fetchAssets();
+  }, []);
+
   const metrics = [
     {
       title: "Current Value",

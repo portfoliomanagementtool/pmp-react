@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SellBuyTable from "./components/SellBuyTable";
 import Modal from "./components/Modals/Modal";
 import Metrics from "../Dashboard/components/Metrics";
@@ -12,6 +12,7 @@ import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import Donut from "./components/Charts/Donut";
 import { EditAsset } from "../pages";
 import { Bar, Card } from "../Dashboard/components/components";
+import { getPortfolio } from "../../api";
 
 const Portfolio = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -158,6 +159,9 @@ const Portfolio = () => {
       // status: "error",
     },
   ]);
+
+  // const [rows, setRows] = useState([]);
+
   const metrics = [
     {
       title: "Current Value",
@@ -189,6 +193,21 @@ const Portfolio = () => {
       percentage: "20",
     },
   ];
+
+  useEffect(() => {
+    const fetchPortfolio = async () => {
+      try {
+        const { data } = await getPortfolio();
+        console.log(data)
+        // setRows(data.assets);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchPortfolio();
+  }, []);
+
   const ProfitData = [
     { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
     { title: "Day P/L", Amount: "2456", percentage: "+2456(+0.27%)" },

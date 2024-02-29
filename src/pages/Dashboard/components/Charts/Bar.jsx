@@ -12,6 +12,7 @@ const Bar = () => {
   const options = {
     chart: {
       type: 'bar',
+      background:"transparent",
       height: 350,
       toolbar: {
         show: false,

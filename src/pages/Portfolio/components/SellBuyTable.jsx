@@ -190,12 +190,12 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           </td>
                           <td className="py-2 flex relative">
                             <div className="flex justify-end text-lg">
-                              <span
+                              {/* <span
                                 onClick={() => editRow(row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
-                              </span>
+                              </span> */}
                             </div>
                             <div className="flex  justify-end text-lg">
                               <span

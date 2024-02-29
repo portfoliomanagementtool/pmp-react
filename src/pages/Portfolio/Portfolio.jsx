@@ -364,35 +364,8 @@ const Portfolio = () => {
           </div>
         </div>
 
-        {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
         <SellBuyTable rows={rows} />
-        {/* <button
-            onClick={() => {
-              setModalOpen(true);
-              setRowToEdit(null);
-            }}
-            className="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
-          >
-            Add
-          </button> */}
-        {/* {modalOpen && (
-            <EditAsset 
-              closeModal={() => {
-                setModalOpen(false);
-                setRowToEdit(null);
-              }}
-              onSubmit={handleSubmit}
-              defaultValue={rowToEdit}
-            />
-          )} */}
-        {/* </div> */}
-
-        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-          <div
-            className="card 2xl:col-span-3 xl:col-span-4 card-border"
-            role="presentation"
-          ></div>
-        </div>
+       
       </div>
     </div>
   );

@@ -284,9 +284,9 @@ const Portfolio = () => {
                 <h4 className="text-xl font-semibold">Monthly Investment</h4>
                 <div className="segment flex gap-2">
                   <button
-                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "monthly"
-                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-gray-900"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("monthly")}

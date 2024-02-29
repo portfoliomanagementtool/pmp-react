@@ -16,11 +16,17 @@ import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
+import DropdownMenu from "./Modals/DropdownMenu";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
+
+  const handleThreeDotsClick = (idx) => {
+    setDetail(idx === detail ? null : idx);
+  };
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -30,36 +36,21 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     }
   };
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
+
   const [selectedRowData, setSelectedRowData] = useState(null);
-  const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
-  const [selectedRowID, setSelectedRowID] = useState(null);
-  const [isRowModalOpen, setRowModalOpen] = useState(false);
-  const [rowModalData, setRowModalData] = useState(null);
 
-  // const handleRowMouseEnter = (e, rowData) => {
-  //   console.log("Mouse Enter Triggered");
-  //   const rect = e.target.getBoundingClientRect();
-  //   setRowModalData(rowData);
-  //   setRowModalOpen(true);
-  //   setClickPosition({
-  //     top: rect.top + window.scrollY,
-  //     left: rect.left + window.scrollX,
-  //   });
-  // };
-
-  // const handleRowMouseLeave = () => {
-  //   setRowModalOpen(false);
-  //   setRowModalData(null);
-  // };
-
-  const openModal = (e, rowData, idx) => {
-    setModalOpen(true);
-    setSelectedRowData(rowData);
+  const openModal = (idx, row) => {
+    const updatedModalOpenStates = [...isModalOpen];
+    updatedModalOpenStates[idx] = true;
+    setModalOpen(updatedModalOpenStates);
+    setSelectedRowData(row);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeModal = (idx) => {
+    const updatedModalOpenStates = [...isModalOpen];
+    updatedModalOpenStates[idx] = false;
+    setModalOpen(updatedModalOpenStates);
     setSelectedRowData(null);
   };
 
@@ -99,21 +90,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 </span>
               </button>
 
-              {/* <a
-                download=""
-                className="block lg:inline-block md:mb-0 mb-4"
-                href="/data/product-list.csv"
-                target="_blank"
-              >
-                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
-                  <span className="flex items-center justify-center">
-                    <span className="text-lg">
-                      <RiDownloadLine />
-                    </span>
-                    <span className="ml-1 mr-1">Export</span>
-                  </span>
-                </button>
-              </a> */}
               <a
                 className="block lg:inline-block md:mb-0 mb-4"
                 href="/app/funds/ticker-new"
@@ -224,26 +200,24 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                             <div className="flex  justify-end text-lg">
                               <span
                                 className="cursor-pointer p-2  hover:text-indigo-600"
-                                onMouseEnter={(e) => openModal(e, row)}
-                                onMouseLeave={closeModal}
+                                onClick={() => openModal(idx, row)}
                               >
                                 <BsThreeDotsVertical />
                               </span>
                             </div>
                           </td>
                         </tr>
+                        {isModalOpen[idx] && (
+                          <Modal
+                            onSubmit={closeModal}
+                            closeModal={() => closeModal(idx)}
+                            defaultValue={selectedRowData}
+                          />
+                        )}
                       </React.Fragment>
                     );
                   })}
                 </tbody>
-                {isModalOpen && (
-                  <Modal
-                    onSubmit={closeModal}
-                    closeModal={closeModal}
-                    defaultValue={selectedRowData}
-                    position={clickPosition}
-                  />
-                )}
               </table>
             </div>
           </div>

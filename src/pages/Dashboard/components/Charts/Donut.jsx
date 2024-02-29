@@ -17,7 +17,6 @@ const Donut = () => {
     legend: {
       show: false,
     },
-    colors:['#008FFB', '#00A76D', '#E91E63'],
     plotOptions: {
       pie: {
         size: 100,
@@ -31,10 +30,6 @@ const Donut = () => {
               label: '',                           
               formatter: function (w) {
                 return "Equity"
-                // let sum = 0;
-                // return w.globals.seriesTotals.reduce((a, b) => {
-                //     return `${a}/${b}`
-                // })
               }
             },
             value:{

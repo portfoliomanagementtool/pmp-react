@@ -91,7 +91,7 @@ const Watchlist = () => {
           <div className="">
             <div className="overflow-x-auto">
               <table className="table-default table-hover">
-                <thead className="">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="">
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">

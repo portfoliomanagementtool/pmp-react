@@ -355,7 +355,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto items-center w-[70%]">
+                  <div className=" mx-auto items-center ">
                     <Donut />
                   </div>
                 </div>
@@ -391,8 +391,7 @@ const Portfolio = () => {
           <div
             className="card 2xl:col-span-3 xl:col-span-4 card-border"
             role="presentation"
-          >
-          </div>
+          ></div>
         </div>
       </div>
     </div>

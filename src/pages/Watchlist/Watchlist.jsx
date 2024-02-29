@@ -7,11 +7,28 @@ import { PiCaretUpDownFill } from "react-icons/pi";
 import { RiDownloadLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { getAllWatchlist } from "../../api";
 
 const Watchlist = () => {
-  const { watchlist } = useSelector((state) => state.watchlist);
+  const [watchlists, setWatchlist] = useState([]);
+  // const { watchlist } = useSelector((state) => state.watchlist);
+
   const handleRowClick = () => {};
-  console.log(watchlist);
+
+  useEffect(() => {
+    const fetchWatchlist = async () => {
+      try {
+        const { data } = await getAllWatchlist();
+        console.log(data)
+        setWatchlist(data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+
+    fetchWatchlist();
+  }, []);
+
   return (
     <div
       className="card 2xl:col-span-3 mt-4 xl:col-span-4 card-border"
@@ -74,7 +91,7 @@ const Watchlist = () => {
           <div className="">
             <div className="overflow-x-auto">
               <table className="table-default table-hover">
-                <thead className="">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="">
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center">
@@ -122,35 +139,40 @@ const Watchlist = () => {
                   </tr>
                 </thead>
                 <tbody className="">
-                  <React.Fragment>
-                    <tr
-                      className="cursor-pointer"
-                      onClick={() => handleRowClick()}
-                    >
-                      <td className="py-2">
-                        <div className="flex items-center">
-                          <span className="ml-2 rtl:mr-2 font-semibold">
-                            {watchlist.category}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-2">
-                        <span className="capitalize">{watchlist.ticker}</span>
-                      </td>
-                      <td className="py-2">{watchlist.quantity}</td>
-                      <td className="py-2">
-                        <div className="flex items-center gap-2">
-                          <span className="badge-dot bg-emerald-500"></span>
-                          <span className="capitalize font-semibold text-emerald-500">
-                            In Stock
-                          </span>
-                        </div>
-                      </td>
-                      <td className="py-2">
-                        <span>${watchlist.price}</span>
-                      </td>
-                    </tr>
-                  </React.Fragment>
+                  {watchlists.map((watchlist) => {
+                    return (
+                      <React.Fragment>
+                        <tr
+                          className="cursor-pointer"
+                          onClick={() => handleRowClick()}
+                        >
+                          <td className="py-2">
+                            <div className="flex items-center">
+                              <span className="ml-2 rtl:mr-2 font-semibold">
+                                {watchlist.category}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span className="capitalize">{watchlist.ticker}</span>
+                          </td>
+                          <td className="py-2">{watchlist.quantity}</td>
+                          <td className="py-2">
+                            <div className="flex items-center gap-2">
+                              <span className="badge-dot bg-emerald-500"></span>
+                              <span className="capitalize font-semibold text-emerald-500">
+                                In Stock
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span>${watchlist.price}</span>
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    )
+                  })
+                  }
                 </tbody>
               </table>
             </div>

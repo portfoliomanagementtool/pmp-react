@@ -27,7 +27,7 @@ const Line = () => {
       enabled: false,
     },
     stroke: {
-        width: 3,
+      width: 3,
       curve: "straight",
     },
 

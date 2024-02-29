@@ -15,6 +15,7 @@ const Area = () => {
     chart: {
       height: 350,
       type: "area",
+      background:"transparent",
       toolbar: {
         show: true,
       },

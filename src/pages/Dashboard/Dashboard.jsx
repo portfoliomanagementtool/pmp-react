@@ -17,8 +17,8 @@ const Dashboard = () => {
   const [activeButton, setActiveButton] = useState("monthly");
   const [rowToEdit, setRowToEdit] = useState(null);
   const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: dayjs(), 
-    endDate: dayjs().add(3, 'month') 
+    startDate: dayjs(),
+    endDate: dayjs().add(3, "month"),
   });
 
   const handleCalendarClose = () => {

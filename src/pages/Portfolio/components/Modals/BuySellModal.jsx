@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
+import { useSelector } from "react-redux";
 
 const BuySellModal = ({
   onSubmit,
@@ -11,6 +12,8 @@ const BuySellModal = ({
   defaultValue,
   initialChecked,
 }) => {
+  const mode = useSelector((state) => state.config.mode);
+  const isDarkMode = mode === "dark";
   const navigate = useNavigate();
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
@@ -59,18 +62,15 @@ const BuySellModal = ({
       // navigate("/app/asset/edit");
     }
   };
-  // const handleButtonClick = (e) => {
-  //   closeModal();
-  // };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
-      <div className="modal bg-white w-[70vh] p-6 rounded-md z-10">
+      <div className="modal bg-white dark:bg-gray-800 w-[70vh] p-6 rounded-md z-10">
         <div className="flex justify-between items-center mb-4">
           <div className="flex">
             <button
-              className="text-gray-900 text-lg font-bold hover:text-gray-800"
+              className="text-gray-900 dark:text-gray-200 text-lg font-bold hover:text-gray-800"
               onClick={handleClose}
             >
               <AiOutlineClose />
@@ -88,11 +88,28 @@ const BuySellModal = ({
           </div>
         </div>
         <h3 className="text-xl font-semibold">{formState.category}</h3>
-        <div className="mt-5">
+        <div className="mt-5 ">
           <Box
             component="form"
             sx={{
               "& > :not(style)": { m: 1, width: "25ch" },
+              "& .MuiInputLabel-root": {
+                color: isDarkMode ? "white" : "initial",
+              },
+              "& .MuiOutlinedInput-root": {
+                "& fieldset": {
+                  borderColor: isDarkMode ? "white" : "rgba(0, 0, 0, 0.23)",
+                },
+                "&:hover fieldset": {
+                  borderColor: isDarkMode ? "white" : "rgba(0, 0, 0, 0.23)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: isDarkMode ? "white" : "#3f51b5",
+                },
+              },
+              "& .MuiOutlinedInput-input": {
+                color: isDarkMode ? "white" : "initial",
+              },
             }}
             noValidate
             autoComplete="off"
@@ -104,7 +121,7 @@ const BuySellModal = ({
               value={formState.quantity}
               onChange={(e) => changeInput(e)}
               name="quantity"
-            ></TextField>
+            />
             <TextField
               id="outlined-basic"
               label="Price"
@@ -117,15 +134,17 @@ const BuySellModal = ({
         </div>
         <div
           className={`card card-border mt-4 ${
-            checked ? "bg-emerald-500" : "bg-red-500"
+            checked ? "bg-red-500 dark:bg-red-500" : "bg-green-500 dark:bg-green-500"
           } text-center cursor-pointer hover:${
-            checked ? "bg-emerald-700" : "bg-red-600"
-          }`}
+            checked ? "bg-red-600 dark:bg-red-300" : " bg-green-700 dark:bg-green-300"
+          } `}
           role="presentation"
           onClick={handleSubmit}
         >
           <div className="card-body">
-            <h6 className="text-white">{checked ? "SELL" : "BUY"}</h6>
+            <h6 className="text-white ">
+              {checked ? "SELL" : "BUY"}
+            </h6>
           </div>
         </div>
       </div>

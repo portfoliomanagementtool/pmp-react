@@ -23,6 +23,7 @@ const Statistic = () => {
     chart: {
       height: 350,
       type: "line",
+      background:"transparent",
       toolbar: {
         show: false,
       },

@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import Chart from 'react-apexcharts';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 const Donut = () => {
   const mode = useSelector((state) => state.config.mode);
@@ -8,47 +8,43 @@ const Donut = () => {
 
   const options = {
     chart: {
-      type: 'donut',
+      type: "donut",
+      background: "transparent",
     },
-    labels: ['Crypto', 'Index', 'Innovation'],
+    labels: ["Crypto", "Index", "Innovation"],
     dataLabels: {
       enabled: false,
     },
     legend: {
       show: false,
     },
-    colors:['#008FFB', '#00A76D', '#E91E63'],
     plotOptions: {
       pie: {
         size: 100,
         donut: {
-          size: '80%',
+          size: "80%",
           labels: {
             show: true,
             total: {
               show: true,
               showAlways: true,
-              label: '',                           
+              label: "",
               formatter: function (w) {
-                return "Equity"
-                // let sum = 0;
-                // return w.globals.seriesTotals.reduce((a, b) => {
-                //     return `${a}/${b}`
-                // })
-              }
+                return "Equity";
+              },
             },
-            value:{
+            value: {
               offsetY: -8, // -8 worked for me
-              color: mode === "light" ? '#000' : "#fff",
-              fontSize: '20px',
-              fontWeight: 'semi-bold',
-            }
+              color: mode === "light" ? "#000" : "#fff",
+              fontSize: "20px",
+              fontWeight: "semi-bold",
+            },
           },
         },
       },
     },
     annotations: {
-      position: 'front',
+      position: "front",
       points: [
         {
           x: 50,
@@ -57,11 +53,11 @@ const Donut = () => {
             size: 0,
           },
           label: {
-            text: 'Center Text',
+            text: "Center Text",
             offsetY: 0,
             style: {
-              fontSize: '18px',
-              color: '#000',
+              fontSize: "18px",
+              color: "#000",
             },
           },
         },
@@ -69,18 +65,17 @@ const Donut = () => {
     },
   };
 
-  // useEffect(() => {
-  //   if(mode === "dark") {
-  //     setOptions((options) => ({...options, theme: { mode: 'dark' }}))
-  //   } else if(mode === "light") {
-  //     setOptions((options) => ({...options, theme: { mode: 'light' }}))
-  //   }
-  // }, [mode, setOptions]);
   return (
-    <div className='object-contain flex justify-center' id="equity">
-      <Chart options={options} series={series} type="donut" height={278.7} width={279} />
+    <div className="object-contain flex justify-center" id="equity">
+      <Chart
+        options={options}
+        series={series}
+        type="donut"
+        height={278.7}
+        width={279}
+      />
     </div>
-  )
-}
+  );
+};
 
 export default Donut;

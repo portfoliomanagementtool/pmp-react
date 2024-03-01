@@ -29,6 +29,8 @@ const Portfolio = () => {
       percentPL: 7.32,
       portfolioPercent: 12.5,
       categoryPercent: 10.2,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "live",
     },
     {
@@ -43,6 +45,8 @@ const Portfolio = () => {
       percentPL: 1.4,
       portfolioPercent: 8.3,
       categoryPercent: 9.1,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "draft",
     },
     {
@@ -57,6 +61,8 @@ const Portfolio = () => {
       percentPL: -4.03,
       portfolioPercent: 9.7,
       categoryPercent: 11.8,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "error",
     },
     {
@@ -71,6 +77,8 @@ const Portfolio = () => {
       percentPL: -2.1,
       portfolioPercent: 7.1,
       categoryPercent: 8.5,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "live",
     },
     {
@@ -85,6 +93,8 @@ const Portfolio = () => {
       percentPL: 1.38,
       portfolioPercent: 10.2,
       categoryPercent: 10.2,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "draft",
     },
     {
@@ -99,6 +109,8 @@ const Portfolio = () => {
       percentPL: 4.47,
       portfolioPercent: 6.2,
       categoryPercent: 7.3,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "live",
     },
     {
@@ -113,6 +125,8 @@ const Portfolio = () => {
       percentPL: -1.87,
       portfolioPercent: 18.3,
       categoryPercent: 10.1,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "error",
     },
     {
@@ -127,6 +141,8 @@ const Portfolio = () => {
       percentPL: 2.32,
       portfolioPercent: 5.5,
       categoryPercent: 9.9,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "live",
     },
     {
@@ -141,6 +157,8 @@ const Portfolio = () => {
       percentPL: 3.39,
       portfolioPercent: 4.7,
       categoryPercent: 10.9,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "draft",
     },
     {
@@ -155,9 +173,12 @@ const Portfolio = () => {
       percentPL: -1.18,
       portfolioPercent: 3.8,
       categoryPercent: 7.8,
+      invAmount: 50000,
+      daysProfitLoss: 20,
       // status: "error",
     },
   ]);
+
   const metrics = [
     {
       title: "Current Value",
@@ -224,40 +245,23 @@ const Portfolio = () => {
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
-    console.log("Active button:", buttonType);
   };
 
   return (
     <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
+        <div className="pb-4 lg:mb-0">
+          <h3>My Portfolio</h3>
+          <p>View your current portfolio & summary</p>
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {metrics.map((metric) => (
             <Card key={metric.title} {...metric} />
           ))}
         </div>
-        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-          {/* <div
-            className="card 2xl:col-span-8 xl:col-span-7 card-border"
-            role="presentation"
-          >
-            
-            <div className="card-body">
-              <div className="flex items-center justify-between">
-                <h4>Profit/Loss</h4>
-                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-                  Export Report
-                </button>
-              </div>
-              <div className="chartRef">
-                <div className="min-h-[395px]">
-                  <Line />
-                </div>
-              </div>
-            </div>
-          </div> */}
-
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-4">
           <div
-            className="card 2xl:col-span-8 xl:col-span-7 card-border"
+            className="card 2xl:col-span-2 xl:col-span-2 card-border"
             role="presentation"
           >
             <div className="card-body">
@@ -265,9 +269,9 @@ const Portfolio = () => {
                 <h4 className="text-xl font-semibold">Monthly Investment</h4>
                 <div className="segment flex gap-2">
                   <button
-                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                    className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "monthly"
-                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("monthly")}
@@ -277,7 +281,7 @@ const Portfolio = () => {
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "weekly"
-                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("weekly")}
@@ -287,7 +291,7 @@ const Portfolio = () => {
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "daily"
-                        ? "bg-gray-700/70 hover:bg-gray-700/40 text-white"
+                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("daily")}
@@ -303,10 +307,7 @@ const Portfolio = () => {
               </div>
             </div>
           </div>
-          <div
-            className="card 2xl:col-span-3 xl:col-span-4 card-border"
-            role="presentation"
-          >
+          <div className="card card-border" role="presentation">
             <div className="card-body">
               <h4>My Assets</h4>
 
@@ -355,7 +356,7 @@ const Portfolio = () => {
                   </div>
                 </div>
                 <div className="chartRef">
-                  <div className=" mx-auto items-center w-[70%]">
+                  <div className=" mx-auto items-center ">
                     <Donut />
                   </div>
                 </div>
@@ -363,37 +364,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-
-        {/* <div className="flex flex-col items-center justify-center bg-gray-100"> */}
         <SellBuyTable rows={rows} />
-        {/* <button
-            onClick={() => {
-              setModalOpen(true);
-              setRowToEdit(null);
-            }}
-            className="btn mt-4 bg-blue-600 text-white px-4 py-2 rounded cursor-pointer shadow-md"
-          >
-            Add
-          </button> */}
-        {/* {modalOpen && (
-            <EditAsset 
-              closeModal={() => {
-                setModalOpen(false);
-                setRowToEdit(null);
-              }}
-              onSubmit={handleSubmit}
-              defaultValue={rowToEdit}
-            />
-          )} */}
-        {/* </div> */}
-
-        <div className="grid grid-cols-1 xl:grid-cols-11 gap-4 mt-4">
-          <div
-            className="card 2xl:col-span-3 xl:col-span-4 card-border"
-            role="presentation"
-          >
-          </div>
-        </div>
       </div>
     </div>
   );

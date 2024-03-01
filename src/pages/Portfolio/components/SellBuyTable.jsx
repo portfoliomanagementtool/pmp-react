@@ -6,6 +6,7 @@ import {
 } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
+import { CiStar } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
 import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
@@ -16,11 +17,18 @@ import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
+import DropdownMenu from "./Modals/DropdownMenu";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
+
+  const handleThreeDotsClick = (idx) => {
+    setDetail(idx === detail ? null : idx);
+  };
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -30,36 +38,23 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     }
   };
 
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
+
   const [selectedRowData, setSelectedRowData] = useState(null);
-  const [clickPosition, setClickPosition] = useState({ top: 0, left: 0 });
-  const [selectedRowID, setSelectedRowID] = useState(null);
-  const [isRowModalOpen, setRowModalOpen] = useState(false);
-  const [rowModalData, setRowModalData] = useState(null);
 
-  // const handleRowMouseEnter = (e, rowData) => {
-  //   console.log("Mouse Enter Triggered");
-  //   const rect = e.target.getBoundingClientRect();
-  //   setRowModalData(rowData);
-  //   setRowModalOpen(true);
-  //   setClickPosition({
-  //     top: rect.top + window.scrollY,
-  //     left: rect.left + window.scrollX,
-  //   });
-  // };
-
-  // const handleRowMouseLeave = () => {
-  //   setRowModalOpen(false);
-  //   setRowModalData(null);
-  // };
-
-  const openModal = (e, rowData, idx) => {
-    setModalOpen(true);
-    setSelectedRowData(rowData);
+  const openModal = (idx, row) => {
+    const updatedModalOpenStates = isModalOpen.map((state, index) =>
+      index === idx ? true : false
+    );
+    setModalOpen(updatedModalOpenStates);
+    setSelectedRowData(row);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
+  const closeModal = (idx) => {
+    const updatedModalOpenStates = isModalOpen.map((state, index) =>
+      index === idx ? false : state
+    );
+    setModalOpen(updatedModalOpenStates);
     setSelectedRowData(null);
   };
 
@@ -99,21 +94,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 </span>
               </button>
 
-              {/* <a
-                download=""
-                className="block lg:inline-block md:mb-0 mb-4"
-                href="/data/product-list.csv"
-                target="_blank"
-              >
-                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
-                  <span className="flex items-center justify-center">
-                    <span className="text-lg">
-                      <RiDownloadLine />
-                    </span>
-                    <span className="ml-1 mr-1">Export</span>
-                  </span>
-                </button>
-              </a> */}
               <a
                 className="block lg:inline-block md:mb-0 mb-4"
                 href="/app/funds/ticker-new"
@@ -130,12 +110,12 @@ const SellBuyTable = ({ rows, deleteRow }) => {
             </div>
           </div>
           <div className="">
-            <div className="overflow-x-auto">
+            <div className="">
               <table className="table-default table-hover">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
                   <tr className="">
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-white">
                         Category
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -143,7 +123,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Ticker
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -151,29 +131,36 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Quantity
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Qty
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Actions
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        ATP
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
-                        Price
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Inv.Amount
                       </div>
                     </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Mkt.Value
+                      </div>
+                    </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Overall G/L
+                      </div>
+                    </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Day's G/L
+                      </div>
+                    </th>
+
                     <th className="" colSpan="1">
                       <div className=""></div>
                     </th>
@@ -190,60 +177,64 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               : ""
                           }`}
                         >
-                          <td className="py-2">
-                            <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.category}
-                              </span>
+                          <td className="py-2 ">
+                            <div className="flex items-center justify-between w-[350px]">
+                              <div className="flex items-center">
+                                <CiStar />
+                                <span className="ml-2 rtl:mr-2 font-semibold">
+                                  {row.category}
+                                </span>
+                              </div>
+                              <div className=" bg-white rounded-lg border-2 w-[200px]  ">
+                                <button className="text-green-500 w-1/2">
+                                  Buy
+                                </button>
+                                <button className="text-red-500 w-1/2 ">
+                                  Sell
+                                </button>
+                              </div>
                             </div>
                           </td>
                           <td className="py-2">
                             <span className="capitalize">{row.ticker}</span>
                           </td>
                           <td className="py-2">{row.quantity}</td>
-                          <td className="py-2">
-                            <div className="flex items-center gap-2">
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="capitalize font-semibold text-emerald-500">
-                                In Stock
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span>${row.price}</span>
-                          </td>
+                          <td className="py-2">${row.price}</td>
+                          <td className="py-2">{row.invAmount}</td>
+                          <td className="py-2">{row.marketValue}</td>
+                          <td className="py-2">{row.profitLoss}</td>
+                          <td className="py-2">{row.daysProfitLoss}</td>
+
                           <td className="py-2 flex relative">
                             <div className="flex justify-end text-lg">
-                              <span
+                              {/* <span
                                 onClick={() => editRow(row)}
                                 className="cursor-pointer p-2 hover:text-indigo-600"
                               >
                                 <BsFillPencilFill />
-                              </span>
+                              </span> */}
                             </div>
-                            <div className="flex  justify-end text-lg">
+                            <div className="flex justify-end text-lg">
                               <span
                                 className="cursor-pointer p-2  hover:text-indigo-600"
-                                onMouseEnter={(e) => openModal(e, row)}
-                                onMouseLeave={closeModal}
+                                onClick={() => openModal(idx, row)}
                               >
                                 <BsThreeDotsVertical />
                               </span>
                             </div>
                           </td>
                         </tr>
+                        {isModalOpen[idx] && (
+                          <Modal
+                            onSubmit={closeModal}
+                            closeModal={() => closeModal(idx)}
+                            defaultValue={selectedRowData}
+                          />
+                        )}
                       </React.Fragment>
                     );
                   })}
                 </tbody>
-                {isModalOpen && (
-                  <Modal
-                    onSubmit={closeModal}
-                    closeModal={closeModal}
-                    defaultValue={selectedRowData}
-                    position={clickPosition}
-                  />
-                )}
               </table>
             </div>
           </div>

@@ -180,6 +180,10 @@ const Orders = () => {
   };
   return (
     <>
+      <div className="pb-4 lg:mb-0">
+        <h3>Orders</h3>
+        <p>View your current orders & summary</p>
+      </div>
       <OrdersTable
         rows={rows}
         deleteRow={handleDeleteRow}

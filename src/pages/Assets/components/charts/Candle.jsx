@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React from "react";
 import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 const Candle = () => {
     const series= [{
@@ -110,11 +111,18 @@ const Candle = () => {
         ]
       },
     ];
-  
+    const mode = useSelector((state) => state.config.mode);
   
     const options = {
       chart: {
         type: 'candlestick',
+        background:"transparent",
+        toolbar: {
+          show: false,
+        }
+      },
+      theme: {
+        mode: mode === "light" ? "light" : "dark",
       },
       annotations: {
         xaxis: [

@@ -48,6 +48,7 @@ const Assets = () => {
       categoryPercent: 10.2,
       change: 20,
       percentchange: 7.2,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -64,6 +65,7 @@ const Assets = () => {
       categoryPercent: 9.1,
       change: -10,
       percentchange: 4.2,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -80,6 +82,7 @@ const Assets = () => {
       categoryPercent: 11.8,
       change: 40,
       percentchange: 9.2,
+      daysProfitLoss:20,
       // status: "error",
     },
     {
@@ -96,6 +99,7 @@ const Assets = () => {
       categoryPercent: 8.5,
       change: -60,
       percentchange: 4.7,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -112,6 +116,7 @@ const Assets = () => {
       categoryPercent: 10.2,
       change: -200,
       percentchange: 30.5,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -128,6 +133,7 @@ const Assets = () => {
       categoryPercent: 7.3,
       change: 90,
       percentchange: 14.2,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -144,6 +150,7 @@ const Assets = () => {
       categoryPercent: 10.1,
       change: 100,
       percentchange: 26.2,
+      daysProfitLoss:20,
       // status: "error",
     },
     {
@@ -160,6 +167,7 @@ const Assets = () => {
       categoryPercent: 9.9,
       change: -67,
       percentchange: 23.5,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -176,6 +184,7 @@ const Assets = () => {
       categoryPercent: 10.9,
       change: -123,
       percentchange: 30.5,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -192,6 +201,7 @@ const Assets = () => {
       categoryPercent: 7.8,
       change: -56,
       percentchange: 21.6,
+      daysProfitLoss:20,
       // status: "error",
     },
   ]);

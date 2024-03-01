@@ -10,6 +10,7 @@ const Donut = () => {
   const options = {
     chart: {
       type: "donut",
+      background: "transparent",
     },
     labels: ["Crypto", "Index", "Innovation"],
 

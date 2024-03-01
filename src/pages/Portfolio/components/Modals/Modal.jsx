@@ -66,19 +66,19 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
               <AiOutlineClose />
             </button>
           </div>
-          <div className="flex mx-auto justify-center items-center mt-4">
+          <div className="flex mx-auto justify-center items-center my-4">
             <button
               className={`${
-                activeTab === "buy" ? "bg-red-500" : "bg-gray-300"
-              } text-white px-4 py-2 rounded-l cursor-pointer`}
+                activeTab === "buy" ? "bg-green-500 text-white" : "bg-gray-300 text-gray-500"
+              } px-4 py-2 rounded-l cursor-pointer`}
               onClick={() => handleTabClick("buy")}
             >
               Buy
             </button>
             <button
               className={`${
-                activeTab === "sell" ? "bg-green-500" : "bg-gray-300"
-              } text-white px-4 py-2 rounded-r cursor-pointer`}
+                activeTab === "sell" ? "bg-red-500 text-white" : "bg-gray-300 text-gray-500"
+              }  px-4 py-2 rounded-r cursor-pointer `}
               onClick={() => handleTabClick("sell")}
             >
               Sell
@@ -118,7 +118,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
                   View Asset
                 </span>
               </div>
-              <div className="w-full flex justify-start bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+              <div className="w-full flex justify-start bg-white hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
                 <div className="py-4 pr-6 pl-2 flex text-xl font-bold text-gray-900 dark:text-white">
                   <MdChecklistRtl />
                 </div>

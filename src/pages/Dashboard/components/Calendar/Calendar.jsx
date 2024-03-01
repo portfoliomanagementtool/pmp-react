@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 const Calendar = ({ onClose, onSelectDateRange }) => {
+  const mode = useSelector((state) => state.config.mode);
+  const isDarkMode = mode === "dark";
+
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
@@ -27,7 +31,6 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   const handleSubmit = () => {
     onSelectDateRange(selectedStartDate, selectedEndDate);
     onClose();
-    console.log('hi')
   };
 
   const generateMonthMatrix = (date) => {
@@ -60,7 +63,9 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
       <div>
         <div className="flex justify-between items-center mb-4">
           <button
-            className="text-gray-600 hover:text-gray-800"
+            className={`text-gray-600 hover:text-gray-800 ${
+              isDarkMode ? "text-white hover:text-gray-400" : ""
+            }`}
             onClick={() => handleMonthChange(-1)}
           >
             <BsChevronLeft />
@@ -69,7 +74,9 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
             {selectedDate.format("MMMM YYYY")}
           </h3>
           <button
-            className="text-gray-600 hover:text-gray-800"
+            className={`text-gray-600 hover:text-gray-800 ${
+              isDarkMode ? "text-white hover:text-gray-400" : ""
+            }`}
             onClick={() => handleMonthChange(1)}
           >
             <BsChevronRight />
@@ -82,33 +89,45 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
             </div>
           ))}
           {monthMatrix.map((week, weekIndex) =>
-            week.map((date) => (
-              <div
-                key={date.format("YYYY-MM-DD")}
-                className={`rounded-full text-center p-2 cursor-pointer border ${
-                  date.isSame(selectedDate, "day")
-                    ? "bg-gray-500 text-white"
-                    : ""
-                }${
-                  (selectedStartDate &&
-                    selectedEndDate &&
-                    date.isAfter(selectedStartDate, "day") &&
-                    date.isBefore(selectedEndDate, "day")) ||
-                  date.isSame(selectedStartDate, "day") ||
-                  date.isSame(selectedEndDate, "day")
-                    ? "bg-blue-200"
-                    : ""
-                }`}
-                onClick={() => handleDateClick(date)}
-              >
-                {date.format("D")}
-              </div>
-            ))
+            week.map((date) => {
+              const isCurrentMonth = date.month() === selectedDate.month();
+              const isBeforeCurrentMonth = date.isBefore(selectedDate, "month");
+              return (
+                <div
+                  key={date.format("YYYY-MM-DD")}
+                  className={`rounded-full text-center p-2 cursor-pointer  ${
+                    date.isSame(selectedDate, "day")
+                      ? "bg-gray-200 text-gray-800"
+                      : date.isSame(today, "day")
+                      ? "bg-yellow-200"
+                      : isBeforeCurrentMonth && !isCurrentMonth
+                      ? "dark:text-gray-700 dark:border-gray-700 text-gray-200 border-white" 
+                      : ""
+                  }${
+                    (selectedStartDate &&
+                      selectedEndDate &&
+                      date.isAfter(selectedStartDate, "day") &&
+                      date.isBefore(selectedEndDate, "day")) ||
+                    date.isSame(selectedStartDate, "day") ||
+                    date.isSame(selectedEndDate, "day")
+                      ? "bg-blue-200 text-gray-600"
+                      : ""
+                  } ${isDarkMode ? "border-gray-700" : "border-gray-300"} ${
+                    isDarkMode && date.isSame(selectedDate, "day")
+                      ? "text-white"
+                      : ""
+                  }`}
+                  onClick={() => handleDateClick(date)}
+                >
+                  {date.format("D")}
+                </div>
+              );
+            })
           )}
         </div>
         <div className="mt-4 flex justify-center">
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded-md"
+            className={`px-4 py-2 rounded-md bg-blue-500 text-white`}
             onClick={handleSubmit}
             // disabled={!selectedStartDate || !selectedEndDate}
           >
@@ -122,7 +141,11 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   return (
     <>
       <div
-        className="absolute w-80 p-3 top-12 left-0 bg-white shadow-lg border "
+        className={`absolute w-80 p-3 top-12 left-0 shadow-lg border ${
+          isDarkMode
+            ? "bg-gray-800 border-gray-700"
+            : "bg-white border-gray-300"
+        }`}
         style={{
           transform: "translate(829.6px, 78.4px);",
           zIndex: "40",

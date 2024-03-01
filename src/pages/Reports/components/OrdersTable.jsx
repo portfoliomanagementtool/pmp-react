@@ -62,8 +62,8 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
     >
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
-          <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">All Assets</h3>
+          {/* <div className="lg:flex items-center justify-between mb-4">
+            <h3 className="mb-4 lg:mb-0">Orders</h3>
             <div className="flex flex-col gap-2 lg:flex-row lg:items-center">
               <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
                 <div className="input-suffix-start ml-2">
@@ -98,14 +98,14 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                 </button>
               </a>
             </div>
-          </div>
+          </div> */}
           <div className="">
             <div className="overflow-x-auto">
               <table className="table-default table-hover">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr className="">
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Category
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -113,7 +113,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Ticker
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -121,7 +121,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer text-center inline-flex select-none justify-center items-center dark:text-gray-300">
                         Quantity
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -129,7 +129,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Actions
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -137,7 +137,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Price
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -158,7 +158,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       >
                         <td className="py-2">
                           <div className="flex items-center">
-                            <span className="ml-2 rtl:mr-2 font-semibold">
+                            <span className="ml-2 rtl:mr-2 font-semibold ">
                               {row.category}
                             </span>
                           </div>
@@ -166,7 +166,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                         <td className="py-2">
                           <span className="capitalize">{row.ticker}</span>
                         </td>
-                        <td className="py-2">{row.qty}</td>
+                        <td className="py-2 text-center">{row.qty}</td>
                         <td className="py-2">
                           <div className="flex items-center gap-2">
                             <OrderStatusChip status={row.status} />

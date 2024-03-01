@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { useUser } from '@clerk/clerk-react';
-import SideNav from './SideNav';
-import Header from './Header';
-import View from './View';
-import ThemeConfigModal from '../Modals/ThemeConfigModal';
+import React, { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import SideNav from "./SideNav";
+import Header from "./Header";
+import View from "./View";
+import ThemeConfigModal from "../Modals/ThemeConfigModal";
 
 const DashboardLayout = () => {
   const { user } = useUser();

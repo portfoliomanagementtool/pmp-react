@@ -117,6 +117,9 @@ const Candle = () => {
       chart: {
         type: 'candlestick',
         background:"transparent",
+        toolbar: {
+          show: false,
+        }
       },
       theme: {
         mode: mode === "light" ? "light" : "dark",

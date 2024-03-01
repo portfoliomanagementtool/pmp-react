@@ -113,7 +113,7 @@ const BuySellModal = ({
         </div>
         <div
           className={`card card-border mt-4 ${
-            checked ? 'bg-emerald-500' : 'bg-red-500'
+            checked ? 'bg-green-500 dark:bg-green-500 ' : 'bg-red-500'
           } text-center cursor-pointer hover:${
             checked ? 'bg-emerald-700' : 'bg-red-600'
           }`}
@@ -121,7 +121,7 @@ const BuySellModal = ({
           onClick={handleSubmit}
         >
           <div className="card-body">
-            <h6 className="text-white">{checked ? 'SELL' : 'BUY'}</h6>
+            <h6 className="text-">{checked ? 'SELL' : 'BUY'}</h6>
           </div>
         </div>
       </div>

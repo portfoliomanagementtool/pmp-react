@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
 import DropdownMenu from "./Modals/DropdownMenu";
+import { Scrollbars } from "react-custom-scrollbars-2";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -41,15 +42,17 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const [selectedRowData, setSelectedRowData] = useState(null);
 
   const openModal = (idx, row) => {
-    const updatedModalOpenStates = [...isModalOpen];
-    updatedModalOpenStates[idx] = true;
+    const updatedModalOpenStates = isModalOpen.map((state, index) =>
+      index === idx ? true : false
+    );
     setModalOpen(updatedModalOpenStates);
     setSelectedRowData(row);
   };
 
   const closeModal = (idx) => {
-    const updatedModalOpenStates = [...isModalOpen];
-    updatedModalOpenStates[idx] = false;
+    const updatedModalOpenStates = isModalOpen.map((state, index) =>
+      index === idx ? false : state
+    );
     setModalOpen(updatedModalOpenStates);
     setSelectedRowData(null);
   };
@@ -106,12 +109,13 @@ const SellBuyTable = ({ rows, deleteRow }) => {
             </div>
           </div>
           <div className="">
-            <div className="overflow-x-auto">
+          
+            <div className="">
               <table className="table-default table-hover">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
                   <tr className="">
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-white">
                         Category
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -119,7 +123,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Ticker
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -127,7 +131,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Quantity
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -135,7 +139,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Actions
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -143,7 +147,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Price
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -197,7 +201,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                 <BsFillPencilFill />
                               </span> */}
                             </div>
-                            <div className="flex  justify-end text-lg">
+                            <div className="flex justify-end text-lg">
                               <span
                                 className="cursor-pointer p-2  hover:text-indigo-600"
                                 onClick={() => openModal(idx, row)}
@@ -220,6 +224,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 </tbody>
               </table>
             </div>
+            
           </div>
         </div>
       </div>

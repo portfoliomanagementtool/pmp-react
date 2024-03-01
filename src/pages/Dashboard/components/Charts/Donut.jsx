@@ -6,10 +6,10 @@ const Donut = () => {
   const mode = useSelector((state) => state.config.mode);
   const series = [55, 27, 18];
 
-  const [chartOptions, setChartOptions] = useState({
+  const options = {
     chart: {
       type: "donut",
-      // background: "transparent",
+      background: "transparent",
     },
     labels: ["Crypto", "Index", "Innovation"],
     dataLabels: {
@@ -31,7 +31,6 @@ const Donut = () => {
               label: "",
               formatter: function (w) {
                 return "Equity";
-                
               },
             },
             value: {
@@ -64,12 +63,12 @@ const Donut = () => {
         },
       ],
     },
-  });
+  };
 
   return (
     <div className="object-contain flex justify-center" id="equity">
       <Chart
-        options={chartOptions}
+        options={options}
         series={series}
         type="donut"
         height={278.7}

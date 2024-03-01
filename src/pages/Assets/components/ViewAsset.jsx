@@ -8,13 +8,16 @@ import { useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
 import Area from "./Charts/Area";
 import BuySellModal from "./BuySellModal";
+import { MdCandlestickChart } from "react-icons/md";
+import { FaChartArea } from "react-icons/fa6";
+import { TbChartAreaLineFilled } from "react-icons/tb";
 
 const ViewAsset = () => {
   const { edit } = useSelector((state) => state.asset);
   const [showCandlestick, setShowCandlestick] = useState(true);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('BUY'); 
+  const [modalType, setModalType] = useState("BUY");
 
   const openModal = (type) => {
     setModalType(type);
@@ -48,9 +51,18 @@ const ViewAsset = () => {
       percentage: "20",
     },
   ];
+  const [activeButton, setActiveButton] = useState("monthly");
+
+  const handleButtonClick = (buttonType) => {
+    setActiveButton(buttonType);
+  };
 
   return (
     <>
+      <div className="pb-4 lg:mb-0">
+        <h3>View Asset</h3>
+        <p>View the asset & summary</p>
+      </div>
       <div className="grid grid-cols-3">
         <div className="col-span-3 row-span-2">
           <div
@@ -58,25 +70,59 @@ const ViewAsset = () => {
             role="presentation"
           >
             <div className="card-body">
+              <h4 className="">ASSETS</h4>
               <div className="flex items-center justify-between">
-                <h4 className="">ASSETS</h4>
                 <div className="">
                   <button
                     className={`button ${
-                      showCandlestick ? "bg-gray-300" : "bg-white"
-                    } border mx-2 border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm`}
+                      showCandlestick ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200" : "bg-white"
+                    } border mx-2 border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 text-sm`}
                     onClick={() => setShowCandlestick(true)}
                   >
-                    Candlestick
+                    <MdCandlestickChart size={20} />
                   </button>
                   <button
                     className={`button ${
-                      !showCandlestick ? "bg-gray-300" : "bg-white"
+                      !showCandlestick ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200" : "bg-white"
                     } border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm`}
                     onClick={() => setShowCandlestick(false)}
                   >
-                    Area
+                    <TbChartAreaLineFilled size={20} />
                   </button>
+                </div>
+                <div className="">
+                  <div className="segment flex gap-2">
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "monthly"
+                          ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                          : ""
+                      }`}
+                      onClick={() => handleButtonClick("monthly")}
+                    >
+                      Monthly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "weekly"
+                          ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                          : ""
+                      }`}
+                      onClick={() => handleButtonClick("weekly")}
+                    >
+                      Weekly
+                    </button>
+                    <button
+                      className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
+                        activeButton === "daily"
+                          ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                          : ""
+                      }`}
+                      onClick={() => handleButtonClick("daily")}
+                    >
+                      Daily
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className="chartRef">
@@ -156,11 +202,11 @@ const ViewAsset = () => {
         </div>
       )}
 
-<div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
         <div
-          className="card card-border mt-4 bg-red-500 text-center cursor-pointer hover:bg-red-600"
+          className="card card-border mt-4 bg-red-500 dark:bg-red-600 dark:hover:bg-red-500 text-center cursor-pointer hover:bg-red-600"
           role="presentation"
-          onClick={() => openModal('BUY')}
+          onClick={() => openModal("BUY")}
         >
           <div className="card-body">
             <h6 className="text-white">BUY</h6>
@@ -168,9 +214,9 @@ const ViewAsset = () => {
         </div>
 
         <div
-          className="card card-border mt-4 bg-green-600 text-center cursor-pointer hover:bg-green-700"
+          className="card card-border mt-4 bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 text-center cursor-pointer hover:bg-green-700"
           role="presentation"
-          onClick={() => openModal('SELL')}
+          onClick={() => openModal("SELL")}
         >
           <div className="card-body text-white">
             <h6 className="text-white">SELL</h6>
@@ -180,10 +226,10 @@ const ViewAsset = () => {
 
       {isModalOpen && (
         <BuySellModal
-          onSubmit={console.log} 
+          onSubmit={console.log}
           closeModal={closeModal}
-          defaultValue={null} 
-          initialChecked={modalType === 'SELL'}
+          defaultValue={null}
+          initialChecked={modalType === "SELL"}
         />
       )}
     </>

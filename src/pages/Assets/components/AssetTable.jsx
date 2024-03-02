@@ -1,5 +1,10 @@
 import React, { useState } from "react";
-import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
+import {
+  BsFillTrashFill,
+  BsFillPencilFill,
+  BsStarFill,
+  BsStar,
+} from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
@@ -10,10 +15,19 @@ import { GoGraph } from "react-icons/go";
 import ViewAsset from "./ViewAsset";
 import { useNavigate } from "react-router-dom";
 import { CiStar } from "react-icons/ci";
+import BuySellModal from "./BuySellModal";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
-  const [expandedRow, setExpandedRow] = useState(null);
   const navigate = useNavigate();
+
+  const [expandedRow, setExpandedRow] = useState(null);
+  const [activeTab, setActiveTab] = useState("buy");
+  const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
+  const [starClicked, setStarClicked] = useState(
+    Array(rows.length).fill(false)
+  );
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -22,11 +36,47 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
       setExpandedRow(idx);
     }
   };
+
+  const handleTabClick = (tab, row) => {
+    setActiveTab(tab);
+    setSellBuyModalOpen(true);
+    setSelectedRowData(row);
+    console.log(selectedRowData);
+  };
+
+  const closeBuySellModal = () => {
+    setSellBuyModalOpen(false);
+  };
+
+  const handleClose = () => {
+    console.log("hi");
+    setModalOpen(false);
+    closeModal();
+  };
+
+  const handleRowHover = (idx, isHovered) => {
+    const group = document.querySelector(`.buy-sell-group-hover-${idx}`);
+    if (group) {
+      group.style.opacity = isHovered ? "1" : "0";
+    }
+  };
+
+  const handleStarClick = (idx) => {
+    const updatedStarClicked = [...starClicked];
+    updatedStarClicked[idx] = !updatedStarClicked[idx];
+    setStarClicked(updatedStarClicked);
+  };
+  const closeModal = (idx) => {
+    const updatedModalOpenStates = isModalOpen.map((state, index) =>
+      index === idx ? false : state
+    );
+    setModalOpen(updatedModalOpenStates);
+    setSelectedRowData(null);
+  };
+
   const handleRowClick = (idx) => {
-    // Get the selected asset details based on the index
     const selectedAsset = rows[idx];
 
-    // Navigate to the ViewAsset component with the selected asset details
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
@@ -66,21 +116,6 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                   </span>
                 </button>
 
-                {/* <a
-      download=""
-      className="block lg:inline-block md:mb-0 mb-4"
-      href="/data/product-list.csv"
-      target="_blank"
-    >
-      <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm w-full">
-        <span className="flex items-center justify-center">
-          <span className="text-lg">
-            <RiDownloadLine />
-          </span>
-          <span className="ml-1 mr-1">Export</span>
-        </span>
-      </button>
-    </a> */}
                 <a
                   className="block lg:inline-block md:mb-0 mb-4"
                   href="/app/funds/ticker-new"
@@ -101,7 +136,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                 <table className="table-default table-hover">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 font-bold dark:text-gray-400">
                     <tr className="">
-                      <th className="" colSpan="1">
+                      <th className="" colSpan="2">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Category
                           <div className=" font-bold text-base items-center ">
@@ -141,55 +176,99 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     </tr>
                   </thead>
                   <tbody className="">
-                    {rows.map((row, idx) => (
-                      <React.Fragment key={idx}>
-                        <tr
-                          className="cursor-pointer"
-                          onClick={() => handleRowClick(idx)}
-                        >
-                          <td className="py-2 ">
-                            <div className="flex items-center justify-between w-[350px]">
-                              <div className="flex items-center">
-                                <CiStar />
-                                <span className="ml-2 rtl:mr-2 font-semibold">
-                                  {row.category}
-                                </span>
+                    {rows.map((row, idx) => {
+                      return (
+                        <React.Fragment key={row.id}>
+                          <tr
+                            className={`cursor-pointer ${
+                              expandedRow === idx
+                                ? "bg-gray-200 text-black rounded-md"
+                                : ""
+                            }`}
+                            onMouseEnter={() => handleRowHover(idx, true)}
+                            onMouseLeave={() => handleRowHover(idx, false)}
+                          >
+                            <td className="py-2">
+                              <div className="flex items-center justify-between ">
+                                <div
+                                  className="flex items-center px-1"
+                                  onClick={() => handleStarClick(idx)}
+                                >
+                                  {starClicked[idx] ? (
+                                    <BsStarFill size={20} color="yellow" />
+                                  ) : (
+                                    <BsStar size={20} color="gray" />
+                                  )}
+                                  <span className="ml-2 rtl:mr-2 font-semibold">
+                                    {row.category}
+                                  </span>
+                                </div>
                               </div>
-                              <div className=" bg-white rounded-lg border-2 w-[200px]  ">
-                                <button className="text-green-500 w-1/2">
+                            </td>
+                            <td className="py-2 relative">
+                              <div className="flex mx-auto justify-center items-center my-4">
+                                <button
+                                  className={`buy-sell-button ${
+                                    activeTab === "buy"
+                                      ? "bg-green-500 text-white"
+                                      : "bg-gray-300 text-gray-500"
+                                  } px-4 py-2 rounded-l cursor-pointer hidden`}
+                                  onClick={() => handleTabClick("buy", row)}
+                                >
                                   Buy
                                 </button>
-                                <button className="text-red-500 w-1/2 ">
+                                <button
+                                  className={`buy-sell-button ${
+                                    activeTab === "sell"
+                                      ? "bg-red-500 text-white"
+                                      : "bg-gray-300 text-gray-500"
+                                  }  px-4 py-2 rounded-r cursor-pointer hidden`}
+                                  onClick={() => handleTabClick("sell", row)}
+                                >
                                   Sell
                                 </button>
                               </div>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span className="capitalize">{row.ticker}</span>
-                          </td>
-                          <td className="py-2">${row.price}</td>
-                          <td className="py-2">${row.price}</td>
-                          <td className="py-2">{row.profitLoss}</td>
-                          <td className="py-2">{row.daysProfitLoss}</td>
+                              <div
+                                className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
+                              >
+                                <button
+                                  className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
+                                  onClick={() => handleTabClick("buy", row)}
+                                >
+                                  Buy
+                                </button>
+                                <button
+                                  className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
+                                  onClick={() => handleTabClick("sell", row)}
+                                >
+                                  Sell
+                                </button>
+                              </div>
+                            </td>
 
-                          {/* <td className="py-2">
-                            <div className="flex text-lg">
-                              <span className="cursor-pointer p-2 hover:text-indigo-600">
-                                <BsFillPencilFill
-                                  onClick={() => editRow(idx)}
-                                />
+                            <td className="py-2 text-center">
+                              <span className="capitalize text-center">
+                                {row.ticker}
                               </span>
-                              <span className="cursor-pointer p-2 hover:text-red-500">
-                                <BsFillTrashFill
-                                  onClick={() => deleteRow(idx)}
-                                />
-                              </span>
-                            </div>
-                          </td> */}
-                        </tr>
-                      </React.Fragment>
-                    ))}
+                            </td>
+                            <td className="py-2">${row.price}</td>
+                            <td className="py-2">{row.marketValue}</td>
+                            <td className="py-2">{row.profitLoss}</td>
+                            <td className="py-2">{row.daysProfitLoss}</td>
+                          </tr>
+                        </React.Fragment>
+                      );
+                    })}
+                    <div>
+                      {sellBuyModalOpen && (
+                        <BuySellModal
+                          onSubmit={handleClose}
+                          closeModal={closeBuySellModal}
+                          initialChecked={activeTab === "sell"}
+                          defaultValue={selectedRowData}
+                        />
+                      )}
+                    </div>
                   </tbody>
                 </table>
               </div>

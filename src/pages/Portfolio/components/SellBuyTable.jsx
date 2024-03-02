@@ -25,11 +25,18 @@ import { Scrollbars } from "react-custom-scrollbars-2";
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [selectedRowData, setSelectedRowData] = useState(null);
+  const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
   const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
+  const [activeTab, setActiveTab] = useState("buy");
+
   const [starClicked, setStarClicked] = useState(
     Array(rows.length).fill(false)
   );
+
   const handleClose = () => {
     console.log("hi");
     setModalOpen(false);
@@ -58,7 +65,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
       setExpandedRow(idx);
     }
   };
-  const [activeTab, setActiveTab] = useState("buy");
 
   const handleTabClick = (tab, row) => {
     setActiveTab(tab);
@@ -67,13 +73,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     console.log(selectedRowData);
   };
 
-  const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
-
   const closeBuySellModal = () => {
     setSellBuyModalOpen(false);
   };
-  const [selectedRowData, setSelectedRowData] = useState(null);
-  const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
 
   const openModal = (idx, row) => {
     const updatedModalOpenStates = isModalOpen.map((state, index) =>
@@ -148,7 +150,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
                   <tr className="">
                     <th className="" colSpan="2">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-white">
+                      <div className="cursor-pointer inline-flex select-none justify-center text-center items-center dark:text-white">
                         Category
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
@@ -193,7 +195,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                         Day's G/L
                       </div>
                     </th>
-
                   </tr>
                 </thead>
                 <tbody className="">
@@ -268,7 +269,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           </td>
 
                           <td className="py-2 text-center">
-                            <span className="capitalize text-center">{row.ticker}</span>
+                            <span className="capitalize text-center">
+                              {row.ticker}
+                            </span>
                           </td>
                           <td className="py-2">{row.quantity}</td>
                           <td className="py-2">${row.price}</td>

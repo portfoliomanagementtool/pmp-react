@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { useNavigate } from 'react-router';
-import Switch from '@mui/material/Switch';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import React, { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import { useNavigate } from "react-router";
+import Switch from "@mui/material/Switch";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
 
 const BuySellModal = ({
   onSubmit,
@@ -15,14 +15,14 @@ const BuySellModal = ({
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
     defaultValue || {
-      category: '',
-      ticker: '',
+      category: "",
+      ticker: "",
       price: 0,
       quantity: 0,
     }
   );
 
-  const [errors, setErrors] = useState('');
+  const [errors, setErrors] = useState("");
 
   const validateForm = () => {
     let errorFields = [];
@@ -32,10 +32,10 @@ const BuySellModal = ({
       }
     }
     if (errorFields.length === 0) {
-      setErrors('');
+      setErrors("");
       return true;
     } else {
-      setErrors(errorFields.join(', '));
+      setErrors(errorFields.join(", "));
       return false;
     }
   };
@@ -74,12 +74,12 @@ const BuySellModal = ({
           </div>
 
           <div>
-            BUY{' '}
+            BUY{" "}
             <Switch
               checked={checked}
               onChange={handleChange}
-              inputProps={{ 'aria-label': 'controlled' }}
-            />{' '}
+              inputProps={{ "aria-label": "controlled" }}
+            />{" "}
             SELL
           </div>
         </div>
@@ -88,7 +88,7 @@ const BuySellModal = ({
           <Box
             component="form"
             sx={{
-              '& > :not(style)': { m: 1, width: '25ch' },
+              "& > :not(style)": { m: 1, width: "25ch" },
             }}
             noValidate
             autoComplete="off"
@@ -108,20 +108,21 @@ const BuySellModal = ({
               value={formState.price}
               onChange={(e) => changeInput(e)}
               name="price"
+              disabled
             />
           </Box>
         </div>
         <div
           className={`card card-border mt-4 ${
-            checked ? 'bg-green-500 dark:bg-green-500 ' : 'bg-red-500'
+            checked ? "bg-green-500 dark:bg-green-500 " : "bg-red-500"
           } text-center cursor-pointer hover:${
-            checked ? 'bg-emerald-700' : 'bg-red-600'
+            checked ? "bg-emerald-700" : "bg-red-600"
           }`}
           role="presentation"
           onClick={handleSubmit}
         >
           <div className="card-body">
-            <h6 className="text-">{checked ? 'SELL' : 'BUY'}</h6>
+            <h6 className="text-">{checked ? "SELL" : "BUY"}</h6>
           </div>
         </div>
       </div>

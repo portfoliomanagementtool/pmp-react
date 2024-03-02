@@ -3,10 +3,10 @@ import Slider from "@mui/material/Slider";
 import { Box, Button } from "@mui/material";
 
 import Card from "./card/Card";
-import Candle from "./charts/Candle";
+import Candle from "./Charts/Candle";
 import { useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
-import Area from "./charts/Area";
+import Area from "./Charts/Area";
 import BuySellModal from "./BuySellModal";
 import { MdCandlestickChart } from "react-icons/md";
 import { FaChartArea } from "react-icons/fa6";

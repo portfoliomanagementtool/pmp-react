@@ -3,6 +3,8 @@ import {
   BsFillTrashFill,
   BsFillPencilFill,
   BsThreeDotsVertical,
+  BsStarFill,
+  BsStar,
 } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
@@ -25,7 +27,26 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const navigate = useNavigate();
   const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
+  const [starClicked, setStarClicked] = useState(
+    Array(rows.length).fill(false)
+  );
+  const handleClose = () => {
+    console.log("hi");
+    setModalOpen(false);
+    closeModal();
+  };
+  const handleRowHover = (idx, isHovered) => {
+    const group = document.querySelector(`.buy-sell-group-hover-${idx}`);
+    if (group) {
+      group.style.opacity = isHovered ? "1" : "0";
+    }
+  };
 
+  const handleStarClick = (idx) => {
+    const updatedStarClicked = [...starClicked];
+    updatedStarClicked[idx] = !updatedStarClicked[idx];
+    setStarClicked(updatedStarClicked);
+  };
   const handleThreeDotsClick = (idx) => {
     setDetail(idx === detail ? null : idx);
   };
@@ -37,10 +58,22 @@ const SellBuyTable = ({ rows, deleteRow }) => {
       setExpandedRow(idx);
     }
   };
+  const [activeTab, setActiveTab] = useState("buy");
+
+  const handleTabClick = (tab, row) => {
+    setActiveTab(tab);
+    setSellBuyModalOpen(true);
+    setSelectedRowData(row);
+    console.log(selectedRowData);
+  };
 
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
 
+  const closeBuySellModal = () => {
+    setSellBuyModalOpen(false);
+  };
   const [selectedRowData, setSelectedRowData] = useState(null);
+  const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
 
   const openModal = (idx, row) => {
     const updatedModalOpenStates = isModalOpen.map((state, index) =>
@@ -110,11 +143,11 @@ const SellBuyTable = ({ rows, deleteRow }) => {
             </div>
           </div>
           <div className="">
-            <div className="">
+            <div className=" overflow-x-auto">
               <table className="table-default table-hover">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
                   <tr className="">
-                    <th className="" colSpan="1">
+                    <th className="" colSpan="2">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-white">
                         Category
                         <div className=" font-bold text-base items-center">
@@ -161,9 +194,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       </div>
                     </th>
 
-                    <th className="" colSpan="1">
-                      <div className=""></div>
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="">
@@ -176,27 +206,69 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               ? "bg-gray-200 text-black rounded-md"
                               : ""
                           }`}
+                          onMouseEnter={() => handleRowHover(idx, true)}
+                          onMouseLeave={() => handleRowHover(idx, false)}
                         >
-                          <td className="py-2 ">
-                            <div className="flex items-center justify-between w-[350px]">
-                              <div className="flex items-center">
-                                <CiStar />
+                          <td className="py-2">
+                            <div className="flex items-center justify-between ">
+                              <div
+                                className="flex items-center px-1"
+                                onClick={() => handleStarClick(idx)}
+                              >
+                                {starClicked[idx] ? (
+                                  <BsStarFill size={20} color="yellow" />
+                                ) : (
+                                  <BsStar size={20} color="gray" />
+                                )}
                                 <span className="ml-2 rtl:mr-2 font-semibold">
                                   {row.category}
                                 </span>
                               </div>
-                              <div className=" bg-white rounded-lg border-2 w-[200px]  ">
-                                <button className="text-green-500 w-1/2">
-                                  Buy
-                                </button>
-                                <button className="text-red-500 w-1/2 ">
-                                  Sell
-                                </button>
-                              </div>
                             </div>
                           </td>
-                          <td className="py-2">
-                            <span className="capitalize">{row.ticker}</span>
+                          <td className="py-2 relative">
+                            <div className="flex mx-auto justify-center items-center my-4">
+                              <button
+                                className={`buy-sell-button ${
+                                  activeTab === "buy"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-gray-300 text-gray-500"
+                                } px-4 py-2 rounded-l cursor-pointer hidden`}
+                                onClick={() => handleTabClick("buy", row)}
+                              >
+                                Buy
+                              </button>
+                              <button
+                                className={`buy-sell-button ${
+                                  activeTab === "sell"
+                                    ? "bg-red-500 text-white"
+                                    : "bg-gray-300 text-gray-500"
+                                }  px-4 py-2 rounded-r cursor-pointer hidden`}
+                                onClick={() => handleTabClick("sell", row)}
+                              >
+                                Sell
+                              </button>
+                            </div>
+                            <div
+                              className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
+                            >
+                              <button
+                                className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
+                                onClick={() => handleTabClick("buy", row)}
+                              >
+                                Buy
+                              </button>
+                              <button
+                                className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
+                                onClick={() => handleTabClick("sell", row)}
+                              >
+                                Sell
+                              </button>
+                            </div>
+                          </td>
+
+                          <td className="py-2 text-center">
+                            <span className="capitalize text-center">{row.ticker}</span>
                           </td>
                           <td className="py-2">{row.quantity}</td>
                           <td className="py-2">${row.price}</td>
@@ -204,36 +276,28 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <td className="py-2">{row.marketValue}</td>
                           <td className="py-2">{row.profitLoss}</td>
                           <td className="py-2">{row.daysProfitLoss}</td>
-
-                          <td className="py-2 flex relative">
-                            <div className="flex justify-end text-lg">
-                              {/* <span
-                                onClick={() => editRow(row)}
-                                className="cursor-pointer p-2 hover:text-indigo-600"
-                              >
-                                <BsFillPencilFill />
-                              </span> */}
-                            </div>
-                            <div className="flex justify-end text-lg">
-                              <span
-                                className="cursor-pointer p-2  hover:text-indigo-600"
-                                onClick={() => openModal(idx, row)}
-                              >
-                                <BsThreeDotsVertical />
-                              </span>
-                            </div>
-                          </td>
                         </tr>
-                        {isModalOpen[idx] && (
+
+                        {/* {isModalOpen[idx] && (
                           <Modal
                             onSubmit={closeModal}
                             closeModal={() => closeModal(idx)}
                             defaultValue={selectedRowData}
                           />
-                        )}
+                        )} */}
                       </React.Fragment>
                     );
                   })}
+                  <div>
+                    {sellBuyModalOpen && (
+                      <BuySellModal
+                        onSubmit={handleClose}
+                        closeModal={closeBuySellModal}
+                        initialChecked={activeTab === "sell"}
+                        defaultValue={selectedRowData}
+                      />
+                    )}
+                  </div>
                 </tbody>
               </table>
             </div>

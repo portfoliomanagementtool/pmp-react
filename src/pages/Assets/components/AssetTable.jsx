@@ -9,6 +9,7 @@ import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import ViewAsset from "./ViewAsset";
 import { useNavigate } from "react-router-dom";
+import { CiStar } from "react-icons/ci";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -111,38 +112,30 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Ticker
-                          <div className=" font-bold text-base items-center ">
-                            <PiCaretUpDownFill />
-                          </div>
                         </div>
                       </th>
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Quantity
-                          <div className=" font-bold text-base items-center ">
-                            <PiCaretUpDownFill />
-                          </div>
+                          ATP
+                        </div>
+                      </th>
+
+                      <th className="" colSpan="1">
+                        <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                          Mkt.Value
                         </div>
                       </th>
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Actions
-                          <div className=" font-bold text-base items-center ">
-                            <PiCaretUpDownFill />
-                          </div>
+                          Overall G/L
                         </div>
                       </th>
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Price
+                          Day G/L
                           <div className=" font-bold text-base items-center ">
                             <PiCaretUpDownFill />
                           </div>
-                        </div>
-                      </th>
-                      <th className="" colSpan="1">
-                        <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Actions
                         </div>
                       </th>
                     </tr>
@@ -154,29 +147,33 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                           className="cursor-pointer"
                           onClick={() => handleRowClick(idx)}
                         >
-                          <td className="py-2">
-                            <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.category}
-                              </span>
+                          <td className="py-2 ">
+                            <div className="flex items-center justify-between w-[350px]">
+                              <div className="flex items-center">
+                                <CiStar />
+                                <span className="ml-2 rtl:mr-2 font-semibold">
+                                  {row.category}
+                                </span>
+                              </div>
+                              <div className=" bg-white rounded-lg border-2 w-[200px]  ">
+                                <button className="text-green-500 w-1/2">
+                                  Buy
+                                </button>
+                                <button className="text-red-500 w-1/2 ">
+                                  Sell
+                                </button>
+                              </div>
                             </div>
                           </td>
                           <td className="py-2">
                             <span className="capitalize">{row.ticker}</span>
                           </td>
-                          <td className="py-2">{row.qty}</td>
-                          <td className="py-2">
-                            <div className="flex items-center gap-2">
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="capitalize font-semibold text-emerald-500">
-                                In Stock
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span>${row.price}</span>
-                          </td>
-                          <td className="py-2">
+                          <td className="py-2">${row.price}</td>
+                          <td className="py-2">${row.price}</td>
+                          <td className="py-2">{row.profitLoss}</td>
+                          <td className="py-2">{row.daysProfitLoss}</td>
+
+                          {/* <td className="py-2">
                             <div className="flex text-lg">
                               <span className="cursor-pointer p-2 hover:text-indigo-600">
                                 <BsFillPencilFill
@@ -189,7 +186,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                                 />
                               </span>
                             </div>
-                          </td>
+                          </td> */}
                         </tr>
                       </React.Fragment>
                     ))}

@@ -6,6 +6,7 @@ import {
 } from "react-icons/bs";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
+import { CiStar } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
 import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
@@ -109,7 +110,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
             </div>
           </div>
           <div className="">
-          
             <div className="">
               <table className="table-default table-hover">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
@@ -132,28 +132,35 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Quantity
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        Qty
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Actions
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        ATP
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Price
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        Inv.Amount
                       </div>
                     </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Mkt.Value
+                      </div>
+                    </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Overall G/L
+                      </div>
+                    </th>
+                    <th className="" colSpan="1">
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Day's G/L
+                      </div>
+                    </th>
+
                     <th className="" colSpan="1">
                       <div className=""></div>
                     </th>
@@ -170,28 +177,34 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                               : ""
                           }`}
                         >
-                          <td className="py-2">
-                            <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.category}
-                              </span>
+                          <td className="py-2 ">
+                            <div className="flex items-center justify-between w-[350px]">
+                              <div className="flex items-center">
+                                <CiStar />
+                                <span className="ml-2 rtl:mr-2 font-semibold">
+                                  {row.category}
+                                </span>
+                              </div>
+                              <div className=" bg-white rounded-lg border-2 w-[200px]  ">
+                                <button className="text-green-500 w-1/2">
+                                  Buy
+                                </button>
+                                <button className="text-red-500 w-1/2 ">
+                                  Sell
+                                </button>
+                              </div>
                             </div>
                           </td>
                           <td className="py-2">
                             <span className="capitalize">{row.ticker}</span>
                           </td>
                           <td className="py-2">{row.quantity}</td>
-                          <td className="py-2">
-                            <div className="flex items-center gap-2">
-                              <span className="badge-dot bg-emerald-500"></span>
-                              <span className="capitalize font-semibold text-emerald-500">
-                                In Stock
-                              </span>
-                            </div>
-                          </td>
-                          <td className="py-2">
-                            <span>${row.price}</span>
-                          </td>
+                          <td className="py-2">${row.price}</td>
+                          <td className="py-2">{row.invAmount}</td>
+                          <td className="py-2">{row.marketValue}</td>
+                          <td className="py-2">{row.profitLoss}</td>
+                          <td className="py-2">{row.daysProfitLoss}</td>
+
                           <td className="py-2 flex relative">
                             <div className="flex justify-end text-lg">
                               {/* <span
@@ -224,7 +237,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 </tbody>
               </table>
             </div>
-            
           </div>
         </div>
       </div>

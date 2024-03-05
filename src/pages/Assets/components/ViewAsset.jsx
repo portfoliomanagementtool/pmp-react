@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import { Box, Button } from "@mui/material";
-
 import Card from "./card/Card";
 import Candle from "./Charts/Candle";
 import { useSelector } from "react-redux";
@@ -11,8 +10,26 @@ import BuySellModal from "./BuySellModal";
 import { MdCandlestickChart } from "react-icons/md";
 import { FaChartArea } from "react-icons/fa6";
 import { TbChartAreaLineFilled } from "react-icons/tb";
+import { useParams } from "react-router-dom";
+import { getAssetDetails } from "../../../api";
 
 const ViewAsset = () => {
+  // const { ticker } = useParams();
+  // const [tickerDetails, setTickerDetails] = useState({});
+
+  // useEffect(() => { 
+  //   const getTickerDetails = async () => {
+  //     try {
+  //       const { data } = await getAssetDetails(ticker);
+  //       setTickerDetails(data);
+  //     } catch (error) {
+  //       console.log(error.message)
+  //     }
+  //   }
+
+  //   getTickerDetails();
+  // }, [ticker]);
+
   const { edit } = useSelector((state) => state.asset);
   const [showCandlestick, setShowCandlestick] = useState(true);
 

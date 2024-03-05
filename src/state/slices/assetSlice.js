@@ -3,10 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   edit: {
     ticker: "",
-    quantity: null,
-    price: null,
+    name: "",
+    quantity: 0,
+    price: 0,
     category: "",
-    action: "",
   },
 };
 
@@ -14,10 +14,10 @@ export const configSlice = createSlice({
   name: "asset",
   initialState,
   reducers: {
-    saveEditAsset: (state, action) => {
+    saveAssetDetails: (state, action) => {
       state.edit = { ...state.edit, ...action.payload};
     },
-    setDefaultEditAsset: (state) => {
+    setDefaultAssetDetails: (state) => {
       state.edit = initialState.edit;
     },
   },

@@ -1,13 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import SideNav from "./SideNav";
 import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
+import { getMetrics } from "../../api";
+import { useDispatch } from "react-redux";
+import { saveEquityDistribution, saveMetrics } from "../../state/slices/portfolioSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
+  const dispatch = useDispatch(); 
   const [modalIsOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const fetchMetrics = async () => {
+      try {
+        const { data } = await getMetrics();
+        dispatch(saveMetrics(data.metrics))
+        dispatch(saveEquityDistribution(data.categories))
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    fetchMetrics();
+  }, [user])
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);

@@ -38,7 +38,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   );
 
   const handleClose = () => {
-    console.log("hi");
     setModalOpen(false);
     closeModal();
   };
@@ -116,7 +115,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 <input
                   className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
                   type="text"
-                  placeholder="Search product"
+                  placeholder="Search asset"
                 />
               </span>
 
@@ -129,7 +128,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 </span>
               </button>
 
-              <a
+              {/* <a
                 className="block lg:inline-block md:mb-0 mb-4"
                 href="/app/funds/ticker-new"
               >
@@ -141,7 +140,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <span className="ml-1 mr-1">Add Product</span>
                   </span>
                 </button>
-              </a>
+              </a> */}
             </div>
           </div>
           <div className="">
@@ -149,22 +148,15 @@ const SellBuyTable = ({ rows, deleteRow }) => {
               <table className="table-default table-hover">
                 <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
                   <tr className="">
-                    <th className="" colSpan="2">
-                      <div className="cursor-pointer inline-flex select-none justify-center text-center items-center dark:text-white">
-                        Category
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
-                      </div>
-                    </th>
                     <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Ticker
+                      <div className="cursor-pointer inline-flex select-none justify-center text-center items-center dark:text-white">
+                        Name
                         <div className=" font-bold text-base items-center">
                           <PiCaretUpDownFill />
                         </div>
                       </div>
                     </th>
+                    <th className="" colSpan="1"></th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Qty
@@ -177,22 +169,34 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Inv.Amount
+                        Inv Amount
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Mkt.Value
+                        Mkt Value
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Overall G/L
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Day's G/L
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
                       </div>
                     </th>
                   </tr>
@@ -200,109 +204,93 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 <tbody className="">
                   {rows.map((row, idx) => {
                     return (
-                      <React.Fragment key={row.id}>
-                        <tr
-                          className={`cursor-pointer ${
-                            expandedRow === idx
-                              ? "bg-gray-200 text-black rounded-md"
-                              : ""
-                          }`}
-                          onMouseEnter={() => handleRowHover(idx, true)}
-                          onMouseLeave={() => handleRowHover(idx, false)}
-                        >
-                          <td className="py-2">
-                            <div className="flex items-center justify-between ">
-                              <div
-                                className="flex items-center px-1"
-                                onClick={() => handleStarClick(idx)}
-                              >
-                                {starClicked[idx] ? (
-                                  <BsStarFill size={20} color="yellow" />
-                                ) : (
-                                  <BsStar size={20} color="gray" />
-                                )}
-                                <span className="ml-2 rtl:mr-2 font-semibold">
-                                  {row.category}
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-2 relative">
-                            <div className="flex mx-auto justify-center items-center my-4">
-                              <button
-                                className={`buy-sell-button ${
-                                  activeTab === "buy"
-                                    ? "bg-green-500 text-white"
-                                    : "bg-gray-300 text-gray-500"
-                                } px-4 py-2 rounded-l cursor-pointer hidden`}
-                                onClick={() => handleTabClick("buy", row)}
-                              >
-                                Buy
-                              </button>
-                              <button
-                                className={`buy-sell-button ${
-                                  activeTab === "sell"
-                                    ? "bg-red-500 text-white"
-                                    : "bg-gray-300 text-gray-500"
-                                }  px-4 py-2 rounded-r cursor-pointer hidden`}
-                                onClick={() => handleTabClick("sell", row)}
-                              >
-                                Sell
-                              </button>
-                            </div>
+                      <tr key={idx}
+                        className={`cursor-pointer ${
+                          expandedRow === idx
+                            ? "bg-gray-200 text-black rounded-md"
+                            : ""
+                        }`}
+                        onMouseEnter={() => handleRowHover(idx, true)}
+                        onMouseLeave={() => handleRowHover(idx, false)}
+                      >
+                        <td className="py-2 !pl-4">
+                          <div className="flex items-center justify-between ">
                             <div
-                              className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
+                              className="flex items-center px-1"
+                              onClick={() => handleStarClick(idx)}
                             >
-                              <button
-                                className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
-                                onClick={() => handleTabClick("buy", row)}
-                              >
-                                Buy
-                              </button>
-                              <button
-                                className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
-                                onClick={() => handleTabClick("sell", row)}
-                              >
-                                Sell
-                              </button>
+                              {starClicked[idx] ? (
+                                <BsStarFill size={20} color="yellow" />
+                              ) : (
+                                <BsStar size={20} color="gray" />
+                              )}
+                              <span className="ml-2 rtl:mr-2 font-semibold">
+                                {row.portfolio_asset.name}
+                              </span>
                             </div>
-                          </td>
-
-                          <td className="py-2 text-center">
-                            <span className="capitalize text-center">
-                              {row.ticker}
-                            </span>
-                          </td>
-                          <td className="py-2">{row.quantity}</td>
-                          <td className="py-2">${row.price}</td>
-                          <td className="py-2">{row.invAmount}</td>
-                          <td className="py-2">{row.marketValue}</td>
-                          <td className="py-2">{row.profitLoss}</td>
-                          <td className="py-2">{row.daysProfitLoss}</td>
-                        </tr>
-
-                        {/* {isModalOpen[idx] && (
-                          <Modal
-                            onSubmit={closeModal}
-                            closeModal={() => closeModal(idx)}
-                            defaultValue={selectedRowData}
-                          />
-                        )} */}
-                      </React.Fragment>
+                          </div>
+                        </td>
+                        <td className="py-2 relative">
+                          <div className="flex mx-auto justify-center items-center my-4 w-12">
+                            <button
+                              className={`buy-sell-button ${
+                                activeTab === "buy"
+                                  ? "bg-green-500 text-white"
+                                  : "bg-gray-300 text-gray-500"
+                              } px-4 py-2 rounded-l cursor-pointer hidden`}
+                              onClick={() => handleTabClick("buy", row)}
+                            >
+                              Buy
+                            </button>
+                            <button
+                              className={`buy-sell-button ${
+                                activeTab === "sell"
+                                  ? "bg-red-500 text-white"
+                                  : "bg-gray-300 text-gray-500"
+                              }  px-4 py-2 rounded-r cursor-pointer hidden`}
+                              onClick={() => handleTabClick("sell", row)}
+                            >
+                              Sell
+                            </button>
+                          </div>
+                          <div
+                            className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
+                          >
+                            <button
+                              className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
+                              onClick={() => handleTabClick("buy", row)}
+                            >
+                              Buy
+                            </button>
+                            <button
+                              className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
+                              onClick={() => handleTabClick("sell", row)}
+                            >
+                              Sell
+                            </button>
+                          </div>
+                        </td>
+                        <td className="py-2">{row.quantity}</td>
+                        <td className="py-2">{Number(row.avgBasis).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.marketValue).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.price).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.profitLoss).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.daysProfitLoss).toFixed(2)}</td>
+                      </tr>
                     );
                   })}
-                  <div>
-                    {sellBuyModalOpen && (
-                      <BuySellModal
-                        onSubmit={handleClose}
-                        closeModal={closeBuySellModal}
-                        initialChecked={activeTab === "sell"}
-                        defaultValue={selectedRowData}
-                      />
-                    )}
-                  </div>
                 </tbody>
               </table>
+              <div>
+                {sellBuyModalOpen && (
+                  <BuySellModal
+                    onSubmit={handleClose}
+                    closeModal={closeBuySellModal}
+                    initialChecked={activeTab === "sell"}
+                    defaultValue={selectedRowData}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </div>

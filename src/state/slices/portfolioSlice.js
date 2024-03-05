@@ -1,12 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  metrics: {
-    marketValue: null,
-    totalInvestment: null,
-    dayProfitLoss: null,
-    realisedProfitLoss: null,
-  }
+  metrics: [],
+  equityDistribution: {}
+  // metrics: {
+  //   marketValue: null,
+  //   totalInvestment: null,
+  //   dayProfitLoss: null,
+  //   realisedProfitLoss: null,
+  // }
 };
 
 export const portfolioSlice = createSlice({
@@ -14,10 +16,14 @@ export const portfolioSlice = createSlice({
   initialState,
   reducers: {
     saveMetrics: (state, action) => {
+      // state.metrics = action.payload
       state.metrics = action.payload
+    },
+    saveEquityDistribution: (state, action) => {
+      state.equityDistribution = action.payload
     },
   },
 });
 
-export const { saveMetrics } = portfolioSlice.actions;
+export const { saveMetrics, saveEquityDistribution } = portfolioSlice.actions;
 export default portfolioSlice.reducer;

@@ -6,12 +6,12 @@ import {
   ClerkProvider,
   SignedIn,
   SignedOut,
+  useUser,
 } from "@clerk/clerk-react";
 import Portfolio from './pages/Portfolio/Portfolio';
 import routes from './routes';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { getAllWatchlist } from './api';
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -83,18 +83,6 @@ function App() {
       const html = document.querySelector('html');
       html.classList.remove('dark');
     }
-
-    const fetchWatchlist = async () => {
-      try {
-        const { data } = await getAllWatchlist();
-        console.log(data)
-        // setWatchlist(data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-
-    fetchWatchlist();
   }, [mode])
 
   return (

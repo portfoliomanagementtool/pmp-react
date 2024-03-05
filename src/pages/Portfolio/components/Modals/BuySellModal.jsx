@@ -4,7 +4,9 @@ import { useNavigate } from "react-router";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { useSelector } from "react-redux";
+import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../../api';
+import { useDispatch, useSelector } from 'react-redux';
+import { saveEquityDistribution, saveMetrics } from "../../../../state/slices/portfolioSlice"; 
 
 const BuySellModal = ({
   onSubmit,
@@ -12,8 +14,10 @@ const BuySellModal = ({
   defaultValue,
   initialChecked,
 }) => {
+  console.log(defaultValue)
   const mode = useSelector((state) => state.config.mode);
   const isDarkMode = mode === "dark";
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
@@ -24,6 +28,7 @@ const BuySellModal = ({
       quantity: 0,
     }
   );
+  const [quantity, setQuantity] = useState(formState.quantity);
 
   const [errors, setErrors] = useState("");
 
@@ -56,12 +61,59 @@ const BuySellModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (validateForm()) {
-      // onSubmit(formState);
       closeModal();
-      // navigate("/app/asset/edit");
+    }
+
+    const formData = {
+      ticker: formState.ticker,
+      quantity: parseInt(formState.quantity),
+      price: formState.market_value,
+    }
+
+    if (checked) {
+      sellAsset(formData);
+    } else {
+      buyAsset(formData);
     }
   };
+
+  const buyAsset = async (data) => {
+    console.log("buy", data)
+    try {
+      const result = await buyAssetAPI(data);
+      console.log(result)
+
+      try {
+        const { data } = await getMetrics();
+        dispatch(saveMetrics(data.metrics));
+        dispatch(saveEquityDistribution(data.categories))
+      } catch (error) {
+        console.log(error.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const sellAsset = async (data) => {
+    console.log("sell", data)
+    try {
+      const result = await sellAssetAPI(data);
+      console.log(result)
+
+      try {
+        const { data } = await getMetrics();
+        dispatch(saveMetrics(data.metrics));
+        dispatch(saveEquityDistribution(data.categories))
+      } catch (error) {
+        console.log(error.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -73,19 +125,18 @@ const BuySellModal = ({
               className="text-gray-900 dark:text-gray-200 text-lg font-bold hover:text-gray-800"
               onClick={handleClose}
             >
-              <AiOutlineClose />
+              <AiOutlineClose fill={`${mode === "dark" ? "#ebecec" : "#000"}`} />
             </button>
           </div>
 
           <div>
-            BUY{" "}
+          <span className="text-green-500">BUY</span>{" "}
             <Switch
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
-              className={checked ? "text-green-500" : "text-red-500"}
             />{" "}
-            SELL
+            <span className="text-red-500">SELL</span>
           </div>
         </div>
 
@@ -117,18 +168,24 @@ const BuySellModal = ({
             autoComplete="off"
           >
             <TextField
+              style={{ WebkitAppearance: "none", MozAppearance: "none" }}
               id="outlined-basic"
               label="Quantity"
+              defaultValue={1}
+              type='number'
+              InputProps={{
+                inputProps: { min: 1 }
+              }}
               variant="outlined"
               value={formState.quantity}
-              onChange={(e) => changeInput(e)}
+              onChange={(e) => { changeInput(e); setQuantity(e.target.value) }}
               name="quantity"
             />
             <TextField
               id="outlined-basic"
               label="Price"
               variant="outlined"
-              value={formState.price}
+              value={quantity*formState.price}
               onChange={(e) => changeInput(e)}
               name="price"
               disabled

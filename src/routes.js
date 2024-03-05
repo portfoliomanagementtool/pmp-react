@@ -49,7 +49,7 @@ const routes = [
         element: <Assets />
       },
       {
-        path: 'asset/view',
+        path: 'asset/view/:ticker',
         element: <ViewAsset />
       },
       {

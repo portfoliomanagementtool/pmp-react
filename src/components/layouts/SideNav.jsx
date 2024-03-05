@@ -40,13 +40,14 @@ const SideNav = () => {
           id: "assets",
           name: "Assets",
           icon: <FaMoneyBill />,
-          path: "/app/assets",
-          dropDown: true,
-          subMenu: [
-            { id: "all-asset", name: "All Asset", path: "/app/asset/all" },
-            { id: "view-asset", name: "View Asset", path: "/app/asset/view" },
-            { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
-          ],
+          path: "/app/asset/all",
+          dropDown: false,
+          // dropDown: true,
+          // subMenu: [
+          //   { id: "all-asset", name: "All Asset", path: "/app/asset/all" },
+          //   { id: "view-asset", name: "View Asset", path: "/app/asset/view" },
+          //   { id: "edit-asset", name: "Edit Asset", path: "/app/asset/edit" },
+          // ],
         },
         {
           id: "reports",

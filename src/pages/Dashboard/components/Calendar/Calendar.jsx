@@ -17,14 +17,18 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   };
 
   const handleDateClick = (date) => {
-    if (!selectedStartDate) {
+    const isBeforeToday =
+      date.isBefore(today, "day") || date.isSame(today, "day");
+    if (!selectedStartDate && isBeforeToday) {
       setSelectedStartDate(date);
       setSelectedEndDate(null);
-    } else if (!selectedEndDate || date.isBefore(selectedStartDate)) {
-      setSelectedEndDate(date);
-    } else {
-      setSelectedStartDate(date);
-      setSelectedEndDate(null);
+    } else if (selectedStartDate && isBeforeToday) {
+      if (!selectedEndDate || date.isBefore(selectedStartDate)) {
+        setSelectedEndDate(date);
+      } else {
+        setSelectedStartDate(date);
+        setSelectedEndDate(null);
+      }
     }
   };
 
@@ -64,7 +68,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
         <div className="flex justify-between items-center mb-4">
           <button
             className={`text-gray-600 hover:text-gray-800 ${
-              isDarkMode ? "text-white hover:text-gray-400" : ""
+              isDarkMode ? "text-white hover:text-gray-500" : ""
             }`}
             onClick={() => handleMonthChange(-1)}
           >
@@ -75,7 +79,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
           </h3>
           <button
             className={`text-gray-600 hover:text-gray-800 ${
-              isDarkMode ? "text-white hover:text-gray-400" : ""
+              isDarkMode ? "text-white hover:text-gray-500" : ""
             }`}
             onClick={() => handleMonthChange(1)}
           >
@@ -91,17 +95,22 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
           {monthMatrix.map((week, weekIndex) =>
             week.map((date) => {
               const isCurrentMonth = date.month() === selectedDate.month();
-              const isBeforeCurrentMonth = date.isBefore(selectedDate, "month");
+              const isToday = date.isSame(today, "day");
+              const isBeforeToday = date.isBefore(today, "day");
+              const isTodayInCurrentMonth = isToday && isCurrentMonth;
+              const isCurrentYear = date.year() === today.year();
+              const isLastDayOfMonth = date.isSame(date.endOf("month"), "day"); // Add this line
+
               return (
                 <div
                   key={date.format("YYYY-MM-DD")}
                   className={`rounded-full text-center p-2 cursor-pointer  ${
                     date.isSame(selectedDate, "day")
-                      ? "bg-gray-200 text-gray-800"
-                      : date.isSame(today, "day")
+                      ? ""
+                      : isTodayInCurrentMonth
                       ? "bg-yellow-200"
-                      : isBeforeCurrentMonth && !isCurrentMonth
-                      ? "dark:text-gray-700 dark:border-gray-700 text-gray-200 border-white" 
+                      : isBeforeToday && !isCurrentMonth
+                      ? "dark:text-gray-700 dark:border-gray-700 text-gray-200 border-white"
                       : ""
                   }${
                     (selectedStartDate &&
@@ -113,10 +122,8 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
                       ? "bg-blue-200 text-gray-600"
                       : ""
                   } ${isDarkMode ? "border-gray-700" : "border-gray-300"} ${
-                    isDarkMode && date.isSame(selectedDate, "day")
-                      ? "text-white"
-                      : ""
-                  }`}
+                    isDarkMode && date.isSame(selectedDate, "day") ? "" : ""
+                  }${isToday && !isLastDayOfMonth ? "bg-gray-200" : ""}`}
                   onClick={() => handleDateClick(date)}
                 >
                   {date.format("D")}

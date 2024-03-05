@@ -83,10 +83,12 @@ const BuySellModal = ({
               checked={checked}
               onChange={handleChange}
               inputProps={{ "aria-label": "controlled" }}
+              className={checked ? "text-green-500" : "text-red-500"}
             />{" "}
             SELL
           </div>
         </div>
+
         <h3 className="text-xl font-semibold">{formState.category}</h3>
         <div className="mt-5 ">
           <Box
@@ -129,22 +131,44 @@ const BuySellModal = ({
               value={formState.price}
               onChange={(e) => changeInput(e)}
               name="price"
+              disabled
+              sx={{
+                "& .MuiInputLabel-root": {
+                  color: isDarkMode ? "white" : "initial",
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: isDarkMode ? "white" : "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&:hover fieldset": {
+                    borderColor: isDarkMode ? "white" : "rgba(0, 0, 0, 0.23)",
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: isDarkMode ? "white" : "#3f51b5",
+                  },
+                  "& .MuiOutlinedInput-input": {
+                    color: isDarkMode ? "white" : "initial",
+                  },
+                },
+              }}
             />
           </Box>
         </div>
         <div
           className={`card card-border mt-4 ${
-            checked ? "bg-red-500 dark:bg-red-500" : "bg-green-500 dark:bg-green-500"
+            checked
+              ? "bg-red-500 dark:bg-red-500"
+              : "bg-green-500 dark:bg-green-500"
           } text-center cursor-pointer hover:${
-            checked ? "bg-red-600 dark:bg-red-300" : " bg-green-700 dark:bg-green-300"
+            checked
+              ? "bg-red-600 dark:bg-red-300"
+              : " bg-green-700 dark:bg-green-300"
           } `}
           role="presentation"
           onClick={handleSubmit}
         >
           <div className="card-body">
-            <h6 className="text-white ">
-              {checked ? "SELL" : "BUY"}
-            </h6>
+            <h6 className="text-white ">{checked ? "SELL" : "BUY"}</h6>
           </div>
         </div>
       </div>

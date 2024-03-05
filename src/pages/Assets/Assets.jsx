@@ -63,6 +63,9 @@ const Assets = () => {
       percentPL: 7.32,
       portfolioPercent: 12.5,
       categoryPercent: 10.2,
+      change: 20,
+      percentchange: 7.2,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -77,6 +80,9 @@ const Assets = () => {
       percentPL: 1.4,
       portfolioPercent: 8.3,
       categoryPercent: 9.1,
+      change: -10,
+      percentchange: 4.2,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -91,6 +97,9 @@ const Assets = () => {
       percentPL: -4.03,
       portfolioPercent: 9.7,
       categoryPercent: 11.8,
+      change: 40,
+      percentchange: 9.2,
+      daysProfitLoss:20,
       // status: "error",
     },
     {
@@ -105,6 +114,9 @@ const Assets = () => {
       percentPL: -2.1,
       portfolioPercent: 7.1,
       categoryPercent: 8.5,
+      change: -60,
+      percentchange: 4.7,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -119,6 +131,9 @@ const Assets = () => {
       percentPL: 1.38,
       portfolioPercent: 10.2,
       categoryPercent: 10.2,
+      change: -200,
+      percentchange: 30.5,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -133,6 +148,9 @@ const Assets = () => {
       percentPL: 4.47,
       portfolioPercent: 6.2,
       categoryPercent: 7.3,
+      change: 90,
+      percentchange: 14.2,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -147,6 +165,9 @@ const Assets = () => {
       percentPL: -1.87,
       portfolioPercent: 18.3,
       categoryPercent: 10.1,
+      change: 100,
+      percentchange: 26.2,
+      daysProfitLoss:20,
       // status: "error",
     },
     {
@@ -161,6 +182,9 @@ const Assets = () => {
       percentPL: 2.32,
       portfolioPercent: 5.5,
       categoryPercent: 9.9,
+      change: -67,
+      percentchange: 23.5,
+      daysProfitLoss:20,
       // status: "live",
     },
     {
@@ -175,6 +199,9 @@ const Assets = () => {
       percentPL: 3.39,
       portfolioPercent: 4.7,
       categoryPercent: 10.9,
+      change: -123,
+      percentchange: 30.5,
+      daysProfitLoss:20,
       // status: "draft",
     },
     {
@@ -189,6 +216,9 @@ const Assets = () => {
       percentPL: -1.18,
       portfolioPercent: 3.8,
       categoryPercent: 7.8,
+      change: -56,
+      percentchange: 21.6,
+      daysProfitLoss:20,
       // status: "error",
     },
   ]);

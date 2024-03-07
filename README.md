@@ -44,6 +44,9 @@
 
 ### Instructions
 1. Navigate to the cloned repository directory.
+   ```bash
+   cd pmp-react
+
 2. Run the following command to install dependencies:
    ```bash
    npm install

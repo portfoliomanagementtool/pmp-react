@@ -1,4 +1,4 @@
-# PORTFOLIO MANAGEMENT PLATFORM
+# **PORTFOLIO MANAGEMENT PLATFORM**
 
 ## Overview
 
@@ -27,11 +27,11 @@
 - Receive timely updates and notifications on watchlisted assets to stay informed about market changes.
 
 ## Technologies Used 🛠️
-- React: Frontend framework for building user interfaces
-- Redux: State management library for managing application state
-- ApexCharts: Interactive charting library for visualizing data
-- Tailwind CSS: Utility-first CSS framework for styling components
-- Clerk: Authentication and user management platform for secure login and authorization
+- **React**: Frontend framework for building user interfaces
+- **Redux**: State management library for managing application state
+- **ApexCharts**: Interactive charting library for visualizing data
+- **Tailwind CSS**: Utility-first CSS framework for styling components
+- **Clerk**: Authentication and user management platform for secure login and authorization
 
 ## Setup Instructions 🚀
 

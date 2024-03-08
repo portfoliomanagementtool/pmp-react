@@ -208,10 +208,10 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     Nil
                     {/* {Number(row.change.value).toFixed(2)} {Number(row.change.percentage).toFixed(2)} */}
                   </td>
-                  <td className="py-2">{Number(row.Open).toFixed(2)}</td>
+                  <td className="py-2">{Number(row.open).toFixed(2)}</td>
                   <td className="py-2">{Number(row.highLow.today.high).toFixed(2)}</td>
                   <td className="py-2">{Number(row.highLow.today.low).toFixed(2)}</td>
-                  <td className="py-2">{Number(row.Close).toFixed(2)}</td>
+                  <td className="py-2">{Number(row.close).toFixed(2)}</td>
                   <td className="py-2">{Number(row.highLow['52week'].high).toFixed(2)}</td>
                   <td className="py-2">{Number(row.highLow['52week'].low).toFixed(2)}</td>
                 </tr>

@@ -69,7 +69,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     setActiveTab(tab);
     setSellBuyModalOpen(true);
     setSelectedRowData(row);
-    console.log(selectedRowData);
+    // console.log(selectedRowData);
   };
 
   const closeBuySellModal = () => {
@@ -272,8 +272,8 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                         </td>
                         <td className="py-2">{row.quantity}</td>
                         <td className="py-2">{Number(row.avgBasis).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.costBasis).toFixed(2)}</td>
                         <td className="py-2">{Number(row.marketValue).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.price).toFixed(2)}</td>
                         <td className="py-2">{Number(row.profitLoss).toFixed(2)}</td>
                         <td className="py-2">{Number(row.daysProfitLoss).toFixed(2)}</td>
                       </tr>

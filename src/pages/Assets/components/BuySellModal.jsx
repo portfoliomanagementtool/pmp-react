@@ -170,12 +170,11 @@ const BuySellModal = ({
               id="outlined-basic"
               label="Quantity"
               type='number'
-              defaultValue={1}
               InputProps={{
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              value={formState.quantity}
+              defaultValue={0}
               onChange={(e) => { changeInput(e); setQuantity(e.target.value) }}
               name="quantity"
             />

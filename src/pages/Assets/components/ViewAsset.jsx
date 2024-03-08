@@ -5,7 +5,7 @@ import Card from "./card/Card";
 import Candle from "./charts/Candle";
 import { useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
-import Area from "./Charts/Area";
+import Area from "./charts/Area";
 import BuySellModal from "./BuySellModal";
 import { MdCandlestickChart } from "react-icons/md";
 import { FaChartArea } from "react-icons/fa6";

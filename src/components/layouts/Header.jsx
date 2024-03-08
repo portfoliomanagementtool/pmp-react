@@ -14,7 +14,6 @@ import { FiSettings, FiActivity } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Scrollbars from "react-custom-scrollbars-2";
 import { Tooltip } from "react-tooltip";
-import { setDefaultEditAsset } from "../../state/slices/assetSlice";
 
 const Header = ({ openModal }) => {
   const dispatch = useDispatch();
@@ -129,7 +128,6 @@ const Header = ({ openModal }) => {
     try {
       await signOut();
       dispatch(setMode("light"));
-      dispatch(setDefaultEditAsset());
       navigate("/");
     } catch (error) {
       console.error("Error signing out:", error);
@@ -384,7 +382,7 @@ const Header = ({ openModal }) => {
                     <span className="text-xl opacity-50">
                       <IoLogOutOutline />
                     </span>
-                    <span>Sign Out</span>
+                    <span>Log Out</span>
                   </li>
                 </ul>
               )}

@@ -14,21 +14,21 @@ import { useParams } from "react-router-dom";
 import { getAssetDetails } from "../../../api";
 
 const ViewAsset = () => {
-  // const { ticker } = useParams();
-  // const [tickerDetails, setTickerDetails] = useState({});
+  const { ticker } = useParams();
+  const [tickerDetails, setTickerDetails] = useState({});
 
-  // useEffect(() => { 
-  //   const getTickerDetails = async () => {
-  //     try {
-  //       const { data } = await getAssetDetails(ticker);
-  //       setTickerDetails(data);
-  //     } catch (error) {
-  //       console.log(error.message)
-  //     }
-  //   }
+  useEffect(() => { 
+    const getTickerDetails = async () => {
+      try {
+        const { data } = await getAssetDetails(ticker);
+        setTickerDetails(data[0]);
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
 
-  //   getTickerDetails();
-  // }, [ticker]);
+    getTickerDetails();
+  }, [ticker]);
 
   const { edit } = useSelector((state) => state.asset);
   const [showCandlestick, setShowCandlestick] = useState(true);

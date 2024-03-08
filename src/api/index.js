@@ -19,7 +19,7 @@ export const buyAsset = (data) => API.post("/portfolio/buy", data);
 export const sellAsset = (data) => API.post("/portfolio/sell", data);
 
 // Asset
-export const getAssetDetails = (ticker) => API.get(`/asset/${ticker}`, ticker); // done
+export const getAssetDetails = (ticker) => API.get(`/assets?ticker=${ticker}`, ticker); // done
 export const getAllAssets = () => API.get("/assets");  // done
 
 // Watchlist

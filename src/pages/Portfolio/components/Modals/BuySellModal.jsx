@@ -14,7 +14,6 @@ const BuySellModal = ({
   defaultValue,
   initialChecked,
 }) => {
-  console.log(defaultValue)
   const mode = useSelector((state) => state.config.mode);
   const isDarkMode = mode === "dark";
   const dispatch = useDispatch();
@@ -67,10 +66,12 @@ const BuySellModal = ({
     }
 
     const formData = {
-      ticker: formState.ticker,
+      ticker: formState.portfolio_asset.ticker,
       quantity: parseInt(formState.quantity),
-      price: formState.market_value,
+      price: formState.price,
     }
+
+    console.log(formData)
 
     if (checked) {
       sellAsset(formData);
@@ -140,7 +141,7 @@ const BuySellModal = ({
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold">{formState.category}</h3>
+        <h3 className="text-xl font-semibold">{formState.portfolio_asset.category}</h3>
         <div className="mt-5 ">
           <Box
             component="form"
@@ -171,13 +172,12 @@ const BuySellModal = ({
               style={{ WebkitAppearance: "none", MozAppearance: "none" }}
               id="outlined-basic"
               label="Quantity"
-              defaultValue={1}
               type='number'
               InputProps={{
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              value={formState.quantity}
+              defaultValue={formState.quantity}
               onChange={(e) => { changeInput(e); setQuantity(e.target.value) }}
               name="quantity"
             />

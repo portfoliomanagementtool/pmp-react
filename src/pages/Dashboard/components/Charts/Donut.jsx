@@ -2,21 +2,27 @@ import React, { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 
-const Donut = () => {
+const Donut = ({ series, labels }) => {
   const mode = useSelector((state) => state.config.mode);
-  const series = [55, 27, 18];
+  // const series = [55, 27, 18];
 
   const options = {
     chart: {
       type: "donut",
       background: "transparent",
     },
-    labels: ["Crypto", "Index", "Innovation"],
+    labels: labels,
     dataLabels: {
       enabled: false,
     },
     legend: {
-      show: false,
+      show: true,
+      position: "bottom",
+      fontSize: "16px",
+      fontWeight: "600",
+      labels: {
+        colors: mode === "light" ? "#6B7280" : "#9CA3AF",
+      },
     },
     plotOptions: {
       pie: {

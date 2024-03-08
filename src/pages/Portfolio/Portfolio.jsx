@@ -13,10 +13,14 @@ import Donut from "./components/Charts/Donut";
 import { EditAsset } from "../pages";
 import { Bar, Card } from "../Dashboard/components/components";
 import { getPortfolio } from "../../api";
+import { useSelector } from "react-redux";
 
 const Portfolio = () => {
-  const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [rows, setRows] = useState([]);
+  const [categories, setCategories] = useState([]);
   // const [rows, setRows] = useState([
   //   {
   //     category: "Technology",
@@ -180,39 +184,37 @@ const Portfolio = () => {
   //   },
   // ]);
 
-  const metrics = [
-    {
-      title: "Current Value",
-      value: "₹ 1,20,000",
-      type: "green",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
-    // {
-    //   title: "Total Investment",
-    //   value: "₹ 1,00,000",
-    //   type: "green",
-    //   relativeValue: "+₹ 20,000",
-    //   percentage: "20%",
-    // },
-    {
-      title: "Invested Value",
-      value: "₹ 1,00,000",
-      type: "green",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
+  // const metrics = [
+  //   {
+  //     title: "Current Value",
+  //     value: "₹ 1,20,000",
+  //     type: "green",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
+  //   // {
+  //   //   title: "Total Investment",
+  //   //   value: "₹ 1,00,000",
+  //   //   type: "green",
+  //   //   relativeValue: "+₹ 20,000",
+  //   //   percentage: "20%",
+  //   // },
+  //   {
+  //     title: "Invested Value",
+  //     value: "₹ 1,00,000",
+  //     type: "green",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
 
-    {
-      title: "Realised P/L",
-      value: "₹ 20,000",
-      type: "red",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
-  ];
-
-  const [rows, setRows] = useState([]);
+  //   {
+  //     title: "Realised P/L",
+  //     value: "₹ 20,000",
+  //     type: "red",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
+  // ];
   
   useEffect(() => {
     const fetchPortfolio = async () => {
@@ -227,6 +229,18 @@ const Portfolio = () => {
 
     fetchPortfolio();
   }, []);
+
+  useEffect(() => {
+    let labels = Object.keys(equityDistribution);
+    const categories = labels.map((label) => {
+      return {
+        label: label,
+        value: equityDistribution[label].value,
+      };
+    });
+
+    setCategories(categories);
+  }, [equityDistribution]);
 
   const ProfitData = [
     { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
@@ -265,6 +279,14 @@ const Portfolio = () => {
     setActiveButton(buttonType);
   };
 
+  const formatData = (data) => {
+    const formattedData = [];
+    for (let key in data) {
+      formattedData.push(data[key].percentage);
+    }
+    return formattedData;
+  }
+
   return (
     <div className="flex font-poppins overflow-x-hidden">
       <div className="w-full flex flex-col">
@@ -273,9 +295,12 @@ const Portfolio = () => {
           <p>View your current portfolio & summary</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-          {metrics.map((metric) => (
+          {/* {metrics.map((metric) => (
             <Card key={metric.title} {...metric} />
-          ))}
+          ))} */}
+            <Card title="Current Value" {...metrics.market_value} />
+            <Card title="Invested Value" {...metrics.invested_value} />
+            <Card title="Overall P/L" {...metrics.overall_pl} />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-4">
           <div
@@ -327,55 +352,28 @@ const Portfolio = () => {
           </div>
           <div className="card card-border" role="presentation">
             <div className="card-body">
-              <h4>My Assets</h4>
+              <h4>Categories</h4>
 
               <div className="grid grid-cols-1">
                 <div>
                   <div className="mt-6">
-                    <div className="flex justify-between mb-6">
-                      <div className="flex gap-1">
-                        <span
-                          className="badge-dot mt-1.5"
-                          // style="background-color: rgb(79, 70, 229);"
-                        ></span>
-                        <div>
-                          <h6 className="font-bold text-sm">Crypto</h6>
-                          <p>0.5832112 BTC</p>
+                    {categories.map((category, idx) => (
+                      <div key={idx} className="flex justify-between mb-6">
+                        <div className="flex gap-1">
+                          <span className="badge-dot mt-1.5"></span>
+                          <div>
+                            <h6 className="font-bold text-sm capitalize">{category.label}</h6>
+                            {/* <p>0.5832112 BTC</p> */}
+                          </div>
                         </div>
+                        <span className="font-semibold self-end">₹{Number(category.value).toFixed(2)}</span>
                       </div>
-                      <span className="font-semibold self-end">$15032</span>
-                    </div>
-                    <div className="flex justify-between mb-6">
-                      <div className="flex gap-1">
-                        <span
-                          className="badge-dot mt-1.5"
-                          // style="background-color: rgb(59, 130, 246);"
-                        ></span>
-                        <div>
-                          <h6 className="font-bold text-sm">Index</h6>
-                          <p>1.7294746 ETH</p>
-                        </div>
-                      </div>
-                      <span className="font-semibold self-end">$11246</span>
-                    </div>
-                    <div className="flex justify-between mb-6">
-                      <div className="flex gap-1">
-                        <span
-                          className="badge-dot mt-1.5"
-                          // style="background-color: rgb(16, 185, 129);"
-                        ></span>
-                        <div>
-                          <h6 className="font-bold text-sm">Innovation</h6>
-                          <p>196.9766 SOL</p>
-                        </div>
-                      </div>
-                      <span className="font-semibold self-end">$8273</span>
-                    </div>
+                    ))}
                   </div>
                 </div>
                 <div className="chartRef">
                   <div className=" mx-auto items-center ">
-                    <Donut />
+                    <Donut series={formatData(equityDistribution)} labels={Object.keys(equityDistribution)} />
                   </div>
                 </div>
               </div>

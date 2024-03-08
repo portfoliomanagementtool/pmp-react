@@ -9,13 +9,18 @@ import TopListing from "../Analytics/components/TopListing";
 import { CiCalendar } from "react-icons/ci";
 import Statistic from "../Portfolio/components/Charts/Statistic";
 import dayjs from "dayjs";
+import { getTopGainersAndLosers } from "../../api";
+import { useSelector } from "react-redux";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const calendarRef = useRef(null);
+  const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [showCalendar, setShowCalendar] = useState(false);
   const [activeButton, setActiveButton] = useState("monthly");
   const [rowToEdit, setRowToEdit] = useState(null);
+  const [topGainers, setTopGainers] = useState([]);
+  const [topLosers, setTopLosers] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: dayjs(),
     endDate: dayjs().add(3, "month"),
@@ -25,9 +30,9 @@ const Dashboard = () => {
     setShowCalendar(false);
   };
 
-  const handleDeleteRow = (targetIndex) => {
-    setRows(rows.filter((_, idx) => idx !== targetIndex));
-  };
+  // const handleDeleteRow = (targetIndex) => {
+  //   setRows(rows.filter((_, idx) => idx !== targetIndex));
+  // };
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
@@ -41,163 +46,135 @@ const Dashboard = () => {
     }
   };
 
-  const [rows2, setRows2] = useState([
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: -12.7,
-      categoryPercent: -10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: -12.7,
-      categoryPercent: -10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: -12.7,
-      categoryPercent: -10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: -12.7,
-      categoryPercent: -10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: -12.7,
-      categoryPercent: -10.2,
-      // status: "live",
-    },
-  ]);
-  const [rows, setRows] = useState([
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: 12.7,
-      categoryPercent: 10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: 12.7,
-      categoryPercent: 10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: 12.7,
-      categoryPercent: 10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: 12.7,
-      categoryPercent: 10.2,
-      // status: "live",
-    },
-    {
-      ticker: "AAPL",
-      price: 150.5,
-      change: 12.7,
-      categoryPercent: 10.2,
-      // status: "live",
-    },
-  ]);
+  useEffect(() => {
+    const fetchTopGainersAndLosers = async () => {
+      try {
+        const { data } = await getTopGainersAndLosers();
+        console.log(data);
+        const topGainers = data.data.top_gainers;
+        const topLosers = data.data.top_losers;
+        const topGainersData = topGainers.map((gainer) => {
+          return {
+            ticker: gainer.ticker,
+            price: gainer.price,
+            category: gainer.category,
+            change: {
+              value: gainer.day_change,
+              percentage: gainer.day_change_percentage,
+            },
+          };
+        });
+        const topLosersData = topLosers.map((loser) => {
+          return {
+            ticker: loser.ticker,
+            price: loser.price,
+            category: loser.category,
+            change: {
+              value: loser.day_change,
+              percentage: loser.day_change_percentage,
+            }
+          };
+        });
+        setTopGainers(topGainersData);
+        setTopLosers(topLosersData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
 
-  const metrics = [
-    {
-      title: "Current Value",
-      value: "₹ 1,20,000",
-      type: "green",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
-    // {
-    //   title: "Total Investment",
-    //   value: "₹ 1,00,000",
-    //   type: "green",
-    //   relativeValue: "+₹ 20,000",
-    //   percentage: "20%",
-    // },
-    {
-      title: "Invested Value",
-      value: "₹ 1,00,000",
-      type: "green",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
-    {
-      title: "Day P/L",
-      value: "₹ 20,000",
-      type: "red",
-      relativeValue: "₹ 20K",
-      percentage: "20",
-    },
-  ];
+    fetchTopGainersAndLosers();
+  }, [])
 
-  const history = [
-    {
-      transId: "#JY7686",
-      status: "green",
-      date: "21/12/2023",
-      asset: "TECL",
-      price: "10,000",
-    },
-    {
-      transId: "#JY7687",
-      status: "red",
-      date: "21/12/2023",
-      asset: "BIL",
-      price: "999",
-    },
-    {
-      transId: "#JY7688",
-      status: "green",
-      date: "21/12/2023",
-      asset: "IJH",
-      price: "300",
-    },
-    {
-      transId: "#JY7689",
-      status: "red",
-      date: "21/12/2023",
-      asset: "GOVZ",
-      price: "5,000",
-    },
-    {
-      transId: "#JY7690",
-      status: "red",
-      date: "21/12/2023",
-      asset: "BIL",
-      price: "120",
-    },
-    {
-      transId: "#JY7691",
-      status: "green",
-      date: "21/12/2023",
-      asset: "GOVZ",
-      price: "800",
-    },
-    {
-      transId: "#JY7692",
-      status: "red",
-      date: "21/12/2023",
-      asset: "TECL",
-      price: "1,200",
-    },
-  ];
+  // const metrics = [
+  //   {
+  //     title: "Current Value",
+  //     value: "₹ 1,20,000",
+  //     type: "green",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
+  //   // {
+  //   //   title: "Total Investment",
+  //   //   value: "₹ 1,00,000",
+  //   //   type: "green",
+  //   //   relativeValue: "+₹ 20,000",
+  //   //   percentage: "20%",
+  //   // },
+  //   {
+  //     title: "Invested Value",
+  //     value: "₹ 1,00,000",
+  //     type: "green",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
+  //   {
+  //     title: "Day P/L",
+  //     value: "₹ 20,000",
+  //     type: "red",
+  //     relativeValue: "₹ 20K",
+  //     percentage: "20",
+  //   },
+  // ];
+
+  // const history = [
+  //   {
+  //     transId: "#JY7686",
+  //     status: "green",
+  //     date: "21/12/2023",
+  //     asset: "TECL",
+  //     price: "10,000",
+  //   },
+  //   {
+  //     transId: "#JY7687",
+  //     status: "red",
+  //     date: "21/12/2023",
+  //     asset: "BIL",
+  //     price: "999",
+  //   },
+  //   {
+  //     transId: "#JY7688",
+  //     status: "green",
+  //     date: "21/12/2023",
+  //     asset: "IJH",
+  //     price: "300",
+  //   },
+  //   {
+  //     transId: "#JY7689",
+  //     status: "red",
+  //     date: "21/12/2023",
+  //     asset: "GOVZ",
+  //     price: "5,000",
+  //   },
+  //   {
+  //     transId: "#JY7690",
+  //     status: "red",
+  //     date: "21/12/2023",
+  //     asset: "BIL",
+  //     price: "120",
+  //   },
+  //   {
+  //     transId: "#JY7691",
+  //     status: "green",
+  //     date: "21/12/2023",
+  //     asset: "GOVZ",
+  //     price: "800",
+  //   },
+  //   {
+  //     transId: "#JY7692",
+  //     status: "red",
+  //     date: "21/12/2023",
+  //     asset: "TECL",
+  //     price: "1,200",
+  //   },
+  // ];
+
+  const formatData = (data) => {
+    const formattedData = [];
+    for (let key in data) {
+      formattedData.push(data[key].percentage);
+    }
+    return formattedData;
+  }
 
   useEffect(() => {
     if (showCalendar) {
@@ -265,9 +242,12 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {metrics.map((metric) => (
+            {/* {metrics.map((metric) => (
               <Card key={metric.title} {...metric} />
-            ))}
+            ))} */}
+            <Card title="Current Value" {...metrics.market_value} />
+            <Card title="Invested Value" {...metrics.invested_value} />
+            <Card title="Overall P/L" {...metrics.overall_pl} />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card col-span-2 card-border" role="presentation">
@@ -288,10 +268,10 @@ const Dashboard = () => {
                 <div className="mt-6">
                   <div className="chartRef">
                     <div style={{ minHeight: "278.7px" }}>
-                      <Donut />
+                      <Donut series={formatData(equityDistribution)} labels={Object.keys(equityDistribution)} />
                     </div>
                   </div>
-                  <div className="mt-6 grid grid-cols-2 gap-4 max-w-[180px] mx-auto">
+                  {/* <div className="mt-6 grid grid-cols-2 gap-4 max-w-[180px] mx-auto">
                     <div className="flex items-center gap-1">
                       <span
                         className="badge-dot"
@@ -313,14 +293,14 @@ const Dashboard = () => {
                       ></span>
                       <span className="font-semibold">Innovation</span>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <TopListing name={"Top Gainers"} rows={rows} />
-            <TopListing name={"Top losers"} rows={rows2} />
+            <TopListing name={"Top Gainers"} rows={topGainers} />
+            <TopListing name={"Top losers"} rows={topLosers} />
           </div>
 
           {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

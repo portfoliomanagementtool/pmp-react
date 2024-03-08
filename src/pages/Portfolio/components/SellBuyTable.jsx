@@ -275,7 +275,7 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                         <td className="py-2">{Number(row.costBasis).toFixed(2)}</td>
                         <td className="py-2">{Number(row.marketValue).toFixed(2)}</td>
                         <td className="py-2">{Number(row.profitLoss).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.daysProfitLoss).toFixed(2)}</td>
+                        <td className="py-2">{Number(row.portfolio_asset.daypl).toFixed(2)}</td>
                       </tr>
                     );
                   })}

@@ -17,6 +17,7 @@ export const getMetrics = (data) => API.get("/portfolio/getmetrics", data);
 export const getPortfolio = (data) => API.get("/portfolio/portfolios", data); // done
 export const buyAsset = (data) => API.post("/portfolio/buy", data);
 export const sellAsset = (data) => API.post("/portfolio/sell", data);
+export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_losers");
 
 // Asset
 export const getAssetDetails = (ticker) => API.get(`/assets?ticker=${ticker}`, ticker); // done

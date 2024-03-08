@@ -20,8 +20,8 @@ const TopListing = ({ name, rows }) => {
               </button>
             </div>
             <div>
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <div className="overflow-x-hidden">
+                <table className="table-default w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                       <th scope="col" className="px-6 py-3 dark:text-gray-300">
@@ -34,7 +34,7 @@ const TopListing = ({ name, rows }) => {
                         Category
                       </th>
                       <th scope="col" className="px-6 py-3 dark:text-gray-300">
-                        % Gain
+                        Gain
                       </th>
                     </tr>
                   </thead>
@@ -50,27 +50,19 @@ const TopListing = ({ name, rows }) => {
                             </div>
                           </td>
                           <td className="py-4">
-                            <span className="capitalize">${row.price}</span>
+                            <span>₹{Number(row.price).toFixed(2)}</span>
+                          </td>
+                          <td className="py-4">
+                            <span className="capitalize">{row.category}</span>
                           </td>
                           <td
                             className={`py-4 ${
-                              row.change >= 0
+                              row.change.value >= 0
                                 ? "text-emerald-500"
                                 : "text-red-500"
                             }`}
                           >
-                            {row.change}
-                          </td>
-                          <td className="py-4">
-                            <span
-                              className={`py-4 ${
-                                row.change >= 0
-                                  ? "text-emerald-500"
-                                  : "text-red-500"
-                              }`}
-                            >
-                              {row.categoryPercent}
-                            </span>
+                            {row.change.value} ({row.change.percentage}%)
                           </td>
                         </tr>
                       </React.Fragment>

@@ -376,7 +376,7 @@ const Header = ({ openModal }) => {
                   <li className="menu-item-divider"></li>
                   <li
                     onClick={handleSignOut}
-                    className={`menu-item menu-item-${mode} menu-item-hoverable gap-2"`}
+                    className={`menu-item menu-item-hoverable text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700 gap-2`}
                     style={{ height: "35px" }}
                   >
                     <span className="text-xl opacity-50">

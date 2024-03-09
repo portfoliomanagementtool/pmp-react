@@ -245,9 +245,13 @@ const Dashboard = () => {
             {/* {metrics.map((metric) => (
               <Card key={metric.title} {...metric} />
             ))} */}
-            <Card title="Current Value" {...metrics.market_value} />
-            <Card title="Invested Value" {...metrics.invested_value} />
-            <Card title="Overall P/L" {...metrics.overall_pl} />
+            {Object.keys(metrics).length !== 0 && (
+              <>
+                <Card title="Current Value" {...metrics.market_value} />
+                <Card title="Invested Value" {...metrics.invested_value} />
+                <Card title="Overall P/L" {...metrics.overall_pl} />
+              </>
+            )}
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card col-span-2 card-border" role="presentation">

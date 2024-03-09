@@ -3,6 +3,7 @@ import { FaArrowUp, FaArrowDown } from "react-icons/fa6";
 import abbreviate from "number-abbreviate";
 
 const Card = ({ title, type, value, change }) => {
+  console.log(change)
   return (
     // <div className="card dark:bg-[rgb(31,41,55)] card-border dark:border-[rgb(75,85,99)]" role='presentation'>
     <div className="card card-border" role='presentation'>

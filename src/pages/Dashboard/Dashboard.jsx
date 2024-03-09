@@ -299,8 +299,12 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <TopListing name={"Top Gainers"} rows={topGainers} />
-            <TopListing name={"Top losers"} rows={topLosers} />
+            {topGainers.length !== 0 && (
+              <TopListing name={"Top Gainers"} rows={topGainers} />
+            )}
+            {topLosers.length !== 0 && (
+              <TopListing name={"Top losers"} rows={topLosers} />
+            )}
           </div>
 
           {/* <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

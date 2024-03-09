@@ -11,13 +11,13 @@ const API = axios.create({
 
 
 // Metrics
-export const getMetrics = (data) => API.get("/portfolio/getmetrics", data);
+export const getMetrics = (data) => API.get("/portfolio/getmetrics", data); //done
 
 // Portfolio
 export const getPortfolio = (data) => API.get("/portfolio/portfolios", data); // done
-export const buyAsset = (data) => API.post("/portfolio/buy", data);
-export const sellAsset = (data) => API.post("/portfolio/sell", data);
-export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_losers");
+export const buyAsset = (data) => API.post("/portfolio/buy", data); //done
+export const sellAsset = (data) => API.post("/portfolio/sell", data); //done
+export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_losers"); //done
 
 // Asset
 export const getAssetDetails = (ticker) => API.get(`/assets?ticker=${ticker}`, ticker); // done
@@ -29,4 +29,4 @@ export const addToWatchlist = (data) => API.post(`/portfolio/watchlist/add`, dat
 export const removeFromWatchlist = (data) => API.delete(`/portfolio/watchlist/remove`, data);
 
 // All transactions
-// export const getAllTransactions = (data, userId) => API.get(`/transactions/${userId}`, data);
+export const getAllTransactions = () => API.get(`portfolio/transactions`); // done

@@ -163,7 +163,8 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     </div>
                   </td>
                   <td className="py-2 relative">
-                    <div className="flex mx-auto justify-center items-center my-4 w-12">
+                    <div className="w-12"></div>
+                    {/* <div className="flex mx-auto justify-center items-center my-4 w-12">
                       <button
                         className={`buy-sell-button ${
                           activeTab === "buy"
@@ -184,7 +185,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                       >
                         Sell
                       </button>
-                    </div>
+                    </div> */}
                     <div
                       className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
                     >
@@ -202,7 +203,6 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                       </button>
                     </div>
                   </td>
-
                   <td className="py-2">{Number(row.market_value).toFixed(2)}</td>
                   <td className="py-2">
                     {row.day_change >= 0 ? (

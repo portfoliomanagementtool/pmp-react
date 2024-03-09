@@ -7,6 +7,7 @@ import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
+import dateFormat, { masks } from "dateformat";
 
 import { useNavigate } from "react-router-dom";
 import OrderStatusChip from "./card/OrderStatusChip";
@@ -54,6 +55,16 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
         return "";
     }
   };
+
+  const handleStatus = (buyPrice, sellPrice) => {
+    if (buyPrice !== null) {
+      return "PURCHASED";
+    } else if (sellPrice !== null) {
+      return "SOLD";
+    } else {
+      return "PENDING";
+    }
+  }
 
   return (
     <div
@@ -107,7 +118,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Category
-                        <div className=" font-bold text-base items-center">
+                        <div className="font-bold text-base items-center">
                           <PiCaretUpDownFill />
                         </div>
                       </div>
@@ -145,35 +156,44 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                       </div>
                     </th>
                     <th className="" colSpan="1">
-                      <div className=""></div>
+                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                        Date
+                        <div className=" font-bold text-base items-center">
+                          <PiCaretUpDownFill />
+                        </div>
+                      </div>
                     </th>
+                    {/* <th className="" colSpan="1">
+                      <div className=""></div>
+                    </th> */}
                   </tr>
                 </thead>
                 <tbody className="">
                   {rows.map((row, idx) => (
                     <React.Fragment key={idx}>
                       <tr
-                        className="cursor-pointer"
-                        onClick={() => handleRowClick(idx)}
+                        // className="cursor-pointer"
+                        // onClick={() => handleRowClick(idx)}
                       >
                         <td className="py-2">
                           <div className="flex items-center">
-                            <span className="ml-2 rtl:mr-2 font-semibold ">
-                              {row.category}
+                            <span className="rtl:mr-2 font-semibold capitalize">
+                              {row.transaction_asset.category}
                             </span>
                           </div>
                         </td>
                         <td className="py-2">
-                          <span className="capitalize">{row.ticker}</span>
+                          <span className="capitalize">{row.transaction_asset.ticker}</span>
                         </td>
-                        <td className="py-2 text-center">{row.qty}</td>
+                        <td className="py-2">{row.quantity}</td>
                         <td className="py-2">
-                          <div className="flex items-center gap-2">
-                            <OrderStatusChip status={row.status} />
-                          </div>
+                          <OrderStatusChip status={handleStatus(row.buy_price, row.sell_price)} />
                         </td>
                         <td className="py-2">
-                          <span>${row.price}</span>
+                          <span>₹{Number(row.buy_price !== null ? row.buy_price : row.sell_price).toFixed(2)}</span>
+                        </td>
+                        <td className="py-2">
+                          {dateFormat(row.updated_at, "h:MM TT, dS mmmm, yyyy")}
                         </td>
                       </tr>
                     </React.Fragment>

@@ -81,7 +81,7 @@ const routes = [
         element: <></>
       },
       {
-        path: 'reports/orders',
+        path: 'transactions',
         element:<Orders/>
       },
       {

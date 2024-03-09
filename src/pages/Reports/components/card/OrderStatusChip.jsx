@@ -28,15 +28,15 @@ const OrderStatusChip = ({ status }) => {
   }
 
   return (
-   
-      <div className="card-body">
-        <div className="flex justify-between items-center">
-          <div className={`tag gap-1 font-bold border-0  flex items-center justify-center  ${tagColor} w-[100px]`}>
-            <span className=''>{title}</span>
-          </div>
+    <>
+      <div className="py-5">
+        {/* <div className="flex justify-between items-center"> */}
+        <div className={`tag gap-1 font-bold border-0  flex items-center justify-center  ${tagColor} w-[100px]`}>
+          <span className=''>{title}</span>
         </div>
+        {/* </div> */}
       </div>
-
+    </>
   );
 }
 

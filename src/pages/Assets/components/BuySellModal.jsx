@@ -138,7 +138,7 @@ const BuySellModal = ({
             <span className="text-red-500">SELL</span>
           </div>
         </div>
-        <h3 className="text-xl font-semibold">{formState.category}</h3>
+        <h3 className="text-xl font-semibold capitalize">{formState.category}</h3>
         <div className="mt-5">
           <Box
             component="form"

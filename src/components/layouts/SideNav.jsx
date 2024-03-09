@@ -14,6 +14,7 @@ import MenuGroup from "../Menu/MenuGroup";
 import { useSelector } from "react-redux";
 import SideNavModal from "../Modals/SideNavModal";
 import { HiOutlineDocumentReport } from "react-icons/hi";
+import { GrTransaction } from "react-icons/gr";
 
 const SideNav = () => {
   const collapsed = useSelector((state) => state.config.collapsed);
@@ -50,19 +51,20 @@ const SideNav = () => {
           // ],
         },
         {
-          id: "reports",
-          name: "Reports",
+          id: "transactions",
+          name: "Transactions",
           icon: <HiOutlineDocumentReport />,
-          path: "/app/reports",
-          dropDown: true,
-          subMenu: [
-            { id: "order-asset", name: "Orders", path: "/app/reports/orders" },
-            {
-              id: "positions-asset",
-              name: "Positions",
-              path: "/app/reports/positions",
-            },
-          ],
+          // icon: <GrTransaction />,
+          path: "/app/transactions",
+          // dropDown: true,
+          // subMenu: [
+          //   { id: "order-asset", name: "Orders", path: "/app/reports/orders" },
+          //   {
+          //     id: "positions-asset",
+          //     name: "Positions",
+          //     path: "/app/reports/positions",
+          //   },
+          // ],
         },
         {
           id: "watchlist",

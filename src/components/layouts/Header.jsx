@@ -325,54 +325,58 @@ const Header = ({ openModal }) => {
                     </div>
                   </li>
                   <li className="menu-item-divider"></li>
-                  <li
-                    className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
-                    style={{ height: "35px" }}
-                  >
-                    <Link
-                      to="/app/account/settings/profile"
-                      className="flex h-full w-full px-2"
-                    >
-                      <span className="flex gap-2 items-center w-full">
-                        <span className="text-xl opacity-50">
-                          <HiOutlineUser />
-                        </span>
-                        <span>Profile</span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li
-                    className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
-                    style={{ height: "35px" }}
-                  >
-                    <Link
-                      to="/app/account/settings/profile"
-                      className="flex h-full w-full px-2"
-                    >
-                      <span className="flex gap-2 items-center w-full">
-                        <span className="text-xl opacity-50">
-                          <FiSettings />
-                        </span>
-                        <span>Account Setting</span>
-                      </span>
-                    </Link>
-                  </li>
-                  <li
-                    className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
-                    style={{ height: "35px" }}
-                  >
-                    <Link
-                      to="/app/account/activity-log"
-                      className="flex h-full w-full px-2"
-                    >
-                      <span className="flex gap-2 items-center w-full">
-                        <span className="text-xl opacity-50">
-                          <FiActivity />
-                        </span>
-                        <span>Activity Log</span>
-                      </span>
-                    </Link>
-                  </li>
+                  {(mode === "light" || mode === "dark") && (
+                    <>
+                      <li
+                        className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
+                        style={{ height: "35px" }}
+                      >
+                        <Link
+                          to="/app/account/settings/profile"
+                          className="flex h-full w-full px-2"
+                        >
+                          <span className="flex gap-2 items-center w-full">
+                            <span className="text-xl opacity-50">
+                              <HiOutlineUser />
+                            </span>
+                            <span>Profile</span>
+                          </span>
+                        </Link>
+                      </li>
+                      <li
+                        className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
+                        style={{ height: "35px" }}
+                      >
+                        <Link
+                          to="/app/account/settings/profile"
+                          className="flex h-full w-full px-2"
+                        >
+                          <span className="flex gap-2 items-center w-full">
+                            <span className="text-xl opacity-50">
+                              <FiSettings />
+                            </span>
+                            <span>Account Setting</span>
+                          </span>
+                        </Link>
+                      </li>
+                      <li
+                        className={`menu-item menu-item-${mode} menu-item-hoverable mb-1 px-0`}
+                        style={{ height: "35px" }}
+                      >
+                        <Link
+                          to="/app/account/activity-log"
+                          className="flex h-full w-full px-2"
+                        >
+                          <span className="flex gap-2 items-center w-full">
+                            <span className="text-xl opacity-50">
+                              <FiActivity />
+                            </span>
+                            <span>Activity Log</span>
+                          </span>
+                        </Link>
+                      </li>
+                    </>
+                  )}
                   <li className="menu-item-divider"></li>
                   <li
                     onClick={handleSignOut}

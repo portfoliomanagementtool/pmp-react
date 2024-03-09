@@ -205,8 +205,17 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
 
                   <td className="py-2">{Number(row.market_value).toFixed(2)}</td>
                   <td className="py-2">
-                    Nil
-                    {/* {Number(row.change.value).toFixed(2)} {Number(row.change.percentage).toFixed(2)} */}
+                    {row.day_change >= 0 ? (
+                      <span className="text-green-600">
+                      {Number(row.day_change).toFixed(2)}{" "}
+                      ({Number(row.day_change_percentage).toFixed(2)}%)
+                      </span>
+                    ) : (
+                      <span className="text-red-500">
+                        {Number(row.day_change).toFixed(2)}{" "}
+                        ({Number(row.day_change_percentage).toFixed(2)}%)
+                      </span>
+                    )}
                   </td>
                   <td className="py-2">{Number(row.open).toFixed(2)}</td>
                   <td className="py-2">{Number(row.highLow.today.high).toFixed(2)}</td>

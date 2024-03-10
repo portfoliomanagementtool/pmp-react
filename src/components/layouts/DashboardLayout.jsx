@@ -16,7 +16,7 @@ const DashboardLayout = () => {
   useEffect(() => {
     const fetchMetrics = async () => {
       try {
-        const { data } = await getMetrics();
+        const { data } = await getMetrics(user.primaryEmailAddress.emailAddress)
         dispatch(saveMetrics(data.metrics))
         dispatch(saveEquityDistribution(data.categories))
       } catch (error) {
@@ -25,7 +25,7 @@ const DashboardLayout = () => {
     }
 
     fetchMetrics();
-  }, [user])
+  }, [user, dispatch])
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);

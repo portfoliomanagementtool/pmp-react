@@ -1,58 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 
-const Area = () => {
+const Area = ({ data, min, type }) => {
   const mode = useSelector((state) => state.config.mode);
-  const series = [
-    {
-      name: "Asset",
-      data: [40, 11, 25, 21, 89, 42, 19, 12, 38],
+  const series= [{
+      data: data,
     },
   ];
 
   const options = {
     chart: {
-      height: 350,
+      id: "area-datetime",
       type: "area",
+      height: 350,
       background:"transparent",
       toolbar: {
         show: false,
       },
       zoom: {
-        enabled: true,
-      },
+        autoScaleYaxis: true,
+      }
     },
+    colors: [type === "green" ? "#81C995" : "#F28B82"],
     theme: {
       mode: mode === "light" ? "light" : "dark",
     },
     dataLabels: {
       enabled: false,
     },
+    markers: {
+      size: 0,
+      style: 'hollow',
+    },
+    zoom: {
+      enabled: true,
+      type: 'xy',
+      autoScaleYaxis: true,
+    },
     stroke: {
       width: 3,
-      curve: "smooth",
+      // curve: "smooth",
     },
     xaxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-      ],
+      type: 'datetime',
+      min: min,
+      tickAmount: 6,
+    },
+    tooltip: {
+      x: {
+        format: 'dd MMM yyyy'
+      }
     },
     fill: {
+      colors: type === "green" ? "#81C995" : "#F28B82",
       type: "gradient",
       gradient: {
-        shadeIntensity: 1,
-        opacityFrom: 0.7,
-        opacityTo: 0.9,
-        stops: [0, 90, 100],
+        shadeIntensity: mode === "light" ? 1 : 0.5,
+        opacityFrom: mode === "light" ? 0.3 : 0.7,
+        opacityTo: mode === "light" ? 0.9: 0.1,
+        stops: [0, 100],
       },
     },
   };

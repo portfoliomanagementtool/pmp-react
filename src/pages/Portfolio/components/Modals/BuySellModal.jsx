@@ -1,23 +1,20 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
-import { useNavigate } from "react-router";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
-import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../../api';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveEquityDistribution, saveMetrics } from "../../../../state/slices/portfolioSlice"; 
+import { useSelector } from 'react-redux';
 
 const BuySellModal = ({
   onSubmit,
   closeModal,
   defaultValue,
   initialChecked,
+  buyAsset,
+  sellAsset,
 }) => {
   const mode = useSelector((state) => state.config.mode);
   const isDarkMode = mode === "dark";
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
     defaultValue || {
@@ -28,6 +25,7 @@ const BuySellModal = ({
     }
   );
   const [quantity, setQuantity] = useState(formState.quantity);
+  console.log(formState);
 
   const [errors, setErrors] = useState("");
 
@@ -66,9 +64,9 @@ const BuySellModal = ({
     }
 
     const formData = {
-      ticker: formState.portfolio_asset.ticker,
+      ticker: formState.ticker,
       quantity: parseInt(formState.quantity),
-      price: formState.price,
+      price: formState.market_value,
     }
 
     console.log(formData)
@@ -79,42 +77,6 @@ const BuySellModal = ({
       buyAsset(formData);
     }
   };
-
-  const buyAsset = async (data) => {
-    console.log("buy", data)
-    try {
-      const result = await buyAssetAPI(data);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics();
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const sellAsset = async (data) => {
-    console.log("sell", data)
-    try {
-      const result = await sellAssetAPI(data);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics();
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -141,7 +103,7 @@ const BuySellModal = ({
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold">{formState.portfolio_asset.category}</h3>
+        <h3 className="text-xl font-semibold capitalize">{formState.category}</h3>
         <div className="mt-5 ">
           <Box
             component="form"
@@ -178,14 +140,14 @@ const BuySellModal = ({
               }}
               variant="outlined"
               defaultValue={formState.quantity}
-              onChange={(e) => { changeInput(e); setQuantity(e.target.value) }}
+              onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
               name="quantity"
             />
             <TextField
               id="outlined-basic"
               label="Price"
               variant="outlined"
-              value={quantity*formState.price}
+              value={Number(quantity*formState.market_value).toFixed(2)}
               onChange={(e) => changeInput(e)}
               name="price"
               disabled

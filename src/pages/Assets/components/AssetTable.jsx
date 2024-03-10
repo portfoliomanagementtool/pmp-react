@@ -7,10 +7,17 @@ import { PiCaretUpDownFill } from "react-icons/pi";
 import ViewAsset from "./ViewAsset";
 import { Link, useNavigate } from "react-router-dom";
 import BuySellModal from "./BuySellModal";
+import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../api';
+import { saveEquityDistribution, saveMetrics } from '../../../state/slices/portfolioSlice';
+import Statistics from "./Statistics";
+import { useUser } from "@clerk/clerk-react";
+import { useDispatch } from "react-redux";
+import { setActive } from "../../../state/slices/configSlice";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const { user } = useUser();
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -68,6 +75,46 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
 
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
+
+  const buyAsset = async (data) => {
+    console.log("buy", data)
+    const email = user.primaryEmailAddress.emailAddress;
+
+    try {
+      const result = await buyAssetAPI(data, email);
+      console.log(result)
+
+      try {
+        const { data } = await getMetrics(email);
+        dispatch(saveMetrics(data.metrics));
+        dispatch(saveEquityDistribution(data.categories))
+      } catch (error) {
+        console.log(error.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
+
+  const sellAsset = async (data) => {
+    console.log("sell", data)
+    const email = user.primaryEmailAddress.emailAddress;
+    
+    try {
+      const result = await sellAssetAPI(data, email);
+      console.log(result)
+
+      try {
+        const { data } = await getMetrics(email);
+        dispatch(saveMetrics(data.metrics));
+        dispatch(saveEquityDistribution(data.categories))
+      } catch (error) {
+        console.log(error.message)
+      }
+    } catch (error) {
+      console.log(error.message)
+    }
+  }
 
   return (
     <>
@@ -155,7 +202,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                           <BsStar size={20} color="gray" />
                         )}
                         <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                          <Link to={`/app/asset/view/${row.ticker}`}>
+                          <Link to={`/app/asset/view/${row.ticker}`} onClick={() => dispatch(setActive("assets"))}>
                             {row.name}
                           </Link>
                         </span>
@@ -234,7 +281,14 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
               onSubmit={handleClose}
               closeModal={closeBuySellModal}
               initialChecked={activeTab === "sell"}
-              defaultValue={selectedRowData}
+              defaultValue={{
+                category: selectedRowData.category,
+                ticker: selectedRowData.ticker,
+                market_value: selectedRowData.market_value,
+                quantity: 0,
+              }}
+              buyAsset={buyAsset}
+              sellAsset={sellAsset}
             />
           )}
         </div>

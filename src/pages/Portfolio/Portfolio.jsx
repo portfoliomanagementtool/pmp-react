@@ -14,9 +14,11 @@ import { EditAsset } from "../pages";
 import { Bar, Card } from "../Dashboard/components/components";
 import { getPortfolio } from "../../api";
 import { useSelector } from "react-redux";
+import { useUser } from "@clerk/clerk-react";
 
 const Portfolio = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [modalOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([]);
@@ -219,7 +221,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchPortfolio = async () => {
       try {
-        const { data } = await getPortfolio();
+        const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
         console.log(data)
         setRows(data.assets);
       } catch (error) {
@@ -228,7 +230,7 @@ const Portfolio = () => {
     };
 
     fetchPortfolio();
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     let labels = Object.keys(equityDistribution);

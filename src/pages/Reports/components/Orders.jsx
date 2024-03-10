@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import AssetTable from "../../Assets/components/AssetTable";
 import OrdersTable from "./OrdersTable";
 import { getAllTransactions } from "../../../api";
+import { useUser } from "@clerk/clerk-react";
 
 const Orders = () => {
+  const { user } = useUser();
   const [modalOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
     const fetchAllTransactions = async () => {
       try {
-        const { data } = await getAllTransactions();
+        const { data } = await getAllTransactions(user.primaryEmailAddress.emailAddress);
         console.log(data)
         setRows(data.data);
       } catch (error) {
@@ -19,7 +21,7 @@ const Orders = () => {
     };
 
     fetchAllTransactions();
-  }, []);
+  }, [user]);
 
   // const [rows, setRows] = useState([
   //   {

@@ -2,31 +2,68 @@ import axios from "axios";
 
 const API = axios.create({ 
   baseURL: "http://localhost:8000", 
-  headers: { 
-    "UserId": 1,
-   }
 });
 
 // User
 
 
 // Metrics
-export const getMetrics = (data) => API.get("/portfolio/getmetrics", data); //done
+export const getMetrics = (email) => API.get("/portfolio/getmetrics", {
+  headers: {
+    "UserId": email,
+  }
+}); //done
 
 // Portfolio
-export const getPortfolio = (data) => API.get("/portfolio/portfolios", data); // done
-export const buyAsset = (data) => API.post("/portfolio/buy", data); //done
-export const sellAsset = (data) => API.post("/portfolio/sell", data); //done
-export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_losers"); //done
+export const getPortfolio = (email) => API.get("/portfolio/portfolios", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const buyAsset = (data, email) => API.post("/portfolio/buy", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const sellAsset = (data, email) => API.post("/portfolio/sell", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getPortfolioAssetDetails = (ticker, email) => API.get(`/portfolio/portfolios?ticker=${ticker}`, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
 
 // Asset
 export const getAssetDetails = (ticker) => API.get(`/assets?ticker=${ticker}`, ticker); // done
 export const getAllAssets = () => API.get("/assets");  // done
 
+// Asset Pricing
+export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_losers"); //done
+export const getAssetPrice = (ticker) => API.get(`asset_pricing/latest?ticker=${ticker}`); // done
+
 // Watchlist
-export const getAllWatchlist = (data) => API.get("/portfolio/watchlist", data); // done
-export const addToWatchlist = (data) => API.post(`/portfolio/watchlist/add`, data);
-export const removeFromWatchlist = (data) => API.delete(`/portfolio/watchlist/remove`, data);
+export const getAllWatchlist = (data, email) => API.get("/portfolio/watchlist", data, {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const addToWatchlist = (data, email) => API.post(`/portfolio/watchlist/add`, data, {
+  headers: {
+    "UserId": email,
+  }
+});
+export const removeFromWatchlist = (data, email) => API.delete(`/portfolio/watchlist/remove`, data, {
+  headers: {
+    "UserId": email,
+  }
+});
 
 // All transactions
-export const getAllTransactions = () => API.get(`portfolio/transactions`); // done
+export const getAllTransactions = (email) => API.get(`portfolio/transactions`, {
+  headers: {
+    "UserId": email,
+  }
+}); // done

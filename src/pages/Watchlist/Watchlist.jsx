@@ -8,8 +8,10 @@ import { RiDownloadLine } from "react-icons/ri";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { getAllWatchlist } from "../../api";
+import { useUser } from "@clerk/clerk-react";
 
 const Watchlist = () => {
+  const { user } = useUser();
   const [watchlists, setWatchlist] = useState([]);
   // const { watchlist } = useSelector((state) => state.watchlist);
 
@@ -18,7 +20,7 @@ const Watchlist = () => {
   useEffect(() => {
     const fetchWatchlist = async () => {
       try {
-        const result = await getAllWatchlist();
+        const result = await getAllWatchlist(user.primaryEmailAddress.emailAddress);
         console.log(result)
         // setWatchlist(data);
       } catch (error) {
@@ -27,7 +29,7 @@ const Watchlist = () => {
     };
 
     fetchWatchlist();
-  }, []);
+  }, [user]);
 
   return (
     <>

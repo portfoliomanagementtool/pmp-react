@@ -9,14 +9,10 @@ const Card = ({ title, type, value, relativeValue, percentage }) => {
         <div className="flex justify-between items-center">
           <div>
             <h3 className="font-bold">
-              <span>{value}</span>
+              <span className={`${type}`}>{value}</span>
             </h3>
-            <p>
-              from <span className="font-semibold">Start Date</span> to{" "}
-              <span className="font-semibold">Current Date</span>
-            </p>
           </div>
-          {type === "green" ? (
+          {/* {type === "green" ? (
             <div className="tag gap-1 font-bold border-0 text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 dark:text-emerald-100">
               <span>
                 <FaArrowUp />
@@ -34,7 +30,7 @@ const Card = ({ title, type, value, relativeValue, percentage }) => {
                 {relativeValue}({percentage}%)
               </span>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

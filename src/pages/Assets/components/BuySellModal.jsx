@@ -1,23 +1,19 @@
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { useNavigate } from 'react-router';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../api';
-import { useDispatch, useSelector } from 'react-redux';
-import { saveEquityDistribution, saveMetrics } from '../../../state/slices/portfolioSlice';
+import { useSelector } from 'react-redux';
 
 const BuySellModal = ({
   onSubmit,
   closeModal,
   defaultValue,
   initialChecked,
+  buyAsset,
+  sellAsset
 }) => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { mode } = useSelector((state) => state.config);
-  const [quantity, setQuantity] = useState(1);
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
     defaultValue || {
@@ -27,6 +23,7 @@ const BuySellModal = ({
       quantity: 0,
     }
   );
+  const [quantity, setQuantity] = useState(formState.quantity !== 0 ? formState.quantity : 1);
 
   const [errors, setErrors] = useState("");
 
@@ -78,41 +75,7 @@ const BuySellModal = ({
     }
   };
 
-  const buyAsset = async (data) => {
-    console.log("buy", data)
-    try {
-      const result = await buyAssetAPI(data);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics();
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const sellAsset = async (data) => {
-    console.log("sell", data)
-    try {
-      const result = await sellAssetAPI(data);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics();
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
+  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -174,15 +137,15 @@ const BuySellModal = ({
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              defaultValue={0}
-              onChange={(e) => { changeInput(e); setQuantity(e.target.value) }}
+              defaultValue={formState.quantity}
+              onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
               name="quantity"
             />
             <TextField
               id="outlined-basic"
               label="Price"
               variant="outlined"
-              value={quantity*formState.market_value}
+              value={Number(quantity*formState.market_value).toFixed(2)}
               onChange={(e) => changeInput(e)}
               name="price"
               sx={{

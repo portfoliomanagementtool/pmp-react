@@ -6,8 +6,8 @@ import { TbChartAreaLineFilled } from 'react-icons/tb';
 
 const Statistics = ({ candleData, areaData }) => {
   const [showCandlestick, setShowCandlestick] = useState(true);
-  const [activeButton, setActiveButton] = useState("one_month");
-  const [minTime, setMinTime] = useState(null);
+  const [activeButton, setActiveButton] = useState("all");
+  const [minTime, setMinTime] = useState(null)
   const [type, setType] = useState("green")
 
   const updateData = (timeline) => {
@@ -32,7 +32,7 @@ const Statistics = ({ candleData, areaData }) => {
         break;
       default:
     }
-  }
+  };
 
   const handleButtonClick = (buttonType) => {
     updateData(buttonType);
@@ -40,7 +40,7 @@ const Statistics = ({ candleData, areaData }) => {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-2 pr-4">
+      <div className="flex items-center justify-between mb-4">
         <div>
           <div className="segment flex gap-2">
             <button

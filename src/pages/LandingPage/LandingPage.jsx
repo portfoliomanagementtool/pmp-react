@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "@clerk/clerk-react";
 import { Icon } from "@iconify/react";
@@ -9,16 +10,19 @@ import image2 from "../../images/image-02.png";
 import image3 from "../../images/image-03.png";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { setActive } from "../../state/slices/configSlice";
 
 const LandingPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useUser();
 
   useEffect(() => {
     if(user) {
+      dispatch(setActive("dashboard"))
       navigate('/app/dashboard');
     }
-  }, [user, navigate]);
+  }, [user, navigate, dispatch]);
 
   return (
     <>

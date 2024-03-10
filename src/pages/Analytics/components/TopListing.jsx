@@ -1,8 +1,12 @@
 import React from "react";
 import { CiFilter } from "react-icons/ci";
 import { PiCaretUpDownFill } from "react-icons/pi";
+import { Link } from "react-router-dom";
+import { setActive } from "../../../state/slices/configSlice";
+import { useDispatch } from "react-redux";
 
 const TopListing = ({ name, rows }) => {
+  const dispatch = useDispatch();
   return (
     <>
       <div className="card card-border" role="presentation">
@@ -44,8 +48,10 @@ const TopListing = ({ name, rows }) => {
                         <tr className="cursor-pointer bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
                           <td className="py-4">
                             <div className="flex items-center">
-                              <span className="ml-2 rtl:mr-2 font-semibold">
-                                {row.ticker}
+                              <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
+                                <Link to={`/app/asset/view/${row.ticker}`} onClick={() => dispatch(setActive("assets"))}>
+                                  {row.ticker}
+                                </Link>
                               </span>
                             </div>
                           </td>

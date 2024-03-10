@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
 import React from "react";
-import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
+import Chart from "react-apexcharts";
+import abbreviate from "number-abbreviate";
 
 const Candle = ({ data, min}) => {
   const mode = useSelector((state) => state.config.mode);
@@ -35,6 +35,13 @@ const Candle = ({ data, min}) => {
       // max: new Date('01 Mar 2020').getTime(),
       tickAmount: 6,
     },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return abbreviate(value, 2);
+        },
+      }
+    }
     // yaxis: {
     //   tooltip: {
     //     enabled: true

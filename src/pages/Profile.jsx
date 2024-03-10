@@ -9,7 +9,6 @@ const Profile = () => {
   const { user } = useUser();
   const [enabled, setEnabled] = useState(false);
 
-  console.log(user);
   const fileInputRef = useRef(null);
 
   const handleImageClick = () => {
@@ -30,9 +29,9 @@ const Profile = () => {
   };
 
   return (
-    <div class="px-4 py-6">
+    <div className="px-4 py-6">
       <form action="#">
-        <div class="form-container vertical">
+        <div className="form-container vertical">
           <div>
             <h5>General</h5>
             <p>
@@ -40,54 +39,56 @@ const Profile = () => {
               public
             </p>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
-            <div class="font-semibold">Name</div>
-            <div class="col-span-2">
-              <div class="form-item vertical mb-0 max-w-[700px]">
-                <label class="form-label"></label>
-                <div class="">
-                  <span class="input-wrapper undefined">
-                    <div class="input-suffix-start">
+          <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
+            <div className="font-semibold">Name</div>
+            <div className="col-span-2">
+              <div className="form-item vertical mb-0 max-w-[700px]">
+                <label className="form-label"></label>
+                <div className="">
+                  <span className="input-wrapper undefined">
+                    <div className="input-suffix-start">
                       <CgProfile className="text-lg ml-3" />
                     </div>
                     <input
-                      class="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
+                      className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
                       type="text"
                       name="name"
-                      autocomplete="off"
+                      autoComplete="off"
                       placeholder="Name"
                       value={user.fullName}
+                      readOnly
                     />
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
-            <div class="font-semibold">Email</div>
-            <div class="col-span-2">
-              <div class="form-item vertical mb-0 max-w-[700px]">
-                <label class="form-label"></label>
-                <div class="">
-                  <span class="input-wrapper undefined">
-                    <div class="input-suffix-start">
+          <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
+            <div className="font-semibold">Email</div>
+            <div className="col-span-2">
+              <div className="form-item vertical mb-0 max-w-[700px]">
+                <label className="form-label"></label>
+                <div className="">
+                  <span className="input-wrapper undefined">
+                    <div className="input-suffix-start">
                       <CiMail className="text-lg ml-3" />
                     </div>
                     <input
-                      class="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
+                      className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
                       type="email"
                       name="email"
-                      autocomplete="off"
+                      autoComplete="off"
                       placeholder="Email"
                       value={user.primaryEmailAddress}
+                      readOnly
                     />
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
-            <div class="font-semibold">Avatar</div>
+          <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
+            <div className="font-semibold">Avatar</div>
             <div className="col-span-2">
               <div className="form-item vertical mb-0 max-w-[700px]">
                 <label className="form-label"></label>
@@ -125,33 +126,34 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 items-center">
-            <div class="font-semibold">Phone Number</div>
-            <div class="col-span-2">
-              <div class="form-item vertical mb-0 max-w-[700px]">
-                <label class="form-label"></label>
-                <div class="">
-                  <span class="input-wrapper undefined">
-                    <div class="input-suffix-start">
+          <div className="grid md:grid-cols-3 gap-4 py-8 items-center">
+            <div className="font-semibold">Phone Number</div>
+            <div className="col-span-2">
+              <div className="form-item vertical mb-0 max-w-[700px]">
+                <label className="form-label"></label>
+                <div className="">
+                  <span className="input-wrapper undefined">
+                    <div className="input-suffix-start">
                       <GoBriefcase className="text-lg ml-3" />
                     </div>
                     <input
-                      class="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
-                      autocomplete="off"
+                      className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
+                      autoComplete="off"
                       placeholder="Phone"
                       value={user.primaryPhoneNumber}
+                      readOnly
                     />
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="mt-8">
+          <div className="mt-8">
             <h5>Preferences</h5>
             <p>Your personalized preference displayed in your account</p>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
-            <div class="font-semibold">Language</div>
+          <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
+            <div className="font-semibold">Language</div>
             <div className="col-span-2">
               <div className="form-item vertical mb-0 max-w-[700px]">
                 <label className="form-label">Select Language:</label>
@@ -185,38 +187,38 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
-            <div class="font-semibold">Time Zone</div>
-            <div class="col-span-2">
-              <div class="form-item vertical mb-0 max-w-[700px]">
-                <label class="form-label"></label>
-                <div class="">
-                  <span class="input-wrapper undefined">
-                    <div class="input-suffix-start">
+          <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">
+            <div className="font-semibold">Time Zone</div>
+            <div className="col-span-2">
+              <div className="form-item vertical mb-0 max-w-[700px]">
+                <label className="form-label"></label>
+                <div className="">
+                  <span className="input-wrapper undefined">
+                    <div className="input-suffix-start">
                       <CiGlobe className="text-lg ml-3" />
                     </div>
                     <input
-                      class="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
+                      className="input input-md h-11 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.25rem]"
                       type="text"
                       name="timeZone"
-                      readonly=""
-                      autocomplete="off"
+                      autoComplete="off"
                       placeholder="Time Zone"
                       value="GMT+8"
+                      readOnly
                     />
                   </span>
                 </div>
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-3 gap-4 py-8 items-center">
-            <div class="font-semibold">Sync Data</div>
+          <div className="grid md:grid-cols-3 gap-4 py-8 items-center">
+            <div className="font-semibold">Sync Data</div>
             <div className="col-span-2">
               <div className="form-item vertical mb-0 max-w-[700px]">
                 <label className="form-label"></label>
                 <div className="relative flex flex-col overflow-hidden">
                   <div className="flex">
-                    <label class="inline-flex relative items-center mr-5 cursor-pointer">
+                    <label className="inline-flex relative items-center mr-5 cursor-pointer">
                       <input
                         type="checkbox"
                         className="sr-only peer"
@@ -235,15 +237,15 @@ const Profile = () => {
               </div>
             </div>
           </div>
-          <div class="mt-4 ">
+          <div className="mt-4 ">
             <button
-              class="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-11 px-8 py-2 mx-2"
+              className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-11 px-8 py-2 mx-2"
               type="button"
             >
               Reset
             </button>
             <button
-              class="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-11 px-8 py-2"
+              className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-11 px-8 py-2"
               type="submit"
             >
               Update

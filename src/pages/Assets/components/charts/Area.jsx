@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
+import Chart from "react-apexcharts";
+import abbreviate from "number-abbreviate";
 
 const Area = ({ data, min, type }) => {
   const mode = useSelector((state) => state.config.mode);
@@ -46,6 +47,13 @@ const Area = ({ data, min, type }) => {
       type: 'datetime',
       min: min,
       tickAmount: 6,
+    },
+    yaxis: {
+      labels: {
+        formatter: function (value) {
+          return abbreviate(value, 2);
+        },
+      }
     },
     tooltip: {
       x: {

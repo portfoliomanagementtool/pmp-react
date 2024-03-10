@@ -6,7 +6,7 @@ import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
 import { getMetrics } from "../../api";
 import { useDispatch } from "react-redux";
-import { saveEquityDistribution, saveMetrics } from "../../state/slices/portfolioSlice";
+import { saveEquityDistribution, saveMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
@@ -15,10 +15,15 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     const fetchMetrics = async () => {
+      const today = new Date();
+      const startDate = new Date(today.setMonth(today.getMonth() - 3));
+      const endDate = new Date();
+
       try {
-        const { data } = await getMetrics(user.primaryEmailAddress.emailAddress)
-        dispatch(saveMetrics(data.metrics))
-        dispatch(saveEquityDistribution(data.categories))
+        const { data } = await getMetrics(startDate, endDate, user.primaryEmailAddress.emailAddress);
+        dispatch(saveMetrics(data.metrics));
+        dispatch(saveEquityDistribution(data.categories));
+        dispatch(saveTimeInterval({ start: startDate.toString(), end: endDate.toString() }));
       } catch (error) {
         console.log(error.message)
       }

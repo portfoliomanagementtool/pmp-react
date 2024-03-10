@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SellBuyTable from "./components/SellBuyTable";
 import Modal from "./components/Modals/Modal";
 import Metrics from "../Dashboard/components/Metrics";
@@ -10,19 +10,27 @@ import Statistic from "./components/Charts/Statistic";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
 import Donut from "./components/Charts/Donut";
-import { EditAsset } from "../pages";
-import { Bar, Card } from "../Dashboard/components/components";
+import { Bar, Calendar, Card } from "../Dashboard/components/components";
 import { getPortfolio } from "../../api";
+import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
+import { HiOutlineFilter } from "react-icons/hi";
+import { MdClose } from "react-icons/md";
 
 const Portfolio = () => {
-  const navigate = useNavigate();
+  const calendarRef = useRef(null);
+  const { interval } = useSelector((state) => state.portfolio);
   const { user } = useUser();
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [modalOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [selectedDateRange, setSelectedDateRange] = useState({
+    startDate: dayjs(interval.start),
+    endDate: dayjs(interval.end),
+  });
   // const [rows, setRows] = useState([
   //   {
   //     category: "Technology",
@@ -244,15 +252,6 @@ const Portfolio = () => {
     setCategories(categories);
   }, [equityDistribution]);
 
-  const ProfitData = [
-    { title: "Market Value", Amount: "123456", percentage: "-90.56(-0.47%)" },
-    { title: "Day P/L", Amount: "2456", percentage: "+2456(+0.27%)" },
-    {
-      title: "Overall P/L",
-      Amount: "4556456",
-      percentage: "-12222.56(-3.47%)",
-    },
-  ];
   const [rowToEdit, setRowToEdit] = useState(null);
   const handleDeleteRow = (targetIndex) => {
     setRows(rows.filter((_, idx) => idx !== targetIndex));
@@ -275,6 +274,7 @@ const Portfolio = () => {
           })
         );
   };
+
   const [activeButton, setActiveButton] = useState("monthly");
 
   const handleButtonClick = (buttonType) => {
@@ -289,12 +289,71 @@ const Portfolio = () => {
     return formattedData;
   }
 
+  const handleCalendarClose = () => {
+    setShowCalendar(false);
+  };
+
+  const handleClickOutside = (event) => {
+    event.preventDefault();
+
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
+
   return (
-    <div className="flex font-poppins overflow-x-hidden">
-      <div className="w-full flex flex-col">
-        <div className="pb-4 lg:mb-0">
-          <h3>My Portfolio</h3>
-          <p>View your current portfolio & summary</p>
+    <main>
+      <div className="flex flex-col gap-4 h-full">
+        <div className="lg:flex items-center justify-between mb-4 gap-3">
+          <div className="mb-4 lg:mb-0">
+            <h3>My Portfolio</h3>
+            <p>View your current portfolio & summary</p>
+          </div>
+          <div className="flex flex-col lg:flex-row lg:items-center gap-3">
+            <div ref={calendarRef} className="relative">
+              <span className="input-wrapper">
+                <input
+                  onClick={() => setShowCalendar(!showCalendar)}
+                  type="text"
+                  placeholder="Select Date Range"
+                  className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
+                  readOnly={true}
+                  autoComplete="off"
+                  value={
+                    selectedDateRange.startDate && selectedDateRange.endDate
+                      ? `${selectedDateRange.startDate.format(
+                          "MMM DD, YYYY"
+                        )} ~ ${selectedDateRange.endDate.format(
+                          "MMM DD, YYYY"
+                        )}`
+                      : ""
+                  }
+                  style={{ paddingRight: "2rem" }}
+                />
+                <div className="input-suffix-end">
+                  <span className="close-btn text-base" role="button">
+                    <MdClose />
+                  </span>
+                </div>
+              </span>
+              {showCalendar && (
+                <Calendar
+                  onClose={handleCalendarClose}
+                  onSelectDateRange={(startDate, endDate) =>
+                    setSelectedDateRange({ startDate, endDate })
+                  }
+                />
+              )}
+            </div>
+            <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+              <span className="flex items-center justify-center">
+                <span className="text-lg">
+                  <HiOutlineFilter />
+                </span>
+                <span className="ml-2">Filter</span>
+              </span>
+            </button>
+          </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           {/* {metrics.map((metric) => (
@@ -384,7 +443,7 @@ const Portfolio = () => {
         </div>
         <SellBuyTable rows={rows} />
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -13,8 +13,8 @@ import { getTopGainersAndLosers } from "../../api";
 import { useSelector } from "react-redux";
 
 const Dashboard = () => {
-  const navigate = useNavigate();
   const calendarRef = useRef(null);
+  const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [showCalendar, setShowCalendar] = useState(false);
   const [activeButton, setActiveButton] = useState("monthly");
@@ -22,8 +22,8 @@ const Dashboard = () => {
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: dayjs(),
-    endDate: dayjs().add(3, "month"),
+    startDate: dayjs(interval.start),
+    endDate: dayjs(interval.end),
   });
 
   const handleCalendarClose = () => {
@@ -50,7 +50,7 @@ const Dashboard = () => {
     const fetchTopGainersAndLosers = async () => {
       try {
         const { data } = await getTopGainersAndLosers();
-        console.log(data);
+
         const topGainers = data.data.top_gainers;
         const topLosers = data.data.top_losers;
         const topGainersData = topGainers.map((gainer) => {
@@ -84,89 +84,6 @@ const Dashboard = () => {
 
     fetchTopGainersAndLosers();
   }, [])
-
-  // const metrics = [
-  //   {
-  //     title: "Current Value",
-  //     value: "₹ 1,20,000",
-  //     type: "green",
-  //     relativeValue: "₹ 20K",
-  //     percentage: "20",
-  //   },
-  //   // {
-  //   //   title: "Total Investment",
-  //   //   value: "₹ 1,00,000",
-  //   //   type: "green",
-  //   //   relativeValue: "+₹ 20,000",
-  //   //   percentage: "20%",
-  //   // },
-  //   {
-  //     title: "Invested Value",
-  //     value: "₹ 1,00,000",
-  //     type: "green",
-  //     relativeValue: "₹ 20K",
-  //     percentage: "20",
-  //   },
-  //   {
-  //     title: "Day P/L",
-  //     value: "₹ 20,000",
-  //     type: "red",
-  //     relativeValue: "₹ 20K",
-  //     percentage: "20",
-  //   },
-  // ];
-
-  // const history = [
-  //   {
-  //     transId: "#JY7686",
-  //     status: "green",
-  //     date: "21/12/2023",
-  //     asset: "TECL",
-  //     price: "10,000",
-  //   },
-  //   {
-  //     transId: "#JY7687",
-  //     status: "red",
-  //     date: "21/12/2023",
-  //     asset: "BIL",
-  //     price: "999",
-  //   },
-  //   {
-  //     transId: "#JY7688",
-  //     status: "green",
-  //     date: "21/12/2023",
-  //     asset: "IJH",
-  //     price: "300",
-  //   },
-  //   {
-  //     transId: "#JY7689",
-  //     status: "red",
-  //     date: "21/12/2023",
-  //     asset: "GOVZ",
-  //     price: "5,000",
-  //   },
-  //   {
-  //     transId: "#JY7690",
-  //     status: "red",
-  //     date: "21/12/2023",
-  //     asset: "BIL",
-  //     price: "120",
-  //   },
-  //   {
-  //     transId: "#JY7691",
-  //     status: "green",
-  //     date: "21/12/2023",
-  //     asset: "GOVZ",
-  //     price: "800",
-  //   },
-  //   {
-  //     transId: "#JY7692",
-  //     status: "red",
-  //     date: "21/12/2023",
-  //     asset: "TECL",
-  //     price: "1,200",
-  //   },
-  // ];
 
   const formatData = (data) => {
     const formattedData = [];

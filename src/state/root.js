@@ -9,8 +9,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     config: configReducer,
     portfolio: portfolioReducer,
-    asset: assetReducer,
-    watchlist: watchlistReducer,
+    // asset: assetReducer,
+    // watchlist: watchlistReducer,
 });
 
 export default rootReducer;

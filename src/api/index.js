@@ -1,14 +1,15 @@
 import axios from "axios";
 
 const API = axios.create({ 
-  baseURL: "http://localhost:8000", 
+  // baseURL: "http://localhost:8000", 
+  baseURL: "https://pmp-back.azurewebsites.net", 
 });
 
 // User
 
 
 // Metrics
-export const getMetrics = (email) => API.get("/portfolio/getmetrics", {
+export const getMetrics = (startDate, endDate, email) => API.get(`/portfolio/getmetrics?start=${startDate}&end=${endDate}`, {
   headers: {
     "UserId": email,
   }

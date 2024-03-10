@@ -54,7 +54,7 @@ const Watchlist = () => {
                   <input
                     className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
                     type="text"
-                    placeholder="Search product"
+                    placeholder="Search asset"
                   />
                 </span>
                 <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block ltr:md:ml-2 rtl:md:mr-2 md:mb-0 mb-4">
@@ -75,7 +75,7 @@ const Watchlist = () => {
                       <span className="text-lg mr-1">
                         <IoIosAddCircle />
                       </span>
-                      <span className="ltr:ml-1 rtl:mr-1">Add Product</span>
+                      <span className="ltr:ml-1 rtl:mr-1">Add Asset</span>
                     </span>
                   </button>
                 </a>

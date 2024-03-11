@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { useDispatch, useSelector } from 'react-redux';
-import { buyAsset, sellAsset } from '../../../../state/slices/portfolioSlice';
+import { buyAsset, sellAsset } from '../../../state/slices/portfolioSlice';
 import { useUser } from '@clerk/clerk-react';
 
 const BuySellModal = ({

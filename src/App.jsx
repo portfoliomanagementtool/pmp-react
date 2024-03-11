@@ -31,43 +31,6 @@ function ClerkProviderWithRoutes() {
       navigate={(to) => navigate(to)}
     >
       {allPages}
-      {/* <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route
-          path="/sign-in/*"
-          element={<LogIn routing="path" path="/sign-in" />}
-        />
-        <Route
-          path="/sign-up/*"
-          element={<Register routing="path" path="/sign-up" />}
-        />
-        <Route
-          path="/dashboard"
-          element={
-          <>
-            <SignedIn>
-              <Dashboard />
-            </SignedIn>
-             <SignedOut>
-              <LandingPage />
-           </SignedOut>
-          </>
-          }
-        />
-        <Route
-          path="/portfolio"
-          element={
-          <>
-            <SignedIn>
-              <Portfolio />
-            </SignedIn>
-             <SignedOut>
-              <LandingPage />
-           </SignedOut>
-          </>
-          }
-        />
-      </Routes> */}
     </ClerkProvider>
   );
 }

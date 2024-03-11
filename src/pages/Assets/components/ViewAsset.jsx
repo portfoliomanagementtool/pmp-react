@@ -17,7 +17,7 @@ const ViewAsset = () => {
   // const { ticker } = useParams();
   // const [tickerDetails, setTickerDetails] = useState({});
 
-  // useEffect(() => { 
+  // useEffect(() => {
   //   const getTickerDetails = async () => {
   //     try {
   //       const { data } = await getAssetDetails(ticker);
@@ -92,7 +92,9 @@ const ViewAsset = () => {
                 <div className="">
                   <button
                     className={`button ${
-                      showCandlestick ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200" : "bg-white"
+                      showCandlestick
+                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                        : "bg-white"
                     } border mx-2 border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 text-sm`}
                     onClick={() => setShowCandlestick(true)}
                   >
@@ -100,7 +102,9 @@ const ViewAsset = () => {
                   </button>
                   <button
                     className={`button ${
-                      !showCandlestick ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200" : "bg-white"
+                      !showCandlestick
+                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                        : "bg-white"
                     } border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm`}
                     onClick={() => setShowCandlestick(false)}
                   >

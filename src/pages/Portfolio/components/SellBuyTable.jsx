@@ -14,22 +14,18 @@ import { RiDownloadLine } from "react-icons/ri";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
 import { Link, useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
 import Modal from "./Modals/Modal";
 import DropdownMenu from "./Modals/DropdownMenu";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../api';
-import { saveEquityDistribution, saveMetrics } from "../../../state/slices/portfolioSlice"; 
-import { useUser } from "@clerk/clerk-react";
 import { setActive } from "../../../state/slices/configSlice";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useUser();
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -100,44 +96,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     dispatch(saveEditAsset({ ticker, quantity, price, category, action }));
     navigate("/app/asset/edit");
   };
-
-  const buyAsset = async (data) => {
-    console.log("buy", data)
-    const email = user.primaryEmailAddress.emailAddress;
-    try {
-      const result = await buyAssetAPI(data, email);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics(email);
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const sellAsset = async (data) => {
-    console.log("sell", data)
-    const email = user.primaryEmailAddress.emailAddress;
-    try {
-      const result = await sellAssetAPI(data, email);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics(email);
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
 
   return (
     <div
@@ -337,8 +295,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                       market_value: selectedRowData.portfolio_asset.pricing,
                       quantity: selectedRowData.quantity,
                     }}
-                    buyAsset={buyAsset}
-                    sellAsset={sellAsset}
                   />
                 )}
               </div>

@@ -4,11 +4,13 @@ import configReducer from "./slices/configSlice";
 import assetReducer from "./slices/assetSlice";
 import watchlistReducer from "./slices/watchlistSlice";
 import portfolioReducer from "./slices/portfolioSlice";
+import notificationReducer from "./slices/notificationSlice";
 
 const rootReducer = combineReducers({
     auth: authReducer,
     config: configReducer,
     portfolio: portfolioReducer,
+    notifications: notificationReducer,
     // asset: assetReducer,
     // watchlist: watchlistReducer,
 });

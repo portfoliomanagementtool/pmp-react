@@ -22,12 +22,12 @@ const Card = ({ title, type, value, change }) => {
           { type === "green" ? (
             <div className="tag gap-1 font-bold border-0 text-emerald-600 dark:text-emerald-400 bg-emerald-100 dark:bg-emerald-500/20 dark:text-emerald-100">
               <span><FaArrowUp /></span>
-              <span>₹{abbreviate(change.value, 1)} ({change.percentage}%)</span>
+              <span>₹{abbreviate(change.value, 1)} ({abbreviate(Number(change.percentage).toFixed(2), 2)}%)</span>
             </div>
           ) : (
             <div className="tag gap-1 font-bold border-0 text-red-600 dark:text-red-500 bg-red-100 dark:bg-red-500/20 dark:text-red-100">
               <span><FaArrowDown /></span>
-              <span>₹{abbreviate(change.value, 1)} ({change.percentage}%)</span>
+              <span>₹{abbreviate(change.value, 1)} ({abbreviate(Number(change.percentage).toFixed(2), 2)}%)</span>
             </div>
           )}
         </div>

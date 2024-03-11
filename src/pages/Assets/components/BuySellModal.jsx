@@ -3,16 +3,19 @@ import { AiOutlineClose } from 'react-icons/ai';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { buyAsset, sellAsset } from '../../../../state/slices/portfolioSlice';
+import { useUser } from '@clerk/clerk-react';
 
 const BuySellModal = ({
   onSubmit,
   closeModal,
   defaultValue,
   initialChecked,
-  buyAsset,
-  sellAsset
 }) => {
+  const { user } = useUser();
+  const dispatch = useDispatch();
+  const interval = useSelector((state) => state.portfolio.interval);
   const { mode } = useSelector((state) => state.config);
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
@@ -57,6 +60,7 @@ const BuySellModal = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const email = user.primaryEmailAddress.emailAddress;
 
     if (validateForm()) {
       closeModal();
@@ -69,9 +73,9 @@ const BuySellModal = ({
     }
 
     if (checked) {
-      sellAsset(formData);
+      dispatch(sellAsset(formData, email, interval));
     } else {
-      buyAsset(formData);
+      dispatch(buyAsset(formData, email, interval));
     }
   };
 

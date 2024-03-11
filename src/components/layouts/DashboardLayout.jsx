@@ -4,9 +4,10 @@ import SideNav from "./SideNav";
 import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
-import { getMetrics } from "../../api";
+import { getMetrics, getNotifications } from "../../api";
 import { useDispatch } from "react-redux";
 import { saveEquityDistribution, saveMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
+import { saveNotifications } from "../../state/slices/notificationSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
@@ -31,6 +32,39 @@ const DashboardLayout = () => {
 
     fetchMetrics();
   }, [user, dispatch])
+
+  useEffect(() => {
+    const formatNotifications = (notifications) => {
+      const formattedNotifications = {};
+
+      notifications.forEach((notification) => {
+        formattedNotifications[notification.id] = {
+          id: notification.id,
+          title: notification.title,
+          message: notification.message,
+          read: notification.is_read,
+          date: notification.updated_at,
+        }
+      });
+
+      return formattedNotifications;
+    }
+
+    const fetchNotifcations = async () => {
+      try {
+        const { data } = await getNotifications(user.primaryEmailAddress.emailAddress);
+        const notifications = formatNotifications(data.data)
+        dispatch(saveNotifications({
+          notifications,
+          unread: data.count
+        }));
+      } catch (error) {
+        console.log(error.message)
+      }
+    }
+
+    fetchNotifcations();
+  }, [user, dispatch]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);

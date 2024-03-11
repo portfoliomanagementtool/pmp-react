@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({ 
-  // baseURL: "http://localhost:8000", 
-  baseURL: "https://pmp-back.azurewebsites.net", 
+  baseURL: "http://localhost:8000", 
+  // baseURL: "https://pmp-back.azurewebsites.net", 
 });
 
 // User
@@ -36,6 +36,11 @@ export const getPortfolioAssetDetails = (ticker, email) => API.get(`/portfolio/p
     "UserId": email,
   }
 }); //done
+export const getDailyInvestment = (email) => API.get("/portfolio/get_daily_investments", {
+  headers: {
+    "UserId": email,
+  }
+}); //done
 
 // Asset
 export const getAssetDetails = (ticker) => API.get(`/assets?ticker=${ticker}`, ticker); // done
@@ -46,7 +51,7 @@ export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_l
 export const getAssetPrice = (ticker) => API.get(`asset_pricing/latest?ticker=${ticker}`); // done
 
 // Watchlist
-export const getAllWatchlist = (data, email) => API.get("/portfolio/watchlist", data, {
+export const getAllWatchlist = (email) => API.get("/portfolio/watchlist", {
   headers: {
     "UserId": email,
   }
@@ -64,6 +69,28 @@ export const removeFromWatchlist = (data, email) => API.delete(`/portfolio/watch
 
 // All transactions
 export const getAllTransactions = (email) => API.get(`portfolio/transactions`, {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+
+// Notifications
+export const getNotifications = (email) => API.get("/notifications/get_notifications?count=6", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const getActivityLogs = (email) => API.get("/notifications/get_notifications", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const markNotificationAsRead = (notificationId, email) => API.get(`/notifications/mark_as_read?id=${notificationId}`, {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const markAllNotificationsAsRead = (email) => API.get("/notifications/mark_as_read_all", {
   headers: {
     "UserId": email,
   }

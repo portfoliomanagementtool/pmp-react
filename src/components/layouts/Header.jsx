@@ -14,6 +14,9 @@ import { FiSettings, FiActivity } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Scrollbars from "react-custom-scrollbars-2";
 import { Tooltip } from "react-tooltip";
+import { TbCoinRupee } from "react-icons/tb";
+import { markAllNotificationsAsRead, markNotificationAsRead } from "../../api";
+import { markAsRead, markAllAsRead } from "../../state/slices/notificationSlice";
 
 const Header = ({ openModal }) => {
   const dispatch = useDispatch();
@@ -25,79 +28,34 @@ const Header = ({ openModal }) => {
   const [notifyDropdown, showNotifyDropdown] = useState(false);
   const userRef = useRef(null);
   const notifyRef = useRef(null);
-  const [isAllRead, setIsAllRead] = useState(false);
-  const [notifications, setNotifications] = useState([
-    {
-      id: "1",
-      imageUrl: user.imageUrl,
-      fullName: user.fullName,
-      message: "invited you to new project.",
-      time: "4 minutes",
-      read: false,
-    },
-    {
-      id: "2",
-      imageUrl: user.imageUrl,
-      fullName: user.fullName,
-      message: "invited you to new project.",
-      time: "4 minutes",
-      read: true,
-    },
-    {
-      id: "3",
-      imageUrl: user.imageUrl,
-      fullName: user.fullName,
-      message: "invited you to new project.",
-      time: "4 minutes",
-      read: false,
-    },
-    {
-      id: "4",
-      imageUrl: user.imageUrl,
-      fullName: user.fullName,
-      message: "invited you to new project.",
-      time: "4 minutes",
-      read: false,
-    },
-    {
-      id: "5",
-      imageUrl: user.imageUrl,
-      fullName: user.fullName,
-      message: "invited you to new project.",
-      time: "4 minutes",
-      read: false,
-    },
-  ]);
+  let { notifications, numberOfUnreads } = useSelector((state) => state.notifications)
+  notifications = Object.values(notifications);
 
-  useEffect(() => {
-    setIsAllRead(
-      notifications.every((notification) => notification.read === true)
-    );
-  }, [notifications]);
-
-  const updateNotifcation = (id, read) => {
-    if (read) {
+  const updateNotifcation = async (id) => {
+    if (numberOfUnreads) {
       return;
     }
 
-    setNotifications(
-      notifications.map((notification) => {
-        if (notification.id === id) {
-          notification.read = true;
-        }
-        return notification;
-      })
-    );
+    try {
+      const { data } = await markNotificationAsRead(id, user.primaryEmailAddress.emailAddress);
+      if(data.message) {
+        dispatch(markAsRead(id));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
-  const markAllAsRead = () => {
-    if (!isAllRead) {
-      setNotifications(
-        notifications.map((notification) => {
-          notification.read = true;
-          return notification;
-        })
-      );
+  const markAllRead = async () => {
+    if (!numberOfUnreads) {
+      try {
+        const { data } = await markAllNotificationsAsRead(user.primaryEmailAddress.emailAddress);
+        if(data.message) {
+          dispatch(markAllAsRead());
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 
@@ -134,6 +92,26 @@ const Header = ({ openModal }) => {
     }
   };
 
+  const formatDate = (date) => {
+    const currentDate = new Date();
+    const previousDate = new Date(date);
+    const timeDifference = currentDate.getTime() - previousDate.getTime();
+    const daysDifference = timeDifference / (1000 * 3600 * 24);
+    const hoursDifference = timeDifference / (1000 * 3600);
+    const minutesDifference = timeDifference / (1000 * 60);
+    const secondsDifference = timeDifference / 1000;
+
+    if (daysDifference > 1) {
+      return Math.floor(daysDifference) + " days";
+    } else if (hoursDifference > 1) {
+      return Math.floor(hoursDifference) + " hours";
+    } else if (minutesDifference > 1) {
+      return Math.floor(minutesDifference) + " minutes";
+    } else {
+      return Math.floor(secondsDifference) + " seconds";
+    }
+  }
+
   return (
     <header className="header border-b border-gray-200 dark:border-gray-700">
       <div className="header-wrapper h-16">
@@ -159,7 +137,7 @@ const Header = ({ openModal }) => {
                 className="header-action-item header-action-item-hoverable text-2xl"
               >
                 <span className="badge-wrapper">
-                  {!isAllRead && (
+                  {numberOfUnreads !== 0 && (
                     <span
                       className="badge-dot badge-inner"
                       style={{ top: "0px", right: "3px" }}
@@ -182,7 +160,7 @@ const Header = ({ openModal }) => {
                   <div className="border-b border-gray-200 dark:border-gray-600 px-4 py-2 flex items-center justify-between">
                     <h6>Notifcations</h6>
                     <button
-                      onClick={markAllAsRead}
+                      onClick={markAllRead}
                       id="mark-all-as-read"
                       className="button bg-transparent border border-transparent hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-circle h-9 w-9 inline-flex items-center justify-center text-lg"
                     >
@@ -200,49 +178,59 @@ const Header = ({ openModal }) => {
                 </li>
                 <div className="overflow-y-auto h-72">
                   <Scrollbars>
-                    {notifications.map((notification, index) => {
-                      return (
-                        <div
-                          key={index}
-                          onClick={() =>
-                            updateNotifcation(
-                              notification.id,
-                              notification.read
-                            )
-                          }
-                          className="relative flex px-4 py-4 cursor-pointer hover:bg-gray-50 active:bg-gray-100 dark:hover:bg-black dark:hover:bg-opacity-20  border-b border-gray-200 dark:border-gray-600"
-                        >
-                          <div>
-                            <span className="avatar avatar-circle avatar-md">
-                              <img
-                                className="avatar-img avatar-circle"
-                                src={notification.imageUrl}
-                                alt={notification.fullName}
-                                loading="lazy"
-                              />
-                            </span>
-                          </div>
-                          <div className="ml-3 rtl:mr-3">
-                            <div>
-                              <span className="font-semibold heading-text">
-                                {notification.fullName}
-                              </span>
-                              <span> {notification.message}</span>
+                    {notifications.length !== 0 ? (
+                      <>
+                        {notifications.map((notification, index) => {
+                          return (
+                            <div
+                              key={index}
+                              onClick={() => updateNotifcation(notification.id)}
+                              className="relative flex px-4 py-4 cursor-pointer hover:bg-gray-50 active:bg-gray-100 dark:hover:bg-black dark:hover:bg-opacity-20  border-b border-gray-200 dark:border-gray-600"
+                            >
+                              <div>
+                                <span className="avatar avatar-circle avatar-md">
+                                  {/* <img
+                                    className="avatar-img avatar-circle"
+                                    src={notification.imageUrl}
+                                    alt={notification.fullName}
+                                    loading="lazy"
+                                  /> */}
+                                  <div className={`avatar-img ${notification.title !== "SELL" ? (notification.title === "BUY" ? "text-green-500" : "text-indigo-500") : "text-red-500" } `}>
+                                    <TbCoinRupee size={40} />
+                                  </div>
+                                </span>
+                              </div>
+                              <div className="ml-3 mr-3 rtl:mr-3">
+                                <div>
+                                  <span className="font-semibold heading-text">
+                                    {notification.title}.
+                                  </span>
+                                  <span> {notification.message}</span>
+                                </div>
+                                <span className="text-xs">
+                                  {formatDate(notification.date)} ago
+                                </span>
+                              </div>
+                              <span
+                                className={`badge-dot ${
+                                  notification.read === false
+                                    ? "!bg-indigo-600"
+                                    : "!bg-gray-300"
+                                } absolute top-4 right-4 rtl:left-4 mt-1.5`}
+                              ></span>
                             </div>
-                            <span className="text-xs">
-                              {notification.time} ago
-                            </span>
-                          </div>
-                          <span
-                            className={`badge-dot ${
-                              notification.read === false
-                                ? "!bg-indigo-600"
-                                : "!bg-gray-300"
-                            } absolute top-4 right-4 rtl:left-4 mt-1.5`}
-                          ></span>
+                          );
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <div className="flex justify-center items-center h-full">
+                          <span className="text-gray-400 dark:text-gray-500">
+                            No new notifications
+                          </span>
                         </div>
-                      );
-                    })}
+                      </>
+                    )}
                   </Scrollbars>
                 </div>
                 <li className="menu-item-header">

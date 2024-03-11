@@ -13,6 +13,8 @@ import { useUser } from "@clerk/clerk-react";
 const Watchlist = () => {
   const { user } = useUser();
   const [watchlists, setWatchlist] = useState([]);
+  // const { notifications } = useSelector((state) => state.notifications);
+  // console.log(notifications)
   // const { watchlist } = useSelector((state) => state.watchlist);
 
   const handleRowClick = () => {};

@@ -11,13 +11,14 @@ import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '
 import { saveEquityDistribution, saveMetrics } from '../../../state/slices/portfolioSlice';
 import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActive } from "../../../state/slices/configSlice";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useUser();
+  const { interval } = useSelector((state) => state.portfolio)
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -85,7 +86,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
       console.log(result)
 
       try {
-        const { data } = await getMetrics(email);
+        const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
         dispatch(saveEquityDistribution(data.categories))
       } catch (error) {
@@ -105,7 +106,7 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
       console.log(result)
 
       try {
-        const { data } = await getMetrics(email);
+        const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
         dispatch(saveEquityDistribution(data.categories))
       } catch (error) {

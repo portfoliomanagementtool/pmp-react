@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Slider from "@mui/material/Slider";
 import { Box, Button } from "@mui/material";
 import Card from "./card/Card";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CustomSlider from "./CustomSlider";
 import BuySellModal from "./BuySellModal";
 import { MdCandlestickChart } from "react-icons/md";
@@ -20,6 +20,7 @@ const ViewAsset = () => {
   const { ticker } = useParams();
   const dispatch = useDispatch();
   const { user } = useUser();
+  const { interval } = useSelector((state) => state.portfolio);
   const [assetDetails, setAssetDetails] = useState(null);
   const [portfolioAsset, setPortfolioAsset] = useState(null);
   const [assetPrice, setAssetPrice] = useState(null);
@@ -101,7 +102,7 @@ const ViewAsset = () => {
       console.log(result)
 
       try {
-        const { data } = await getMetrics(email);
+        const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
         dispatch(saveEquityDistribution(data.categories))
       } catch (error) {
@@ -120,7 +121,7 @@ const ViewAsset = () => {
       console.log(result)
 
       try {
-        const { data } = await getMetrics(email);
+        const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
         dispatch(saveEquityDistribution(data.categories))
       } catch (error) {

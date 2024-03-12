@@ -6,7 +6,6 @@ import {
   BsStarFill,
   BsStar,
 } from "react-icons/bs";
-import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { CiStar } from "react-icons/ci";
 import { IoIosAddCircle } from "react-icons/io";
@@ -22,7 +21,10 @@ import Modal from "./Modals/Modal";
 import DropdownMenu from "./Modals/DropdownMenu";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { setActive } from "../../../state/slices/configSlice";
-import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
+import {
+  addAssetToWatchlist,
+  removeAssetFromWatchlist,
+} from "../../../state/slices/watchlistSlice";
 import { useUser } from "@clerk/clerk-react";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
@@ -56,14 +58,14 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     const email = user.primaryEmailAddress.emailAddress;
 
     try {
-      if(watchlists[ticker]) {
-        console.log("remove", {ticker: ticker}, id, email)
-        dispatch(removeAssetFromWatchlist({ticker: ticker}, id, email));
+      if (watchlists[ticker]) {
+        console.log("remove", { ticker: ticker }, id, email);
+        dispatch(removeAssetFromWatchlist({ ticker: ticker }, id, email));
         return;
       }
-  
-      console.log("add", {ticker: ticker}, id, email)
-      dispatch(addAssetToWatchlist({ticker: ticker}, id, email));
+
+      console.log("add", { ticker: ticker }, id, email);
+      dispatch(addAssetToWatchlist({ ticker: ticker }, id, email));
     } catch (error) {
       console.log(error.message);
     }
@@ -167,9 +169,6 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center text-center items-center dark:text-white">
                         Name
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1"></th>
@@ -186,33 +185,21 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Inv Amount
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Mkt Value
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Overall G/L
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Day's G/L
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
                       </div>
                     </th>
                   </tr>
@@ -220,7 +207,8 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                 <tbody className="">
                   {rows.map((row, idx) => {
                     return (
-                      <tr key={idx}
+                      <tr
+                        key={idx}
                         className={`cursor-pointer ${
                           expandedRow === idx
                             ? "bg-gray-200 text-black rounded-md"
@@ -233,7 +221,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <div className="flex items-center justify-between ">
                             <div
                               className="flex items-center px-1"
-                              onClick={() => handleStarClick(row.portfolio_asset.ticker)}
+                              onClick={() =>
+                                handleStarClick(row.portfolio_asset.ticker)
+                              }
                             >
                               {watchlists[row.portfolio_asset.ticker] ? (
                                 <BsStarFill size={20} color="yellow" />
@@ -241,7 +231,10 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                                 <BsStar size={20} color="gray" />
                               )}
                               <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                                <Link to={`/app/asset/view/${row.portfolio_asset.ticker}`} onClick={() => dispatch(setActive("assets"))}>
+                                <Link
+                                  to={`/app/asset/view/${row.portfolio_asset.ticker}`}
+                                  onClick={() => dispatch(setActive("assets"))}
+                                >
                                   {row.portfolio_asset.name}
                                 </Link>
                               </span>
@@ -289,11 +282,21 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           </div>
                         </td>
                         <td className="py-2">{row.quantity}</td>
-                        <td className="py-2">{Number(row.avgBasis).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.costBasis).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.marketValue).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.profitLoss).toFixed(2)}</td>
-                        <td className="py-2">{Number(row.portfolio_asset.daypl).toFixed(2)}</td>
+                        <td className="py-2">
+                          {Number(row.avgBasis).toFixed(2)}
+                        </td>
+                        <td className="py-2">
+                          {Number(row.costBasis).toFixed(2)}
+                        </td>
+                        <td className="py-2">
+                          {Number(row.marketValue).toFixed(2)}
+                        </td>
+                        <td className="py-2">
+                          {Number(row.profitLoss).toFixed(2)}
+                        </td>
+                        <td className="py-2">
+                          {Number(row.portfolio_asset.daypl).toFixed(2)}
+                        </td>
                       </tr>
                     );
                   })}

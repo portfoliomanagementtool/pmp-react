@@ -3,7 +3,7 @@ import { BsFillPencilFill, BsFillTrashFill, BsStar, BsStarFill } from "react-ico
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { IoIosAddCircle } from "react-icons/io";
-import { PiCaretUpDownFill } from "react-icons/pi";
+ 
 import { RiDownloadLine } from "react-icons/ri";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -94,9 +94,7 @@ const Watchlist = () => {
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Ticker
-                          <div className=" font-bold text-base items-center">
-                            <PiCaretUpDownFill />
-                          </div>
+                          
                         </div>
                       </th>
                       <th className="" colSpan="1">
@@ -107,25 +105,19 @@ const Watchlist = () => {
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Market Value
-                          <div className=" font-bold text-base items-center">
-                            <PiCaretUpDownFill />
-                          </div>
+                          
                         </div>
                       </th>
                       {/* <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Actions
-                          <div className=" font-bold text-base items-center">
-                            <PiCaretUpDownFill />
-                          </div>
+                          
                         </div>
                       </th> */}
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Day P/L
-                          <div className=" font-bold text-base items-center">
-                            <PiCaretUpDownFill />
-                          </div>
+                          
                         </div>
                       </th>
                       <th className="" colSpan="1">

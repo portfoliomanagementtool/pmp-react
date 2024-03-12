@@ -237,9 +237,9 @@ const Portfolio = () => {
               </div>
               <div className="chartRef">
                 <div style={{ minHeight: "395px" }}>
-                  {dailyInvestments.categories.length !== 0 && (
+                  {/* {dailyInvestments.categories.length !== 0 && ( */}
                     <Bar investments={dailyInvestments} />
-                  )}
+                  {/* )} */}
                 </div>
               </div>
             </div>

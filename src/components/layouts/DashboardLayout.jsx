@@ -7,7 +7,7 @@ import ThemeConfigModal from "../Modals/ThemeConfigModal";
 import { getAllWatchlists, getMetrics, getNotifications, getWatchlist } from "../../api";
 import { useDispatch } from "react-redux";
 import { saveEquityDistribution, saveMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
-import { saveNotifications } from "../../state/slices/notificationSlice";
+import { fetchNotifcations, saveNotifications } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists, saveWatchlist, saveWatchlistId } from "../../state/slices/watchlistSlice";
 
 const DashboardLayout = () => {
@@ -35,36 +35,7 @@ const DashboardLayout = () => {
   }, [user, dispatch])
 
   useEffect(() => {
-    const formatNotifications = (notifications) => {
-      const formattedNotifications = {};
-
-      notifications.forEach((notification) => {
-        formattedNotifications[notification.id] = {
-          id: notification.id,
-          title: notification.title,
-          message: notification.message,
-          read: notification.is_read,
-          date: notification.created_at,
-        }
-      });
-
-      return formattedNotifications;
-    }
-
-    const fetchNotifcations = async () => {
-      try {
-        const { data } = await getNotifications(user.primaryEmailAddress.emailAddress);
-        const notifications = formatNotifications(data.data)
-        dispatch(saveNotifications({
-          notifications,
-          unread: data.count
-        }));
-      } catch (error) {
-        console.log(error.message)
-      }
-    }
-
-    fetchNotifcations();
+    dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress))
   }, [user, dispatch]);
 
   useEffect(() => {

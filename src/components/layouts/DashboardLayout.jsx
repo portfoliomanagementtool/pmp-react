@@ -43,7 +43,7 @@ const DashboardLayout = () => {
           title: notification.title,
           message: notification.message,
           read: notification.is_read,
-          date: notification.updated_at,
+          date: notification.created_at,
         }
       });
 

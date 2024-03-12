@@ -74,10 +74,10 @@ const SideNav = () => {
           dropDown: false,
         },
         {
-          id: "activityLogs",
+          id: "activity-logs",
           name: "Activity Logs",
           icon: <RxActivityLog />,
-          path: "/app/activityLogs",
+          path: "/app/activity-logs",
           dropDown: false,
         },
       ],

@@ -20,6 +20,10 @@
   background-color: rgb(31 41 55 / var(--tw-bg-opacity));
 }
 
+.card-gutterless {
+  padding: 0;
+}
+
 .card-body {
   padding: 1.25rem;
 }

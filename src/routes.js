@@ -65,7 +65,7 @@ const routes = [
         element:<Watchlist/>
       },
       {
-        path:'activityLogs',
+        path:'activity-logs',
         element:<ActivityLogs/>
       },
       {

@@ -11,8 +11,8 @@ const rootReducer = combineReducers({
     config: configReducer,
     portfolio: portfolioReducer,
     notifications: notificationReducer,
+    watchlist: watchlistReducer,
     // asset: assetReducer,
-    // watchlist: watchlistReducer,
 });
 
 export default rootReducer;

@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({ 
-  baseURL: "http://localhost:8000", 
-  // baseURL: "https://pmp-back.azurewebsites.net", 
+  // baseURL: "http://localhost:8000", 
+  baseURL: "https://pmp-back.azurewebsites.net", 
 });
 
 // User
@@ -56,12 +56,12 @@ export const getAllWatchlist = (email) => API.get("/portfolio/watchlist", {
     "UserId": email,
   }
 }); // done
-export const addToWatchlist = (data, email) => API.post(`/portfolio/watchlist/add`, data, {
+export const addToWatchlist = (data, watchlistId, email) => API.post(`/portfolio/watchlist/${watchlistId}/add`, data, {
   headers: {
     "UserId": email,
   }
 });
-export const removeFromWatchlist = (data, email) => API.delete(`/portfolio/watchlist/remove`, data, {
+export const removeFromWatchlist = (data, watchlistId, email) => API.delete(`/portfolio/watchlist/${watchlistId}/remove`, data, {
   headers: {
     "UserId": email,
   }

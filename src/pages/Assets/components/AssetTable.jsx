@@ -1,26 +1,32 @@
 import React, { useState } from "react";
-import {
-  BsStarFill,
-  BsStar,
-} from "react-icons/bs";
-import { PiCaretUpDownFill } from "react-icons/pi";
+import { BsStarFill, BsStar } from "react-icons/bs";
 import ViewAsset from "./ViewAsset";
 import { Link, useNavigate } from "react-router-dom";
 import BuySellModal from "./BuySellModal";
-import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../api';
-import { saveEquityDistribution, saveMetrics } from '../../../state/slices/portfolioSlice';
+import {
+  buyAsset as buyAssetAPI,
+  getMetrics,
+  sellAsset as sellAssetAPI,
+} from "../../../api";
+import {
+  saveEquityDistribution,
+  saveMetrics,
+} from "../../../state/slices/portfolioSlice";
 import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActive } from "../../../state/slices/configSlice";
-import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
+import {
+  addAssetToWatchlist,
+  removeAssetFromWatchlist,
+} from "../../../state/slices/watchlistSlice";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useUser();
   const { watchlists, id } = useSelector((state) => state.watchlists);
-  const { interval } = useSelector((state) => state.portfolio)
+  const { interval } = useSelector((state) => state.portfolio);
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -61,14 +67,14 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
     const email = user.primaryEmailAddress.emailAddress;
 
     try {
-      if(watchlists[ticker]) {
-        console.log("remove", {ticker: ticker}, id, email)
-        dispatch(removeAssetFromWatchlist({ticker: ticker}, id, email));
+      if (watchlists[ticker]) {
+        console.log("remove", { ticker: ticker }, id, email);
+        dispatch(removeAssetFromWatchlist({ ticker: ticker }, id, email));
         return;
       }
-  
-      console.log("add", {ticker: ticker}, id, email)
-      dispatch(addAssetToWatchlist({ticker: ticker}, id, email));
+
+      console.log("add", { ticker: ticker }, id, email);
+      dispatch(addAssetToWatchlist({ ticker: ticker }, id, email));
     } catch (error) {
       console.log(error.message);
     }
@@ -89,44 +95,44 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
   };
 
   const buyAsset = async (data) => {
-    console.log("buy", data)
+    console.log("buy", data);
     const email = user.primaryEmailAddress.emailAddress;
 
     try {
       const result = await buyAssetAPI(data, email);
-      console.log(result)
+      console.log(result);
 
       try {
         const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
+        dispatch(saveEquityDistribution(data.categories));
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   const sellAsset = async (data) => {
-    console.log("sell", data)
+    console.log("sell", data);
     const email = user.primaryEmailAddress.emailAddress;
-    
+
     try {
       const result = await sellAssetAPI(data, email);
-      console.log(result)
+      console.log(result);
 
       try {
         const { data } = await getMetrics(interval.start, interval.end, email);
         dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
+        dispatch(saveEquityDistribution(data.categories));
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
     } catch (error) {
-      console.log(error.message)
+      console.log(error.message);
     }
-  }
+  };
 
   return (
     <>
@@ -137,18 +143,12 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
               <th className="" colSpan="1">
                 <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                   Name
-                  <div className=" font-bold text-base items-center ">
-                    <PiCaretUpDownFill />
-                  </div>
                 </div>
               </th>
               <th className="" colSpan="1"></th>
               <th className="" colSpan="1">
                 <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                   Mkt Value
-                  <div className=" font-bold text-base items-center ">
-                    <PiCaretUpDownFill />
-                  </div>
                 </div>
               </th>
 
@@ -214,7 +214,10 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                           <BsStar size={20} color="gray" />
                         )}
                         <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                          <Link to={`/app/asset/view/${row.ticker}`} onClick={() => dispatch(setActive("assets"))}>
+                          <Link
+                            to={`/app/asset/view/${row.ticker}`}
+                            onClick={() => dispatch(setActive("assets"))}
+                          >
                             {row.name}
                           </Link>
                         </span>
@@ -262,26 +265,36 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                       </button>
                     </div>
                   </td>
-                  <td className="py-2">{Number(row.market_value).toFixed(2)}</td>
+                  <td className="py-2">
+                    {Number(row.market_value).toFixed(2)}
+                  </td>
                   <td className="py-2">
                     {row.day_change >= 0 ? (
                       <span className="text-green-600">
-                      {Number(row.day_change).toFixed(2)}{" "}
-                      ({Number(row.day_change_percentage).toFixed(2)}%)
+                        {Number(row.day_change).toFixed(2)} (
+                        {Number(row.day_change_percentage).toFixed(2)}%)
                       </span>
                     ) : (
                       <span className="text-red-500">
-                        {Number(row.day_change).toFixed(2)}{" "}
-                        ({Number(row.day_change_percentage).toFixed(2)}%)
+                        {Number(row.day_change).toFixed(2)} (
+                        {Number(row.day_change_percentage).toFixed(2)}%)
                       </span>
                     )}
                   </td>
                   <td className="py-2">{Number(row.open).toFixed(2)}</td>
-                  <td className="py-2">{Number(row.highLow.today.high).toFixed(2)}</td>
-                  <td className="py-2">{Number(row.highLow.today.low).toFixed(2)}</td>
+                  <td className="py-2">
+                    {Number(row.highLow.today.high).toFixed(2)}
+                  </td>
+                  <td className="py-2">
+                    {Number(row.highLow.today.low).toFixed(2)}
+                  </td>
                   <td className="py-2">{Number(row.close).toFixed(2)}</td>
-                  <td className="py-2">{Number(row.highLow['52week'].high).toFixed(2)}</td>
-                  <td className="py-2">{Number(row.highLow['52week'].low).toFixed(2)}</td>
+                  <td className="py-2">
+                    {Number(row.highLow["52week"].high).toFixed(2)}
+                  </td>
+                  <td className="py-2">
+                    {Number(row.highLow["52week"].low).toFixed(2)}
+                  </td>
                 </tr>
               );
             })}

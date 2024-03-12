@@ -9,7 +9,11 @@ import { MdCandlestickChart } from "react-icons/md";
 import { FaChartArea } from "react-icons/fa6";
 import { TbChartAreaLineFilled } from "react-icons/tb";
 import { useParams } from "react-router-dom";
-import { getAssetDetails, getAssetPrice, getPortfolioAssetDetails } from "../../../api";
+import {
+  getAssetDetails,
+  getAssetPrice,
+  getPortfolioAssetDetails,
+} from "../../../api";
 import abbreviate from "number-abbreviate";
 import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
@@ -25,59 +29,65 @@ const ViewAsset = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState("BUY");
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchAssetDetails = async () => {
       try {
         const { data } = await getAssetDetails(ticker);
         setAssetDetails(data[0]);
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
-    }
+    };
 
     fetchAssetDetails();
   }, [ticker]);
 
-  console.log(assetDetails)
+  console.log(assetDetails);
 
-  useEffect(() => { 
+  useEffect(() => {
     const fetchPortfolioAssetDetails = async () => {
       try {
-        const { data } = await getPortfolioAssetDetails(ticker, user.primaryEmailAddress.emailAddress);
+        const { data } = await getPortfolioAssetDetails(
+          ticker,
+          user.primaryEmailAddress.emailAddress
+        );
         setPortfolioAsset(data.assets[0]);
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
-    }
+    };
 
     fetchPortfolioAssetDetails();
   }, [ticker, user]);
 
-  useEffect(() => { 
+  useEffect(() => {
     const formatData = (data) => {
       return data.map((item) => {
         return {
           x: new Date(item.timestamp1).getTime(),
           y: [item.open, item.high, item.low, item.close],
-        }
+        };
       });
-    }
+    };
 
     const formatAreaData = (data) => {
-      return data.map(item => {
-        return [new Date(item.timestamp1).getTime(), item.market_value]
-      })
+      return data.map((item) => {
+        return [new Date(item.timestamp1).getTime(), item.market_value];
+      });
     };
 
     const fetchAssetPrice = async () => {
       try {
-        const { data } = await getAssetPrice(ticker, user.primaryEmailAddress.emailAddress);
+        const { data } = await getAssetPrice(
+          ticker,
+          user.primaryEmailAddress.emailAddress
+        );
         setAssetPrice(formatData(data));
         setAreaData(formatAreaData(data));
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
-    }
+    };
 
     fetchAssetPrice();
   }, [ticker, user]);
@@ -104,7 +114,11 @@ const ViewAsset = () => {
             role="presentation"
           >
             {assetDetails && assetPrice && areaData && (
-              <Statistics assetDetails={assetDetails} candleData={assetPrice} areaData={areaData} />
+              <Statistics
+                assetDetails={assetDetails}
+                candleData={assetPrice}
+                areaData={areaData}
+              />
             )}
           </div>
         </div>
@@ -113,11 +127,33 @@ const ViewAsset = () => {
         <>
           <h3 className="mt-4">My Portfolio</h3>
           <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-            <Card title="Average Price" value={`₹${abbreviate(portfolioAsset.avgBasis, 2)}`} />
-            <Card title="Current Value" value={`₹${abbreviate(portfolioAsset.marketValue, 2)}`} />
+            <Card
+              title="Average Price"
+              value={`₹${abbreviate(portfolioAsset.avgBasis, 2)}`}
+            />
+            <Card
+              title="Current Value"
+              value={`₹${abbreviate(portfolioAsset.marketValue, 2)}`}
+            />
             <Card title="Quantity" value={portfolioAsset.quantity} />
-            <Card title="Unrealised P/L" value={`₹${abbreviate(portfolioAsset.profitLoss, 2)}`} type={parseInt(portfolioAsset.profitLoss) >= 0 ? "text-green-500" : "text-red-500"} />
-            <Card title="Day's P/L" value={`₹${abbreviate(portfolioAsset.daypl, 2)}`} type={parseInt(portfolioAsset.daypl) >= 0 ? "text-green-500" : "text-red-500"} />
+            <Card
+              title="Unrealised P/L"
+              value={`₹${abbreviate(portfolioAsset.profitLoss, 2)}`}
+              type={
+                parseInt(portfolioAsset.profitLoss) >= 0
+                  ? "text-green-500"
+                  : "text-red-500"
+              }
+            />
+            <Card
+              title="Day's P/L"
+              value={`₹${abbreviate(portfolioAsset.daypl, 2)}`}
+              type={
+                parseInt(portfolioAsset.daypl) >= 0
+                  ? "text-green-500"
+                  : "text-red-500"
+              }
+            />
           </div>
         </>
       )}
@@ -150,23 +186,45 @@ const ViewAsset = () => {
             <div className="card card-border mt-4" role="presentation">
               <div className="card-body">
                 <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">Today's Low-High</h6>
+                  <h6 className="font-semibold mb-4 text-sm">
+                    Today's Low-High
+                  </h6>
                   <div>
                     <div className="flex justify-between">
                       <h6>{abbreviate(assetDetails.highLow.today.low, 2)}</h6>
                       <h6>{abbreviate(assetDetails.highLow.today.high, 2)}</h6>
                     </div>
-                    <CustomSlider value={parseInt(assetDetails.market_value/assetDetails.highLow.today.high*100)} disabled />
+                    <CustomSlider
+                      value={parseInt(
+                        (assetDetails.market_value /
+                          assetDetails.highLow.today.high) *
+                          100
+                      )}
+                      disabled
+                    />
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">52 Week Low-High</h6>
+                  <h6 className="font-semibold mb-4 text-sm">
+                    52 Week Low-High
+                  </h6>
                   <div>
                     <div className="flex justify-between">
-                    <h6>{abbreviate(assetDetails.highLow['52week'].low, 2)}</h6>
-                      <h6>{abbreviate(assetDetails.highLow['52week'].high, 2)}</h6>
+                      <h6>
+                        {abbreviate(assetDetails.highLow["52week"].low, 2)}
+                      </h6>
+                      <h6>
+                        {abbreviate(assetDetails.highLow["52week"].high, 2)}
+                      </h6>
                     </div>
-                    <CustomSlider value={parseInt(assetDetails.market_value/assetDetails.highLow['52week'].high*100)} disabled />
+                    <CustomSlider
+                      value={parseInt(
+                        (assetDetails.market_value /
+                          assetDetails.highLow["52week"].high) *
+                          100
+                      )}
+                      disabled
+                    />
                   </div>
                 </div>
                 <div className="flex justify-between items-center">
@@ -175,10 +233,19 @@ const ViewAsset = () => {
                   </h6>
                   <div>
                     <div className="flex justify-between">
-                    <h6>{abbreviate(assetDetails.highLow.overall.low, 2)}</h6>
-                      <h6>{abbreviate(assetDetails.highLow.overall.high, 2)}</h6>
+                      <h6>{abbreviate(assetDetails.highLow.overall.low, 2)}</h6>
+                      <h6>
+                        {abbreviate(assetDetails.highLow.overall.high, 2)}
+                      </h6>
                     </div>
-                    <CustomSlider value={parseInt(assetDetails.market_value/assetDetails.highLow.overall.high*100)} disabled />
+                    <CustomSlider
+                      value={parseInt(
+                        (assetDetails.market_value /
+                          assetDetails.highLow.overall.high) *
+                          100
+                      )}
+                      disabled
+                    />
                   </div>
                 </div>
               </div>

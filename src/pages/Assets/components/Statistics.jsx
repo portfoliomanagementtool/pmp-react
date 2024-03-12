@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import Candle from './charts/Candle';
-import Area from './charts/Area';
-import { MdCandlestickChart } from 'react-icons/md';
-import { TbChartAreaLineFilled } from 'react-icons/tb';
+import React, { useState } from "react";
+import Candle from "./charts/Candle";
+import Area from "./charts/Area";
+import { MdCandlestickChart } from "react-icons/md";
+import { TbChartAreaLineFilled } from "react-icons/tb";
 
 const Statistics = ({ assetDetails, candleData, areaData }) => {
   const [showCandlestick, setShowCandlestick] = useState(true);
@@ -13,26 +13,28 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
     const today = new Date();
     setActiveButton(timeline);
 
-    if(activeButton === timeline) {
-      setActiveButton("default")
+    if (activeButton === timeline) {
+      setActiveButton("default");
       setMinTime(null);
       return;
     }
-  
+
     switch (timeline) {
-      case 'one_month': 
+      case "one_month":
         setMinTime(new Date(today.setMonth(today.getMonth() - 1)).getTime());
         break;
-      case 'six_month':
+      case "six_month":
         setMinTime(new Date(today.setMonth(today.getMonth() - 6)).getTime());
         break;
-      case 'one_year':
-        setMinTime(new Date(today.setFullYear(today.getFullYear() - 1)).getTime());
+      case "one_year":
+        setMinTime(
+          new Date(today.setFullYear(today.getFullYear() - 1)).getTime()
+        );
         break;
-      case 'ytd':
+      case "ytd":
         setMinTime(new Date(today.getFullYear(), 0, 1).getTime());
         break;
-      case 'all':
+      case "all":
         setMinTime(null);
         break;
       default:
@@ -47,32 +49,47 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
 
   const formatTime = () => {
     switch (activeButton) {
-      case 'one_month':
-        return 'past month';
-      case 'six_month':
-        return 'past 6 months';
-      case 'one_year':
-        return 'past year';
-      case 'ytd':
-        return 'year to date';
-      case 'all':
-        return 'all time';
+      case "one_month":
+        return "past month";
+      case "six_month":
+        return "past 6 months";
+      case "one_year":
+        return "past year";
+      case "ytd":
+        return "year to date";
+      case "all":
+        return "all time";
       default:
-        return 'today';
+        return "today";
     }
-  }
+  };
 
   return (
     <div className="card-body">
       <div className="flex justify-start items-center gap-4 mb-2 ml-2 text-[18px]">
-        <h4>
-          {assetDetails.name}
-        </h4>
+        <h4>{assetDetails.name}</h4>
         <div className="flex flex-col justify-between">
-          <p>{Number(assetDetails.market_value).toFixed(2)} <span className="text-xs">INR</span></p>
-          <p className={`${assetDetails.changes[activeButton].change >= 0 ? "text-green-500" : "text-red-500"}`}>
-            <span>{Number(assetDetails.changes[activeButton].change).toFixed(2)}</span>{" "}
-            <span>({Number(assetDetails.changes[activeButton].change_percentage).toFixed(2)}%)</span>{" "}
+          <p>
+            {Number(assetDetails.market_value).toFixed(2)}{" "}
+            <span className="text-xs">INR</span>
+          </p>
+          <p
+            className={`${
+              assetDetails.changes[activeButton].change >= 0
+                ? "text-green-500"
+                : "text-red-500"
+            }`}
+          >
+            <span>
+              {Number(assetDetails.changes[activeButton].change).toFixed(2)}
+            </span>{" "}
+            <span>
+              (
+              {Number(
+                assetDetails.changes[activeButton].change_percentage
+              ).toFixed(2)}
+              %)
+            </span>{" "}
             {assetDetails.changes[activeButton].change >= 0 ? "▲" : "▼"}{" "}
             <span>{formatTime()}</span>
           </p>
@@ -82,41 +99,56 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
         <div>
           <div className="segment flex gap-2">
             <button
-              className={`button ${activeButton === "one_month" ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-                ml-2 radius-round h-9 px-3 text-sm`
+              className={`button ${
+                activeButton === "one_month"
+                  ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                  : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
               }
+                ml-2 radius-round h-9 px-3 text-sm`}
               onClick={() => handleButtonClick("one_month")}
             >
               1M
             </button>
             <button
-              className={`button ${activeButton === "six_month" ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-                ml-2 radius-round h-9 px-3 text-sm`
+              className={`button ${
+                activeButton === "six_month"
+                  ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                  : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
               }
+                ml-2 radius-round h-9 px-3 text-sm`}
               onClick={() => handleButtonClick("six_month")}
             >
               6M
             </button>
             <button
-              className={`button ${activeButton === "one_year" ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-                ml-2 radius-round h-9 px-3 text-sm`
+              className={`button ${
+                activeButton === "one_year"
+                  ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                  : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
               }
+                ml-2 radius-round h-9 px-3 text-sm`}
               onClick={() => handleButtonClick("one_year")}
             >
               1Y
             </button>
             <button
-              className={`button ${activeButton === "ytd" ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-                ml-2 radius-round h-9 px-3 text-sm`
+              className={`button ${
+                activeButton === "ytd"
+                  ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                  : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
               }
+                ml-2 radius-round h-9 px-3 text-sm`}
               onClick={() => handleButtonClick("ytd")}
             >
               YTD
             </button>
             <button
-              className={`button ${activeButton === "all" ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-                ml-2 radius-round h-9 px-3 text-sm`
+              className={`button ${
+                activeButton === "all"
+                  ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                  : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
               }
+                ml-2 radius-round h-9 px-3 text-sm`}
               onClick={() => handleButtonClick("all")}
             >
               Max
@@ -125,17 +157,23 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
         </div>
         <div>
           <button
-            className={`button ${showCandlestick ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-               mx-2 radius-round h-9 px-3 text-sm`
+            className={`button ${
+              showCandlestick
+                ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
             }
+               mx-2 radius-round h-9 px-3 text-sm`}
             onClick={() => setShowCandlestick(true)}
           >
             <MdCandlestickChart size={20} />
           </button>
           <button
-            className={`button ${!showCandlestick ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100" : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"}
-              mx-2 radius-round h-9 px-3 text-sm`
+            className={`button ${
+              !showCandlestick
+                ? "bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-gray-100"
+                : "border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100"
             }
+              mx-2 radius-round h-9 px-3 text-sm`}
             onClick={() => setShowCandlestick(false)}
           >
             <TbChartAreaLineFilled size={20} />
@@ -147,12 +185,18 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
           {showCandlestick ? (
             <Candle data={candleData} min={minTime} />
           ) : (
-            <Area data={areaData} min={minTime} type={assetDetails.changes[activeButton].change >= 0 ? "green" : "red"} />
+            <Area
+              data={areaData}
+              min={minTime}
+              type={
+                assetDetails.changes[activeButton].change >= 0 ? "green" : "red"
+              }
+            />
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Statistics;

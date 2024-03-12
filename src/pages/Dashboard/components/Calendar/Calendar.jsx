@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  saveEndDate,
+  saveStartDate,
+} from "../../../../state/slices/portfolioSlice";
 
 const Calendar = ({ onClose, onSelectDateRange }) => {
   const mode = useSelector((state) => state.config.mode);
@@ -11,6 +15,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const today = dayjs();
+  const dispatch = useDispatch();
 
   const handleMonthChange = (monthsToAdd) => {
     setSelectedDate(selectedDate.add(monthsToAdd, "month"));
@@ -29,6 +34,11 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
         setSelectedStartDate(date);
         setSelectedEndDate(null);
       }
+    }
+    if (!selectedStartDate) {
+      dispatch(saveStartDate(date));
+    } else {
+      dispatch(saveEndDate(date));
     }
   };
 

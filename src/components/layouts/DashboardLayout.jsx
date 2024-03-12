@@ -4,10 +4,11 @@ import SideNav from "./SideNav";
 import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
-import { getMetrics, getNotifications } from "../../api";
+import { getAllWatchlists, getMetrics, getNotifications, getWatchlist } from "../../api";
 import { useDispatch } from "react-redux";
 import { saveEquityDistribution, saveMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
 import { saveNotifications } from "../../state/slices/notificationSlice";
+import { fetchAllWatchlists, saveWatchlist, saveWatchlistId } from "../../state/slices/watchlistSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
@@ -64,6 +65,10 @@ const DashboardLayout = () => {
     }
 
     fetchNotifcations();
+  }, [user, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchAllWatchlists(user.primaryEmailAddress.emailAddress));
   }, [user, dispatch]);
 
   const openModal = () => setIsOpen(true);

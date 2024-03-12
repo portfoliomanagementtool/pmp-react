@@ -11,8 +11,6 @@ import { TbChartAreaLineFilled } from "react-icons/tb";
 import { useParams } from "react-router-dom";
 import { getAssetDetails, getAssetPrice, getPortfolioAssetDetails } from "../../../api";
 import abbreviate from "number-abbreviate";
-import { buyAsset as buyAssetAPI, getMetrics, sellAsset as sellAssetAPI } from '../../../api';
-import { saveEquityDistribution, saveMetrics } from '../../../state/slices/portfolioSlice';
 import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
 
@@ -20,7 +18,6 @@ const ViewAsset = () => {
   const { ticker } = useParams();
   const dispatch = useDispatch();
   const { user } = useUser();
-  const { interval } = useSelector((state) => state.portfolio);
   const [assetDetails, setAssetDetails] = useState(null);
   const [portfolioAsset, setPortfolioAsset] = useState(null);
   const [assetPrice, setAssetPrice] = useState(null);
@@ -40,6 +37,8 @@ const ViewAsset = () => {
 
     fetchAssetDetails();
   }, [ticker]);
+
+  console.log(assetDetails)
 
   useEffect(() => { 
     const fetchPortfolioAssetDetails = async () => {
@@ -92,46 +91,6 @@ const ViewAsset = () => {
     setIsModalOpen(false);
   };
 
-
-  const buyAsset = async (data) => {
-    console.log("buy", data)
-    const email = user.primaryEmailAddress.emailAddress;
-
-    try {
-      const result = await buyAssetAPI(data, email);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics(interval.start, interval.end, email);
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
-  const sellAsset = async (data) => {
-    console.log("sell", data)
-    const email = user.primaryEmailAddress.emailAddress;
-    try {
-      const result = await sellAssetAPI(data, email);
-      console.log(result)
-
-      try {
-        const { data } = await getMetrics(interval.start, interval.end, email);
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories))
-      } catch (error) {
-        console.log(error.message)
-      }
-    } catch (error) {
-      console.log(error.message)
-    }
-  }
-
   return (
     <>
       <div className="pb-4 lg:mb-0">
@@ -144,27 +103,9 @@ const ViewAsset = () => {
             className="card 2xl:col-span-8 xl:col-span-7 card-border"
             role="presentation"
           >
-            <div className="card-body">
-              {assetDetails && (
-                <div className="flex justify-start items-center gap-4 mb-2 ml-2 text-[18px]">
-                  <h4>
-                    {assetDetails.name}
-                  </h4>
-                  <div className="flex flex-col justify-between">
-                    <p>{Number(assetDetails.market_value).toFixed(2)} <span className="text-xs">INR</span></p>
-                    <p className={`${assetDetails.day_change >= 0 ? "text-green-500" : "text-red-500"}`}>
-                      <span>{Number(assetDetails.day_change).toFixed(2)}</span>{" "}
-                      <span>({Number(assetDetails.day_change_percentage).toFixed(2)}%)</span>{" "}
-                      {assetDetails.day_change >= 0 ? "▲" : "▼"}{" "}
-                      <span>today</span>
-                    </p>
-                  </div>
-                </div>
-              )}
-              {assetPrice && areaData && (
-                <Statistics candleData={assetPrice} areaData={areaData} />
-              )}
-            </div>
+            {assetDetails && assetPrice && areaData && (
+              <Statistics assetDetails={assetDetails} candleData={assetPrice} areaData={areaData} />
+            )}
           </div>
         </div>
       </div>
@@ -279,8 +220,6 @@ const ViewAsset = () => {
             quantity: portfolioAsset.quantity || 0,
           }}
           initialChecked={modalType === "SELL"}
-          buyAsset={buyAsset}
-          sellAsset={sellAsset}
         />
       )}
     </>

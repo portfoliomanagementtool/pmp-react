@@ -4,15 +4,20 @@ import Area from './charts/Area';
 import { MdCandlestickChart } from 'react-icons/md';
 import { TbChartAreaLineFilled } from 'react-icons/tb';
 
-const Statistics = ({ candleData, areaData }) => {
+const Statistics = ({ assetDetails, candleData, areaData }) => {
   const [showCandlestick, setShowCandlestick] = useState(true);
-  const [activeButton, setActiveButton] = useState("all");
-  const [minTime, setMinTime] = useState(null)
-  const [type, setType] = useState("green")
+  const [activeButton, setActiveButton] = useState("default");
+  const [minTime, setMinTime] = useState(null);
 
   const updateData = (timeline) => {
     const today = new Date();
     setActiveButton(timeline);
+
+    if(activeButton === timeline) {
+      setActiveButton("default")
+      setMinTime(null);
+      return;
+    }
   
     switch (timeline) {
       case 'one_month': 
@@ -31,6 +36,8 @@ const Statistics = ({ candleData, areaData }) => {
         setMinTime(null);
         break;
       default:
+        setMinTime(null);
+        break;
     }
   };
 
@@ -38,8 +45,39 @@ const Statistics = ({ candleData, areaData }) => {
     updateData(buttonType);
   };
 
+  const formatTime = () => {
+    switch (activeButton) {
+      case 'one_month':
+        return 'past month';
+      case 'six_month':
+        return 'past 6 months';
+      case 'one_year':
+        return 'past year';
+      case 'ytd':
+        return 'year to date';
+      case 'all':
+        return 'all time';
+      default:
+        return 'today';
+    }
+  }
+
   return (
-    <>
+    <div className="card-body">
+      <div className="flex justify-start items-center gap-4 mb-2 ml-2 text-[18px]">
+        <h4>
+          {assetDetails.name}
+        </h4>
+        <div className="flex flex-col justify-between">
+          <p>{Number(assetDetails.market_value).toFixed(2)} <span className="text-xs">INR</span></p>
+          <p className={`${assetDetails.changes[activeButton].change >= 0 ? "text-green-500" : "text-red-500"}`}>
+            <span>{Number(assetDetails.changes[activeButton].change).toFixed(2)}</span>{" "}
+            <span>({Number(assetDetails.changes[activeButton].change_percentage).toFixed(2)}%)</span>{" "}
+            {assetDetails.changes[activeButton].change >= 0 ? "▲" : "▼"}{" "}
+            <span>{formatTime()}</span>
+          </p>
+        </div>
+      </div>
       <div className="flex items-center justify-between mb-4">
         <div>
           <div className="segment flex gap-2">
@@ -81,7 +119,7 @@ const Statistics = ({ candleData, areaData }) => {
               }
               onClick={() => handleButtonClick("all")}
             >
-              All
+              Max
             </button>
           </div>
         </div>
@@ -109,11 +147,11 @@ const Statistics = ({ candleData, areaData }) => {
           {showCandlestick ? (
             <Candle data={candleData} min={minTime} />
           ) : (
-            <Area data={areaData} min={minTime} type={type} />
+            <Area data={areaData} min={minTime} type={assetDetails.changes[activeButton].change >= 0 ? "green" : "red"} />
           )}
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

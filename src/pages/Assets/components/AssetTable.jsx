@@ -13,20 +13,19 @@ import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { setActive } from "../../../state/slices/configSlice";
+import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
 
 const AssetTable = ({ rows, deleteRow, editRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useUser();
+  const { watchlists, id } = useSelector((state) => state.watchlists);
   const { interval } = useSelector((state) => state.portfolio)
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
-  const [starClicked, setStarClicked] = useState(
-    Array(rows.length).fill(false)
-  );
 
   const toggleRow = (idx) => {
     if (expandedRow === idx) {
@@ -58,11 +57,23 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
     }
   };
 
-  const handleStarClick = (idx) => {
-    const updatedStarClicked = [...starClicked];
-    updatedStarClicked[idx] = !updatedStarClicked[idx];
-    setStarClicked(updatedStarClicked);
+  const handleStarClick = (ticker) => {
+    const email = user.primaryEmailAddress.emailAddress;
+
+    try {
+      if(watchlists[ticker]) {
+        console.log("remove", {ticker: ticker}, id, email)
+        dispatch(removeAssetFromWatchlist({ticker: ticker}, id, email));
+        return;
+      }
+  
+      console.log("add", {ticker: ticker}, id, email)
+      dispatch(addAssetToWatchlist({ticker: ticker}, id, email));
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
   const closeModal = (idx) => {
     const updatedModalOpenStates = isModalOpen.map((state, index) =>
       index === idx ? false : state
@@ -195,9 +206,9 @@ const AssetTable = ({ rows, deleteRow, editRow }) => {
                     <div className="flex items-center justify-between ">
                       <div
                         className="flex items-center px-1"
-                        onClick={() => handleStarClick(idx)}
+                        onClick={() => handleStarClick(row.ticker)}
                       >
-                        {starClicked[idx] ? (
+                        {watchlists[row.ticker] ? (
                           <BsStarFill size={20} color="yellow" />
                         ) : (
                           <BsStar size={20} color="gray" />

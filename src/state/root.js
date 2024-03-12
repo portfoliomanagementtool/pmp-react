@@ -10,8 +10,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     config: configReducer,
     portfolio: portfolioReducer,
+    watchlists: watchlistReducer,
     notifications: notificationReducer,
-    watchlist: watchlistReducer,
     // asset: assetReducer,
 });
 

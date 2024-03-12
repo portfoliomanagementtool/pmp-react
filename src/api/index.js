@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const API = axios.create({ 
-  // baseURL: "http://localhost:8000", 
-  baseURL: "https://pmp-back.azurewebsites.net", 
+  baseURL: "http://localhost:8000", 
+  // baseURL: "https://pmp-back.azurewebsites.net", 
 });
 
 // User
@@ -51,7 +51,12 @@ export const getTopGainersAndLosers = () => API.get("asset_pricing/top_gainers_l
 export const getAssetPrice = (ticker) => API.get(`asset_pricing/latest?ticker=${ticker}`); // done
 
 // Watchlist
-export const getAllWatchlist = (email) => API.get("/portfolio/watchlist", {
+export const getAllWatchlists = (email) => API.get("/portfolio/watchlist", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const getWatchlist = (watchlistId, email) => API.get(`/portfolio/watchlist/${watchlistId}`, {
   headers: {
     "UserId": email,
   }
@@ -61,11 +66,12 @@ export const addToWatchlist = (data, watchlistId, email) => API.post(`/portfolio
     "UserId": email,
   }
 });
-export const removeFromWatchlist = (data, watchlistId, email) => API.delete(`/portfolio/watchlist/${watchlistId}/remove`, data, {
+export const removeFromWatchlist = (data, watchlistId, email) => API.delete(`/portfolio/watchlist/${watchlistId}/delete`, {
   headers: {
     "UserId": email,
-  }
-});
+  },
+  data
+}); // done
 
 // All transactions
 export const getAllTransactions = (email) => API.get(`portfolio/transactions`, {

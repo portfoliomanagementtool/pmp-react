@@ -22,10 +22,14 @@ import Modal from "./Modals/Modal";
 import DropdownMenu from "./Modals/DropdownMenu";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { setActive } from "../../../state/slices/configSlice";
+import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
+import { useUser } from "@clerk/clerk-react";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { user } = useUser();
+  const { watchlists, id } = useSelector((state) => state.watchlists);
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -33,9 +37,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
 
-  const [starClicked, setStarClicked] = useState(
-    Array(rows.length).fill(false)
-  );
+  // const [starClicked, setStarClicked] = useState(
+  //   Array(rows.length).fill(false)
+  // );
 
   const handleClose = () => {
     setModalOpen(false);
@@ -48,11 +52,23 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     }
   };
 
-  const handleStarClick = (idx) => {
-    const updatedStarClicked = [...starClicked];
-    updatedStarClicked[idx] = !updatedStarClicked[idx];
-    setStarClicked(updatedStarClicked);
+  const handleStarClick = (ticker) => {
+    const email = user.primaryEmailAddress.emailAddress;
+
+    try {
+      if(watchlists[ticker]) {
+        console.log("remove", {ticker: ticker}, id, email)
+        dispatch(removeAssetFromWatchlist({ticker: ticker}, id, email));
+        return;
+      }
+  
+      console.log("add", {ticker: ticker}, id, email)
+      dispatch(addAssetToWatchlist({ticker: ticker}, id, email));
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+
   const handleThreeDotsClick = (idx) => {
     setDetail(idx === detail ? null : idx);
   };
@@ -217,9 +233,9 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                           <div className="flex items-center justify-between ">
                             <div
                               className="flex items-center px-1"
-                              onClick={() => handleStarClick(idx)}
+                              onClick={() => handleStarClick(row.portfolio_asset.ticker)}
                             >
-                              {starClicked[idx] ? (
+                              {watchlists[row.portfolio_asset.ticker] ? (
                                 <BsStarFill size={20} color="yellow" />
                               ) : (
                                 <BsStar size={20} color="gray" />

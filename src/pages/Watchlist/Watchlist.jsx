@@ -1,40 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { BsFillPencilFill, BsFillTrashFill } from "react-icons/bs";
+import { BsFillPencilFill, BsFillTrashFill, BsStar, BsStarFill } from "react-icons/bs";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { IoIosAddCircle } from "react-icons/io";
 import { PiCaretUpDownFill } from "react-icons/pi";
 import { RiDownloadLine } from "react-icons/ri";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getAllWatchlist } from "../../api";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
+import { setActive } from "../../state/slices/configSlice";
+import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../state/slices/watchlistSlice";
+import abbreviate from "number-abbreviate";
 
 const Watchlist = () => {
   const { user } = useUser();
-  const [watchlists, setWatchlist] = useState([]);
-  // const { notifications } = useSelector((state) => state.notifications);
-  // console.log(notifications)
-  // const { watchlist } = useSelector((state) => state.watchlist);
+  const dispatch = useDispatch();
+  const { watchlists, id } = useSelector((state) => state.watchlists);
 
   const handleRowClick = () => {};
 
-  useEffect(() => {
-    const fetchWatchlist = async () => {
-      try {
-        const result = await getAllWatchlist(user.primaryEmailAddress.emailAddress);
-        console.log(result)
-        // setWatchlist(data);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
+  const handleStarClick = async (ticker) => {
+    const email = user.primaryEmailAddress.emailAddress;
 
-    fetchWatchlist();
-  }, [user]);
+    try {
+      if(watchlists[ticker]) {
+        console.log("remove", {ticker: ticker}, id, email)
+        dispatch(removeAssetFromWatchlist({ticker: ticker}, id, email));
+        return;
+      }
+  
+      console.log("add", {ticker: ticker}, id, email)
+      dispatch(addAssetToWatchlist({ticker: ticker}, id, email));
+    } catch (error) {
+      console.log(error.message);
+    }
+  };  
 
   return (
-    <>
+    <main>
       <div className="pb-4 lg:mb-0">
         <h3>Watchlist</h3>
         <p>View your current Watchlist</p>
@@ -68,7 +71,7 @@ const Watchlist = () => {
                   </span>
                 </button>
 
-                <a
+                {/* <a
                   className="block lg:inline-block md:mb-0 mb-4"
                   href="/app/funds/ticker-new"
                 >
@@ -80,7 +83,7 @@ const Watchlist = () => {
                       <span className="ltr:ml-1 rtl:mr-1">Add Asset</span>
                     </span>
                   </button>
-                </a>
+                </a> */}
               </div>
             </div>
             <div className="">
@@ -88,14 +91,6 @@ const Watchlist = () => {
                 <table className="table-default table-hover">
                   <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr className="">
-                      <th className="" colSpan="1">
-                        <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Category
-                          <div className=" font-bold text-base items-center">
-                            <PiCaretUpDownFill />
-                          </div>
-                        </div>
-                      </th>
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Ticker
@@ -106,23 +101,28 @@ const Watchlist = () => {
                       </th>
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Quantity
+                          Category
+                        </div>
+                      </th>
+                      <th className="" colSpan="1">
+                        <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
+                          Market Value
                           <div className=" font-bold text-base items-center">
                             <PiCaretUpDownFill />
                           </div>
                         </div>
                       </th>
-                      <th className="" colSpan="1">
+                      {/* <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                           Actions
                           <div className=" font-bold text-base items-center">
                             <PiCaretUpDownFill />
                           </div>
                         </div>
-                      </th>
+                      </th> */}
                       <th className="" colSpan="1">
                         <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                          Price
+                          Day P/L
                           <div className=" font-bold text-base items-center">
                             <PiCaretUpDownFill />
                           </div>
@@ -134,39 +134,50 @@ const Watchlist = () => {
                     </tr>
                   </thead>
                   <tbody className="">
-                    {watchlists.map((watchlist) => {
+                    {Object.keys(watchlists).map((key, index) => {
                       return (
-                        <React.Fragment>
-                          <tr
-                            className="cursor-pointer"
-                            onClick={() => handleRowClick()}
-                          >
-                            <td className="py-2">
-                              <div className="flex items-center">
-                                <span className="ml-2 rtl:mr-2 font-semibold">
-                                  {watchlist.category}
+                        <tr
+                          key={index}
+                          className="cursor-pointer"
+                          onClick={() => handleRowClick()}
+                        >
+                         <td className="py-2 !pl-4">
+                            <div className="flex items-center justify-between">
+                              <div
+                                className="flex items-center px-1"
+                                onClick={() => handleStarClick(watchlists[key].ticker)}
+                              >
+                                {watchlists[key] ? (
+                                  <BsStarFill size={20} color="yellow" />
+                                ) : (
+                                  <BsStar size={20} color="gray" />
+                                )}
+                                <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
+                                  <Link to={`/app/asset/view/${watchlists[key].ticker}`} onClick={() => dispatch(setActive("assets"))}>
+                                    {watchlists[key].ticker}
+                                  </Link>
                                 </span>
                               </div>
-                            </td>
-                            <td className="py-2">
-                              <span className="capitalize">
-                                {watchlist.ticker}
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span className="capitalize">
+                              {watchlists[key].category}
+                            </span>
+                          </td>
+                          <td className="py-2">₹{Number(watchlists[key].market_value).toFixed(2)}</td>
+                          {/* <td className="py-2">
+                            <div className="flex items-center gap-2">
+                              <span className="badge-dot bg-emerald-500"></span>
+                              <span className="capitalize font-semibold text-emerald-500">
+                                In Stock
                               </span>
-                            </td>
-                            <td className="py-2">{watchlist.quantity}</td>
-                            <td className="py-2">
-                              <div className="flex items-center gap-2">
-                                <span className="badge-dot bg-emerald-500"></span>
-                                <span className="capitalize font-semibold text-emerald-500">
-                                  In Stock
-                                </span>
-                              </div>
-                            </td>
-                            <td className="py-2">
-                              <span>${watchlist.price}</span>
-                            </td>
-                          </tr>
-                        </React.Fragment>
+                            </div>
+                          </td> */}
+                          <td className="py-2">
+                            <span className={ watchlists[key].daypl >= 0 ? "text-green-500" : "text-red-500"}>{Number(watchlists[key].daypl).toFixed(2)}</span>
+                          </td>
+                        </tr>
                       );
                     })}
                   </tbody>
@@ -176,7 +187,7 @@ const Watchlist = () => {
           </div>
         </div>
       </div>
-    </>
+    </main>
   );
 };
 

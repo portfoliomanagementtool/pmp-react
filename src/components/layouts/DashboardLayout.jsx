@@ -4,35 +4,30 @@ import SideNav from "./SideNav";
 import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
-import { getAllWatchlists, getMetrics, getNotifications, getWatchlist } from "../../api";
-import { useDispatch } from "react-redux";
-import { saveEquityDistribution, saveMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
-import { fetchNotifcations, saveNotifications } from "../../state/slices/notificationSlice";
-import { fetchAllWatchlists, saveWatchlist, saveWatchlistId } from "../../state/slices/watchlistSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
+import { fetchNotifcations } from "../../state/slices/notificationSlice";
+import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
   const dispatch = useDispatch(); 
+  const { interval } = useSelector((state) => state.portfolio);
   const [modalIsOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const fetchMetrics = async () => {
-      const today = new Date();
-      const startDate = new Date(today.setMonth(today.getMonth() - 3));
-      const endDate = new Date();
+    const today = new Date();
+    const startDate = new Date(today.setMonth(today.getMonth() - 3));
+    const endDate = new Date();
 
-      try {
-        const { data } = await getMetrics(startDate, endDate, user.primaryEmailAddress.emailAddress);
-        dispatch(saveMetrics(data.metrics));
-        dispatch(saveEquityDistribution(data.categories));
-        dispatch(saveTimeInterval({ start: startDate.toString(), end: endDate.toString() }));
-      } catch (error) {
-        console.log(error.message)
-      }
+    dispatch(saveTimeInterval({ start: startDate.toString(), end: endDate.toString() }));
+  }, [dispatch])
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchMetrics(interval, user.primaryEmailAddress.emailAddress));
     }
-
-    fetchMetrics();
-  }, [user, dispatch])
+  }, [user, dispatch, interval])
 
   useEffect(() => {
     dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress))

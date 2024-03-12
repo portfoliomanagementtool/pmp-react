@@ -1,15 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "@clerk/clerk-react";
 import { Icon } from "@iconify/react";
 import customer1 from "../../images/customer-01.png";
 import customer2 from "../../images/customer-02.png";
 import image1 from "../../images/image-01.png";
 import image2 from "../../images/image-02.png";
 import image3 from "../../images/image-03.png";
-
 import Navbar from "./Navbar";
-import Footer from "../../components/Footer";
+import Footer from "./Footer";
+import { setActive } from "../../state/slices/configSlice";
 
 const LandingPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useUser();
+
+  useEffect(() => {
+    if(user) {
+      dispatch(setActive("dashboard"))
+      navigate('/app/dashboard');
+    }
+  }, [user, navigate, dispatch]);
+
   return (
     <>
       <Navbar />

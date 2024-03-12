@@ -38,7 +38,7 @@ const Navbar = () => {
           <ul className="flex flex-col gap-4 items-center">
             <li className="text-lg lg:text-xl text-[#263238]">Home</li>
             <li className="text-lg lg:text-xl text-[#263238]">About</li>
-            <li className="text-lg lg:text-xl text-[#263238]">Features</li>
+            <li className="text-lg lg:text-xl text-[#263238]">How it works</li>
             <li className="text-lg lg:text-xl text-[#263238]">How it works</li>
           </ul>
           <div className="flex gap-4 lg:gap-5 mt-4 lg:mt-0">

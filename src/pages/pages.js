@@ -8,6 +8,7 @@ import Analytics from "./Analytics/Analytics";
 import Profile from "./Profile";
 import EditAsset from "./Assets/components/EditAsset";
 import Reports from "./Reports/Reports";
+import ActivityLogs from "./ActivityLogs/ActivityLogs";
 
 
 export {
@@ -21,4 +22,5 @@ export {
   Profile,
   EditAsset,
   Reports,
+  ActivityLogs
 };

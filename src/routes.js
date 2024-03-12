@@ -1,4 +1,4 @@
-import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics, Profile } from './pages/pages';
+import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics, Profile, ActivityLogs } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 import ViewAsset from './pages/Assets/components/ViewAsset';
@@ -63,6 +63,10 @@ const routes = [
       {
         path:'watchlist',
         element:<Watchlist/>
+      },
+      {
+        path:'activityLogs',
+        element:<ActivityLogs/>
       },
       {
         path: 'profile',

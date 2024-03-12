@@ -14,7 +14,7 @@ import MenuGroup from "../Menu/MenuGroup";
 import { useSelector } from "react-redux";
 import SideNavModal from "../Modals/SideNavModal";
 import { HiOutlineDocumentReport } from "react-icons/hi";
-import { GrTransaction } from "react-icons/gr";
+import { RxActivityLog } from "react-icons/rx";
 
 const SideNav = () => {
   const collapsed = useSelector((state) => state.config.collapsed);
@@ -71,6 +71,13 @@ const SideNav = () => {
           name: "Watchlist",
           icon: <MdChecklistRtl />,
           path: "/app/watchlist",
+          dropDown: false,
+        },
+        {
+          id: "activityLogs",
+          name: "Activity Logs",
+          icon: <RxActivityLog />,
+          path: "/app/activityLogs",
           dropDown: false,
         },
       ],

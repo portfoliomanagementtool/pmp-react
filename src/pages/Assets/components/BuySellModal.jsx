@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import Switch from '@mui/material/Switch';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { useDispatch, useSelector } from 'react-redux';
-import { buyAsset, sellAsset } from '../../../state/slices/portfolioSlice';
-import { useUser } from '@clerk/clerk-react';
+import React, { useState } from "react";
+import { AiOutlineClose } from "react-icons/ai";
+import Switch from "@mui/material/Switch";
+import Box from "@mui/material/Box";
+import TextField from "@mui/material/TextField";
+import { useDispatch, useSelector } from "react-redux";
+import { buyAsset, sellAsset } from "../../../state/slices/portfolioSlice";
+import { useUser } from "@clerk/clerk-react";
 
 const BuySellModal = ({
   onSubmit,
@@ -26,7 +26,9 @@ const BuySellModal = ({
       quantity: 0,
     }
   );
-  const [quantity, setQuantity] = useState(formState.quantity !== 0 ? formState.quantity : 1);
+  const [quantity, setQuantity] = useState(
+    formState.quantity !== 0 ? formState.quantity : 1
+  );
 
   const [errors, setErrors] = useState("");
 
@@ -70,7 +72,7 @@ const BuySellModal = ({
       ticker: formState.ticker,
       quantity: parseInt(formState.quantity),
       price: formState.market_value,
-    }
+    };
 
     if (checked) {
       dispatch(sellAsset(formData, email, interval));
@@ -78,8 +80,6 @@ const BuySellModal = ({
       dispatch(buyAsset(formData, email, interval));
     }
   };
-
-  
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
@@ -91,7 +91,9 @@ const BuySellModal = ({
               className="text-gray-900 text-lg font-bold hover:text-gray-800"
               onClick={handleClose}
             >
-              <AiOutlineClose fill={`${mode === "dark" ? "#ebecec" : "#000"}`} />
+              <AiOutlineClose
+                fill={`${mode === "dark" ? "#ebecec" : "#000"}`}
+              />
             </button>
           </div>
 
@@ -105,7 +107,9 @@ const BuySellModal = ({
             <span className="text-red-500">SELL</span>
           </div>
         </div>
-        <h3 className="text-xl font-semibold capitalize">{formState.category}</h3>
+        <h3 className="text-xl font-semibold capitalize">
+          {formState.category}
+        </h3>
         <div className="mt-5">
           <Box
             component="form"
@@ -116,10 +120,12 @@ const BuySellModal = ({
               },
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
-                  borderColor: mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
+                  borderColor:
+                    mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
                 },
                 "&:hover fieldset": {
-                  borderColor: mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
+                  borderColor:
+                    mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
                 },
                 "&.Mui-focused fieldset": {
                   borderColor: mode === "dark" ? "white" : "#3f51b5",
@@ -136,20 +142,23 @@ const BuySellModal = ({
               style={{ WebkitAppearance: "none", MozAppearance: "none" }}
               id="outlined-basic"
               label="Quantity"
-              type='number'
+              type="number"
               InputProps={{
-                inputProps: { min: 1 }
+                inputProps: { min: 1 },
               }}
               variant="outlined"
               defaultValue={formState.quantity}
-              onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
+              onChange={(e) => {
+                changeInput(e);
+                setQuantity(e.target.value > 0 ? e.target.value : 1);
+              }}
               name="quantity"
             />
             <TextField
               id="outlined-basic"
               label="Price"
               variant="outlined"
-              value={Number(quantity*formState.market_value).toFixed(2)}
+              value={Number(quantity * formState.market_value).toFixed(2)}
               onChange={(e) => changeInput(e)}
               name="price"
               sx={{
@@ -158,10 +167,12 @@ const BuySellModal = ({
                 },
                 "& .MuiOutlinedInput-root": {
                   "& fieldset": {
-                    borderColor: mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
+                    borderColor:
+                      mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
                   },
                   "&:hover fieldset": {
-                    borderColor: mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
+                    borderColor:
+                      mode === "dark" ? "white" : "rgba(0, 0, 0, 0.23)",
                   },
                   "&.Mui-focused fieldset": {
                     borderColor: mode === "dark" ? "white" : "#3f51b5",

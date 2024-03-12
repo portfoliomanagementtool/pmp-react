@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { saveTimeInterval } from "../../../../state/slices/portfolioSlice";
 
-const Calendar = ({ onClose, onSelectDateRange }) => {
+const Calendar = ({ onClose, setSelectedDateRange }) => {
   const mode = useSelector((state) => state.config.mode);
   const isDarkMode = mode === "dark";
 
@@ -11,6 +12,7 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const today = dayjs();
+  const dispatch = useDispatch();
 
   const handleMonthChange = (monthsToAdd) => {
     setSelectedDate(selectedDate.add(monthsToAdd, "month"));
@@ -20,12 +22,15 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
     const isBeforeToday =
       date.isBefore(today, "day") || date.isSame(today, "day");
     if (!selectedStartDate && isBeforeToday) {
+      setSelectedDateRange((prev) => ({ ...prev, startDate: date }));
       setSelectedStartDate(date);
       setSelectedEndDate(null);
     } else if (selectedStartDate && isBeforeToday) {
       if (!selectedEndDate || date.isBefore(selectedStartDate)) {
+        setSelectedDateRange((prev) => ({ ...prev, endDate: date}))
         setSelectedEndDate(date);
       } else {
+        setSelectedDateRange((prev) => ({ ...prev, startDate: date }));
         setSelectedStartDate(date);
         setSelectedEndDate(null);
       }
@@ -33,7 +38,8 @@ const Calendar = ({ onClose, onSelectDateRange }) => {
   };
 
   const handleSubmit = () => {
-    onSelectDateRange(selectedStartDate, selectedEndDate);
+    setSelectedDateRange({ startDate: selectedStartDate, endDate: selectedEndDate });
+    dispatch(saveTimeInterval({ start: selectedStartDate.toString(), end: selectedEndDate.toString() }));
     onClose();
   };
 

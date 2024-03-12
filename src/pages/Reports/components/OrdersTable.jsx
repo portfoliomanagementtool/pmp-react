@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { BsFillTrashFill, BsFillPencilFill } from "react-icons/bs";
-import { PiCaretUpDownFill } from "react-icons/pi";
 import addProduct from "../../../components/svg/add.svg";
 import { IoIosAddCircle } from "react-icons/io";
 import { RiDownloadLine } from "react-icons/ri";
@@ -8,7 +7,6 @@ import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import { GoGraph } from "react-icons/go";
 import dateFormat, { masks } from "dateformat";
-
 import { useNavigate } from "react-router-dom";
 import OrderStatusChip from "./card/OrderStatusChip";
 
@@ -101,49 +99,37 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Category
-                        <div className="font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                       
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Ticker
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer text-center inline-flex select-none justify-center items-center dark:text-gray-300">
                         Quantity
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Actions
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                        
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Price
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                       
                       </div>
                     </th>
                     <th className="" colSpan="1">
                       <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
                         Date
-                        <div className=" font-bold text-base items-center">
-                          <PiCaretUpDownFill />
-                        </div>
+                       
                       </div>
                     </th>
                     {/* <th className="" colSpan="1">

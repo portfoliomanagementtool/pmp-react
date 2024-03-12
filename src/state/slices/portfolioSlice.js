@@ -36,6 +36,20 @@ export const portfolioSlice = createSlice({
 export const { saveMetrics, saveEquityDistribution, saveTimeInterval, saveStartDate, saveEndDate } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
 
+export const fetchMetrics = (interval, email) => async (dispatch) => {
+  const { start, end } = interval;
+
+  console.log(start, end)
+
+  try {
+    const { data } = await getMetrics(start, end, email);
+    dispatch(saveMetrics(data.metrics));
+    dispatch(saveEquityDistribution(data.categories));
+  } catch (error) {
+    console.log(error.message)
+  }
+}
+
 const formatNotifications = (notifications) => {
   const formattedNotifications = {};
 

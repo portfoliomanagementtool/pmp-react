@@ -3,34 +3,35 @@ import { useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import abbreviate from "number-abbreviate";
 
-const Candle = ({ data, min}) => {
+const Candle = ({ data, min }) => {
   const mode = useSelector((state) => state.config.mode);
-  const series= [{
+  const series = [
+    {
       data: data,
     },
   ];
-  
+
   const options = {
     chart: {
-      type: 'candlestick',
-      background:"transparent",
+      type: "candlestick",
+      background: "transparent",
       toolbar: {
         show: true,
-      }
+      },
     },
     theme: {
       mode: mode === "light" ? "light" : "dark",
     },
     zoom: {
       enabled: true,
-      type: 'xy',
+      type: "xy",
       autoScaleYaxis: false,
     },
     tooltip: {
       enabled: true,
     },
     xaxis: {
-      type: 'datetime',
+      type: "datetime",
       min: min,
       // max: new Date('01 Mar 2020').getTime(),
       tickAmount: 6,
@@ -40,19 +41,23 @@ const Candle = ({ data, min}) => {
         formatter: function (value) {
           return abbreviate(value, 2);
         },
-      }
-    }
+      },
+    },
     // yaxis: {
     //   tooltip: {
     //     enabled: true
     //   }
     // }
-  }
-    
+  };
 
   return (
     <div id="profit-loss">
-      <Chart options={options} series={series} type="candlestick" height={380} />
+      <Chart
+        options={options}
+        series={series}
+        type="candlestick"
+        height={380}
+      />
     </div>
   );
 };

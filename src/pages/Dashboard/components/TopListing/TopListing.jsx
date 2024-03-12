@@ -1,6 +1,6 @@
 import React from "react";
 import { CiFilter } from "react-icons/ci";
-import { PiCaretUpDownFill } from "react-icons/pi";
+ 
 import { Link } from "react-router-dom";
 import { setActive } from "../../../../state/slices/configSlice";
 import { useDispatch } from "react-redux";

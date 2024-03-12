@@ -1,4 +1,4 @@
-import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Analytics, Profile, ActivityLogs } from './pages/pages';
+import { LogIn, Register, LandingPage, Dashboard, Portfolio, Assets, EditAsset, Profile, ActivityLogs } from './pages/pages';
 import { SignedIn, SignedOut } from "@clerk/clerk-react";
 import DashboardLayout from './components/layouts/DashboardLayout';
 import ViewAsset from './pages/Assets/components/ViewAsset';
@@ -27,9 +27,9 @@ const routes = [
       <SignedIn>
         <DashboardLayout />
       </SignedIn>
-      {/* <SignedOut>
+      <SignedOut>
         <LandingPage />
-      </SignedOut> */}
+      </SignedOut>
     </>,
     children: [
       {
@@ -40,10 +40,6 @@ const routes = [
         path: 'portfolio',
         element: <Portfolio />
       },
-      // {
-      //   path: 'assets',
-      //   element: <Assets />
-      // },
       {
         path: 'asset/all',
         element: <Assets />
@@ -57,41 +53,37 @@ const routes = [
         element: <EditAsset />
       },
       {
-        path: 'analytics',
-        element: <Analytics />
-      },
-      {
-        path:'watchlist',
-        element:<Watchlist/>
-      },
-      {
-        path:'activity-logs',
-        element:<ActivityLogs/>
-      },
-      {
-        path: 'profile',
-        element: <Profile/>
-      },
-      {
-        path: 'settings',
-        element: <></>
-      },
-      {
-        path: 'change-password',
-        element: <></>
-      },
-      {
-        path: 'logout',
-        element: <></>
-      },
-      {
         path: 'transactions',
         element:<Orders/>
       },
       {
         path: 'reports/positions',
         element: <Positions/>
-      }
+      },
+      {
+        path:'watchlist',
+        element:<Watchlist/>
+      },
+      {
+        path: 'profile',
+        element: <Profile/>
+      },
+      {
+        path:'activity-logs',
+        element:<ActivityLogs/>
+      },
+      // {
+      //   path: 'settings',
+      //   element: <></>
+      // },
+      // {
+      //   path: 'change-password',
+      //   element: <></>
+      // },
+      // {
+      //   path: 'logout',
+      //   element: <></>
+      // },
     ]
   },
 ];

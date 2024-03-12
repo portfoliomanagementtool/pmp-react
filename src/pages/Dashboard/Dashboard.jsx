@@ -1,50 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { HiOutlineFilter } from "react-icons/hi";
-import { AiOutlineStock } from "react-icons/ai";
-import { MdClose } from "react-icons/md";
-import { Card, Bar, Donut, Calendar } from "./components/components";
-import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
-import TopListing from "../Analytics/components/TopListing";
-import { CiCalendar } from "react-icons/ci";
-import Statistic from "../Portfolio/components/Charts/Statistic";
+import { useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { getTopGainersAndLosers } from "../../api";
-import { useSelector } from "react-redux";
+import TopListing from "./components/TopListing/TopListing";
+import Statistic from "../Portfolio/components/Charts/Statistic";
+import { Card, Donut, Calendar } from "./components/components";
+import { MdClose } from "react-icons/md";
+import { HiOutlineFilter } from "react-icons/hi";
+// import { AiOutlineStock } from "react-icons/ai";
+// import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
   const calendarRef = useRef(null);
   const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [showCalendar, setShowCalendar] = useState(false);
-  const [activeButton, setActiveButton] = useState("monthly");
-  const [rowToEdit, setRowToEdit] = useState(null);
+  // const [activeButton, setActiveButton] = useState("monthly");
+  // const [rowToEdit, setRowToEdit] = useState(null);
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: dayjs(interval.start),
     endDate: dayjs(interval.end),
   });
-
-  const handleCalendarClose = () => {
-    setShowCalendar(false);
-  };
-
-  // const handleDeleteRow = (targetIndex) => {
-  //   setRows(rows.filter((_, idx) => idx !== targetIndex));
-  // };
-
-  const handleButtonClick = (buttonType) => {
-    setActiveButton(buttonType);
-  };
-
-  const handleClickOutside = (event) => {
-    event.preventDefault();
-
-    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
-      setShowCalendar(false);
-    }
-  };
 
   useEffect(() => {
     const fetchTopGainersAndLosers = async () => {
@@ -83,15 +61,7 @@ const Dashboard = () => {
     }
 
     fetchTopGainersAndLosers();
-  }, [])
-
-  const formatData = (data) => {
-    const formattedData = [];
-    for (let key in data) {
-      formattedData.push(data[key].percentage);
-    }
-    return formattedData;
-  }
+  }, []);
 
   useEffect(() => {
     if (showCalendar) {
@@ -102,6 +72,26 @@ const Dashboard = () => {
       };
     }
   }, [showCalendar]);
+
+  const handleClickOutside = (event) => {
+    event.preventDefault();
+
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
+  };
+
+  const handleCalendarClose = () => {
+    setShowCalendar(false);
+  };
+
+  const formatData = (data) => {
+    const formattedData = [];
+    for (let key in data) {
+      formattedData.push(data[key].percentage);
+    }
+    return formattedData;
+  }
 
   return (
     <>
@@ -171,7 +161,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             <div className="card col-span-2 card-border" role="presentation">
               <div className="card-body">
-                <h4>Statistic</h4>
+                <h4>Statistics</h4>
                 <div className="mt-4">
                   <div className="chartRef min-h-[365px]">
                     <div>

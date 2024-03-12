@@ -2,11 +2,13 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 
-const Bar = () => {
+const Bar = ({ investments }) => {
+  console.log(investments)
   const mode = useSelector((state) => state.config.mode);
   const series = [{
     name: 'Investment',
     data: [23, 44, 55, 57, 56, 61, 58, 63, 60, 66, 69, 73]
+    // data: investments.data
   }];
 
   const options = {
@@ -41,10 +43,16 @@ const Bar = () => {
         text: 'Months'
       },
       categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      // type: 'date',
+      // labels: {
+      //   format: 'dd MM yyyy'
+      // },
+      // categories: investments.categories,
     },
     yaxis: {
       title: {
-        text: '₹ (thousands)'
+        // text: '₹ (thousands)'
+        text: 'Total Investment (in Rupees)'
       }
     },
     fill: {

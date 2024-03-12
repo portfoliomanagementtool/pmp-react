@@ -45,7 +45,15 @@ const Statistic = () => {
     xaxis: {
       categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
     },
-
+    yaxis: {
+      title: {
+        text: 'Market Value (in Rupees)',
+        // style: {
+        //   color: mode === "light" ? "#111827" : "#e5e7eb",
+        //   fontWeight: 600,
+        // }
+      }
+    },
   };
 
   return (

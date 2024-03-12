@@ -318,7 +318,7 @@ const Header = ({ openModal }) => {
                       style={{ height: "35px" }}
                     >
                       <Link
-                        to="/app/account/settings/profile"
+                        to="/app/profile"
                         className="flex h-full w-full px-2"
                       >
                         <span className="flex gap-2 items-center w-full">
@@ -350,7 +350,7 @@ const Header = ({ openModal }) => {
                       style={{ height: "35px" }}
                     >
                       <Link
-                        to="/app/account/activity-log"
+                        to="/app/activity-logs"
                         className="flex h-full w-full px-2"
                       >
                         <span className="flex gap-2 items-center w-full">

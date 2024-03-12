@@ -13,23 +13,6 @@ import { useNavigate } from "react-router-dom";
 import OrderStatusChip from "./card/OrderStatusChip";
 
 const OrdersTable = ({ rows, deleteRow, editRow }) => {
-  const [expandedRow, setExpandedRow] = useState(null);
-  const navigate = useNavigate();
-
-  const toggleRow = (idx) => {
-    if (expandedRow === idx) {
-      setExpandedRow(null);
-    } else {
-      setExpandedRow(idx);
-    }
-  };
-  const handleRowClick = (idx) => {
-    // Get the selected asset details based on the index
-    const selectedAsset = rows[idx];
-
-    // Navigate to the ViewAsset component with the selected asset details
-    navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
-  };
   const getStatusColorClass = (status) => {
     switch (status) {
       case "PURCHASED":

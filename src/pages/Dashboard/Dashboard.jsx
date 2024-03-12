@@ -142,9 +142,7 @@ const Dashboard = () => {
                 {showCalendar && (
                   <Calendar
                     onClose={handleCalendarClose}
-                    onSelectDateRange={(startDate, endDate) =>
-                      setSelectedDateRange({ startDate, endDate })
-                    }
+                    onSelectDateRange={(startDate, endDate) => setSelectedDateRange({ startDate, endDate })}
                   />
                 )}
               </div>

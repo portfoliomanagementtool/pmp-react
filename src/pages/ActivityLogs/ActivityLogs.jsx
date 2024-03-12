@@ -63,7 +63,7 @@ const ActivityLogs = () => {
                                         <span className={`font-semibold ${log.title !== "SELL" ? (log.title === "BUY" ? "text-green-500" : "text-indigo-500") : "text-red-500" }`}>{log.title}</span>
                                         <span className="font-semibold text-gray-900 dark:text-gray-100">.</span>
                                         <span className="mx-1">{log.message}</span>
-                                        <span className="ml-3 rtl:mr-3">{log.date}</span>
+                                        <span className="ml-3 rtl:mr-3">{dateFormat(log.created_at, "hh:MM TT")}</span>
                                       </p>
                                     </div>
                                   </div>

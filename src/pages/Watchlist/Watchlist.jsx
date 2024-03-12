@@ -40,7 +40,7 @@ const Watchlist = () => {
     <main>
       <div className="pb-4 lg:mb-0">
         <h3>Watchlist</h3>
-        <p>View your current Watchlist</p>
+        <p>View your current watchlist</p>
       </div>
       <div
         className="card 2xl:col-span-3 mt-4 xl:col-span-4 card-border"
@@ -48,7 +48,7 @@ const Watchlist = () => {
       >
         <div className="card h-full border-0 card-border" role="presentation">
           <div className="card-body card-gutterless h-full">
-            <div className="lg:flex items-center justify-between mb-4">
+            {/* <div className="lg:flex items-center justify-between mb-4">
               <h3 className="mb-4 lg:mb-0">Watchlist</h3>
               <div className="flex flex-col lg:flex-row lg:items-center gap-x-2">
                 <span className="input-wrapper max-w-md md:w-52 md:mb-0 mb-4">
@@ -71,7 +71,7 @@ const Watchlist = () => {
                   </span>
                 </button>
 
-                {/* <a
+                <a
                   className="block lg:inline-block md:mb-0 mb-4"
                   href="/app/funds/ticker-new"
                 >
@@ -83,9 +83,9 @@ const Watchlist = () => {
                       <span className="ltr:ml-1 rtl:mr-1">Add Asset</span>
                     </span>
                   </button>
-                </a> */}
+                </a>
               </div>
-            </div>
+            </div> */}
             <div className="">
               <div className="overflow-x-auto">
                 <table className="table-default table-hover">
@@ -138,13 +138,13 @@ const Watchlist = () => {
                       return (
                         <tr
                           key={index}
-                          className="cursor-pointer"
+                          // className="hover:bg-gray-100 dark:hover:bg-gray-600"
                           onClick={() => handleRowClick()}
                         >
-                         <td className="py-2 !pl-4">
-                            <div className="flex items-center justify-between">
+                         <td className="!py-8 !pl-4">
+                            <div className="flex items-center justify-between gap-4">
                               <div
-                                className="flex items-center px-1"
+                                className="flex items-center px-1 cursor-pointer"
                                 onClick={() => handleStarClick(watchlists[key].ticker)}
                               >
                                 {watchlists[key] ? (
@@ -160,12 +160,12 @@ const Watchlist = () => {
                               </div>
                             </div>
                           </td>
-                          <td className="py-2">
+                          <td className="py-4">
                             <span className="capitalize">
                               {watchlists[key].category}
                             </span>
                           </td>
-                          <td className="py-2">₹{Number(watchlists[key].market_value).toFixed(2)}</td>
+                          <td className="py-4">₹{Number(watchlists[key].market_value).toFixed(2)}</td>
                           {/* <td className="py-2">
                             <div className="flex items-center gap-2">
                               <span className="badge-dot bg-emerald-500"></span>
@@ -174,7 +174,7 @@ const Watchlist = () => {
                               </span>
                             </div>
                           </td> */}
-                          <td className="py-2">
+                          <td className="py-4">
                             <span className={ watchlists[key].daypl >= 0 ? "text-green-500" : "text-red-500"}>{Number(watchlists[key].daypl).toFixed(2)}</span>
                           </td>
                         </tr>

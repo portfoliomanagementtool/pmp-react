@@ -4,7 +4,6 @@ import LandingPage from "./LandingPage/LandingPage";
 import Dashboard from "./Dashboard/Dashboard";
 import Portfolio from "./Portfolio/Portfolio";
 import Assets from "./Assets/Assets";
-import Analytics from "./Analytics/Analytics";
 import Profile from "./Profile";
 import EditAsset from "./Assets/components/EditAsset";
 import Reports from "./Reports/Reports";
@@ -18,7 +17,6 @@ export {
   Dashboard,
   Portfolio,
   Assets,
-  Analytics,
   Profile,
   EditAsset,
   Reports,

@@ -35,7 +35,7 @@ export const getPortfolioAssetDetails = (ticker, email) => API.get(`/portfolio/p
     "UserId": email,
   }
 }); //done
-export const getDailyInvestment = (email) => API.get("/portfolio/get_daily_investments", {
+export const getDailyInvestments = (email) => API.get("/portfolio/get_daily_investments", {
   headers: {
     "UserId": email,
   }

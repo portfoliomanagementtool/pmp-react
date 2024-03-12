@@ -1,36 +1,41 @@
 import React, { useEffect, useRef, useState } from "react";
-import SellBuyTable from "./components/SellBuyTable";
-import Modal from "./components/Modals/Modal";
-import Metrics from "../Dashboard/components/Metrics";
-import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
-import Line from "../Dashboard/components/Charts/Line";
-// import Link from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import Statistic from "./components/Charts/Statistic";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { FaArrowRightArrowLeft } from "react-icons/fa6";
-import Donut from "./components/Charts/Donut";
-import { Bar, Calendar, Card } from "../Dashboard/components/components";
-import { getPortfolio } from "../../api";
-import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
+import dayjs from "dayjs";
+import Donut from "./components/Charts/Donut";
+import Bar from "./components/Charts/Bar";
+import SellBuyTable from "./components/SellBuyTable";
+import { Calendar, Card } from "../Dashboard/components/components";
+import { getDailyInvestments, getPortfolio } from "../../api";
 import { HiOutlineFilter } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
+// import dateFormat from "dateformat";
+// import Modal from "./components/Modals/Modal";
+// import Metrics from "../Dashboard/components/Metrics";
+// import ProfitLossGraph from "../Dashboard/components/ProfitLossGraph";
+// import Link from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+// import Statistic from "./components/Charts/Statistic";
+// import { AiOutlineShoppingCart } from "react-icons/ai";
+// import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 const Portfolio = () => {
-  const calendarRef = useRef(null);
-  const { interval } = useSelector((state) => state.portfolio);
   const { user } = useUser();
+  const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
-  const [modalOpen, setModalOpen] = useState(false);
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
+  const [activeButton, setActiveButton] = useState("monthly");
+  const [dailyInvestments, setDailyInvestments] = useState({
+    categories: [],
+    data: [],
+  });
   const [selectedDateRange, setSelectedDateRange] = useState({
     startDate: dayjs(interval.start),
     endDate: dayjs(interval.end),
   });
+  const calendarRef = useRef(null);
   
   useEffect(() => {
     const fetchPortfolio = async () => {
@@ -58,30 +63,62 @@ const Portfolio = () => {
     setCategories(categories);
   }, [equityDistribution]);
 
-  const [rowToEdit, setRowToEdit] = useState(null);
-  const handleDeleteRow = (targetIndex) => {
-    setRows(rows.filter((_, idx) => idx !== targetIndex));
+  useEffect(() => {
+    // const formatDate = (date_string) => {
+    //   var date_components = date_string.split("-");
+    //   var day = date_components[0];
+    //   var month = date_components[1];
+    //   var year = date_components[2];
+    //   return new Date(year, month - 1, day);
+    // }
+
+    const fetchDailyInvestments = async () => {
+      try {
+        const { data } = await getDailyInvestments(user.primaryEmailAddress.emailAddress);
+        const obj = {
+          categories: [],
+          data: []
+        }
+        Object.keys(data.data).forEach((key) => {
+          // obj.categories.push(formatDate(key).getTime());
+          obj.categories.push(key);
+          obj.data.push(parseFloat(Number(data.data[key]).toFixed(2)));
+        });
+
+        setDailyInvestments((prev) => ({
+          ...prev,
+          categories: [...prev.categories, ...obj.categories],
+          data: [...prev.data, ...obj.data],
+        }))
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchDailyInvestments();
+  }, [user]);
+
+  useEffect(() => {
+    if (showCalendar) {
+      document.addEventListener("click", handleClickOutside);
+
+      return () => {
+        document.removeEventListener("click", handleClickOutside);
+      };
+    }
+  }, [showCalendar]);
+
+  const handleClickOutside = (event) => {
+    event.preventDefault();
+
+    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
+      setShowCalendar(false);
+    }
   };
 
-  const handleEditRow = (idx) => {
-    setRowToEdit(rows[idx]);
-    // const rowToEdit = rows[idx];
-    setModalOpen(true);
+  const handleCalendarClose = () => {
+    setShowCalendar(false);
   };
-
-  const handleSubmit = (newRow) => {
-    rowToEdit === null
-      ? setRows([...rows, newRow])
-      : setRows(
-          rows.map((currRow, idx) => {
-            if (idx !== rowToEdit) return currRow;
-
-            return newRow;
-          })
-        );
-  };
-
-  const [activeButton, setActiveButton] = useState("monthly");
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
@@ -94,18 +131,6 @@ const Portfolio = () => {
     }
     return formattedData;
   }
-
-  const handleCalendarClose = () => {
-    setShowCalendar(false);
-  };
-
-  const handleClickOutside = (event) => {
-    event.preventDefault();
-
-    if (calendarRef.current && !calendarRef.current.contains(event.target)) {
-      setShowCalendar(false);
-    }
-  };
 
   return (
     <main>
@@ -176,7 +201,7 @@ const Portfolio = () => {
           >
             <div className="card-body">
               <div className="flex items-center justify-between">
-                <h4 className="text-xl font-semibold">Monthly Investment</h4>
+                <h4 className="text-xl font-semibold">Investments</h4>
                 <div className="segment flex gap-2">
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
@@ -212,7 +237,9 @@ const Portfolio = () => {
               </div>
               <div className="chartRef">
                 <div style={{ minHeight: "395px" }}>
-                  <Bar />
+                  {/* {dailyInvestments.categories.length !== 0 && ( */}
+                    <Bar investments={dailyInvestments} />
+                  {/* )} */}
                 </div>
               </div>
             </div>

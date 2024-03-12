@@ -29,10 +29,10 @@ const Header = ({ openModal }) => {
   const userRef = useRef(null);
   const notifyRef = useRef(null);
   let { notifications, numberOfUnreads } = useSelector((state) => state.notifications)
-  notifications = Object.values(notifications);
+  notifications = Object.values(notifications).reverse();
 
   const updateNotifcation = async (id) => {
-    if (numberOfUnreads) {
+    if (!numberOfUnreads) {
       return;
     }
 
@@ -236,7 +236,7 @@ const Header = ({ openModal }) => {
                 <li className="menu-item-header">
                   <div className="flex justify-center border-t border-gray-200 dark:border-gray-600 px-4 py-2">
                     <Link
-                      to="/app/account/activity-log"
+                      to="/app/activity-logs"
                       className="font-semibold cursor-pointer p-2 px-3 text-gray-600 hover:text-gray-900 dark:text-gray-200 dark:hover:text-white"
                     >
                       View All Activity
@@ -318,7 +318,7 @@ const Header = ({ openModal }) => {
                       style={{ height: "35px" }}
                     >
                       <Link
-                        to="/app/account/settings/profile"
+                        to="/app/profile"
                         className="flex h-full w-full px-2"
                       >
                         <span className="flex gap-2 items-center w-full">
@@ -350,7 +350,7 @@ const Header = ({ openModal }) => {
                       style={{ height: "35px" }}
                     >
                       <Link
-                        to="/app/account/activity-log"
+                        to="/app/activity-logs"
                         className="flex h-full w-full px-2"
                       >
                         <span className="flex gap-2 items-center w-full">

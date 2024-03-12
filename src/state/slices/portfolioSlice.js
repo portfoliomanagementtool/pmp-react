@@ -24,10 +24,16 @@ export const portfolioSlice = createSlice({
     saveTimeInterval: (state, action) => {
       state.interval = action.payload
     },
+    saveStartDate: (state, action) => {
+      state.interval.start = action.payload
+    },
+    saveEndDate: (state, action) => {
+      state.interval.end = action.payload
+    },
   }
 });
 
-export const { saveMetrics, saveEquityDistribution, saveTimeInterval } = portfolioSlice.actions;
+export const { saveMetrics, saveEquityDistribution, saveTimeInterval, saveStartDate, saveEndDate } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
 
 const formatNotifications = (notifications) => {

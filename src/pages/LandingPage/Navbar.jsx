@@ -56,14 +56,20 @@ const Navbar = () => {
       )}
       <div className="hidden lg:flex gap-4 lg:gap-5 mt-4 lg:mt-0">
         <button
-          className="border-black px-4 py-2 border-2 rounded-lg"
+          className="border-black px-4 py-2 border-2 rounded-lg hover:bg-[#473A6C] hover:border-[#473A6C] hover:text-white"
           onClick={() => navigate("/sign-in")}
         >
           Sign in
         </button>
-        <button className="bg-[#473A6C] px-4 py-2 border-[#473A6C] rounded-lg border-2 text-white">
-          Get Started
+        <button
+          className="border-black px-4 py-2 border-2 rounded-lg hover:bg-[#473A6C] hover:border-[#473A6C] hover:text-white"
+          onClick={() => navigate("/sign-in")}
+        >
+          Register
         </button>
+        {/* <button className="bg-[#473A6C] px-4 py-2 border-[#473A6C] rounded-lg border-2 text-white">
+          Get Started
+        </button> */}
       </div>
       {/* This section will be visible on mobile screens */}
     </div>

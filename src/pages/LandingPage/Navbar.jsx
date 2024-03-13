@@ -63,7 +63,7 @@ const Navbar = () => {
         </button>
         <button
           className="border-black px-4 py-2 border-2 rounded-lg hover:bg-[#473A6C] hover:border-[#473A6C] hover:text-white"
-          onClick={() => navigate("/sign-in")}
+          onClick={() => navigate("/sign-up")}
         >
           Register
         </button>

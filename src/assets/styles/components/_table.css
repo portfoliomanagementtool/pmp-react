@@ -41,3 +41,27 @@ th, td {
 .table-default tbody>tr>td {
   padding: 1rem 1.5rem;
 }
+
+.resizer {
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 5px;
+  background-color: #27bbff;
+  cursor: col-resize;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  border-radius: 6px;
+}
+
+.resizer .isResizing {
+  background-color: "#2eff31";
+  opacity: 1;
+}
+
+th:hover > .resizer {
+  opacity: 1;
+}

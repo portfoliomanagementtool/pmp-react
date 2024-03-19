@@ -41,7 +41,7 @@ const Area = ({ data, min, type }) => {
     },
     stroke: {
       width: 3,
-      // curve: "smooth",
+      curve: "smooth",
     },
     xaxis: {
       type: 'datetime',

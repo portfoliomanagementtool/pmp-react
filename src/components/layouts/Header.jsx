@@ -48,14 +48,16 @@ const Header = ({ openModal }) => {
 
   const markAllRead = async () => {
     if (!numberOfUnreads) {
-      try {
-        const { data } = await markAllNotificationsAsRead(user.primaryEmailAddress.emailAddress);
-        if(data.message) {
-          dispatch(markAllAsRead());
-        }
-      } catch (error) {
-        console.log(error.message);
+      return;
+    }
+
+    try {
+      const { data } = await markAllNotificationsAsRead(user.primaryEmailAddress.emailAddress);
+      if(data.message) {
+        dispatch(markAllAsRead());
       }
+    } catch (error) {
+      console.log(error.message);
     }
   };
 

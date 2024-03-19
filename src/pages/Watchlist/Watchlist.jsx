@@ -137,13 +137,14 @@ const Watchlist = () => {
                             <div className="flex items-center justify-between gap-4">
                               <div
                                 className="flex items-center px-1 cursor-pointer"
-                                onClick={() => handleStarClick(watchlists[key].ticker)}
                               >
-                                {watchlists[key] ? (
-                                  <BsStarFill size={20} color="yellow" />
-                                ) : (
-                                  <BsStar size={20} color="gray" />
-                                )}
+                                <span onClick={() => handleStarClick(watchlists[key].ticker)}>
+                                  {watchlists[key] ? (
+                                    <BsStarFill size={20} color="yellow" />
+                                  ) : (
+                                    <BsStar size={20} color="gray" />
+                                  )}
+                                </span>
                                 <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
                                   <Link to={`/app/asset/view/${watchlists[key].ticker}`} onClick={() => dispatch(setActive("assets"))}>
                                     {watchlists[key].ticker}

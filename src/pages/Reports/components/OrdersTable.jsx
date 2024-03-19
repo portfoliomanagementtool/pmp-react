@@ -9,6 +9,7 @@ import { GoGraph } from "react-icons/go";
 import dateFormat, { masks } from "dateformat";
 import { useNavigate } from "react-router-dom";
 import OrderStatusChip from "./card/OrderStatusChip";
+import Loader from "../../../components/Loader/Loader";
 
 const OrdersTable = ({ rows, deleteRow, editRow }) => {
   const getStatusColorClass = (status) => {
@@ -137,38 +138,43 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                     </th> */}
                   </tr>
                 </thead>
-                <tbody className="">
-                  {rows.map((row, idx) => (
-                    <React.Fragment key={idx}>
-                      <tr
-                        // className="cursor-pointer"
-                        // onClick={() => handleRowClick(idx)}
-                      >
-                        <td className="py-2">
-                          <div className="flex items-center">
-                            <span className="rtl:mr-2 font-semibold capitalize">
-                              {row.transaction_asset.category}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="py-2">
-                          <span className="capitalize">{row.transaction_asset.ticker}</span>
-                        </td>
-                        <td className="py-2">{row.quantity}</td>
-                        <td className="py-2">
-                          <OrderStatusChip status={handleStatus(row.buy_price, row.sell_price)} />
-                        </td>
-                        <td className="py-2">
-                          <span>₹{Number(row.buy_price !== null ? row.buy_price : row.sell_price).toFixed(2)}</span>
-                        </td>
-                        <td className="py-2">
-                          {dateFormat(row.updated_at, "h:MM TT, dS mmmm, yyyy")}
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  ))}
-                </tbody>
+                {rows.length !== 0 && (
+                  <tbody className="">
+                    {rows.map((row, idx) => (
+                      <React.Fragment key={idx}>
+                        <tr
+                          // className="cursor-pointer"
+                          // onClick={() => handleRowClick(idx)}
+                        >
+                          <td className="py-2">
+                            <div className="flex items-center">
+                              <span className="rtl:mr-2 font-semibold capitalize">
+                                {row.transaction_asset.category}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-2">
+                            <span className="capitalize">{row.transaction_asset.ticker}</span>
+                          </td>
+                          <td className="py-2">{row.quantity}</td>
+                          <td className="py-2">
+                            <OrderStatusChip status={handleStatus(row.buy_price, row.sell_price)} />
+                          </td>
+                          <td className="py-2">
+                            <span>₹{Number(row.buy_price !== null ? row.buy_price : row.sell_price).toFixed(2)}</span>
+                          </td>
+                          <td className="py-2">
+                            {dateFormat(row.updated_at, "h:MM TT, dS mmmm, yyyy")}
+                          </td>
+                        </tr>
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                )}
               </table>
+              {rows.length === 0 && (
+                <Loader />
+              )}
             </div>
             {/* <div className="flex items-center justify-between mt-4">
               <div className="pagination">

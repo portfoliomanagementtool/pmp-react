@@ -26,6 +26,7 @@ import {
   removeAssetFromWatchlist,
 } from "../../../state/slices/watchlistSlice";
 import { useUser } from "@clerk/clerk-react";
+import Loader from "../../../components/Loader/Loader";
 
 const SellBuyTable = ({ rows, deleteRow }) => {
   const dispatch = useDispatch();
@@ -204,104 +205,108 @@ const SellBuyTable = ({ rows, deleteRow }) => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="">
-                  {rows.map((row, idx) => {
-                    return (
-                      <tr
-                        key={idx}
-                        className={`cursor-pointer ${
-                          expandedRow === idx
-                            ? "bg-gray-200 text-black rounded-md"
-                            : ""
-                        }`}
-                        onMouseEnter={() => handleRowHover(idx, true)}
-                        onMouseLeave={() => handleRowHover(idx, false)}
-                      >
-                        <td className="py-2 !pl-4">
-                          <div className="flex items-center justify-between ">
-                            <div
-                              className="flex items-center px-1"
-                              onClick={() =>
-                                handleStarClick(row.portfolio_asset.ticker)
-                              }
-                            >
-                              {watchlists[row.portfolio_asset.ticker] ? (
-                                <BsStarFill size={20} color="yellow" />
-                              ) : (
-                                <BsStar size={20} color="gray" />
-                              )}
-                              <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                                <Link
-                                  to={`/app/asset/view/${row.portfolio_asset.ticker}`}
-                                  onClick={() => dispatch(setActive("assets"))}
-                                >
-                                  {row.portfolio_asset.name}
-                                </Link>
-                              </span>
+                {rows.length !== 0 && (
+                  <tbody className="">
+                    {rows.map((row, idx) => {
+                      return (
+                        <tr
+                          key={idx}
+                          className={`cursor-pointer ${
+                            expandedRow === idx
+                              ? "bg-gray-200 text-black rounded-md"
+                              : ""
+                          }`}
+                          onMouseEnter={() => handleRowHover(idx, true)}
+                          onMouseLeave={() => handleRowHover(idx, false)}
+                        >
+                          <td className="py-2 !pl-4">
+                            <div className="flex items-center justify-between ">
+                              <div
+                                className="flex items-center px-1"
+                              >
+                                <span onClick={() => handleStarClick(row.portfolio_asset.ticker)} >
+                                  {watchlists[row.portfolio_asset.ticker] ? (
+                                    <BsStarFill size={20} color="yellow" />
+                                  ) : (
+                                    <BsStar size={20} color="gray" />
+                                  )}
+                                </span>
+                                <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
+                                  <Link
+                                    to={`/app/asset/view/${row.portfolio_asset.ticker}`}
+                                    onClick={() => dispatch(setActive("assets"))}
+                                  >
+                                    {row.portfolio_asset.name}
+                                  </Link>
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        </td>
-                        <td className="py-2 relative">
-                          <div className="flex mx-auto justify-center items-center my-4 w-12">
-                            <button
-                              className={`buy-sell-button ${
-                                activeTab === "buy"
-                                  ? "bg-green-500 text-white"
-                                  : "bg-gray-300 text-gray-500"
-                              } px-4 py-2 rounded-l cursor-pointer hidden`}
-                              onClick={() => handleTabClick("buy", row)}
+                          </td>
+                          <td className="py-2 relative">
+                            <div className="flex mx-auto justify-center items-center my-4 w-12">
+                              <button
+                                className={`buy-sell-button ${
+                                  activeTab === "buy"
+                                    ? "bg-green-500 text-white"
+                                    : "bg-gray-300 text-gray-500"
+                                } px-4 py-2 rounded-l cursor-pointer hidden`}
+                                onClick={() => handleTabClick("buy", row)}
+                              >
+                                Buy
+                              </button>
+                              <button
+                                className={`buy-sell-button ${
+                                  activeTab === "sell"
+                                    ? "bg-red-500 text-white"
+                                    : "bg-gray-300 text-gray-500"
+                                }  px-4 py-2 rounded-r cursor-pointer hidden`}
+                                onClick={() => handleTabClick("sell", row)}
+                              >
+                                Sell
+                              </button>
+                            </div>
+                            <div
+                              className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
                             >
-                              Buy
-                            </button>
-                            <button
-                              className={`buy-sell-button ${
-                                activeTab === "sell"
-                                  ? "bg-red-500 text-white"
-                                  : "bg-gray-300 text-gray-500"
-                              }  px-4 py-2 rounded-r cursor-pointer hidden`}
-                              onClick={() => handleTabClick("sell", row)}
-                            >
-                              Sell
-                            </button>
-                          </div>
-                          <div
-                            className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
-                          >
-                            <button
-                              className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
-                              onClick={() => handleTabClick("buy", row)}
-                            >
-                              Buy
-                            </button>
-                            <button
-                              className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
-                              onClick={() => handleTabClick("sell", row)}
-                            >
-                              Sell
-                            </button>
-                          </div>
-                        </td>
-                        <td className="py-2">{row.quantity}</td>
-                        <td className="py-2">
-                          {Number(row.avgBasis).toFixed(2)}
-                        </td>
-                        <td className="py-2">
-                          {Number(row.costBasis).toFixed(2)}
-                        </td>
-                        <td className="py-2">
-                          {Number(row.marketValue).toFixed(2)}
-                        </td>
-                        <td className="py-2">
-                          {Number(row.profitLoss).toFixed(2)}
-                        </td>
-                        <td className="py-2">
-                          {Number(row.portfolio_asset.daypl).toFixed(2)}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
+                              <button
+                                className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
+                                onClick={() => handleTabClick("buy", row)}
+                              >
+                                Buy
+                              </button>
+                              <button
+                                className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
+                                onClick={() => handleTabClick("sell", row)}
+                              >
+                                Sell
+                              </button>
+                            </div>
+                          </td>
+                          <td className="py-2">{row.quantity}</td>
+                          <td className="py-2">
+                            {Number(row.avgBasis).toFixed(2)}
+                          </td>
+                          <td className="py-2">
+                            {Number(row.costBasis).toFixed(2)}
+                          </td>
+                          <td className="py-2">
+                            {Number(row.marketValue).toFixed(2)}
+                          </td>
+                          <td className="py-2">
+                            {Number(row.profitLoss).toFixed(2)}
+                          </td>
+                          <td className="py-2">
+                            {Number(row.portfolio_asset.daypl).toFixed(2)}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                )}
               </table>
+              {rows.length === 0 && (
+                <Loader />
+              )}
               <div>
                 {sellBuyModalOpen && (
                   <BuySellModal

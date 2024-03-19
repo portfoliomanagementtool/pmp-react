@@ -17,10 +17,10 @@ import {
 import abbreviate from "number-abbreviate";
 import Statistics from "./Statistics";
 import { useUser } from "@clerk/clerk-react";
+import Loader from "../../../components/Loader/Loader";
 
 const ViewAsset = () => {
   const { ticker } = useParams();
-  const dispatch = useDispatch();
   const { user } = useUser();
   const [assetDetails, setAssetDetails] = useState(null);
   const [portfolioAsset, setPortfolioAsset] = useState(null);
@@ -43,6 +43,8 @@ const ViewAsset = () => {
   }, [ticker]);
 
   console.log(assetDetails);
+  console.log(portfolioAsset);
+  console.log(assetPrice);
 
   useEffect(() => {
     const fetchPortfolioAssetDetails = async () => {
@@ -107,174 +109,181 @@ const ViewAsset = () => {
         <h3>View Asset</h3>
         <p>View the asset & summary</p>
       </div>
-      <div className="grid grid-cols-3">
-        <div className="col-span-3 row-span-2">
-          <div
-            className="card 2xl:col-span-8 xl:col-span-7 card-border"
-            role="presentation"
-          >
-            {assetDetails && assetPrice && areaData && (
-              <Statistics
-                assetDetails={assetDetails}
-                candleData={assetPrice}
-                areaData={areaData}
-              />
-            )}
-          </div>
-        </div>
-      </div>
-      {portfolioAsset && (
+      {(assetDetails && assetPrice) && (
         <>
-          <h3 className="mt-4">My Portfolio</h3>
-          <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
-            <Card
-              title="Average Price"
-              value={`₹${abbreviate(portfolioAsset.avgBasis, 2)}`}
-            />
-            <Card
-              title="Current Value"
-              value={`₹${abbreviate(portfolioAsset.marketValue, 2)}`}
-            />
-            <Card title="Quantity" value={portfolioAsset.quantity} />
-            <Card
-              title="Unrealised P/L"
-              value={`₹${abbreviate(portfolioAsset.profitLoss, 2)}`}
-              type={
-                parseInt(portfolioAsset.profitLoss) >= 0
-                  ? "text-green-500"
-                  : "text-red-500"
-              }
-            />
-            <Card
-              title="Day's P/L"
-              value={`₹${abbreviate(portfolioAsset.daypl, 2)}`}
-              type={
-                parseInt(portfolioAsset.daypl) >= 0
-                  ? "text-green-500"
-                  : "text-red-500"
-              }
-            />
-          </div>
-        </>
-      )}
-      {assetDetails && (
-        <>
-          <h3 className="mt-4">Asset Details</h3>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="card card-border mt-4 " role="presentation">
-              <div className="card-body  ">
-                <div className="flex justify-between items-center my-3">
-                  <h6 className="font-semibold mb-4 text-sm">CURRENT PRICE</h6>
-                  <h3 className="font-bold">
-                    <span>₹{abbreviate(assetDetails.market_value, 2)}</span>
-                  </h3>
-                </div>
-                <div className="flex justify-between items-center my-4">
-                  <h6 className="font-semibold mb-4 text-sm">OPEN PRICE</h6>
-                  <h3 className="font-bold">
-                    <span>₹{abbreviate(assetDetails.open, 2)}</span>
-                  </h3>
-                </div>
-                <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">PREV CLOSE</h6>
-                  <h3 className="font-bold">
-                    <span>₹{abbreviate(assetDetails.close, 2)}</span>
-                  </h3>
-                </div>
+          <div className="grid grid-cols-3">
+            <div className="col-span-3 row-span-2">
+              <div
+                className="card 2xl:col-span-8 xl:col-span-7 card-border"
+                role="presentation"
+              >
+                {assetDetails && assetPrice && areaData && (
+                  <Statistics
+                    assetDetails={assetDetails}
+                    candleData={assetPrice}
+                    areaData={areaData}
+                  />
+                )}
               </div>
             </div>
-            <div className="card card-border mt-4" role="presentation">
+          </div>
+          {portfolioAsset && (
+            <>
+              <h3 className="mt-4">My Portfolio</h3>
+              <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
+                <Card
+                  title="Average Price"
+                  value={`₹${abbreviate(portfolioAsset.avgBasis, 2)}`}
+                />
+                <Card
+                  title="Current Value"
+                  value={`₹${abbreviate(portfolioAsset.marketValue, 2)}`}
+                />
+                <Card title="Quantity" value={portfolioAsset.quantity} />
+                <Card
+                  title="Unrealised P/L"
+                  value={`₹${abbreviate(portfolioAsset.profitLoss, 2)}`}
+                  type={
+                    parseInt(portfolioAsset.profitLoss) >= 0
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                />
+                <Card
+                  title="Day's P/L"
+                  value={`₹${abbreviate(portfolioAsset.daypl, 2)}`}
+                  type={
+                    parseInt(portfolioAsset.daypl) >= 0
+                      ? "text-green-500"
+                      : "text-red-500"
+                  }
+                />
+              </div>
+            </>
+          )}
+          {assetDetails && (
+            <>
+              <h3 className="mt-4">Asset Details</h3>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                <div className="card card-border mt-4 " role="presentation">
+                  <div className="card-body  ">
+                    <div className="flex justify-between items-center my-3">
+                      <h6 className="font-semibold mb-4 text-sm">CURRENT PRICE</h6>
+                      <h3 className="font-bold">
+                        <span>₹{abbreviate(assetDetails.market_value, 2)}</span>
+                      </h3>
+                    </div>
+                    <div className="flex justify-between items-center my-4">
+                      <h6 className="font-semibold mb-4 text-sm">OPEN PRICE</h6>
+                      <h3 className="font-bold">
+                        <span>₹{abbreviate(assetDetails.open, 2)}</span>
+                      </h3>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <h6 className="font-semibold mb-4 text-sm">PREV CLOSE</h6>
+                      <h3 className="font-bold">
+                        <span>₹{abbreviate(assetDetails.close, 2)}</span>
+                      </h3>
+                    </div>
+                  </div>
+                </div>
+                <div className="card card-border mt-4" role="presentation">
+                  <div className="card-body">
+                    <div className="flex justify-between items-center">
+                      <h6 className="font-semibold mb-4 text-sm">
+                        Today's Low-High
+                      </h6>
+                      <div>
+                        <div className="flex justify-between">
+                          <h6>{abbreviate(assetDetails.highLow.today.low, 2)}</h6>
+                          <h6>{abbreviate(assetDetails.highLow.today.high, 2)}</h6>
+                        </div>
+                        <CustomSlider
+                          value={parseInt(
+                            (assetDetails.market_value /
+                              assetDetails.highLow.today.high) *
+                              100
+                          )}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <h6 className="font-semibold mb-4 text-sm">
+                        52 Week Low-High
+                      </h6>
+                      <div>
+                        <div className="flex justify-between">
+                          <h6>
+                            {abbreviate(assetDetails.highLow["52week"].low, 2)}
+                          </h6>
+                          <h6>
+                            {abbreviate(assetDetails.highLow["52week"].high, 2)}
+                          </h6>
+                        </div>
+                        <CustomSlider
+                          value={parseInt(
+                            (assetDetails.market_value /
+                              assetDetails.highLow["52week"].high) *
+                              100
+                          )}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <h6 className="font-semibold mb-4 text-sm">
+                        Lower-Upper Circuit
+                      </h6>
+                      <div>
+                        <div className="flex justify-between">
+                          <h6>{abbreviate(assetDetails.highLow.overall.low, 2)}</h6>
+                          <h6>
+                            {abbreviate(assetDetails.highLow.overall.high, 2)}
+                          </h6>
+                        </div>
+                        <CustomSlider
+                          value={parseInt(
+                            (assetDetails.market_value /
+                              assetDetails.highLow.overall.high) *
+                              100
+                          )}
+                          disabled
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+            <div
+              className="card card-border mt-4 bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 text-center cursor-pointer hover:bg-green-700"
+              role="presentation"
+              onClick={() => openModal("BUY")}
+            >
               <div className="card-body">
-                <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">
-                    Today's Low-High
-                  </h6>
-                  <div>
-                    <div className="flex justify-between">
-                      <h6>{abbreviate(assetDetails.highLow.today.low, 2)}</h6>
-                      <h6>{abbreviate(assetDetails.highLow.today.high, 2)}</h6>
-                    </div>
-                    <CustomSlider
-                      value={parseInt(
-                        (assetDetails.market_value /
-                          assetDetails.highLow.today.high) *
-                          100
-                      )}
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">
-                    52 Week Low-High
-                  </h6>
-                  <div>
-                    <div className="flex justify-between">
-                      <h6>
-                        {abbreviate(assetDetails.highLow["52week"].low, 2)}
-                      </h6>
-                      <h6>
-                        {abbreviate(assetDetails.highLow["52week"].high, 2)}
-                      </h6>
-                    </div>
-                    <CustomSlider
-                      value={parseInt(
-                        (assetDetails.market_value /
-                          assetDetails.highLow["52week"].high) *
-                          100
-                      )}
-                      disabled
-                    />
-                  </div>
-                </div>
-                <div className="flex justify-between items-center">
-                  <h6 className="font-semibold mb-4 text-sm">
-                    Lower-Upper Circuit
-                  </h6>
-                  <div>
-                    <div className="flex justify-between">
-                      <h6>{abbreviate(assetDetails.highLow.overall.low, 2)}</h6>
-                      <h6>
-                        {abbreviate(assetDetails.highLow.overall.high, 2)}
-                      </h6>
-                    </div>
-                    <CustomSlider
-                      value={parseInt(
-                        (assetDetails.market_value /
-                          assetDetails.highLow.overall.high) *
-                          100
-                      )}
-                      disabled
-                    />
-                  </div>
-                </div>
+                <h6 className="text-white">BUY</h6>
+              </div>
+            </div>
+
+            <div
+              className="card card-border mt-4 bg-red-500 dark:bg-red-600 dark:hover:bg-red-500 text-center cursor-pointer hover:bg-red-600"
+              role="presentation"
+              onClick={() => openModal("SELL")}
+            >
+              <div className="card-body text-white">
+                <h6 className="text-white">SELL</h6>
               </div>
             </div>
           </div>
         </>
       )}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
-        <div
-          className="card card-border mt-4 bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 text-center cursor-pointer hover:bg-green-700"
-          role="presentation"
-          onClick={() => openModal("BUY")}
-        >
-          <div className="card-body">
-            <h6 className="text-white">BUY</h6>
-          </div>
-        </div>
-
-        <div
-          className="card card-border mt-4 bg-red-500 dark:bg-red-600 dark:hover:bg-red-500 text-center cursor-pointer hover:bg-red-600"
-          role="presentation"
-          onClick={() => openModal("SELL")}
-        >
-          <div className="card-body text-white">
-            <h6 className="text-white">SELL</h6>
-          </div>
-        </div>
-      </div>
+      {!(assetDetails && assetPrice) && (
+        <Loader />
+      )}
 
       {isModalOpen && (
         <BuySellModal

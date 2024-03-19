@@ -3,7 +3,6 @@ import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 
 const Bar = ({ investments }) => {
-  console.log(investments)
   const mode = useSelector((state) => state.config.mode);
   const series = [{
     name: 'Investment',

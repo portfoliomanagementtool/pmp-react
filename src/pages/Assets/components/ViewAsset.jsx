@@ -42,10 +42,6 @@ const ViewAsset = () => {
     fetchAssetDetails();
   }, [ticker]);
 
-  console.log(assetDetails);
-  console.log(portfolioAsset);
-  console.log(assetPrice);
-
   useEffect(() => {
     const fetchPortfolioAssetDetails = async () => {
       try {

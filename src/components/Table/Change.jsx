@@ -10,7 +10,7 @@ const Change = ({ getValue }) => {
           : "text-red-500"
       }`}
     >
-      {change?.value} ({change?.percentage}%)
+      {Number(change?.value).toFixed(2)} ({Number(change?.percentage).toFixed(2)}%)
     </span>
   )
 }

@@ -11,7 +11,7 @@ import { useDispatch } from "react-redux";
 const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  console.log(defaultValue);
+  // console.log(defaultValue);
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
     }
   );
 
-  console.log(defaultValue);
+  // console.log(defaultValue);
 
   const MoreDetailsClick = () => {
     setMoreDetailsModalOpen(true);
@@ -44,7 +44,6 @@ const Modal = ({ onSubmit, closeModal, defaultValue }) => {
   };
 
   const handleClose = () => {
-    console.log("hi");
     setModalOpen(false);
     closeModal();
   };

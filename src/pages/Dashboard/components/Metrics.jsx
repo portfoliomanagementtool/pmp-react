@@ -3,7 +3,7 @@ import React from 'react'
 const Metrics = ({title,Amount,percentage}) => {
   // Assuming percentage is a string like "-90.56(-0.47%)"
 const percentageValue = parseFloat(percentage.match(/[-+]?[\d.]+/)[0]);
-console.log(percentageValue);
+// console.log(percentageValue);
 const isPositive = percentageValue >= 0;
   return (
     <>  

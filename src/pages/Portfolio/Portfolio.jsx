@@ -41,7 +41,6 @@ const Portfolio = () => {
     const fetchPortfolio = async () => {
       try {
         const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
-        console.log(data)
         setRows(data.assets);
       } catch (error) {
         console.log(error.message);

@@ -28,7 +28,7 @@ const BuySellModal = ({
     }
   );
   const [quantity, setQuantity] = useState(formState.quantity);
-  console.log(formState);
+  // console.log(formState);
 
   const [errors, setErrors] = useState("");
 
@@ -73,7 +73,7 @@ const BuySellModal = ({
       price: formState.market_value,
     }
 
-    console.log(formData)
+    // console.log(formData)
 
     if (checked) {
       dispatch(sellAsset(formData, email, interval));

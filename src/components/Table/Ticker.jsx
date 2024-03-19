@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { setActive } from "../../../../state/slices/configSlice";
+import { setActive } from "../../state/slices/configSlice";
 
 const Ticker = ({ getValue }) => {
   const dispatch = useDispatch();

@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { CiFilter } from "react-icons/ci";
 import { BiSort } from "react-icons/bi";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
-import Ticker from "../../../Assets/components/table/Ticker";
-import Change from "../../../Assets/components/table/Change";
+import Ticker from "../../../../components/Table/Ticker";
+import Change from "../../../../components/Table/Change"
 
 const columns = [
   {
@@ -38,12 +38,10 @@ const columns = [
 ]
 
 const TopListing = ({ name, rows }) => {
-  const [data, setData] = useState(rows);
   const [columnFilters, setColumnFilters] = useState([]);
-  console.log(data)
 
   const table = useReactTable({
-    data,
+    data: rows,
     columns,
     state:{
       columnFilters,

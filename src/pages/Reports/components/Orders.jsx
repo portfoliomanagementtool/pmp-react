@@ -11,7 +11,7 @@ const Orders = () => {
     const fetchAllTransactions = async () => {
       try {
         const { data } = await getAllTransactions(user.primaryEmailAddress.emailAddress);
-        console.log(data)
+        // console.log(data)
         setRows(data.data);
       } catch (error) {
         console.log(error.message) 

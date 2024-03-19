@@ -77,7 +77,7 @@ export const addAssetToWatchlist = (data, watchlistId, email) => async (dispatch
 };
 
 export const removeAssetFromWatchlist = (data, watchlistId, email) => async (dispatch) => {
-  console.log(data, watchlistId, email)
+  // console.log(data, watchlistId, email)
   try {
     await removeFromWatchlist(data, watchlistId, email);
     

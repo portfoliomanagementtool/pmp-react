@@ -51,7 +51,7 @@ export const fetchNotifcations = (email) => async (dispatch) => {
   try {
     const { data } = await getNotifications(email);
     const notifications = formatNotifications(data.data)
-    console.log(notifications)
+    // console.log(notifications)
     dispatch(saveNotifications({
       notifications,
       unread: data.count

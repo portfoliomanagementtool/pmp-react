@@ -39,7 +39,7 @@ export default portfolioSlice.reducer;
 export const fetchMetrics = (interval, email) => async (dispatch) => {
   const { start, end } = interval;
 
-  console.log(start, end)
+  // console.log(start, end)
 
   try {
     const { data } = await getMetrics(start, end, email);
@@ -69,8 +69,7 @@ const formatNotifications = (notifications) => {
 export const buyAsset = (data, email, interval) => async (dispatch) =>{
   console.log("buy", data)
   try {
-    const result = await buyAssetAPI(data, email);
-    console.log(result)
+    await buyAssetAPI(data, email);
 
     try {
       const { data } = await getMetrics(interval.start, interval.end, email);
@@ -98,8 +97,7 @@ export const buyAsset = (data, email, interval) => async (dispatch) =>{
 export const sellAsset = (data, email, interval) => async (dispatch) =>{
   console.log("buy", data)
   try {
-    const result = await sellAssetAPI(data, email);
-    console.log(result)
+    await sellAssetAPI(data, email);
 
     try {
       const { data } = await getMetrics(interval.start, interval.end, email);

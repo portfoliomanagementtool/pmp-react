@@ -95,7 +95,7 @@ const columns = [
   },
 ]
 
-const AssetTable = ({ rows, categories }) => {
+const AssetTable = ({ title, rows, categories }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useUser();
@@ -186,11 +186,10 @@ const AssetTable = ({ rows, categories }) => {
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
-  console.log(categories)
-
   return (
     <>
       <Filters
+        title={title}
         categories={categories}
         columnFilters={columnFilters}
         setColumnFilters={setColumnFilters}

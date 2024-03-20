@@ -28,7 +28,6 @@ const Assets = () => {
     const formatData = (data) => {
       return data.map((item, index) => {
         return {
-          item: item,
           id: index,
           ticker: item.ticker,
           name: item.name,
@@ -51,8 +50,8 @@ const Assets = () => {
     const fetchAssets = async () => {
       try {
         const { data } = await getAllAssets();
-        const rows = formatData(data);
-        setRows(rows);
+        const formattedData = formatData(data);
+        setRows(formattedData);
       } catch (error) {
         console.log(error.message)
       }
@@ -60,8 +59,6 @@ const Assets = () => {
 
     fetchAssets();
   }, []);
-
-  console.log("first")
 
   return (
     <>
@@ -71,7 +68,7 @@ const Assets = () => {
       >
         <div className="card h-full border-0 card-border" role="presentation">
           <div className="card-body card-gutterless h-full">
-            <AssetTable rows={rows} categories={Object.keys(categories)} />
+            <AssetTable title="All Assets" rows={rows} categories={Object.keys(categories)} />
           </div>
         </div>
       </div>

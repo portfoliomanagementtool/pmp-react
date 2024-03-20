@@ -4,7 +4,7 @@ import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
 import FilterPopOver from "./FilterPopOver";
 
-const Filters = ({ columnFilters, setColumnFilters, categories }) => {
+const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
   const filterRef = useRef(null);
   const assetName = columnFilters.find((f) => f.id === "ticker")?.value || "";
   const [filterDropdown, showFilterDropdown] = useState(false);
@@ -40,7 +40,7 @@ const Filters = ({ columnFilters, setColumnFilters, categories }) => {
 
   return (
     <div className="lg:flex  items-center justify-between mb-4">
-      <h3 className="mb-4 lg:mb-0">All Assets</h3>
+      <h3 className="mb-4 lg:mb-0">{title}</h3>
       <div className="flex flex-col lg:flex-row  lg:items-center">
         <span className="input-wrapper lg:my-1 max-w-md md:w-52 md:mb-0 mb-4">
           <div className="input-suffix-start ml-2">

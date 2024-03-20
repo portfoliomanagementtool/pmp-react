@@ -1,79 +1,125 @@
 import React, { useState } from "react";
-import {
-  BsFillTrashFill,
-  BsFillPencilFill,
-  BsThreeDotsVertical,
-  BsStarFill,
-  BsStar,
-} from "react-icons/bs";
-import addProduct from "../../../components/svg/add.svg";
-import { CiStar } from "react-icons/ci";
-import { IoIosAddCircle } from "react-icons/io";
-import { RiDownloadLine } from "react-icons/ri";
-import { CiFilter } from "react-icons/ci";
-import { FiSearch } from "react-icons/fi";
-import { GoGraph } from "react-icons/go";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { saveEditAsset } from "../../../state/slices/assetSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BuySellModal from "./Modals/BuySellModal";
-import Modal from "./Modals/Modal";
-import DropdownMenu from "./Modals/DropdownMenu";
-import { Scrollbars } from "react-custom-scrollbars-2";
-import { setActive } from "../../../state/slices/configSlice";
-import {
-  addAssetToWatchlist,
-  removeAssetFromWatchlist,
-} from "../../../state/slices/watchlistSlice";
-import { useUser } from "@clerk/clerk-react";
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import Loader from "../../../components/Loader/Loader";
+import Filters from "../../../components/Table/Filters";
+import { BiSort } from "react-icons/bi";
+import WatchlistStar from "../../../components/Table/WatchlistStar";
+import Details from "../../../components/Table/Details";
+import BuySellButton from "../../../components/Table/BuySellButton";
+import Pagination from "../../../components/Table/Pagination";
 
-const SellBuyTable = ({ rows, deleteRow }) => {
+const columns = [
+  {
+    accessorKey: 'id',
+    header: "",
+    size: 20,
+    cell: WatchlistStar,
+    enableSorting: false,
+    enableColumnFilter: true,
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: 'name',
+    header: "Name",
+    // size: 225,
+    cell: Details,
+    enableColumnFilter: true,
+    filterFn: "includesString",
+  },
+  {
+    accessorKey: 'ticker',
+    header: "",
+    size: 225,
+    cell: BuySellButton,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'category',
+    header: "Category",
+    cell: (props) => <span>{props.getValue()}</span>,
+    enableSorting: true,
+    enableColumnFilter: true,
+    filterFn: (row, columnId, filterCategories) => {
+      if (filterCategories.length === 0) return true;
+      const category = row.getValue(columnId);
+      return filterCategories.includes(category);
+    },
+  },
+  {
+    accessorKey: 'quantity',
+    header: "qty",
+    cell: (props) => <p>{props.getValue()}</p>,
+    enableSorting: false,
+  },
+  {
+    accessorKey: 'atp',
+    header: "ATP",
+    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+  },
+  {
+    accessorKey: 'inv_amount',
+    header: "Inv Amount",
+    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+  },
+  {
+    accessorKey: 'market_value',
+    header: "Mkt Value",
+    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+  },
+  {
+    accessorKey: 'overall_gl',
+    header: "Overall GL",
+    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+  },
+  {
+    accessorKey: 'day_gl',
+    header: "Day's GL",
+    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+  },
+];
+
+const SellBuyTable = ({ title, rows, categories }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useUser();
-  const { watchlists, id } = useSelector((state) => state.watchlists);
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
-  const [detail, setDetail] = useState(null);
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [rowHovered, setRowHovered] = useState(null);
 
-  // const [starClicked, setStarClicked] = useState(
-  //   Array(rows.length).fill(false)
-  // );
+  const table = useReactTable({
+    data: rows,
+    columns,
+    state:{
+      columnFilters,
+      rowHovered
+    },
+    getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    columnResizeMode: "onChange",
+    meta: {
+      updateTab: (tab, row) => handleTabClick(tab, row),
+    },
+  });
 
   const handleClose = () => {
     setModalOpen(false);
     closeModal();
   };
+
   const handleRowHover = (idx, isHovered) => {
     const group = document.querySelector(`.buy-sell-group-hover-${idx}`);
     if (group) {
       group.style.opacity = isHovered ? "1" : "0";
     }
-  };
-
-  const handleStarClick = (ticker) => {
-    const email = user.primaryEmailAddress.emailAddress;
-
-    try {
-      if (watchlists[ticker]) {
-        console.log("remove", { ticker: ticker }, id, email);
-        dispatch(removeAssetFromWatchlist({ ticker: ticker }, id, email));
-        return;
-      }
-
-      console.log("add", { ticker: ticker }, id, email);
-      dispatch(addAssetToWatchlist({ ticker: ticker }, id, email));
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const handleThreeDotsClick = (idx) => {
-    setDetail(idx === detail ? null : idx);
   };
 
   const toggleRow = (idx) => {
@@ -123,205 +169,89 @@ const SellBuyTable = ({ rows, deleteRow }) => {
     >
       <div className="card h-full border-0 card-border" role="presentation">
         <div className="card-body card-gutterless h-full">
-          <div className="lg:flex items-center justify-between mb-4">
-            <h3 className="mb-4 lg:mb-0">My Assets</h3>
-            <div className="flex flex-col lg:flex-row  lg:items-center">
-              <span className="input-wrapper lg:my-1 max-w-md md:w-52 md:mb-0 mb-4">
-                <div className="input-suffix-start ml-2">
-                  <FiSearch />
-                </div>
-
-                <input
-                  className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600 pl-[2.125rem]"
-                  type="text"
-                  placeholder="Search asset"
-                />
-              </span>
-
-              <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block md:ml-2 md:mr-2 md:mb-0 mb-4">
-                <span className="flex items-center justify-center">
-                  <span className="text-lg">
-                    <CiFilter />
-                  </span>
-                  <span className="ml-1 mr-1">Filter</span>
-                </span>
-              </button>
-
-              {/* <a
-                className="block lg:inline-block md:mb-0 mb-4"
-                href="/app/funds/ticker-new"
-              >
-                <button className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
-                  <span className="flex items-center justify-center">
-                    <span className="text-lg mr-1">
-                      <IoIosAddCircle />
-                    </span>
-                    <span className="ml-1 mr-1">Add Product</span>
-                  </span>
-                </button>
-              </a> */}
-            </div>
-          </div>
-          <div className="">
-            <div className=" overflow-x-auto">
-              <table className="table-default table-hover">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 ">
-                  <tr className="">
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center text-center items-center dark:text-white">
-                        Name
-                      </div>
-                    </th>
-                    <th className="" colSpan="1"></th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Qty
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        ATP
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Inv Amount
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Mkt Value
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Overall G/L
-                      </div>
-                    </th>
-                    <th className="" colSpan="1">
-                      <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                        Day's G/L
-                      </div>
-                    </th>
+          <Filters 
+            title={title} 
+            categories={categories}
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters} 
+          />
+          <div className="overflow-x-auto h-full">
+            <table width={table.getTotalSize()} className="table-default table-hover w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 font-bold dark:text-gray-400">
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <tr key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => (
+                      <th key={header.id} width={header.getSize()} className="font-bold px-6 py-3 dark:text-gray-300">
+                        <span className="flex justify-start items-center gap-1">
+                          {header.column.columnDef.header}
+                          <>
+                            {
+                              header.column.getCanSort() && (
+                                <span className="cursor-pointer" onClick={header.column.getToggleSortingHandler()}>
+                                  <BiSort size={14} />
+                                </span>
+                              )
+                            }
+                            {
+                              {
+                                asc: "🔼",
+                                desc: "🔽",
+                              }[header.column.getIsSorted()]
+                            }
+                          </>
+                        </span>
+                        {/* <div 
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`resizer ${
+                            header.column.getIsResizing() ? "isResizing" : ""
+                          }`} 
+                        /> */}
+                      </th>
+                    ))}
                   </tr>
-                </thead>
-                {rows.length !== 0 && (
-                  <tbody className="">
-                    {rows.map((row, idx) => {
-                      return (
-                        <tr
-                          key={idx}
-                          className={`cursor-pointer ${
-                            expandedRow === idx
-                              ? "bg-gray-200 text-black rounded-md"
-                              : ""
-                          }`}
-                          onMouseEnter={() => handleRowHover(idx, true)}
-                          onMouseLeave={() => handleRowHover(idx, false)}
-                        >
-                          <td className="py-2 !pl-4">
-                            <div className="flex items-center justify-between ">
-                              <div
-                                className="flex items-center px-1"
-                              >
-                                <span onClick={() => handleStarClick(row.portfolio_asset.ticker)} >
-                                  {watchlists[row.portfolio_asset.ticker] ? (
-                                    <BsStarFill size={20} color="yellow" />
-                                  ) : (
-                                    <BsStar size={20} color="gray" />
-                                  )}
-                                </span>
-                                <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                                  <Link
-                                    to={`/app/asset/view/${row.portfolio_asset.ticker}`}
-                                    onClick={() => dispatch(setActive("assets"))}
-                                  >
-                                    {row.portfolio_asset.name}
-                                  </Link>
-                                </span>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-2 relative">
-                            <div className="flex mx-auto justify-center items-center my-4 w-12">
-                              <button
-                                className={`buy-sell-button ${
-                                  activeTab === "buy"
-                                    ? "bg-green-500 text-white"
-                                    : "bg-gray-300 text-gray-500"
-                                } px-4 py-2 rounded-l cursor-pointer hidden`}
-                                onClick={() => handleTabClick("buy", row)}
-                              >
-                                Buy
-                              </button>
-                              <button
-                                className={`buy-sell-button ${
-                                  activeTab === "sell"
-                                    ? "bg-red-500 text-white"
-                                    : "bg-gray-300 text-gray-500"
-                                }  px-4 py-2 rounded-r cursor-pointer hidden`}
-                                onClick={() => handleTabClick("sell", row)}
-                              >
-                                Sell
-                              </button>
-                            </div>
-                            <div
-                              className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
-                            >
-                              <button
-                                className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
-                                onClick={() => handleTabClick("buy", row)}
-                              >
-                                Buy
-                              </button>
-                              <button
-                                className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
-                                onClick={() => handleTabClick("sell", row)}
-                              >
-                                Sell
-                              </button>
-                            </div>
-                          </td>
-                          <td className="py-2">{row.quantity}</td>
-                          <td className="py-2">
-                            {Number(row.avgBasis).toFixed(2)}
-                          </td>
-                          <td className="py-2">
-                            {Number(row.costBasis).toFixed(2)}
-                          </td>
-                          <td className="py-2">
-                            {Number(row.marketValue).toFixed(2)}
-                          </td>
-                          <td className="py-2">
-                            {Number(row.profitLoss).toFixed(2)}
-                          </td>
-                          <td className="py-2">
-                            {Number(row.portfolio_asset.daypl).toFixed(2)}
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                )}
-              </table>
-              {rows.length === 0 && (
-                <Loader />
+                ))}
+              </thead>
+              {rows.length !== 0 && (
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr key={row.id} onMouseEnter={() => setRowHovered(row.id)} onMouseLeave={() => setRowHovered(null)} className="cursor-pointer bg-white border-b hover:bg-slate-50 dark:hover:opacity-80 dark:hover:bg-slate-700 dark:bg-gray-800 dark:border-gray-700">
+                      {row.getVisibleCells().map((cell) => (
+                        <td key={cell.id} width={cell.column.getSize()} className="py-4">
+                          {
+                            flexRender(
+                              cell.column.columnDef.cell,
+                              cell.getContext(),
+                            )
+                          }
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
               )}
-              <div>
-                {sellBuyModalOpen && (
-                  <BuySellModal
-                    onSubmit={handleClose}
-                    closeModal={closeBuySellModal}
-                    initialChecked={activeTab === "sell"}
-                    defaultValue={{
-                      category: selectedRowData.portfolio_asset.category,
-                      ticker: selectedRowData.portfolio_asset.ticker,
-                      market_value: selectedRowData.portfolio_asset.pricing,
-                      quantity: selectedRowData.quantity,
-                    }}
-                  />
-                )}
-              </div>
+            </table>
+            <br />
+            {rows.length > 10 && (
+              <Pagination table={table} />
+            )}
+            {rows.length === 0 && (
+              <Loader />
+            )}
+            <div>
+              {sellBuyModalOpen && (
+                <BuySellModal
+                  onSubmit={handleClose}
+                  closeModal={closeBuySellModal}
+                  initialChecked={activeTab === "sell"}
+                  defaultValue={{
+                    category: selectedRowData.category,
+                    ticker: selectedRowData.ticker,
+                    market_value: selectedRowData.market_value,
+                    quantity: selectedRowData.quantity,
+                  }}
+                />
+              )}
             </div>
           </div>
         </div>

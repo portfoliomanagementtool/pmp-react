@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BsStarFill, BsStar } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import BuySellModal from "./BuySellModal";
-import { useUser } from "@clerk/clerk-react";
-import { useDispatch, useSelector } from "react-redux";
-import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
 import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import Loader from "../../../components/Loader/Loader";
 import { BiSort } from "react-icons/bi";
@@ -96,10 +93,7 @@ const columns = [
 ]
 
 const AssetTable = ({ title, rows, categories }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useUser();
-  const { watchlists, id } = useSelector((state) => state.watchlists);
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
@@ -152,23 +146,6 @@ const AssetTable = ({ title, rows, categories }) => {
     const group = document.querySelector(`.buy-sell-group-hover-${idx}`);
     if (group) {
       group.style.opacity = isHovered ? "1" : "0";
-    }
-  };
-
-  const handleStarClick = (ticker) => {
-    const email = user.primaryEmailAddress.emailAddress;
-
-    try {
-      if (watchlists[ticker]) {
-        console.log("remove", { ticker: ticker }, id, email);
-        dispatch(removeAssetFromWatchlist({ ticker: ticker }, id, email));
-        return;
-      }
-
-      console.log("add", { ticker: ticker }, id, email);
-      dispatch(addAssetToWatchlist({ ticker: ticker }, id, email));
-    } catch (error) {
-      console.log(error.message);
     }
   };
 

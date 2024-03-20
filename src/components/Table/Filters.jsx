@@ -6,7 +6,7 @@ import FilterPopOver from "./FilterPopOver";
 
 const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
   const filterRef = useRef(null);
-  const assetName = columnFilters.find((f) => f.id === "ticker")?.value || "";
+  const assetName = columnFilters.find((f) => f.id === "name")?.value || "";
   const [filterDropdown, showFilterDropdown] = useState(false);
 
   const onFilterChange = (id, value) =>
@@ -52,7 +52,7 @@ const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
             value={assetName}
             type="text"
             placeholder="Search asset"
-            onChange={(e) => onFilterChange("ticker", e.target.value)}
+            onChange={(e) => onFilterChange("name", e.target.value)}
           />
         </span>
 

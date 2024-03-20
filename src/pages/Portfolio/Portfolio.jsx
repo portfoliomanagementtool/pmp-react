@@ -36,19 +36,55 @@ const Portfolio = () => {
     endDate: dayjs(interval.end),
   });
   const calendarRef = useRef(null);
+  const [personalCategories, setPersonalCategories] = useState({})
+
+  useEffect(() => {
+    if(rows.length !== 0) {
+      rows.forEach((item) => {
+        if(!personalCategories[item.category] && item.category) {
+          setPersonalCategories((prev) => {
+            let category = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+
+            return {
+              ...prev,
+              [category]: "true"
+            }
+          })
+        }
+      })
+    }
+  }, [rows]);
   
   useEffect(() => {
+    const formatData = (data) => {
+      return data.map((item, index) => {
+        return {
+          id: index,
+          ticker: item.portfolio_asset.ticker,
+          name: item.portfolio_asset.name,
+          category: item.portfolio_asset.category.charAt(0).toUpperCase() + item.portfolio_asset.category.slice(1),
+          quantity: item.quantity,
+          atp: item.avgBasis,
+          inv_amount: item.costBasis,
+          market_value: item.marketValue,
+          overall_gl: item.profitLoss,
+          day_gl: item.portfolio_asset.daypl,
+        };
+      })
+    }
+
     const fetchPortfolio = async () => {
       try {
         const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
-        setRows(data.assets);
+        const formattedData = formatData(data.assets);
+        setRows(formattedData);
       } catch (error) {
         console.log(error.message);
       }
     };
 
     fetchPortfolio();
-  }, [user, metrics]);
+  }, [user]);
 
   useEffect(() => {
     let labels = Object.keys(equityDistribution);
@@ -273,7 +309,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        <SellBuyTable rows={rows} />
+        <SellBuyTable title="My Assets" rows={rows} categories={Object.keys(personalCategories)} />
       </div>
     </main>
   );

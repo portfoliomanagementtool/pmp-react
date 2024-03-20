@@ -5,7 +5,7 @@ import BuySellModal from "./BuySellModal";
 import { useUser } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssetToWatchlist, removeAssetFromWatchlist } from "../../../state/slices/watchlistSlice";
-import { flexRender, getCoreRowModel, getFilteredRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
+import { flexRender, getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, useReactTable } from "@tanstack/react-table";
 import Loader from "../../../components/Loader/Loader";
 import { BiSort } from "react-icons/bi";
 import Change from "../../../components/Table/Change";
@@ -13,10 +13,11 @@ import WatchlistStar from "../../../components/Table/WatchlistStar";
 import Details from "../../../components/Table/Details";
 import BuySellButton from "../../../components/Table/BuySellButton";
 import Filters from "../../../components/Table/Filters";
+import Pagination from "../../../components/Table/Pagination";
 
 const columns = [
   {
-    accessorKey: 'ticker',
+    accessorKey: 'id',
     header: "",
     size: 20,
     cell: WatchlistStar,
@@ -25,19 +26,31 @@ const columns = [
     filterFn: "includesString",
   },
   {
-    accessorKey: 'ticker1',
-    header: "Ticker",
+    accessorKey: 'name',
+    header: "Name",
     // size: 225,
     cell: Details,
     enableColumnFilter: true,
     filterFn: "includesString",
   },
   {
-    accessorKey: 'item',
+    accessorKey: 'ticker',
     header: "",
     size: 225,
     cell: BuySellButton,
     enableSorting: false,
+  },
+  {
+    accessorKey: 'category',
+    header: "Category",
+    cell: (props) => <span>{props.getValue()}</span>,
+    enableSorting: true,
+    enableColumnFilter: true,
+    filterFn: (row, columnId, filterCategories) => {
+      if (filterCategories.length === 0) return true;
+      const category = row.getValue(columnId);
+      return filterCategories.includes(category);
+    },
   },
   {
     accessorKey: 'market_value',
@@ -92,13 +105,8 @@ const AssetTable = ({ rows, categories }) => {
   const [isModalOpen, setModalOpen] = useState(Array(rows.length).fill(false));
   const [selectedRowData, setSelectedRowData] = useState(null);
   const [sellBuyModalOpen, setSellBuyModalOpen] = useState(false);
-  const [data, setData] = useState(rows);
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowHovered, setRowHovered] = useState(null);
-
-  useEffect(() => {
-    setData(rows);
-  }, [rows]);
 
   const table = useReactTable({
     data: rows,
@@ -109,6 +117,7 @@ const AssetTable = ({ rows, categories }) => {
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     columnResizeMode: "onChange",
     meta: {
@@ -177,6 +186,8 @@ const AssetTable = ({ rows, categories }) => {
     navigate(`/app/asset/view`, { state: { asset: selectedAsset } });
   };
 
+  console.log(categories)
+
   return (
     <>
       <Filters
@@ -191,7 +202,7 @@ const AssetTable = ({ rows, categories }) => {
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th key={header.id} width={header.getSize()} className="font-bold px-6 py-3 dark:text-gray-300">
-                    <span className="flex justify-start gap-1">
+                    <span className="flex justify-start items-center gap-1">
                       {header.column.columnDef.header}
                       <>
                         {
@@ -240,172 +251,10 @@ const AssetTable = ({ rows, categories }) => {
             </tbody>
           )}
         </table>
-        {/* <table className="table-default table-hover">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 font-bold dark:text-gray-400">
-            <tr className="">
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Name
-                </div>
-              </th>
-              <th className="" colSpan="1"></th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Mkt Value
-                </div>
-              </th>
-
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Chng
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Open
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  High
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Low
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  Close
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  52W H
-                </div>
-              </th>
-              <th className="" colSpan="1">
-                <div className="cursor-pointer inline-flex select-none justify-center items-center dark:text-gray-300">
-                  52W L
-                </div>
-              </th>
-            </tr>
-          </thead>
-          {rows.length !== 0 && (
-            <tbody className="">
-              {rows.map((row, idx) => {
-                return (
-                  <tr
-                    key={idx}
-                    className={`cursor-pointer ${
-                      expandedRow === idx
-                        ? "bg-gray-200 text-black rounded-md"
-                        : ""
-                    }`}
-                    onMouseEnter={() => handleRowHover(idx, true)}
-                    onMouseLeave={() => handleRowHover(idx, false)}
-                  >
-                    <td className="py-2 !pl-4">
-                      <div className="flex items-center justify-between ">
-                        <div
-                          className="flex items-center px-1"
-                        >
-                          <span onClick={() => handleStarClick(row.ticker)}>
-                            {watchlists[row.ticker] ? (
-                              <BsStarFill size={20} color="yellow" />
-                            ) : (
-                              <BsStar size={20} color="gray" />
-                            )}
-                          </span>
-                          <span className="ml-2 rtl:mr-2 font-semibold hover:text-orange-600">
-                            <Link
-                              to={`/app/asset/view/${row.ticker}`}
-                              onClick={() => dispatch(setActive("assets"))}
-                            >
-                              {row.name}
-                            </Link>
-                          </span>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="py-2 relative">
-                      <div className="w-12"></div>
-                      <div className="flex mx-auto justify-center items-center my-4 w-12">
-                        <button
-                          className={`buy-sell-button ${
-                            activeTab === "buy"
-                              ? "bg-green-500 text-white"
-                              : "bg-gray-300 text-gray-500"
-                          } px-4 py-2 rounded-l cursor-pointer hidden`}
-                          onClick={() => handleTabClick("buy", row)}
-                        >
-                          Buy
-                        </button>
-                        <button
-                          className={`buy-sell-button ${
-                            activeTab === "sell"
-                              ? "bg-red-500 text-white"
-                              : "bg-gray-300 text-gray-500"
-                          }  px-4 py-2 rounded-r cursor-pointer hidden`}
-                          onClick={() => handleTabClick("sell", row)}
-                        >
-                          Sell
-                        </button>
-                      </div>
-                      <div
-                        className={`absolute inset-0 flex items-center justify-center opacity-0 buy-sell-group-hover-${idx}`}
-                      >
-                        <button
-                          className="buy-sell-button bg-green-500 text-white px-4 py-2 rounded-l cursor-pointer"
-                          onClick={() => handleTabClick("buy", row)}
-                        >
-                          Buy
-                        </button>
-                        <button
-                          className="buy-sell-button bg-red-500 text-white px-4 py-2 rounded-r cursor-pointer"
-                          onClick={() => handleTabClick("sell", row)}
-                        >
-                          Sell
-                        </button>
-                      </div>
-                    </td>
-                    <td className="py-2">
-                      {Number(row.market_value).toFixed(2)}
-                    </td>
-                    <td className="py-2">
-                      {row.day_change >= 0 ? (
-                        <span className="text-green-600">
-                          {Number(row.day_change).toFixed(2)} (
-                          {Number(row.day_change_percentage).toFixed(2)}%)
-                        </span>
-                      ) : (
-                        <span className="text-red-500">
-                          {Number(row.day_change).toFixed(2)} (
-                          {Number(row.day_change_percentage).toFixed(2)}%)
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-2">{Number(row.open).toFixed(2)}</td>
-                    <td className="py-2">
-                      {Number(row.highLow.today.high).toFixed(2)}
-                    </td>
-                    <td className="py-2">
-                      {Number(row.highLow.today.low).toFixed(2)}
-                    </td>
-                    <td className="py-2">{Number(row.close).toFixed(2)}</td>
-                    <td className="py-2">
-                      {Number(row.highLow["52week"].high).toFixed(2)}
-                    </td>
-                    <td className="py-2">
-                      {Number(row.highLow["52week"].low).toFixed(2)}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          )}
-        </table> */}
+        <br />
+        {rows.length !== 0 && (
+          <Pagination table={table} />
+        )}
         {rows.length === 0 && (
           <Loader />
         )}

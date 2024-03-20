@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addAssetToWatchlist, removeAssetFromWatchlist } from '../../state/slices/watchlistSlice';
 import { BsStar, BsStarFill } from 'react-icons/bs';
 
-const WatchlistStar = ({ getValue }) => {
-  const ticker = getValue();
+const WatchlistStar = ({ row }) => {
+  const ticker = row.original.ticker;
   const { user } = useUser();
   const dispatch = useDispatch();
   const { id, watchlists } = useSelector((state) => state.watchlists);

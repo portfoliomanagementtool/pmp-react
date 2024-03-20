@@ -1,8 +1,8 @@
 import React from 'react'
 
-const BuySellButton = ({ table, row, getValue }) => {
+const BuySellButton = ({ table, row }) => {
   const id = table.getState().rowHovered
-  const item = getValue();
+  const item = row.original;
   let show = false;
 
   if(id === row.id) {

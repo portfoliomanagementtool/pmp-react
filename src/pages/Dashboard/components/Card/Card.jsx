@@ -15,7 +15,7 @@ const Card = ({ title, type, value, change }) => {
         <div className="flex justify-between items-center">
           <div>
             <h3 className="font-bold">
-              <span>₹{abbreviate(value, 1)}</span>
+              <span>₹{abbreviate(Number(value).toFixed(2), 2)}</span>
             </h3>
             <p>
               from{" "}
@@ -34,7 +34,7 @@ const Card = ({ title, type, value, change }) => {
                 <FaArrowUp />
               </span>
               <span>
-                ₹{abbreviate(change.value, 1)} (
+                ₹{abbreviate(Number(change.value).toFixed(2), 1)} (
                 {abbreviate(Number(change.percentage).toFixed(2), 2)}%)
               </span>
             </div>

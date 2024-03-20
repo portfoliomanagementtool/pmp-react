@@ -71,14 +71,13 @@ const Filters = ({ columnFilters, setColumnFilters, categories }) => {
                 </span>
               </button>
             </div>
-            {/* {filterDropdown && (
+            {filterDropdown && (
               <FilterPopOver
-                filterRef={filterRef}
                 columnFilters={columnFilters}
                 setColumnFilters={setColumnFilters}
                 categories={categories}
               />
-            )} */}
+            )}
           </div>
         </div>
 

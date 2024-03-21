@@ -92,7 +92,7 @@ const columns = [
   },
 ]
 
-const AssetTable = ({ title, rows, categories }) => {
+const AssetTable = ({ title, status, rows, categories }) => {
   const navigate = useNavigate();
   const [expandedRow, setExpandedRow] = useState(null);
   const [activeTab, setActiveTab] = useState("buy");
@@ -228,11 +228,15 @@ const AssetTable = ({ title, rows, categories }) => {
           )}
         </table>
         <br />
-        {rows.length !== 0 && (
+        {rows.length > 10 && (
           <Pagination table={table} />
         )}
         {rows.length === 0 && (
-          <Loader />
+          <>
+            {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+            {status === "LOADING" && <Loader />}
+            {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+          </>
         )}
         <div>
           {sellBuyModalOpen && (

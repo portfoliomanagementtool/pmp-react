@@ -82,7 +82,7 @@ const columns = [
   },
 ];
 
-const SellBuyTable = ({ title, rows, categories }) => {
+const SellBuyTable = ({ title, status, rows, categories }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedRowData, setSelectedRowData] = useState(null);
@@ -236,7 +236,11 @@ const SellBuyTable = ({ title, rows, categories }) => {
               <Pagination table={table} />
             )}
             {rows.length === 0 && (
-              <Loader />
+              <>
+                {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                {status === "LOADING" && <Loader />}
+                {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+              </>
             )}
             <div>
               {sellBuyModalOpen && (

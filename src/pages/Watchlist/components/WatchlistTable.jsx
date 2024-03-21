@@ -137,6 +137,11 @@ const WatchlistTable = ({ title, rows, categories }) => {
             {rows.length > 10 && (
               <Pagination table={table} />
             )}
+            {rows.length === 0 && (
+              <div className="flex items-center justify-center h-60">
+                <p className="text-gray-500 dark:text-gray-400">The watchlist is empty!</p>
+              </div>
+            )}
           </div>
           {/* <div className="lg:flex items-center justify-between mb-4">
             <h3 className="mb-4 lg:mb-0">Watchlist</h3>

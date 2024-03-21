@@ -54,7 +54,7 @@ const columns = [
   },
 ];
 
-const TransactionsTable = ({ title, rows, categories }) => {
+const TransactionsTable = ({ title, status, rows, categories }) => {
   const [columnFilters, setColumnFilters] = useState([]);
 
   const table = useReactTable({
@@ -180,7 +180,11 @@ const TransactionsTable = ({ title, rows, categories }) => {
               <Pagination table={table} />
             )}
             {rows.length === 0 && (
-              <Loader />
+              <>
+                {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                {status === "LOADING" && <Loader />}
+                {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+              </>
             )}
             {/* <div className="overflow-x-auto">
               <table className="table-default table-hover">

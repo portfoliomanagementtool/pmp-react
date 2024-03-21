@@ -7,6 +7,7 @@ const Transactions = () => {
   const { user } = useUser();
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState({});
+  const [status, setStatus] = useState("IDLE");
 
   useEffect(() => {
     if(rows.length !== 0) {
@@ -52,11 +53,14 @@ const Transactions = () => {
     }
 
     const fetchAllTransactions = async () => {
+      setStatus("LOADING");
       try {
         const { data } = await getAllTransactions(user.primaryEmailAddress.emailAddress);
         const formattedData = formatData(data.data);
         setRows(formattedData);
+        setStatus("IDLE");
       } catch (error) {
+        setStatus("ERROR");
         console.log(error.message) 
       }
     };
@@ -71,7 +75,7 @@ const Transactions = () => {
         <p>View your current transactions & summary</p>
       </div>
       {rows && categories && (
-        <TransactionsTable title="My Transactions" rows={rows} categories={Object.keys(categories)} />
+        <TransactionsTable title="My Transactions" status={status} rows={rows} categories={Object.keys(categories)} />
       )}
     </>
   );

@@ -7,7 +7,8 @@ import { IoIosAddCircle } from "react-icons/io";
 
 const Assets = () => {
   const [rows, setRows] = useState([]);
-  const [categories, setCategories] = useState({})
+  const [categories, setCategories] = useState({});
+  const [status, setStatus] = useState("IDLE");
 
   useEffect(() => {
     rows.forEach((item) => {
@@ -48,11 +49,14 @@ const Assets = () => {
     }
 
     const fetchAssets = async () => {
+      setStatus("LOADING");
       try {
         const { data } = await getAllAssets();
         const formattedData = formatData(data);
         setRows(formattedData);
+        setStatus("IDLE");
       } catch (error) {
+        setStatus("ERROR");
         console.log(error.message)
       }
     }
@@ -68,7 +72,7 @@ const Assets = () => {
       >
         <div className="card h-full border-0 card-border" role="presentation">
           <div className="card-body card-gutterless h-full">
-            <AssetTable title="All Assets" rows={rows} categories={Object.keys(categories)} />
+            <AssetTable title="All Assets" status={status} rows={rows} categories={Object.keys(categories)} />
           </div>
         </div>
       </div>

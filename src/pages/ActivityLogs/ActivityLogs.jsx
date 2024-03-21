@@ -14,7 +14,6 @@ const ActivityLogs = () => {
     const fetchActivityLogs = async () => {
       try {
         const { data } = await getActivityLogs(user.primaryEmailAddress.emailAddress);
-        console.log(data.data)
         setActivityLogs(data.data);
       } catch (error) {
         console.log(error.message)

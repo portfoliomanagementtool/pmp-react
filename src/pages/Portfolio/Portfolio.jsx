@@ -36,7 +36,8 @@ const Portfolio = () => {
     endDate: dayjs(interval.end),
   });
   const calendarRef = useRef(null);
-  const [personalCategories, setPersonalCategories] = useState({})
+  const [personalCategories, setPersonalCategories] = useState({});
+  const [status, setStatus] = useState("IDLE");
 
   useEffect(() => {
     if(rows.length !== 0) {
@@ -74,11 +75,14 @@ const Portfolio = () => {
     }
 
     const fetchPortfolio = async () => {
+      setStatus("LOADING");
       try {
         const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
         const formattedData = formatData(data.assets);
         setRows(formattedData);
+        setStatus("IDLE");
       } catch (error) {
+        setStatus("ERROR");
         console.log(error.message);
       }
     };
@@ -309,7 +313,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        <SellBuyTable title="My Assets" rows={rows} categories={Object.keys(personalCategories)} />
+        <SellBuyTable title="My Assets" status={status} rows={rows} categories={Object.keys(personalCategories)} />
       </div>
     </main>
   );

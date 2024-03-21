@@ -6,10 +6,12 @@ import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from "react-redux";
 import { buyAsset, sellAsset } from "../../../state/slices/portfolioSlice";
 import { useUser } from "@clerk/clerk-react";
+import { getPortfolioAssetDetails } from "../../../api";
 
 const BuySellModal = ({
-  onSubmit,
   closeModal,
+  ticker,
+  handleChangePortfolioAsset,
   defaultValue,
   initialChecked,
 }) => {
@@ -31,6 +33,19 @@ const BuySellModal = ({
   );
 
   const [errors, setErrors] = useState("");
+
+  const fetchPortfolioAssetDetails = async () => {
+    try {
+      const { data } = await getPortfolioAssetDetails(
+        ticker,
+        user.primaryEmailAddress.emailAddress
+      );
+
+      handleChangePortfolioAsset(data.assets[0]);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const validateForm = () => {
     let errorFields = [];
@@ -79,6 +94,8 @@ const BuySellModal = ({
     } else {
       dispatch(buyAsset(formData, email, interval));
     }
+
+    fetchPortfolioAssetDetails();
   };
 
   return (

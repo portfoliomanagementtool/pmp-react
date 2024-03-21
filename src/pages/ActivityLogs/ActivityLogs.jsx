@@ -9,13 +9,17 @@ import Loader from "../../components/Loader/Loader";
 const ActivityLogs = () => {
   const { user } = useUser();
   const [activityLogs, setActivityLogs] = useState({});
+  const [status, setStatus] = useState("IDLE");
 
   useEffect(() => {
     const fetchActivityLogs = async () => {
+      setStatus("LOADING");
       try {
         const { data } = await getActivityLogs(user.primaryEmailAddress.emailAddress);
         setActivityLogs(data.data);
+        setStatus("IDLE");
       } catch (error) {
+        setStatus("ERROR");
         console.log(error.message)
       }
     }
@@ -80,7 +84,11 @@ const ActivityLogs = () => {
                     </>
                   )}
                   {Object.keys(activityLogs).length === 0 && (
-                    <Loader />
+                    <>
+                      {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                      {status === "LOADING" && <Loader />}
+                      {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+                    </>
                   )}
                 </div>
               </div>

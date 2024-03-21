@@ -90,6 +90,10 @@ const ViewAsset = () => {
     fetchAssetPrice();
   }, [ticker, user]);
 
+  const handleChangePortfolioAsset = (portfolio) => {
+    setPortfolioAsset(portfolio);
+  }
+
   const openModal = (type) => {
     setModalType(type);
     setIsModalOpen(true);
@@ -283,8 +287,9 @@ const ViewAsset = () => {
 
       {isModalOpen && (
         <BuySellModal
-          onSubmit={console.log}
           closeModal={closeModal}
+          ticker={ticker}
+          handleChangePortfolioAsset={handleChangePortfolioAsset}
           defaultValue={{
             category: assetDetails.category,
             ticker: assetDetails.ticker,

@@ -82,7 +82,7 @@ const columns = [
   },
 ];
 
-const SellBuyTable = ({ title, status, rows, categories }) => {
+const SellBuyTable = ({ title, status, handleStatusChange, rows, handleRowsChange, categories }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [selectedRowData, setSelectedRowData] = useState(null);
@@ -237,9 +237,9 @@ const SellBuyTable = ({ title, status, rows, categories }) => {
             )}
             {rows.length === 0 && (
               <>
-                {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, something went wrong!</p>}
                 {status === "LOADING" && <Loader />}
-                {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+                {status === "IDLE" && <p className="flex justify-center">No activity yet!</p>}
               </>
             )}
             <div>
@@ -247,6 +247,8 @@ const SellBuyTable = ({ title, status, rows, categories }) => {
                 <BuySellModal
                   onSubmit={handleClose}
                   closeModal={closeBuySellModal}
+                  handleRowsChange={handleRowsChange}
+                  handleStatusChange={handleStatusChange}
                   initialChecked={activeTab === "sell"}
                   defaultValue={{
                     category: selectedRowData.category,

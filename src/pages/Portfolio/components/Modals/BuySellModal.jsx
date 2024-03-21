@@ -6,10 +6,12 @@ import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from 'react-redux';
 import { buyAsset, sellAsset } from "../../../../state/slices/portfolioSlice";
 import { useUser } from "@clerk/clerk-react";
+import { getPortfolio } from "../../../../api";
 
 const BuySellModal = ({
-  onSubmit,
   closeModal,
+  handleStatusChange,
+  handleRowsChange,
   defaultValue,
   initialChecked,
 }) => {
@@ -31,6 +33,36 @@ const BuySellModal = ({
   // console.log(formState);
 
   const [errors, setErrors] = useState("");
+
+  const formatData = (data) => {
+    return data.map((item, index) => {
+      return {
+        id: index,
+        ticker: item.portfolio_asset.ticker,
+        name: item.portfolio_asset.name,
+        category: item.portfolio_asset.category.charAt(0).toUpperCase() + item.portfolio_asset.category.slice(1),
+        quantity: item.quantity,
+        atp: item.avgBasis,
+        inv_amount: item.costBasis,
+        market_value: item.marketValue,
+        overall_gl: item.profitLoss,
+        day_gl: item.portfolio_asset.daypl,
+      };
+    })
+  }
+
+  const fetchPortfolio = async () => {
+    handleStatusChange("LOADING");
+    try {
+      const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
+      const formattedData = formatData(data.assets);
+      handleRowsChange(formattedData);
+      handleStatusChange("IDLE");
+    } catch (error) {
+      handleStatusChange("ERROR");
+      console.log(error.message);
+    }
+  };
 
   const validateForm = () => {
     let errorFields = [];
@@ -80,6 +112,8 @@ const BuySellModal = ({
     } else {
       dispatch(buyAsset(formData, email, interval));
     }
+
+    fetchPortfolio();
   };
 
   return (

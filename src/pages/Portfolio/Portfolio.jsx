@@ -155,6 +155,14 @@ const Portfolio = () => {
     }
   };
 
+  const handleStatusChange = (status) => {
+    setStatus(status);
+  }
+
+  const handleRowsChange = (rows) => {
+    setRows(rows);
+  }
+
   const handleCalendarClose = () => {
     setShowCalendar(false);
   };
@@ -313,7 +321,7 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        <SellBuyTable title="My Assets" status={status} rows={rows} categories={Object.keys(personalCategories)} />
+        <SellBuyTable title="My Assets" status={status} handleStatusChange={handleStatusChange} rows={rows} handleRowsChange={handleRowsChange} categories={Object.keys(personalCategories)} />
       </div>
     </main>
   );

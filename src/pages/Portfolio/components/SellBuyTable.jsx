@@ -239,7 +239,7 @@ const SellBuyTable = ({ title, status, handleStatusChange, rows, handleRowsChang
               <>
                 {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, something went wrong!</p>}
                 {status === "LOADING" && <Loader />}
-                {status === "IDLE" && <p className="flex justify-center">No activity yet!</p>}
+                {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
               </>
             )}
             <div>

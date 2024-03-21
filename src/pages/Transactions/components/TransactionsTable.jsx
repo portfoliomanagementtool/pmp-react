@@ -183,7 +183,7 @@ const TransactionsTable = ({ title, status, rows, categories }) => {
               <>
                 {status === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
                 {status === "LOADING" && <Loader />}
-                {status === "IDLE" && <p className="flex justify-center">No assets found</p>}
+                {status === "IDLE" && <p className="flex justify-center">No transactions yet!</p>}
               </>
             )}
             {/* <div className="overflow-x-auto">

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import abbreviate from "number-abbreviate";
 
-const Candle = ({ data, min }) => {
+const Candle = ({ data, min, max }) => {
   const mode = useSelector((state) => state.config.mode);
   const series = [
     {
@@ -27,12 +27,10 @@ const Candle = ({ data, min }) => {
       type: "xy",
       autoScaleYaxis: false,
     },
-    tooltip: {
-      enabled: true,
-    },
     xaxis: {
       type: "datetime",
       min: min,
+      max: max,
       // max: new Date('01 Mar 2020').getTime(),
       tickAmount: 6,
     },
@@ -43,6 +41,9 @@ const Candle = ({ data, min }) => {
         },
       },
     },
+    tooltip: {
+      enabled: true,
+    }
     // yaxis: {
     //   tooltip: {
     //     enabled: true

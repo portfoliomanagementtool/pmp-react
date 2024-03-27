@@ -44,7 +44,7 @@ const Card = ({ title, type, value, change }) => {
                 <FaArrowDown />
               </span>
               <span>
-                ₹{abbreviate(change.value, 1)} (
+                ₹{abbreviate(Number(change.value).toFixed(2), 1)} (
                 {abbreviate(Number(change.percentage).toFixed(2), 2)}%)
               </span>
             </div>

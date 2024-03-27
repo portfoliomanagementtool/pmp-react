@@ -93,6 +93,10 @@ const Dashboard = () => {
     return formattedData;
   }
 
+  const formatLabels = (labels) => {
+    return labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1));
+  }
+
   return (
     <>
       <main>
@@ -177,11 +181,17 @@ const Dashboard = () => {
               <div className="card-body">
                 <h4>Equity Distribution</h4>
                 <div className="mt-6">
-                  <div className="chartRef">
-                    <div style={{ minHeight: "278.7px" }}>
-                      <Donut series={formatData(equityDistribution)} labels={Object.keys(equityDistribution)} />
+                  {Object.keys(equityDistribution).length ? (
+                    <div className="chartRef">
+                      <div style={{ minHeight: "278.7px" }}>
+                        <Donut series={formatData(equityDistribution)} labels={formatLabels(Object.keys(equityDistribution))} />
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <div className="h-80 flex flex-col justify-center items-center">
+                      <p className="text-gray-400">Buy some assets!</p>
+                    </div>
+                  )}
                   {/* <div className="mt-6 grid grid-cols-2 gap-4 max-w-[180px] mx-auto">
                     <div className="flex items-center gap-1">
                       <span

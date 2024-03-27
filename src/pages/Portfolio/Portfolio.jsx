@@ -179,6 +179,10 @@ const Portfolio = () => {
     return formattedData;
   }
 
+  const formatLabels = (labels) => {
+    return labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1));
+  }
+
   return (
     <main>
       <div className="flex flex-col gap-4 h-full">
@@ -294,29 +298,32 @@ const Portfolio = () => {
           <div className="card card-border" role="presentation">
             <div className="card-body">
               <h4>Categories</h4>
-
               <div className="grid grid-cols-1">
-                <div>
-                  <div className="mt-6">
-                    {categories.map((category, idx) => (
-                      <div key={idx} className="flex justify-between mb-6">
-                        <div className="flex gap-1">
-                          <span className="badge-dot mt-1.5"></span>
-                          <div>
-                            <h6 className="font-bold text-sm capitalize">{category.label}</h6>
-                            {/* <p>0.5832112 BTC</p> */}
-                          </div>
+                <div className="mt-6">
+                  {categories.map((category, idx) => (
+                    <div key={idx} className="flex justify-between mb-6">
+                      <div className="flex items-center gap-1">
+                        <span className="badge-dot"></span>
+                        <div>
+                          <p className="font-bold capitalize">{category.label}</p>
+                          {/* <p>0.5832112 BTC</p> */}
                         </div>
-                        <span className="font-semibold self-end">₹{Number(category.value).toFixed(2)}</span>
                       </div>
-                    ))}
-                  </div>
+                      <span className="font-semibold self-end">₹{Number(category.value).toFixed(2)}</span>
+                    </div>
+                  ))}
                 </div>
-                <div className="chartRef">
-                  <div className=" mx-auto items-center ">
-                    <Donut series={formatData(equityDistribution)} labels={Object.keys(equityDistribution)} />
+                {Object.keys(equityDistribution).length ? (
+                  <div className="chartRef">
+                    <div className=" mx-auto items-center ">
+                      <Donut series={formatData(equityDistribution)} labels={formatLabels(Object.keys(equityDistribution))} />
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="h-80 flex flex-col justify-center items-center">
+                    <p className="text-gray-400">Buy some assets!</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

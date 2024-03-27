@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import abbreviate from "number-abbreviate";
 
-const Area = ({ data, min, type }) => {
+const Area = ({ data, min, max, type }) => {
   const mode = useSelector((state) => state.config.mode);
   const series= [{
+      name: "Market Value",
       data: data,
     },
   ];
@@ -41,11 +42,13 @@ const Area = ({ data, min, type }) => {
     },
     stroke: {
       width: 3,
-      curve: "smooth",
+      // curve: "smooth",
+      curve: "straight",
     },
     xaxis: {
       type: 'datetime',
       min: min,
+      max: max,
       tickAmount: 6,
     },
     yaxis: {
@@ -58,6 +61,11 @@ const Area = ({ data, min, type }) => {
     tooltip: {
       x: {
         format: 'dd MMM yyyy'
+      },
+      y: {
+        formatter: function (val) {
+          return "₹ " + val
+        }
       }
     },
     fill: {
@@ -70,10 +78,21 @@ const Area = ({ data, min, type }) => {
         stops: [0, 100],
       },
     },
+    // optionsLine: {
+    //   id: 'timeline',
+    //   type: 'area',
+    //   brush: {
+    //     enabled: true,
+    //     target: 'area-datetime'
+    //   },
+    //   selection: {
+    //     enabled: true,
+    //   },
+    // }
   };
 
   return (
-    <div id="Asset details">
+    <div id="area-chart">
       <Chart options={options} series={series} type="area" height={380} />
     </div>
   );

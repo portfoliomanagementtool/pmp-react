@@ -7,8 +7,9 @@ import { TbChartAreaLineFilled } from "react-icons/tb";
 const Statistics = ({ assetDetails, candleData, areaData }) => {
   const [showCandlestick, setShowCandlestick] = useState(true);
   const [activeButton, setActiveButton] = useState("default");
-  const [minTime, setMinTime] = useState(null);
-
+  const [minTime, setMinTime] = useState(areaData[areaData.length - 1][0]);
+  const maxTime = areaData[0][0];
+  
   const updateData = (timeline) => {
     const today = new Date();
     setActiveButton(timeline);
@@ -19,26 +20,42 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
       return;
     }
 
+
+
     switch (timeline) {
       case "one_month":
-        setMinTime(new Date(today.setMonth(today.getMonth() - 1)).getTime());
+        let prevMonthTime = new Date(today.setMonth(today.getMonth() - 1))
+        if(new Date(areaData[areaData.length - 1][0]) < prevMonthTime) 
+          setMinTime(prevMonthTime.getTime());
+        else
+          setMinTime(areaData[areaData.length - 1][0]);
         break;
       case "six_month":
-        setMinTime(new Date(today.setMonth(today.getMonth() - 6)).getTime());
+        let prevSixMonthTime = new Date(today.setMonth(today.getMonth() - 6))
+        if(new Date(areaData[areaData.length - 1][0]) < prevSixMonthTime) 
+          setMinTime(prevSixMonthTime.getTime());
+        else
+          setMinTime(areaData[areaData.length - 1][0]);
         break;
       case "one_year":
-        setMinTime(
-          new Date(today.setFullYear(today.getFullYear() - 1)).getTime()
-        );
+        let prevYearTime = new Date(today.setFullYear(today.getFullYear() - 1))
+        if(new Date(areaData[areaData.length - 1][0]) < prevYearTime)
+          setMinTime(prevYearTime.getTime());
+        else
+          setMinTime(areaData[areaData.length - 1][0]);
         break;
       case "ytd":
-        setMinTime(new Date(today.getFullYear(), 0, 1).getTime());
+        let ytd = new Date(today.getFullYear(), 0, 1);
+        if(new Date(areaData[areaData.length - 1][0]) < ytd)
+          setMinTime(ytd.getTime());
+        else
+          setMinTime(areaData[areaData.length - 1][0]);
         break;
       case "all":
-        setMinTime(null);
+        setMinTime(areaData[areaData.length - 1][0]);
         break;
       default:
-        setMinTime(null);
+        setMinTime(areaData[areaData.length - 1][0]);
         break;
     }
   };
@@ -183,11 +200,12 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
       <div className="chartRef">
         <div className="h-auto">
           {showCandlestick ? (
-            <Candle data={candleData} min={minTime} />
+            <Candle data={candleData} min={minTime} max={maxTime} />
           ) : (
             <Area
               data={areaData}
               min={minTime}
+              max={maxTime}
               type={
                 assetDetails.changes[activeButton].change >= 0 ? "green" : "red"
               }

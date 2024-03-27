@@ -59,7 +59,7 @@ const ViewAsset = () => {
   }, [ticker, user]);
 
   useEffect(() => {
-    const formatData = (data) => {
+    const formatCandleStickData = (data) => {
       return data.map((item) => {
         return {
           x: new Date(item.timestamp1).getTime(),
@@ -80,7 +80,7 @@ const ViewAsset = () => {
           ticker,
           user.primaryEmailAddress.emailAddress
         );
-        setAssetPrice(formatData(data));
+        setAssetPrice(formatCandleStickData(data));
         setAreaData(formatAreaData(data));
       } catch (error) {
         console.log(error.message);

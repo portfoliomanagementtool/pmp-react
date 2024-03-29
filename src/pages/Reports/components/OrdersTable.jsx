@@ -161,7 +161,7 @@ const OrdersTable = ({ rows, deleteRow, editRow }) => {
                             <OrderStatusChip status={handleStatus(row.buy_price, row.sell_price)} />
                           </td>
                           <td className="py-2">
-                            <span>₹{Number(row.buy_price !== null ? row.buy_price : row.sell_price).toFixed(2)}</span>
+                            <span>${Number(row.buy_price !== null ? row.buy_price : row.sell_price).toFixed(2)}</span>
                           </td>
                           <td className="py-2">
                             {dateFormat(row.updated_at, "h:MM TT, dS mmmm, yyyy")}

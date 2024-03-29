@@ -237,13 +237,14 @@ const Portfolio = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* {metrics.map((metric) => (
             <Card key={metric.title} {...metric} />
           ))} */}
-            <Card title="Current Value" {...metrics.market_value} />
-            <Card title="Invested Value" {...metrics.invested_value} />
-            <Card title="Overall P/L" {...metrics.overall_pl} />
+            <Card title="Current Value" value={metrics.market_value.value} />
+            <Card title="Invested Value" value={metrics.invested_value.value} />
+            <Card title="Overall P/L" type={(metrics.overall_pl.value > 0) ? "green" : ((metrics.overall_pl.value < 0) ? "red" : "black" )} value={metrics.overall_pl.value} />
+            <Card title="Day P/L" type={(metrics.day_pl.value > 0) ? "green" : ((metrics.day_pl.value < 0) ? "red" : "black" )} value={metrics.day_pl.value} />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-4">
           <div
@@ -309,7 +310,7 @@ const Portfolio = () => {
                           {/* <p>0.5832112 BTC</p> */}
                         </div>
                       </div>
-                      <span className="font-semibold self-end">₹{Number(category.value).toFixed(2)}</span>
+                      <span className="font-semibold self-end">${Number(category.value).toFixed(2)}</span>
                     </div>
                   ))}
                 </div>

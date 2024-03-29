@@ -17,7 +17,7 @@ const columns = [
   {
     accessorKey: 'price',
     header: "Price",
-    cell: (props) => <span>₹{Number(props.getValue()).toFixed(2)}</span>,
+    cell: (props) => <span>${Number(props.getValue()).toFixed(2)}</span>,
     enableColumnFilter: true,
     filterFn: "inNumberRange",
   },
@@ -154,7 +154,7 @@ const TopListing = ({ name, rows }) => {
                             </div>
                           </td>
                           <td className="py-4">
-                            <span>₹{Number(row.price).toFixed(2)}</span>
+                            <span>${Number(row.price).toFixed(2)}</span>
                           </td>
                           <td className="py-4">
                             <span className="capitalize">{row.category}</span>

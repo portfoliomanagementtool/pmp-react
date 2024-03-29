@@ -160,23 +160,23 @@ const Positions = () => {
   const metrics = [
     {
       title: "Totak P&L(Unrealised)",
-      value: "₹138",
+      value: "$138",
       type: "green",
-      relativeValue: "₹ 20K",
+      relativeValue: "$ 20K",
       percentage: "20",
     },
     {
       title: "Net P&L",
-      value: "₹ 20,000",
+      value: "$ 20,000",
       type: "red",
-      relativeValue: "₹ 20K",
+      relativeValue: "$ 20K",
       percentage: "20",
     },
     {
       title: "Net Traded Value",
-      value: "₹ 1,00,000",
+      value: "$ 1,00,000",
       type: "red",
-      relativeValue: "₹ 20K",
+      relativeValue: "$ 20K",
       percentage: "20",
     },
   ];

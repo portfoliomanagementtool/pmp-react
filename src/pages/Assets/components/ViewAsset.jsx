@@ -133,16 +133,16 @@ const ViewAsset = () => {
               <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 mt-4">
                 <Card
                   title="Average Price"
-                  value={`₹${abbreviate(portfolioAsset.avgBasis, 2)}`}
+                  value={`$${abbreviate(Number(portfolioAsset.avgBasis, 2).toFixed(2))}`}
                 />
                 <Card
                   title="Current Value"
-                  value={`₹${abbreviate(portfolioAsset.marketValue, 2)}`}
+                  value={`$${abbreviate(Number(portfolioAsset.marketValue, 2).toFixed(2))}`}
                 />
                 <Card title="Quantity" value={portfolioAsset.quantity} />
                 <Card
                   title="Unrealised P/L"
-                  value={`₹${abbreviate(portfolioAsset.profitLoss, 2)}`}
+                  value={`$${abbreviate(Number(portfolioAsset.profitLoss, 2).toFixed(2))}`}
                   type={
                     parseInt(portfolioAsset.profitLoss) >= 0
                       ? "text-green-500"
@@ -151,7 +151,7 @@ const ViewAsset = () => {
                 />
                 <Card
                   title="Day's P/L"
-                  value={`₹${abbreviate(portfolioAsset.daypl, 2)}`}
+                  value={`$${abbreviate(Number(portfolioAsset.daypl, 2).toFixed(2))}`}
                   type={
                     parseInt(portfolioAsset.daypl) >= 0
                       ? "text-green-500"
@@ -170,19 +170,19 @@ const ViewAsset = () => {
                     <div className="flex justify-between items-center my-3">
                       <h6 className="font-semibold mb-4 text-sm">CURRENT PRICE</h6>
                       <h3 className="font-bold">
-                        <span>₹{abbreviate(assetDetails.market_value, 2)}</span>
+                        <span>${abbreviate(assetDetails.market_value, 2)}</span>
                       </h3>
                     </div>
                     <div className="flex justify-between items-center my-4">
                       <h6 className="font-semibold mb-4 text-sm">OPEN PRICE</h6>
                       <h3 className="font-bold">
-                        <span>₹{abbreviate(assetDetails.open, 2)}</span>
+                        <span>${abbreviate(assetDetails.open, 2)}</span>
                       </h3>
                     </div>
                     <div className="flex justify-between items-center">
                       <h6 className="font-semibold mb-4 text-sm">PREV CLOSE</h6>
                       <h3 className="font-bold">
-                        <span>₹{abbreviate(assetDetails.close, 2)}</span>
+                        <span>${abbreviate(assetDetails.close, 2)}</span>
                       </h3>
                     </div>
                   </div>

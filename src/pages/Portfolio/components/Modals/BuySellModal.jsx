@@ -30,7 +30,7 @@ const BuySellModal = ({
     }
   );
   const [quantity, setQuantity] = useState(formState.quantity);
-  // console.log(formState);
+  const [initialQuantity, setInitialQuantity] = useState(formState.quantity);
 
   const [errors, setErrors] = useState("");
 
@@ -140,8 +140,13 @@ const BuySellModal = ({
             <span className="text-red-500">SELL</span>
           </div>
         </div>
-
-        <h3 className="text-xl font-semibold capitalize">{formState.category}</h3>
+        <div>
+          <p className="capitalize">{formState.category}</p>
+          <div className="flex justify-between">
+            <h3 className="text-xl font-semibold">{formState.ticker}</h3>
+            <h3 className="text-lg font-semibold">Holding: {initialQuantity}</h3>
+          </div>
+        </div>
         <div className="mt-5 ">
           <Box
             component="form"
@@ -177,7 +182,7 @@ const BuySellModal = ({
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              defaultValue={formState.quantity}
+              defaultValue={0}
               onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
               name="quantity"
             />

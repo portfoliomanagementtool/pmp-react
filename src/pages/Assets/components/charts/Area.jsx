@@ -18,7 +18,8 @@ const Area = ({ data, min, max, type }) => {
       height: 350,
       background:"transparent",
       toolbar: {
-        show: false,
+        autoSelected: 'pan',
+        show: true,
       },
       zoom: {
         autoScaleYaxis: true,
@@ -64,7 +65,7 @@ const Area = ({ data, min, max, type }) => {
       },
       y: {
         formatter: function (val) {
-          return "₹ " + val
+          return "$ " + val
         }
       }
     },
@@ -78,22 +79,52 @@ const Area = ({ data, min, max, type }) => {
         stops: [0, 100],
       },
     },
-    // optionsLine: {
-    //   id: 'timeline',
-    //   type: 'area',
-    //   brush: {
-    //     enabled: true,
-    //     target: 'area-datetime'
-    //   },
-    //   selection: {
-    //     enabled: true,
-    //   },
-    // }
+  };
+
+  const brushOptions = {
+    chart: {
+      id: "brush-area-datetime",
+      type: "area",
+      height: 80,
+      // background:"transparent",
+      brush: {
+        enabled: true,
+        target: 'area-datetime'
+      },
+      selection: {
+        enabled: true,
+        xaxis: {
+          min: min,
+          max: max
+        }
+      },
+    },
+    colors: ['#008FFB'],
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.91,
+        opacityTo: 0.1,
+      }
+    },
+    xaxis: {
+      type: 'datetime',
+      tooltip: {
+        enabled: false
+      }
+    },
+    yaxis: {
+      tickAmount: 2
+    },
+    // theme: {
+    //   mode: mode === "light" ? "light" : "dark",
+    // },
   };
 
   return (
     <div id="area-chart">
       <Chart options={options} series={series} type="area" height={380} />
+      <Chart options={brushOptions} series={series} type="area" height={150} />
     </div>
   );
 };

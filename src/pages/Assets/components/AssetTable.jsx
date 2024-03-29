@@ -244,6 +244,7 @@ const AssetTable = ({ title, status, rows, categories }) => {
               onSubmit={handleClose}
               closeModal={closeBuySellModal}
               initialChecked={activeTab === "sell"}
+              ticker={selectedRowData.ticker}
               defaultValue={{
                 category: selectedRowData.category,
                 ticker: selectedRowData.ticker,

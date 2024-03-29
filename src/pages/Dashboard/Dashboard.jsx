@@ -7,12 +7,14 @@ import Statistic from "../Portfolio/components/Charts/Statistic";
 import { Card, Donut, Calendar } from "./components/components";
 import { MdClose } from "react-icons/md";
 import { HiOutlineFilter } from "react-icons/hi";
+import { useUser } from "@clerk/clerk-react";
 // import { AiOutlineStock } from "react-icons/ai";
 // import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
   const calendarRef = useRef(null);
-  const { interval } = useSelector((state) => state.portfolio);
+  const { user } = useUser();
+  // const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector(
     (state) => state.portfolio
   );
@@ -21,12 +23,12 @@ const Dashboard = () => {
   // const [rowToEdit, setRowToEdit] = useState(null);
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
-  const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: dayjs(interval.start),
-    endDate: dayjs(interval.end),
-  });
+  // const [selectedDateRange, setSelectedDateRange] = useState({
+  //   startDate: dayjs(interval.start),
+  //   endDate: dayjs(interval.end),
+  // });
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const createdDate = new Date("03/18/2024");
+  const createdDate = new Date(user.createdAt);
   const handleCalendarClose = (selectedDate) => {
     setShowCalendar(false);
     setSelectedDate(selectedDate);
@@ -154,15 +156,16 @@ const Dashboard = () => {
               </button>
             </div>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {/* {metrics.map((metric) => (
               <Card key={metric.title} {...metric} />
             ))} */}
             {Object.keys(metrics).length !== 0 && (
               <>
-                <Card title="Current Value" {...metrics.market_value} />
-                <Card title="Invested Value" {...metrics.invested_value} />
-                <Card title="Overall P/L" {...metrics.overall_pl} />
+                <Card title="Current Value" value={metrics.market_value.value} />
+                <Card title="Invested Value" value={metrics.invested_value.value} />
+                <Card title="Overall P/L" type={(metrics.overall_pl.value > 0) ? "green" : ((metrics.overall_pl.value < 0) ? "red" : "black" )} value={metrics.overall_pl.value} />
+                <Card title="Day P/L" type={(metrics.day_pl.value > 0) ? "green" : ((metrics.day_pl.value < 0) ? "red" : "black" )} value={metrics.day_pl.value} />
               </>
             )}
           </div>

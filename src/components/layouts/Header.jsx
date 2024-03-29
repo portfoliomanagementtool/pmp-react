@@ -131,6 +131,9 @@ const Header = ({ openModal }) => {
           </div>
         </div>
         <div className="header-action header-action-end">
+          <div className="currency">
+            <p>Currency: Dollar($)</p>
+          </div>
           <div className="dropdown"></div>
           <div ref={notifyRef} className="dropdown">
             <div className="dropdown-toggle">

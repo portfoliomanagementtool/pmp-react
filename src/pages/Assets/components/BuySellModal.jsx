@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
@@ -31,6 +31,7 @@ const BuySellModal = ({
   const [quantity, setQuantity] = useState(
     formState.quantity !== 0 ? formState.quantity : 1
   );
+  const [initialQuantity, setInitialQuantity] = useState(formState.quantity);
 
   const [errors, setErrors] = useState("");
 
@@ -46,6 +47,24 @@ const BuySellModal = ({
       console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    const fetchPortfolioAssetDetails = async () => {
+      try {
+        const { data } = await getPortfolioAssetDetails(
+          ticker,
+          user.primaryEmailAddress.emailAddress
+        );
+        
+        if(data.assets.length > 0)
+          setInitialQuantity(data.assets[0].quantity);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    fetchPortfolioAssetDetails();
+  }, [ticker, user]);
 
   const validateForm = () => {
     let errorFields = [];
@@ -126,9 +145,10 @@ const BuySellModal = ({
         </div>
         <div>
           <p className="capitalize">{formState.category}</p>
-          <h3 className="text-xl font-semibold">
-            {formState.ticker}
-          </h3>
+          <div className="flex justify-between">
+            <h3 className="text-xl font-semibold">{formState.ticker}</h3>
+            <h3 className="text-lg font-semibold">Holding: {initialQuantity}</h3>
+          </div>
         </div>
         <div className="mt-5">
           <Box
@@ -167,7 +187,7 @@ const BuySellModal = ({
                 inputProps: { min: 1 },
               }}
               variant="outlined"
-              defaultValue={formState.quantity}
+              defaultValue={0}
               onChange={(e) => {
                 changeInput(e);
                 setQuantity(e.target.value > 0 ? e.target.value : 1);

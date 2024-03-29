@@ -39,7 +39,7 @@ const columns = [
   {
     accessorKey: 'market_value',
     header: "Market Value",
-    cell: (props) => <p>₹{Number(props.getValue()).toFixed(2)}</p>
+    cell: (props) => <p>${Number(props.getValue()).toFixed(2)}</p>
   },
   {
     accessorKey: 'daypl',
@@ -247,7 +247,7 @@ const WatchlistTable = ({ title, rows, categories }) => {
                             {watchlists[key].category}
                           </span>
                         </td>
-                        <td className="py-4">₹{Number(watchlists[key].market_value).toFixed(2)}</td>
+                        <td className="py-4">${Number(watchlists[key].market_value).toFixed(2)}</td>
                         <td className="py-2">
                           <div className="flex items-center gap-2">
                             <span className="badge-dot bg-emerald-500"></span>

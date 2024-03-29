@@ -50,7 +50,7 @@ const Bar = ({ investments }) => {
     },
     yaxis: {
       title: {
-        // text: '₹ (thousands)'
+        // text: '$ (thousands)'
         text: 'Total Investment (in Rupees)'
       }
     },
@@ -60,7 +60,7 @@ const Bar = ({ investments }) => {
     tooltip: {
       y: {
         formatter: function (val) {
-          return "₹ " + val + " thousands"
+          return "$ " + val + " thousands"
         }
       }
     }

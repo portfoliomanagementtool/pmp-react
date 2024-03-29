@@ -13,7 +13,9 @@ import { HiOutlineFilter } from "react-icons/hi";
 const Dashboard = () => {
   const calendarRef = useRef(null);
   const { interval } = useSelector((state) => state.portfolio);
-  const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
+  const { metrics, equityDistribution } = useSelector(
+    (state) => state.portfolio
+  );
   const [showCalendar, setShowCalendar] = useState(false);
   // const [activeButton, setActiveButton] = useState("monthly");
   // const [rowToEdit, setRowToEdit] = useState(null);
@@ -23,6 +25,12 @@ const Dashboard = () => {
     startDate: dayjs(interval.start),
     endDate: dayjs(interval.end),
   });
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const createdDate = new Date("03/18/2024");
+  const handleCalendarClose = (selectedDate) => {
+    setShowCalendar(false);
+    setSelectedDate(selectedDate);
+  };
 
   useEffect(() => {
     const fetchTopGainersAndLosers = async () => {
@@ -50,7 +58,7 @@ const Dashboard = () => {
             change: {
               value: loser.day_change,
               percentage: loser.day_change_percentage,
-            }
+            },
           };
         });
         setTopGainers(topGainersData);
@@ -58,7 +66,7 @@ const Dashboard = () => {
       } catch (error) {
         console.log(error.message);
       }
-    }
+    };
 
     fetchTopGainersAndLosers();
   }, []);
@@ -81,9 +89,9 @@ const Dashboard = () => {
     }
   };
 
-  const handleCalendarClose = () => {
-    setShowCalendar(false);
-  };
+  // const handleCalendarClose = () => {
+  //   setShowCalendar(false);
+  // };
 
   const formatData = (data) => {
     const formattedData = [];
@@ -91,11 +99,13 @@ const Dashboard = () => {
       formattedData.push(data[key].percentage);
     }
     return formattedData;
-  }
+  };
 
   const formatLabels = (labels) => {
-    return labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1));
-  }
+    return labels.map(
+      (label) => label.charAt(0).toUpperCase() + label.slice(1)
+    );
+  };
 
   return (
     <>
@@ -116,15 +126,7 @@ const Dashboard = () => {
                     className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                     readOnly={true}
                     autoComplete="off"
-                    value={
-                      selectedDateRange.startDate && selectedDateRange.endDate
-                        ? `${selectedDateRange.startDate.format(
-                            "MMM DD, YYYY"
-                          )} ~ ${selectedDateRange.endDate.format(
-                            "MMM DD, YYYY"
-                          )}`
-                        : ""
-                    }
+                    value={selectedDate.format("MMM DD, YYYY")}
                     style={{ paddingRight: "2rem" }}
                   />
                   <div className="input-suffix-end">
@@ -136,9 +138,9 @@ const Dashboard = () => {
                 {showCalendar && (
                   <Calendar
                     onClose={handleCalendarClose}
-                    selectedDateRange={selectedDateRange}
-                    setSelectedDateRange={setSelectedDateRange}
-                    // onSelectDateRange={(startDate, endDate) => setSelectedDateRange({ startDate, endDate })}
+                    onSelectDate={setSelectedDate}
+                    initialSelectedDate={selectedDate}
+                    createdDate={createdDate}
                   />
                 )}
               </div>
@@ -184,7 +186,10 @@ const Dashboard = () => {
                   {Object.keys(equityDistribution).length ? (
                     <div className="chartRef">
                       <div style={{ minHeight: "278.7px" }}>
-                        <Donut series={formatData(equityDistribution)} labels={formatLabels(Object.keys(equityDistribution))} />
+                        <Donut
+                          series={formatData(equityDistribution)}
+                          labels={formatLabels(Object.keys(equityDistribution))}
+                        />
                       </div>
                     </div>
                   ) : (
@@ -192,29 +197,6 @@ const Dashboard = () => {
                       <p className="text-gray-400">Buy some assets!</p>
                     </div>
                   )}
-                  {/* <div className="mt-6 grid grid-cols-2 gap-4 max-w-[180px] mx-auto">
-                    <div className="flex items-center gap-1">
-                      <span
-                        className="badge-dot"
-                        style={{ backgroundColor: "rgb(0,143,251)" }}
-                      ></span>
-                      <span className="font-semibold">Crypto</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <span
-                        className="badge-dot"
-                        style={{ backgroundColor: "rgb(0,227,150)" }}
-                      ></span>
-                      <span className="font-semibold">Index</span>
-                    </div>
-                    <div className="flex col-span-2 items-center gap-1">
-                      <span
-                        className="badge-dot"
-                        style={{ backgroundColor: "rgb(254,176,25)" }}
-                      ></span>
-                      <span className="font-semibold">Innovation</span>
-                    </div>
-                  </div> */}
                 </div>
               </div>
             </div>

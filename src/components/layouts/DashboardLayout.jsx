@@ -14,7 +14,7 @@ const DashboardLayout = () => {
   const dispatch = useDispatch(); 
   const { interval } = useSelector((state) => state.portfolio);
   const [modalIsOpen, setIsOpen] = useState(false);
-
+// console.log(user)
   useEffect(() => {
     const today = new Date();
     const startDate = new Date(today.setMonth(today.getMonth() - 3));

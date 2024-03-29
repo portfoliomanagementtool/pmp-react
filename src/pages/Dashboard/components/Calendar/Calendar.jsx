@@ -4,43 +4,36 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { saveTimeInterval } from "../../../../state/slices/portfolioSlice";
 
-const Calendar = ({ onClose, setSelectedDateRange }) => {
+const Calendar = ({
+  onClose,
+  onSelectDate,
+  initialSelectedDate,
+  createdDate,
+}) => {
   const mode = useSelector((state) => state.config.mode);
   const isDarkMode = mode === "dark";
 
-  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [selectedDate, setSelectedDate] = useState(dayjs(initialSelectedDate));
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const today = dayjs();
   const dispatch = useDispatch();
 
-  const handleMonthChange = (monthsToAdd) => {
-    setSelectedDate(selectedDate.add(monthsToAdd, "month"));
-  };
-
+  console.log(selectedDate);
+  //
   const handleDateClick = (date) => {
-    const isBeforeToday =
-      date.isBefore(today, "day") || date.isSame(today, "day");
-    if (!selectedStartDate && isBeforeToday) {
-      setSelectedDateRange((prev) => ({ ...prev, startDate: date }));
-      setSelectedStartDate(date);
-      setSelectedEndDate(null);
-    } else if (selectedStartDate && isBeforeToday) {
-      if (!selectedEndDate || date.isBefore(selectedStartDate)) {
-        setSelectedDateRange((prev) => ({ ...prev, endDate: date}))
-        setSelectedEndDate(date);
-      } else {
-        setSelectedDateRange((prev) => ({ ...prev, startDate: date }));
-        setSelectedStartDate(date);
-        setSelectedEndDate(null);
-      }
+    if (date.isBefore(createdDate, "day")) {
+      return;
+    }
+    const isBeforeToday = date.isBefore(today, "day");
+    if (isBeforeToday) {
+      setSelectedDate(date);
+      onSelectDate(date);
     }
   };
 
-  const handleSubmit = () => {
-    setSelectedDateRange({ startDate: selectedStartDate, endDate: selectedEndDate });
-    dispatch(saveTimeInterval({ start: selectedStartDate.toString(), end: selectedEndDate.toString() }));
-    onClose();
+  const handleMonthChange = (monthsToAdd) => {
+    setSelectedDate(selectedDate.add(monthsToAdd, "month"));
   };
 
   const generateMonthMatrix = (date) => {
@@ -105,18 +98,21 @@ const Calendar = ({ onClose, setSelectedDateRange }) => {
               const isBeforeToday = date.isBefore(today, "day");
               const isTodayInCurrentMonth = isToday && isCurrentMonth;
               const isCurrentYear = date.year() === today.year();
-              const isLastDayOfMonth = date.isSame(date.endOf("month"), "day"); // Add this line
+              const isLastDayOfMonth = date.isSame(date.endOf("month"), "day");
+              const isBeforeCreatedDate = date.isBefore(createdDate, "day");
 
               return (
                 <div
                   key={date.format("YYYY-MM-DD")}
                   className={`rounded-full text-center p-2 cursor-pointer  ${
                     date.isSame(selectedDate, "day")
-                      ? ""
+                      ? "selected-date bg-blue-200 text-gray-600"
                       : isTodayInCurrentMonth
                       ? "bg-yellow-200"
                       : isBeforeToday && !isCurrentMonth
                       ? "dark:text-gray-700 dark:border-gray-700 text-gray-200 border-white"
+                      : isBeforeCreatedDate
+                      ? "text-gray-200"
                       : ""
                   }${
                     (selectedStartDate &&
@@ -124,7 +120,7 @@ const Calendar = ({ onClose, setSelectedDateRange }) => {
                       date.isAfter(selectedStartDate, "day") &&
                       date.isBefore(selectedEndDate, "day")) ||
                     date.isSame(selectedStartDate, "day") ||
-                    date.isSame(selectedEndDate, "day")
+                    date.isSame(selectedDate, "day")
                       ? "bg-blue-200 text-gray-600"
                       : ""
                   } ${isDarkMode ? "border-gray-700" : "border-gray-300"} ${
@@ -141,7 +137,8 @@ const Calendar = ({ onClose, setSelectedDateRange }) => {
         <div className="mt-4 flex justify-center">
           <button
             className={`px-4 py-2 rounded-md bg-blue-500 text-white`}
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
+            onClick={() => onClose(selectedDate)}
             // disabled={!selectedStartDate || !selectedEndDate}
           >
             OK

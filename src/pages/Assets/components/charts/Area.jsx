@@ -137,7 +137,7 @@ const Area = ({ data, allTimeMin, min, max, type }) => {
   return (
     <div id="area-chart">
       <Chart options={options} series={series} type="area" height={380} />
-      <Chart options={brushOptions} series={series} type="area" height={150} />
+      {/* <Chart options={brushOptions} series={series} type="area" height={150} /> */}
     </div>
   );
 };

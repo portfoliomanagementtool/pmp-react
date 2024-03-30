@@ -47,13 +47,14 @@ export const {
 } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
 
-export const fetchMetrics = (interval, email) => async (dispatch) => {
-  const { start, end } = interval;
+export const fetchMetrics = (end, email) => async (dispatch) => {
+  // const { start, end } = interval;
+  end = new Date(end).toISOString();
 
   // console.log(start, end)
 
   try {
-    const { data } = await getMetrics(start, end, email);
+    const { data } = await getMetrics(end, email);
     dispatch(saveMetrics(data.metrics));
     dispatch(saveEquityDistribution(data.categories));
   } catch (error) {

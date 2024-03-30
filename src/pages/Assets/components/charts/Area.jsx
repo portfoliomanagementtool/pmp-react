@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 import abbreviate from "number-abbreviate";
 
-const Area = ({ data, min, max, type }) => {
+const Area = ({ data, allTimeMin, min, max, type }) => {
   const mode = useSelector((state) => state.config.mode);
   const series= [{
       name: "Market Value",
@@ -17,13 +17,16 @@ const Area = ({ data, min, max, type }) => {
       type: "area",
       height: 350,
       background:"transparent",
+      stacked: false,
       toolbar: {
-        autoSelected: 'pan',
+        // autoSelected: 'pan',
         show: true,
       },
       zoom: {
-        autoScaleYaxis: true,
-      }
+        type: 'x',
+        enabled: true,
+        autoScaleYaxis: true
+      },
     },
     colors: [type === "green" ? "#81C995" : "#F28B82"],
     theme: {
@@ -36,11 +39,11 @@ const Area = ({ data, min, max, type }) => {
       size: 0,
       style: 'hollow',
     },
-    zoom: {
-      enabled: true,
-      type: 'xy',
-      autoScaleYaxis: true,
-    },
+    // zoom: {
+    //   type: 'x',
+    //   enabled: true,
+    //   autoScaleYaxis: true,
+    // },
     stroke: {
       width: 3,
       // curve: "smooth",
@@ -86,18 +89,28 @@ const Area = ({ data, min, max, type }) => {
       id: "brush-area-datetime",
       type: "area",
       height: 80,
-      // background:"transparent",
+      background:"transparent",
       brush: {
         enabled: true,
         target: 'area-datetime'
       },
+      theme: {
+        mode: mode === "light" ? "light" : "dark",
+      },
       selection: {
         enabled: true,
+        fill: {
+          color: "#fff",
+          opacity: 0.4
+        },
         xaxis: {
-          min: min,
+          min: allTimeMin,
           max: max
         }
       },
+    },
+    theme: {
+      mode: mode === "light" ? "light" : "dark",
     },
     colors: ['#008FFB'],
     fill: {

@@ -9,6 +9,7 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
   const [activeButton, setActiveButton] = useState("default");
   const [minTime, setMinTime] = useState(areaData[areaData.length - 1][0]);
   const maxTime = areaData[0][0];
+  const allTimeMin = areaData[areaData.length - 1][0];
   
   const updateData = (timeline) => {
     const today = new Date();
@@ -204,6 +205,7 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
           ) : (
             <Area
               data={areaData}
+              allTimeMin={allTimeMin}
               min={minTime}
               max={maxTime}
               type={

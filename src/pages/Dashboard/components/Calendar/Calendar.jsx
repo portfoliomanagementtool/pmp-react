@@ -19,7 +19,7 @@ const Calendar = ({
   const today = dayjs();
   const dispatch = useDispatch();
 
-  console.log(selectedDate);
+  // console.log(selectedDate);
   //
   const handleDateClick = (date) => {
     if (date.isBefore(createdDate, "day")) {
@@ -27,6 +27,7 @@ const Calendar = ({
     }
     const isBeforeToday = date.isBefore(today, "day");
     if (isBeforeToday) {
+      console.log("hello")
       setSelectedDate(date);
       onSelectDate(date);
     }

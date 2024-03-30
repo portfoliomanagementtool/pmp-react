@@ -25,9 +25,10 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (user) {
-      dispatch(fetchMetrics(interval, user.primaryEmailAddress.emailAddress));
+      const endDate = new Date();
+      dispatch(fetchMetrics(endDate, user.primaryEmailAddress.emailAddress));
     }
-  }, [user, dispatch, interval])
+  }, [user, dispatch])
 
   useEffect(() => {
     dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress))

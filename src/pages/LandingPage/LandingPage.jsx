@@ -25,9 +25,9 @@ const LandingPage = () => {
   }, [user, navigate, dispatch]);
 
   return (
-    <>
+    <main className="h-screen">
       <Navbar />
-      <div>
+      <div className="flex flex-col justify-center">
         <div className="flex justify-center">
           <div>
             <h1 className=" text-3xl  md:text-5xl lg:text-7xl mx-auto mt-10 font-bold text-center">
@@ -46,7 +46,7 @@ const LandingPage = () => {
                 guidance for a prosperous financial journey.
               </h1>
             </div>
-            <div className=" flex  justify-center my-4 mx-5 ">
+            {/* <div className=" flex  justify-center my-4 mx-5 ">
               <input
                 placeholder="Enter your email"
                 className="bg-[#D9D9D9] p-1 rounded-lg  md:pr-32 md:py-6"
@@ -54,10 +54,10 @@ const LandingPage = () => {
               <button className="bg-lightPurple text-white text-xs rounded-md p-2 justify-end">
                 Get Started
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
-        <div className="w-[full] mx-10 md:mx-20 h-[170px] md:h-[270px] bg-[#D9D9D9] mt-12 md:mt-28"></div>
+        {/* <div className="w-[full] mx-10 md:mx-20 h-[170px] md:h-[270px] bg-[#D9D9D9] mt-12 md:mt-28"></div>
         <div className="mx-auto mt-12 md:mt-28">
           <h1 className="text-4xl md:text-6xl font-bold text-center text-darkPurple">
             How <span className="text-lightPurple">We</span> Work
@@ -153,7 +153,6 @@ const LandingPage = () => {
           </div>
         </div>
         <div className="mx-auto mt-12 md:mt-28 ">
-          {/* <div className="w-1/2 h-auto my-10 bg-[#D9D9D950] rounded-lg"></div> */}
           <div className="text-center mx-10">
             <h1 className="text-3xl text-center md:text-6xl font-bold text-darkPurple">
               Your <span className="text-lightPurple">Pathway</span> to Future
@@ -314,10 +313,10 @@ const LandingPage = () => {
               future
             </h1>
           </div>
-        </div>
+        </div> */}
       </div>
-      <Footer />
-    </>
+      {/* <Footer /> */}
+    </main>
   );
 };
 

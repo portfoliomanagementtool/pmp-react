@@ -1,21 +1,22 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
-const Statistic = () => {
+
+const HistoricDataGraph = ({ data }) => {
   const mode = useSelector((state) => state.config.mode);
 
   const series = [
     {
-      name: "Crypto",
-      data: [61000, 45000, 39000, 40800, 80000, 98700, 50000],
+      name: "Investments",
+      data: data.investedValue,
     },
     {
-      name: "Index",
-      data: [60000, 41000, 65000, 51000, 49000, 60000, 69000],
+      name: "Market Value",
+      data: data.marketValue,
     },
     {
-      name: "Innovation",
-      data: [51000, 65000, 69000, 56800, 96000, 68700, 40000],
+      name: "Overall P/L",
+      data: data.overallPL,
     },
   ];
 
@@ -43,16 +44,21 @@ const Statistic = () => {
     },
     colors: ["#008FFB", "#00A76D", "#E91E63"],
     xaxis: {
-      categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+      type: 'datetime',
+      categories: data.timestamps,
+      tooltip: {
+        enabled: false
+      }
     },
     yaxis: {
       title: {
-        text: 'Market Value (in Rupees)',
+        text: 'Historic Data (in Dollars)',
         // style: {
         //   color: mode === "light" ? "#111827" : "#e5e7eb",
         //   fontWeight: 600,
         // }
-      }
+      },
+      tickAmount: 6,
     },
   };
 
@@ -63,4 +69,4 @@ const Statistic = () => {
   );
 };
 
-export default Statistic;
+export default HistoricDataGraph;

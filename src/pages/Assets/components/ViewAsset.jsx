@@ -294,7 +294,7 @@ const ViewAsset = () => {
             category: assetDetails.category,
             ticker: assetDetails.ticker,
             market_value: assetDetails.market_value,
-            quantity: portfolioAsset.quantity || 0,
+            quantity: portfolioAsset ? portfolioAsset.quantity : 0,
           }}
           initialChecked={modalType === "SELL"}
         />

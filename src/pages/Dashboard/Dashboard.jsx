@@ -1,24 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { getTopGainersAndLosers } from "../../api";
+import { getHistoricData, getTopGainersAndLosers } from "../../api";
 import TopListing from "./components/TopListing/TopListing";
-import Statistic from "../Portfolio/components/Charts/Statistic";
+import HistoricDataGraph from "../Portfolio/components/Charts/HistoricDataGraph";
 import { Card, Donut, Calendar } from "./components/components";
 import { MdClose } from "react-icons/md";
 import { HiOutlineFilter } from "react-icons/hi";
 import { useUser } from "@clerk/clerk-react";
+import { fetchMetrics } from "../../state/slices/portfolioSlice";
+import { FaDownload } from "react-icons/fa6";
 // import { AiOutlineStock } from "react-icons/ai";
 // import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
   const calendarRef = useRef(null);
   const { user } = useUser();
+  const dispatch = useDispatch();
   // const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector(
     (state) => state.portfolio
   );
   const [showCalendar, setShowCalendar] = useState(false);
+  const [historicData, setHistoricData] = useState(null);
   // const [activeButton, setActiveButton] = useState("monthly");
   // const [rowToEdit, setRowToEdit] = useState(null);
   const [topGainers, setTopGainers] = useState([]);
@@ -33,6 +37,40 @@ const Dashboard = () => {
     setShowCalendar(false);
     setSelectedDate(selectedDate);
   };
+
+  console.log(selectedDate)
+
+  useEffect(() => {
+    const formatData = (data) => {
+      const formattedData = {
+        investedValue: [],
+        marketValue: [],
+        overallPL: [],
+        timestamps: [],
+      };
+
+      data.forEach((item) => {
+        formattedData.investedValue.push(Number(item.invested_value).toFixed(2));
+        formattedData.marketValue.push(Number(item.market_value).toFixed(2));
+        formattedData.overallPL.push(Number(item.overall_pl).toFixed(2));
+        formattedData.timestamps.push(new Date(item.timestamp).getTime());
+      });
+
+      return formattedData;
+    }
+
+    const fetchHistoricData = async () => {
+      try {
+        const { data } = await getHistoricData(user.primaryEmailAddress.emailAddress);
+        const formattedData = formatData(data.data);
+        setHistoricData(formattedData);
+      } catch (error) {
+        console.log(error.message)
+      }
+    };
+
+    fetchHistoricData();
+  }, [user])
 
   useEffect(() => {
     const fetchTopGainersAndLosers = async () => {
@@ -72,6 +110,12 @@ const Dashboard = () => {
 
     fetchTopGainersAndLosers();
   }, []);
+
+  useEffect(() => {
+    console.log(selectedDate)
+    if (user) 
+      dispatch(fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress));
+  }, [user, selectedDate, dispatch])
 
   useEffect(() => {
     if (showCalendar) {
@@ -146,14 +190,14 @@ const Dashboard = () => {
                   />
                 )}
               </div>
-              <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+              {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
                 <span className="flex items-center justify-center">
                   <span className="text-lg">
-                    <HiOutlineFilter />
+                    <FaDownload  />
                   </span>
-                  <span className="ml-2">Filter</span>
+                  <span className="ml-2">Download</span>
                 </span>
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -169,15 +213,20 @@ const Dashboard = () => {
               </>
             )}
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="md:grid grid-cols-1 lg:grid-cols-3 gap-4 hidden">
             <div className="card col-span-2 card-border" role="presentation">
               <div className="card-body">
-                <h4>Statistics</h4>
+                <h4>Historic Data (Investments vs Mkt. Value vs Overall P/L )</h4>
                 <div className="mt-4">
                   <div className="chartRef min-h-[365px]">
-                    <div>
-                      <Statistic />
-                    </div>
+                    {historicData && (
+                      <HistoricDataGraph data={historicData} />
+                    )}
+                    {!historicData && (
+                      <div className="h-80 flex flex-col justify-center items-center">
+                        <p className="text-gray-400">Buy some assets!</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

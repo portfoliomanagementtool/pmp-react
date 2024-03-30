@@ -126,13 +126,13 @@ const Header = ({ openModal }) => {
           >
             {collapsed ? <RxHamburgerMenu /> : <HiOutlineMenuAlt2 />}
           </div>
-          <div className="header-action-item header-action-item-hoverable text-2xl">
+          {/* <div className="header-action-item header-action-item-hoverable text-2xl">
             <IoSearchSharp />
-          </div>
+          </div> */}
         </div>
         <div className="header-action header-action-end">
-          <div className="currency">
-            <p>Currency: Dollar($)</p>
+          <div className="currency bg-gray-200 dark:bg-gray-700 rounded p-2">
+            <h6 className="font-semibold text-sm">Currency: Dollar($)</h6>
           </div>
           <div className="dropdown"></div>
           <div ref={notifyRef} className="dropdown">

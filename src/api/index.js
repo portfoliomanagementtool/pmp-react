@@ -8,7 +8,12 @@ const API = axios.create({
 
 
 // Metrics
-export const getMetrics = (startDate, endDate, email) => API.get(`/portfolio/getmetrics?start=${startDate}&end=${endDate}`, {
+export const getMetrics = (endDate, email) => API.get(`/portfolio/getmetrics?end_date=${endDate}`, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getHistoricData = (email) => API.get("/portfolio/get_historic_portfolios", {
   headers: {
     "UserId": email,
   }

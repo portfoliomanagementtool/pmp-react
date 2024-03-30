@@ -116,6 +116,8 @@ const BuySellModal = ({
     fetchPortfolio();
   };
 
+  const isDisabled = checked && initialQuantity === 0;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="modal-overlay fixed inset-0 bg-black opacity-50"></div>
@@ -148,6 +150,9 @@ const BuySellModal = ({
           </div>
         </div>
         <div className="mt-5 ">
+          {isDisabled && checked && (
+            <p className="text-red-500 mb-2">*Buy some shares*</p>
+          )}
           <Box
             component="form"
             sx={{
@@ -178,13 +183,16 @@ const BuySellModal = ({
               id="outlined-basic"
               label="Quantity"
               type='number'
-              InputProps={{
+              InputProps={checked ? {
+                inputProps: initialQuantity > 0 ? { min: 1, max: initialQuantity } : { min: 0, max: initialQuantity },
+              } : {
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              defaultValue={0}
+              defaultValue={1}
               onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
               name="quantity"
+              disabled={isDisabled}
             />
             <TextField
               id="outlined-basic"

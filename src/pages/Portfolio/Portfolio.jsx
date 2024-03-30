@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import dayjs from "dayjs";
 import Donut from "./components/Charts/Donut";
 import Bar from "./components/Charts/Bar";
 import SellBuyTable from "./components/SellBuyTable";
 import { Calendar, Card } from "../Dashboard/components/components";
-import { getDailyInvestments, getPortfolio } from "../../api";
+import { getDailyInvestments, getHistoricData, getPortfolio } from "../../api";
 import { HiOutlineFilter } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
+import { fetchMetrics } from "../../state/slices/portfolioSlice";
+import { FaDownload } from "react-icons/fa6";
 // import dateFormat from "dateformat";
 // import Modal from "./components/Modals/Modal";
 // import Metrics from "../Dashboard/components/Metrics";
@@ -21,6 +23,7 @@ import { MdClose } from "react-icons/md";
 
 const Portfolio = () => {
   const { user } = useUser();
+  const dispatch = useDispatch();
   const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
   const [rows, setRows] = useState([]);
@@ -31,13 +34,20 @@ const Portfolio = () => {
     categories: [],
     data: [],
   });
-  const [selectedDateRange, setSelectedDateRange] = useState({
-    startDate: dayjs(interval.start),
-    endDate: dayjs(interval.end),
-  });
+  // const [selectedDateRange, setSelectedDateRange] = useState({
+  //   startDate: dayjs(interval.start),
+  //   endDate: dayjs(interval.end),
+  // });
+  const [selectedDate, setSelectedDate] = useState(dayjs());
+  const createdDate = new Date(user.createdAt);
+  const handleCalendarClose = (selectedDate) => {
+    setShowCalendar(false);
+    setSelectedDate(selectedDate);
+  };
   const calendarRef = useRef(null);
   const [personalCategories, setPersonalCategories] = useState({});
   const [status, setStatus] = useState("IDLE");
+  const [barData, setBarData] = useState(null);
 
   useEffect(() => {
     if(rows.length !== 0) {
@@ -103,39 +113,75 @@ const Portfolio = () => {
   }, [equityDistribution]);
 
   useEffect(() => {
-    // const formatDate = (date_string) => {
-    //   var date_components = date_string.split("-");
-    //   var day = date_components[0];
-    //   var month = date_components[1];
-    //   var year = date_components[2];
-    //   return new Date(year, month - 1, day);
-    // }
+    console.log(selectedDate)
+    if (user) 
+      dispatch(fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress));
+  }, [user, selectedDate, dispatch])
 
-    const fetchDailyInvestments = async () => {
+  // useEffect(() => {
+  //   // const formatDate = (date_string) => {
+  //   //   var date_components = date_string.split("-");
+  //   //   var day = date_components[0];
+  //   //   var month = date_components[1];
+  //   //   var year = date_components[2];
+  //   //   return new Date(year, month - 1, day);
+  //   // }
+
+  //   const fetchDailyInvestments = async () => {
+  //     try {
+  //       const { data } = await getDailyInvestments(user.primaryEmailAddress.emailAddress);
+  //       const obj = {
+  //         categories: [],
+  //         data: []
+  //       }
+  //       Object.keys(data.data).forEach((key) => {
+  //         // obj.categories.push(formatDate(key).getTime());
+  //         obj.categories.push(key);
+  //         obj.data.push(parseFloat(Number(data.data[key]).toFixed(2)));
+  //       });
+
+  //       setDailyInvestments((prev) => ({
+  //         ...prev,
+  //         categories: [...prev.categories, ...obj.categories],
+  //         data: [...prev.data, ...obj.data],
+  //       }))
+  //     } catch (error) {
+  //       console.log(error.message);
+  //     }
+  //   };
+
+  //   fetchDailyInvestments();
+  // }, [user]);
+
+  useEffect(() => {
+    const formatData = (data) => {
+      const formattedData = {
+        investedValue: [],
+        marketValue: [],
+        timestamps: [],
+      };
+
+      data.forEach((item) => {
+        formattedData.investedValue.push(Number(item.invested_value).toFixed(2));
+        formattedData.marketValue.push(Number(item.market_value).toFixed(2));
+        formattedData.timestamps.push(new Date(item.timestamp).getTime());
+      });
+
+      return formattedData;
+    }
+
+    const fetchBarData = async () => {
       try {
-        const { data } = await getDailyInvestments(user.primaryEmailAddress.emailAddress);
-        const obj = {
-          categories: [],
-          data: []
-        }
-        Object.keys(data.data).forEach((key) => {
-          // obj.categories.push(formatDate(key).getTime());
-          obj.categories.push(key);
-          obj.data.push(parseFloat(Number(data.data[key]).toFixed(2)));
-        });
-
-        setDailyInvestments((prev) => ({
-          ...prev,
-          categories: [...prev.categories, ...obj.categories],
-          data: [...prev.data, ...obj.data],
-        }))
+        const { data } = await getHistoricData(user.primaryEmailAddress.emailAddress);
+        const formattedData = formatData(data.data);
+        setBarData(formattedData);
       } catch (error) {
-        console.log(error.message);
+        console.log(error.message)
       }
-    };
+    }
 
-    fetchDailyInvestments();
-  }, [user]);
+    fetchBarData();
+  }, [user])
 
   useEffect(() => {
     if (showCalendar) {
@@ -163,9 +209,9 @@ const Portfolio = () => {
     setRows(rows);
   }
 
-  const handleCalendarClose = () => {
-    setShowCalendar(false);
-  };
+  // const handleCalendarClose = () => {
+  //   setShowCalendar(false);
+  // };
 
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
@@ -201,15 +247,7 @@ const Portfolio = () => {
                   className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
                   readOnly={true}
                   autoComplete="off"
-                  value={
-                    selectedDateRange.startDate && selectedDateRange.endDate
-                      ? `${selectedDateRange.startDate.format(
-                          "MMM DD, YYYY"
-                        )} ~ ${selectedDateRange.endDate.format(
-                          "MMM DD, YYYY"
-                        )}`
-                      : ""
-                  }
+                  value={selectedDate.format("MMM DD, YYYY")}
                   style={{ paddingRight: "2rem" }}
                 />
                 <div className="input-suffix-end">
@@ -219,22 +257,22 @@ const Portfolio = () => {
                 </div>
               </span>
               {showCalendar && (
-                <Calendar
-                  onClose={handleCalendarClose}
-                  onSelectDateRange={(startDate, endDate) =>
-                    setSelectedDateRange({ startDate, endDate })
-                  }
-                />
-              )}
+                  <Calendar
+                    onClose={handleCalendarClose}
+                    onSelectDate={setSelectedDate}
+                    initialSelectedDate={selectedDate}
+                    createdDate={createdDate}
+                  />
+                )}
             </div>
-            <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+            {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
               <span className="flex items-center justify-center">
                 <span className="text-lg">
-                  <HiOutlineFilter />
+                  <FaDownload />
                 </span>
-                <span className="ml-2">Filter</span>
+                <span className="ml-2">Download</span>
               </span>
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -289,9 +327,14 @@ const Portfolio = () => {
               </div>
               <div className="chartRef">
                 <div style={{ minHeight: "395px" }}>
-                  {/* {dailyInvestments.categories.length !== 0 && ( */}
-                    <Bar investments={dailyInvestments} />
-                  {/* )} */}
+                  {barData && (
+                    <Bar data={barData} />
+                  )}
+                  {!barData && (
+                    <div className="h-80 flex flex-col justify-center items-center">
+                      <p className="text-gray-400">Buy some assets!</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

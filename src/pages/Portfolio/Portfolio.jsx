@@ -11,6 +11,7 @@ import { HiOutlineFilter } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
 import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
+import Datepicker from "react-tailwindcss-datepicker";
 // import dateFormat from "dateformat";
 // import Modal from "./components/Modals/Modal";
 // import Metrics from "../Dashboard/components/Metrics";
@@ -25,7 +26,9 @@ const Portfolio = () => {
   const { user } = useUser();
   const dispatch = useDispatch();
   const { interval } = useSelector((state) => state.portfolio);
-  const { metrics, equityDistribution } = useSelector((state) => state.portfolio);
+  const { metrics, equityDistribution } = useSelector(
+    (state) => state.portfolio
+  );
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -34,38 +37,43 @@ const Portfolio = () => {
     categories: [],
     data: [],
   });
-  // const [selectedDateRange, setSelectedDateRange] = useState({
-  //   startDate: dayjs(interval.start),
-  //   endDate: dayjs(interval.end),
-  // });
+
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const createdDate = new Date(user.createdAt);
-  const handleCalendarClose = (selectedDate) => {
-    setShowCalendar(false);
-    setSelectedDate(selectedDate);
-  };
+  const currentDate = new Date();
+
+  const [value, setValue] = useState({
+    startDate: currentDate,
+    endDate: null,
+  });
+  function handleValueChange(newValue) {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  }
+
   const calendarRef = useRef(null);
   const [personalCategories, setPersonalCategories] = useState({});
   const [status, setStatus] = useState("IDLE");
   const [barData, setBarData] = useState(null);
 
   useEffect(() => {
-    if(rows.length !== 0) {
+    if (rows.length !== 0) {
       rows.forEach((item) => {
-        if(!personalCategories[item.category] && item.category) {
+        if (!personalCategories[item.category] && item.category) {
           setPersonalCategories((prev) => {
-            let category = item.category.charAt(0).toUpperCase() + item.category.slice(1);
+            let category =
+              item.category.charAt(0).toUpperCase() + item.category.slice(1);
 
             return {
               ...prev,
-              [category]: "true"
-            }
-          })
+              [category]: "true",
+            };
+          });
         }
-      })
+      });
     }
   }, [rows]);
-  
+
   useEffect(() => {
     const formatData = (data) => {
       return data.map((item, index) => {
@@ -73,7 +81,9 @@ const Portfolio = () => {
           id: index,
           ticker: item.portfolio_asset.ticker,
           name: item.portfolio_asset.name,
-          category: item.portfolio_asset.category.charAt(0).toUpperCase() + item.portfolio_asset.category.slice(1),
+          category:
+            item.portfolio_asset.category.charAt(0).toUpperCase() +
+            item.portfolio_asset.category.slice(1),
           quantity: item.quantity,
           atp: item.avgBasis,
           inv_amount: item.costBasis,
@@ -81,13 +91,15 @@ const Portfolio = () => {
           overall_gl: item.profitLoss,
           day_gl: item.portfolio_asset.daypl,
         };
-      })
-    }
+      });
+    };
 
     const fetchPortfolio = async () => {
       setStatus("LOADING");
       try {
-        const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
+        const { data } = await getPortfolio(
+          user.primaryEmailAddress.emailAddress
+        );
         const formattedData = formatData(data.assets);
         setRows(formattedData);
         setStatus("IDLE");
@@ -113,45 +125,12 @@ const Portfolio = () => {
   }, [equityDistribution]);
 
   useEffect(() => {
-    console.log(selectedDate)
-    if (user) 
-      dispatch(fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress));
-  }, [user, selectedDate, dispatch])
-
-  // useEffect(() => {
-  //   // const formatDate = (date_string) => {
-  //   //   var date_components = date_string.split("-");
-  //   //   var day = date_components[0];
-  //   //   var month = date_components[1];
-  //   //   var year = date_components[2];
-  //   //   return new Date(year, month - 1, day);
-  //   // }
-
-  //   const fetchDailyInvestments = async () => {
-  //     try {
-  //       const { data } = await getDailyInvestments(user.primaryEmailAddress.emailAddress);
-  //       const obj = {
-  //         categories: [],
-  //         data: []
-  //       }
-  //       Object.keys(data.data).forEach((key) => {
-  //         // obj.categories.push(formatDate(key).getTime());
-  //         obj.categories.push(key);
-  //         obj.data.push(parseFloat(Number(data.data[key]).toFixed(2)));
-  //       });
-
-  //       setDailyInvestments((prev) => ({
-  //         ...prev,
-  //         categories: [...prev.categories, ...obj.categories],
-  //         data: [...prev.data, ...obj.data],
-  //       }))
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   };
-
-  //   fetchDailyInvestments();
-  // }, [user]);
+    console.log(selectedDate);
+    if (user)
+      dispatch(
+        fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress)
+      );
+  }, [user, selectedDate, dispatch]);
 
   useEffect(() => {
     const formatData = (data) => {
@@ -162,26 +141,30 @@ const Portfolio = () => {
       };
 
       data.forEach((item) => {
-        formattedData.investedValue.push(Number(item.invested_value).toFixed(2));
+        formattedData.investedValue.push(
+          Number(item.invested_value).toFixed(2)
+        );
         formattedData.marketValue.push(Number(item.market_value).toFixed(2));
         formattedData.timestamps.push(new Date(item.timestamp).getTime());
       });
 
       return formattedData;
-    }
+    };
 
     const fetchBarData = async () => {
       try {
-        const { data } = await getHistoricData(user.primaryEmailAddress.emailAddress);
+        const { data } = await getHistoricData(
+          user.primaryEmailAddress.emailAddress
+        );
         const formattedData = formatData(data.data);
         setBarData(formattedData);
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
-    }
+    };
 
     fetchBarData();
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     if (showCalendar) {
@@ -203,18 +186,17 @@ const Portfolio = () => {
 
   const handleStatusChange = (status) => {
     setStatus(status);
-  }
+  };
 
   const handleRowsChange = (rows) => {
     setRows(rows);
-  }
-
-  // const handleCalendarClose = () => {
-  //   setShowCalendar(false);
-  // };
-
+  };
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
+  };
+
+  const isDateBeforeCreatedAt = (date) => {
+    return date < createdDate;
   };
 
   const formatData = (data) => {
@@ -223,11 +205,13 @@ const Portfolio = () => {
       formattedData.push(data[key].percentage);
     }
     return formattedData;
-  }
+  };
 
   const formatLabels = (labels) => {
-    return labels.map((label) => label.charAt(0).toUpperCase() + label.slice(1));
-  }
+    return labels.map(
+      (label) => label.charAt(0).toUpperCase() + label.slice(1)
+    );
+  };
 
   return (
     <main>
@@ -238,32 +222,17 @@ const Portfolio = () => {
             <p>View your current portfolio & summary</p>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div ref={calendarRef} className="relative">
-              <span className="input-wrapper">
-                <input
-                  onClick={() => setShowCalendar(!showCalendar)}
-                  type="text"
-                  placeholder="Select Date Range"
-                  className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                  readOnly={true}
-                  autoComplete="off"
-                  value={selectedDate.format("MMM DD, YYYY")}
-                  style={{ paddingRight: "2rem" }}
-                />
-                <div className="input-suffix-end">
-                  <span className="close-btn text-base" role="button">
-                    <MdClose />
-                  </span>
-                </div>
-              </span>
-              {showCalendar && (
-                  <Calendar
-                    onClose={handleCalendarClose}
-                    onSelectDate={setSelectedDate}
-                    initialSelectedDate={selectedDate}
-                    createdDate={createdDate}
-                  />
-                )}
+            <div className="border border-gray-300 focus:outline-none active:outline-none">
+              <Datepicker
+                useRange={false}
+                asSingle={true}
+                value={value}
+                onChange={handleValueChange}
+                minDate={createdDate}
+                maxDate={currentDate}
+                startFrom={currentDate}
+                isDateDisabled={isDateBeforeCreatedAt}
+              />
             </div>
             {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
               <span className="flex items-center justify-center">
@@ -279,10 +248,30 @@ const Portfolio = () => {
           {/* {metrics.map((metric) => (
             <Card key={metric.title} {...metric} />
           ))} */}
-            <Card title="Current Value" value={metrics.market_value.value} />
-            <Card title="Invested Value" value={metrics.invested_value.value} />
-            <Card title="Overall P/L" type={(metrics.overall_pl.value > 0) ? "green" : ((metrics.overall_pl.value < 0) ? "red" : "black" )} value={metrics.overall_pl.value} />
-            <Card title="Day P/L" type={(metrics.day_pl.value > 0) ? "green" : ((metrics.day_pl.value < 0) ? "red" : "black" )} value={metrics.day_pl.value} />
+          <Card title="Current Value" value={metrics.market_value.value} />
+          <Card title="Invested Value" value={metrics.invested_value.value} />
+          <Card
+            title="Overall P/L"
+            type={
+              metrics.overall_pl.value > 0
+                ? "green"
+                : metrics.overall_pl.value < 0
+                ? "red"
+                : "black"
+            }
+            value={metrics.overall_pl.value}
+          />
+          <Card
+            title="Day P/L"
+            type={
+              metrics.day_pl.value > 0
+                ? "green"
+                : metrics.day_pl.value < 0
+                ? "red"
+                : "black"
+            }
+            value={metrics.day_pl.value}
+          />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 mt-4">
           <div
@@ -296,7 +285,7 @@ const Portfolio = () => {
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "monthly"
-                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                        ? "bg-gray-500 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("monthly")}
@@ -306,7 +295,7 @@ const Portfolio = () => {
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "weekly"
-                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                        ? "bg-gray-500 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("weekly")}
@@ -316,7 +305,7 @@ const Portfolio = () => {
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500 active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "daily"
-                        ? "bg-gray-400 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
+                        ? "bg-gray-500 hover:bg-gray-700/40 text-white dark:bg-gray-500 dark:text-gray-200"
                         : ""
                     }`}
                     onClick={() => handleButtonClick("daily")}
@@ -327,9 +316,7 @@ const Portfolio = () => {
               </div>
               <div className="chartRef">
                 <div style={{ minHeight: "395px" }}>
-                  {barData && (
-                    <Bar data={barData} />
-                  )}
+                  {barData && <Bar data={barData} />}
                   {!barData && (
                     <div className="h-80 flex flex-col justify-center items-center">
                       <p className="text-gray-400">Buy some assets!</p>
@@ -349,18 +336,25 @@ const Portfolio = () => {
                       <div className="flex items-center gap-1">
                         <span className="badge-dot"></span>
                         <div>
-                          <p className="font-bold capitalize">{category.label}</p>
+                          <p className="font-bold capitalize">
+                            {category.label}
+                          </p>
                           {/* <p>0.5832112 BTC</p> */}
                         </div>
                       </div>
-                      <span className="font-semibold self-end">${Number(category.value).toFixed(2)}</span>
+                      <span className="font-semibold self-end">
+                        ${Number(category.value).toFixed(2)}
+                      </span>
                     </div>
                   ))}
                 </div>
                 {Object.keys(equityDistribution).length ? (
                   <div className="chartRef">
                     <div className=" mx-auto items-center ">
-                      <Donut series={formatData(equityDistribution)} labels={formatLabels(Object.keys(equityDistribution))} />
+                      <Donut
+                        series={formatData(equityDistribution)}
+                        labels={formatLabels(Object.keys(equityDistribution))}
+                      />
                     </div>
                   </div>
                 ) : (
@@ -372,7 +366,14 @@ const Portfolio = () => {
             </div>
           </div>
         </div>
-        <SellBuyTable title="My Assets" status={status} handleStatusChange={handleStatusChange} rows={rows} handleRowsChange={handleRowsChange} categories={Object.keys(personalCategories)} />
+        <SellBuyTable
+          title="My Assets"
+          status={status}
+          handleStatusChange={handleStatusChange}
+          rows={rows}
+          handleRowsChange={handleRowsChange}
+          categories={Object.keys(personalCategories)}
+        />
       </div>
     </main>
   );

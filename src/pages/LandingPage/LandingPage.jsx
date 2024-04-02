@@ -27,7 +27,7 @@ const LandingPage = () => {
   return (
     <main className="h-screen">
       <Navbar />
-      <div className="flex flex-col justify-center">
+      <div className="flex flex-col justify-center dark:bg-white">
         <div className="flex justify-center">
           <div>
             <h1 className=" text-3xl  md:text-5xl lg:text-7xl mx-auto mt-10 font-bold text-center">

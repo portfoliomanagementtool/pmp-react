@@ -14,24 +14,25 @@ const Calendar = ({
   const isDarkMode = mode === "dark";
 
   const [selectedDate, setSelectedDate] = useState(dayjs(initialSelectedDate));
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
   const today = dayjs();
   const dispatch = useDispatch();
 
-  // console.log(selectedDate);
-  //
   const handleDateClick = (date) => {
-    if (date.isBefore(createdDate, "day")) {
-      return;
-    }
-    const isBeforeToday = date.isBefore(today, "day");
-    if (isBeforeToday) {
-      console.log("hello")
-      setSelectedDate(date);
-      onSelectDate(date);
-    }
-  };
+  if (date.isBefore(createdDate, "day")) {
+    return;
+  }
+
+  const isBeforeToday = date.isBefore(today, "day");
+  const isCurrentMonth = date.month() === selectedDate.month();
+  const isFirstDayOfMonth = date.isSame(selectedDate.startOf("month"), "day");
+  const isLastDayOfMonth = date.isSame(selectedDate.endOf("month"), "day");
+
+  if (isBeforeToday && isCurrentMonth && !isFirstDayOfMonth && !isLastDayOfMonth) {
+    setSelectedDate(date);
+    onSelectDate(date);
+    onClose(date);
+  }
+};
 
   const handleMonthChange = (monthsToAdd) => {
     setSelectedDate(selectedDate.add(monthsToAdd, "month"));
@@ -68,7 +69,7 @@ const Calendar = ({
         <div className="flex justify-between items-center mb-4">
           <button
             className={`text-gray-600 hover:text-gray-800 ${
-              isDarkMode ? "text-white hover:text-gray-500" : ""
+              isDarkMode ? "text-white hover:text-gray-100" : ""
             }`}
             onClick={() => handleMonthChange(-1)}
           >
@@ -79,7 +80,7 @@ const Calendar = ({
           </h3>
           <button
             className={`text-gray-600 hover:text-gray-800 ${
-              isDarkMode ? "text-white hover:text-gray-500" : ""
+              isDarkMode ? "text-white hover:text-gray-00" : ""
             }`}
             onClick={() => handleMonthChange(1)}
           >
@@ -101,13 +102,13 @@ const Calendar = ({
               const isCurrentYear = date.year() === today.year();
               const isLastDayOfMonth = date.isSame(date.endOf("month"), "day");
               const isBeforeCreatedDate = date.isBefore(createdDate, "day");
-
+              const isSelectedDate = date.isSame(selectedDate, "day");
               return (
                 <div
                   key={date.format("YYYY-MM-DD")}
-                  className={`rounded-full text-center p-2 cursor-pointer  ${
-                    date.isSame(selectedDate, "day")
-                      ? "selected-date bg-blue-200 text-gray-600"
+                  className={`rounded-full text-center p-2 cursor-pointer ${
+                    isSelectedDate
+                      ? "bg-blue-200 text-gray-600"
                       : isTodayInCurrentMonth
                       ? "bg-yellow-200"
                       : isBeforeToday && !isCurrentMonth
@@ -115,17 +116,8 @@ const Calendar = ({
                       : isBeforeCreatedDate
                       ? "text-gray-200"
                       : ""
-                  }${
-                    (selectedStartDate &&
-                      selectedEndDate &&
-                      date.isAfter(selectedStartDate, "day") &&
-                      date.isBefore(selectedEndDate, "day")) ||
-                    date.isSame(selectedStartDate, "day") ||
-                    date.isSame(selectedDate, "day")
-                      ? "bg-blue-200 text-gray-600"
-                      : ""
                   } ${isDarkMode ? "border-gray-700" : "border-gray-300"} ${
-                    isDarkMode && date.isSame(selectedDate, "day") ? "" : ""
+                    isDarkMode && isSelectedDate ? "" : ""
                   }${isToday && !isLastDayOfMonth ? "bg-gray-200" : ""}`}
                   onClick={() => handleDateClick(date)}
                 >
@@ -135,7 +127,8 @@ const Calendar = ({
             })
           )}
         </div>
-        <div className="mt-4 flex justify-center">
+
+        {/* <div className="mt-4 flex justify-center">
           <button
             className={`px-4 py-2 rounded-md bg-blue-500 text-white`}
             // onClick={handleSubmit}
@@ -144,7 +137,7 @@ const Calendar = ({
           >
             OK
           </button>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -152,14 +145,14 @@ const Calendar = ({
   return (
     <>
       <div
-        className={`absolute w-80 p-3 top-12 left-0 shadow-lg border ${
+        className={`absolute w-80 p-3 top-12 left-0 lg:-left-20 shadow-lg border ${
           isDarkMode
             ? "bg-gray-800 border-gray-700"
             : "bg-white border-gray-300"
         }`}
         style={{
-          transform: "translate(829.6px, 78.4px);",
-          zIndex: "40",
+          transform: "translate(839.6px, 78.4px);",
+          zIndex: "20",
           willChange: "transform",
           borderRadius: "0.5rem",
         }}

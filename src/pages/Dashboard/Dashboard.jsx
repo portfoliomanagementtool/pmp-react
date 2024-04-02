@@ -10,35 +10,31 @@ import { HiOutlineFilter } from "react-icons/hi";
 import { useUser } from "@clerk/clerk-react";
 import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
-// import { AiOutlineStock } from "react-icons/ai";
-// import { CiCalendar } from "react-icons/ci";
+import Datepicker from "react-tailwindcss-datepicker";
 
 const Dashboard = () => {
   const calendarRef = useRef(null);
   const { user } = useUser();
   const dispatch = useDispatch();
-  // const { interval } = useSelector((state) => state.portfolio);
   const { metrics, equityDistribution } = useSelector(
     (state) => state.portfolio
   );
   const [showCalendar, setShowCalendar] = useState(false);
   const [historicData, setHistoricData] = useState(null);
-  // const [activeButton, setActiveButton] = useState("monthly");
-  // const [rowToEdit, setRowToEdit] = useState(null);
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
-  // const [selectedDateRange, setSelectedDateRange] = useState({
-  //   startDate: dayjs(interval.start),
-  //   endDate: dayjs(interval.end),
-  // });
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const createdDate = new Date(user.createdAt);
+  const currentDate = new Date();
   const handleCalendarClose = (selectedDate) => {
     setShowCalendar(false);
     setSelectedDate(selectedDate);
   };
 
-  console.log(selectedDate)
+  console.log(selectedDate);
+  const isDateBeforeCreatedAt = (date) => {
+    return date < createdDate;
+  };
 
   useEffect(() => {
     const formatData = (data) => {
@@ -50,27 +46,31 @@ const Dashboard = () => {
       };
 
       data.forEach((item) => {
-        formattedData.investedValue.push(Number(item.invested_value).toFixed(2));
+        formattedData.investedValue.push(
+          Number(item.invested_value).toFixed(2)
+        );
         formattedData.marketValue.push(Number(item.market_value).toFixed(2));
         formattedData.overallPL.push(Number(item.overall_pl).toFixed(2));
         formattedData.timestamps.push(new Date(item.timestamp).getTime());
       });
 
       return formattedData;
-    }
+    };
 
     const fetchHistoricData = async () => {
       try {
-        const { data } = await getHistoricData(user.primaryEmailAddress.emailAddress);
+        const { data } = await getHistoricData(
+          user.primaryEmailAddress.emailAddress
+        );
         const formattedData = formatData(data.data);
         setHistoricData(formattedData);
       } catch (error) {
-        console.log(error.message)
+        console.log(error.message);
       }
     };
 
     fetchHistoricData();
-  }, [user])
+  }, [user]);
 
   useEffect(() => {
     const fetchTopGainersAndLosers = async () => {
@@ -112,10 +112,12 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    console.log(selectedDate)
-    if (user) 
-      dispatch(fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress));
-  }, [user, selectedDate, dispatch])
+    console.log(selectedDate);
+    if (user)
+      dispatch(
+        fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress)
+      );
+  }, [user, selectedDate, dispatch]);
 
   useEffect(() => {
     if (showCalendar) {
@@ -135,10 +137,14 @@ const Dashboard = () => {
     }
   };
 
-  // const handleCalendarClose = () => {
-  //   setShowCalendar(false);
-  // };
-
+  const [value, setValue] = useState({
+    startDate: null,
+    endDate: null,
+  });
+  function handleValueChange(newValue) {
+    console.log("newValue:", newValue);
+    setValue(newValue);
+  }
   const formatData = (data) => {
     const formattedData = [];
     for (let key in data) {
@@ -163,65 +169,64 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div ref={calendarRef} className="relative">
-                <span className="input-wrapper">
-                  <input
-                    onClick={() => setShowCalendar(!showCalendar)}
-                    type="text"
-                    placeholder="Select Date Range"
-                    className="input input-sm h-9 focus:ring-indigo-600 focus-within:ring-indigo-600 focus-within:border-indigo-600 focus:border-indigo-600"
-                    readOnly={true}
-                    autoComplete="off"
-                    value={selectedDate.format("MMM DD, YYYY")}
-                    style={{ paddingRight: "2rem" }}
-                  />
-                  <div className="input-suffix-end">
-                    <span className="close-btn text-base" role="button">
-                      <MdClose />
-                    </span>
-                  </div>
-                </span>
-                {showCalendar && (
-                  <Calendar
-                    onClose={handleCalendarClose}
-                    onSelectDate={setSelectedDate}
-                    initialSelectedDate={selectedDate}
-                    createdDate={createdDate}
-                  />
-                )}
+              <div className="border border-gray-300 focus:outline-none active:outline-none">
+                <Datepicker
+                  useRange={false}
+                  asSingle={true}
+                  value={value}
+                  onChange={handleValueChange}
+                  minDate={createdDate}
+                  maxDate={currentDate}
+                  isDateDisabled={isDateBeforeCreatedAt}
+                />
               </div>
-              {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-                <span className="flex items-center justify-center">
-                  <span className="text-lg">
-                    <FaDownload  />
-                  </span>
-                  <span className="ml-2">Download</span>
-                </span>
-              </button> */}
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {/* {metrics.map((metric) => (
-              <Card key={metric.title} {...metric} />
-            ))} */}
             {Object.keys(metrics).length !== 0 && (
               <>
-                <Card title="Current Value" value={metrics.market_value.value} />
-                <Card title="Invested Value" value={metrics.invested_value.value} />
-                <Card title="Overall P/L" type={(metrics.overall_pl.value > 0) ? "green" : ((metrics.overall_pl.value < 0) ? "red" : "black" )} value={metrics.overall_pl.value} />
-                <Card title="Day P/L" type={(metrics.day_pl.value > 0) ? "green" : ((metrics.day_pl.value < 0) ? "red" : "black" )} value={metrics.day_pl.value} />
+                <Card
+                  title="Current Value"
+                  value={metrics.market_value.value}
+                />
+                <Card
+                  title="Invested Value"
+                  value={metrics.invested_value.value}
+                />
+                <Card
+                  title="Overall P/L"
+                  type={
+                    metrics.overall_pl.value > 0
+                      ? "green"
+                      : metrics.overall_pl.value < 0
+                      ? "red"
+                      : "black"
+                  }
+                  value={metrics.overall_pl.value}
+                />
+                <Card
+                  title="Day P/L"
+                  type={
+                    metrics.day_pl.value > 0
+                      ? "green"
+                      : metrics.day_pl.value < 0
+                      ? "red"
+                      : "black"
+                  }
+                  value={metrics.day_pl.value}
+                />
               </>
             )}
           </div>
           <div className="md:grid grid-cols-1 lg:grid-cols-3 gap-4 hidden">
             <div className="card col-span-2 card-border" role="presentation">
               <div className="card-body">
-                <h4>Historic Data (Investments vs Mkt. Value vs Overall P/L )</h4>
+                <h4>
+                  Historic Data (Investments vs Mkt. Value vs Overall P/L )
+                </h4>
                 <div className="mt-4">
                   <div className="chartRef min-h-[365px]">
-                    {historicData && (
-                      <HistoricDataGraph data={historicData} />
-                    )}
+                    {historicData && <HistoricDataGraph data={historicData} />}
                     {!historicData && (
                       <div className="h-80 flex flex-col justify-center items-center">
                         <p className="text-gray-400">Buy some assets!</p>

@@ -248,7 +248,7 @@ const AssetTable = ({ title, status, rows, categories }) => {
               defaultValue={{
                 category: selectedRowData.category,
                 ticker: selectedRowData.ticker,
-                market_value: selectedRowData.market_value,
+                market_value: Number(selectedRowData.market_value).toFixed(2),
                 quantity: 0,
               }}
             />

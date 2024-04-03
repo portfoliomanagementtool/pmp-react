@@ -14,7 +14,8 @@ import { FiSettings, FiActivity } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Scrollbars from "react-custom-scrollbars-2";
 import { Tooltip } from "react-tooltip";
-import { TbCoinRupee } from "react-icons/tb";
+// import { TbCoinRupee } from "react-icons/tb";
+import { AiOutlineDollar } from "react-icons/ai";
 import { markAllNotificationsAsRead, markNotificationAsRead } from "../../api";
 import { markAsRead, markAllAsRead } from "../../state/slices/notificationSlice";
 
@@ -200,8 +201,9 @@ const Header = ({ openModal }) => {
                                     alt={notification.fullName}
                                     loading="lazy"
                                   /> */}
-                                  <div className={`avatar-img ${notification.title !== "SELL" ? (notification.title === "BUY" ? "text-green-500" : "text-indigo-500") : "text-red-500" } `}>
-                                    <TbCoinRupee size={40} />
+                                  <div className={`avatar-img ${notification.title !== "SELL" ? (notification.title === "BUY" ? "text-green-300 dark:text-green-500" : "text-indigo-500") : "text-red-500" } `}>
+                                    {/* <TbCoinRupee size={40} /> */}
+                                    <AiOutlineDollar size={40} />
                                   </div>
                                 </span>
                               </div>

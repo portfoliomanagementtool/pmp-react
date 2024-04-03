@@ -234,14 +234,14 @@ const Portfolio = () => {
                 isDateDisabled={isDateBeforeCreatedAt}
               />
             </div>
-            {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+            <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
               <span className="flex items-center justify-center">
                 <span className="text-lg">
                   <FaDownload />
                 </span>
                 <span className="ml-2">Download</span>
               </span>
-            </button> */}
+            </button>
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

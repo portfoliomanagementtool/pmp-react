@@ -3,7 +3,8 @@ import { IoDocument } from "react-icons/io5";
 import { getActivityLogs } from "../../api";
 import { useUser } from "@clerk/clerk-react";
 import dateFormat, { masks } from "dateformat";
-import { TbCoinRupee } from "react-icons/tb";
+// import { TbCoinRupee } from "react-icons/tb";
+import { AiOutlineDollar } from "react-icons/ai";
 import Loader from "../../components/Loader/Loader";
 
 const ActivityLogs = () => {
@@ -54,8 +55,9 @@ const ActivityLogs = () => {
                                             {/* <span className="avatar-string" style={{lineHeight: "30px", transform: "translateX(-50%) scale(1)", height: "30px"}}>
                                               CP
                                             </span> */}
-                                            <div className={`avatar-img ${log.title !== "SELL" ? (log.title === "BUY" ? "text-green-800 dark:text-green-500" : "text-indigo-500 dark:text-indigo-700") : "text-red-500 dark:text-red-800" } `}>
-                                              <TbCoinRupee size={30} />
+                                            <div className={`avatar-img ${log.title !== "SELL" ? (log.title === "BUY" ? "text-green-600 dark:text-green-500" : "text-indigo-500 dark:text-indigo-400") : "text-red-500 dark:text-red-500" } `}>
+                                              {/* <TbCoinRupee size={30} /> */}
+                                              <AiOutlineDollar size={30} />
                                             </div>
                                           </div>
                                         </div>

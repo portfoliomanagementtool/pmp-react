@@ -3,7 +3,6 @@ import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 
 const Bar = ({ data }) => {
-  console.log(data)
   const mode = useSelector((state) => state.config.mode);
   // const series = [
   //   {
@@ -132,9 +131,6 @@ const Bar = ({ data }) => {
     stroke: {
       width: [0, 4]
     },
-    // title: {
-    //   text: 'Traffic Sources'
-    // },
     theme: {
       mode: mode === "light" ? 'light' : 'dark',
     },
@@ -152,15 +148,13 @@ const Bar = ({ data }) => {
       }
     },
     labels: data.timestamps,
-    // fill: {
-    //   type: 'gradient',
-    //   gradient: {
-    //     shadeIntensity: 1,
-    //     opacityFrom: 0.7,
-    //     opacityTo: 0.9,
-    //     colorStops: generateColors([23, 42, 35, 27, 43, 22, 17, -31, 22, 22, 12, 16])
-    //   }
-    // },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        endingShape: 'rounded'
+      },
+    },
     xaxis: {
       type: 'datetime'
     },
@@ -175,6 +169,9 @@ const Bar = ({ data }) => {
       }
     }],
     tooltip: {
+      x: {
+        format: 'dd MMM yyyy'
+      },
       y: {
         formatter: function (val) {
           return "$ " + val

@@ -2,9 +2,10 @@
 import { useEffect, useRef, useState } from "react";
 import { CiFilter } from "react-icons/ci";
 import { FiSearch } from "react-icons/fi";
+import { IoIosAddCircle } from "react-icons/io";
 import FilterPopOver from "./FilterPopOver";
 
-const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
+const Filters = ({ title, columnFilters, setColumnFilters, categories, handleModal }) => {
   const filterRef = useRef(null);
   const assetName = columnFilters.find((f) => f.id === "name")?.value || "";
   const [filterDropdown, showFilterDropdown] = useState(false);
@@ -39,7 +40,7 @@ const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
   };
 
   return (
-    <div className="lg:flex  items-center justify-between mb-4">
+    <div className="lg:flex items-center justify-between mb-4">
       <h3 className="mb-4 lg:mb-0">{title}</h3>
       <div className="flex flex-col lg:flex-row  lg:items-center">
         <span className="input-wrapper lg:my-1 max-w-md md:w-52 md:mb-0 mb-4">
@@ -56,44 +57,44 @@ const Filters = ({ title, columnFilters, setColumnFilters, categories }) => {
           />
         </span>
 
-        <div>
-          <div ref={filterRef} className="dropdown">
-            <div
-              className="dropdown-toggle"
-              onClick={() => showFilterDropdown(!filterDropdown)}
-            >
-              <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block md:ml-2 md:mr-2 md:mb-0 mb-4">
-                <span className="flex items-center justify-center">
-                  <span className="text-lg">
-                    <CiFilter />
+        {title !== "Add Asset" && (
+          <div>
+            <div ref={filterRef} className="dropdown">
+              <div
+                className="dropdown-toggle"
+                onClick={() => showFilterDropdown(!filterDropdown)}
+              >
+                <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm block md:inline-block md:ml-2 md:mr-2 md:mb-0 mb-4">
+                  <span className="flex items-center justify-center">
+                    <span className="text-lg">
+                      <CiFilter />
+                    </span>
+                    <span className="ml-1 mr-1">Filter</span>
                   </span>
-                  <span className="ml-1 mr-1">Filter</span>
-                </span>
-              </button>
+                </button>
+              </div>
+              {filterDropdown && (
+                <FilterPopOver
+                  columnFilters={columnFilters}
+                  setColumnFilters={setColumnFilters}
+                  categories={categories}
+                />
+              )}
             </div>
-            {filterDropdown && (
-              <FilterPopOver
-                columnFilters={columnFilters}
-                setColumnFilters={setColumnFilters}
-                categories={categories}
-              />
-            )}
           </div>
-        </div>
-
-        {/* <a
-          className="block lg:inline-block md:mb-0 mb-4"
-          href="/app/funds/ticker-new"
-        >
-          <button className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
-            <span className="flex items-center justify-center">
-              <span className="text-lg mr-1">
-                <IoIosAddCircle />
+        )}
+        {title === "My Watchlist" && (
+          <div onClick={handleModal} className="block lg:inline-block md:mb-0 mb-4">
+            <button className="button bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-700 text-white radius-round h-9 px-3 py-2 text-sm w-full">
+              <span className="flex items-center justify-center">
+                <span className="text-lg mr-1">
+                  <IoIosAddCircle />
+                </span>
+                <span className="ml-1 mr-1">Add Asset</span>
               </span>
-              <span className="ml-1 mr-1">Add Product</span>
-            </span>
-          </button>
-        </a> */}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

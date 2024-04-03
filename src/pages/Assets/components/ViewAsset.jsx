@@ -293,7 +293,7 @@ const ViewAsset = () => {
           defaultValue={{
             category: assetDetails.category,
             ticker: assetDetails.ticker,
-            market_value: assetDetails.market_value,
+            market_value: Number(assetDetails.market_value).toFixed(2),
             quantity: portfolioAsset ? portfolioAsset.quantity : 0,
           }}
           initialChecked={modalType === "SELL"}

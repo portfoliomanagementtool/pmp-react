@@ -20,36 +20,36 @@ export const getHistoricData = (email) =>
   }); //done
 
 // Portfolio
-export const getPortfolio = (email) =>
-  API.get("/portfolio/portfolios", {
-    headers: {
-      UserId: email,
-    },
-  }); // done
-export const buyAsset = (data, email) =>
-  API.post("/portfolio/buy", data, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const sellAsset = (data, email) =>
-  API.post("/portfolio/sell", data, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const getPortfolioAssetDetails = (ticker, email) =>
-  API.get(`/portfolio/portfolios?ticker=${ticker}`, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const getDailyInvestments = (email) =>
-  API.get("/portfolio/get_daily_investments", {
-    headers: {
-      UserId: email,
-    },
-  }); //done
+export const getPortfolio = (email) => API.get("/portfolio/portfolios", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const buyAsset = (data, email) => API.post("/portfolio/buy", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const sellAsset = (data, email) => API.post("/portfolio/sell", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getPortfolioAssetDetails = (ticker, email) => API.get(`/portfolio/portfolios?ticker=${ticker}`, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getDailyInvestments = (email) => API.get("/portfolio/get_daily_investments", {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const downloadPortfolio = (email) => API.get("/portfolio/download_excel", {
+  headers: {
+    "UserId": email,
+  }
+}); //done
 
 // Asset
 export const getAssetDetails = (ticker) =>

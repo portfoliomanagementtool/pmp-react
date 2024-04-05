@@ -29,7 +29,7 @@ const BuySellModal = ({
       quantity: 0,
     }
   );
-  const [quantity, setQuantity] = useState(formState.quantity);
+  const [quantity, setQuantity] = useState(1);
   const [initialQuantity, setInitialQuantity] = useState(formState.quantity);
 
   const [errors, setErrors] = useState("");
@@ -84,6 +84,7 @@ const BuySellModal = ({
     setFormState({ ...formState, [e.target.name]: e.target.value });
   };
   const handleChange = (event) => {
+    setQuantity(1)
     setChecked(event.target.checked);
   };
 
@@ -189,7 +190,8 @@ const BuySellModal = ({
                 inputProps: { min: 1 }
               }}
               variant="outlined"
-              defaultValue={1}
+              // defaultValue={1}
+              value={quantity}
               onChange={(e) => { changeInput(e); setQuantity(e.target.value > 0 ? e.target.value : 1) }}
               name="quantity"
               disabled={isDisabled}
@@ -198,7 +200,7 @@ const BuySellModal = ({
               id="outlined-basic"
               label="Price"
               variant="outlined"
-              value={Number(quantity*formState.market_value).toFixed(2)}
+              value={Number(formState.market_value).toFixed(2)}
               onChange={(e) => changeInput(e)}
               name="price"
               disabled
@@ -222,6 +224,7 @@ const BuySellModal = ({
                 },
               }}
             />
+            <p className="font-semibold">Required funds: <span>${Number(quantity * formState.market_value).toFixed(2)}</span></p>
           </Box>
         </div>
         <div

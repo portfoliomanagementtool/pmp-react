@@ -89,7 +89,7 @@ const Statistics = ({ assetDetails, candleData, areaData }) => {
         <div className="flex flex-col justify-between">
           <p>
             {Number(assetDetails.market_value).toFixed(2)}{" "}
-            <span className="text-xs">INR</span>
+            <span className="text-xs">USD</span>
           </p>
           <p
             className={`${

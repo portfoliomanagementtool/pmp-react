@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { getHistoricData, getTopGainersAndLosers } from "../../api";
+import { downloadPortfolio, getHistoricData, getTopGainersAndLosers } from "../../api";
 import TopListing from "./components/TopListing/TopListing";
-import HistoricDataGraph from "../Portfolio/components/Charts/HistoricDataGraph";
+import HistoricDataGraph from "./components/Charts/HistoricDataGraph";
 import { Card, Donut, Calendar } from "./components/components";
 import { MdClose } from "react-icons/md";
 import { HiOutlineFilter } from "react-icons/hi";
@@ -11,6 +11,10 @@ import { useUser } from "@clerk/clerk-react";
 import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
+import * as XLSX from 'xlsx';
+import Loader from "../../components/Loader/Loader";
+// import { AiOutlineStock } from "react-icons/ai";
+// import { CiCalendar } from "react-icons/ci";
 
 const Dashboard = () => {
   const calendarRef = useRef(null);
@@ -24,6 +28,9 @@ const Dashboard = () => {
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [graphStatus, setGraphStatus] = useState("IDLE");
+  const [minDate, setMinDate] = useState(null);
+  const [maxDate, setMaxDate] = useState(null);
   const createdDate = new Date(user.createdAt);
   const currentDate = new Date();
 
@@ -59,13 +66,19 @@ const Dashboard = () => {
     };
 
     const fetchHistoricData = async () => {
+      setGraphStatus("LOADING");
       try {
         const { data } = await getHistoricData(
           user.primaryEmailAddress.emailAddress
         );
+        setMaxDate(data.data[0].timestamp)
+        setMinDate(data.data[data.data.length - 1].timestamp)
+        
         const formattedData = formatData(data.data);
         setHistoricData(formattedData);
+        setGraphStatus("IDLE");
       } catch (error) {
+        setGraphStatus("ERROR");
         console.log(error.message);
       }
     };
@@ -157,6 +170,45 @@ const Dashboard = () => {
     );
   };
 
+  const handleDownload = async () => {
+    // Not Working
+
+    // try {
+    //   // Content to be downloaded
+    //   const { data } = await downloadPortfolio(user.primaryEmailAddress.emailAddress);
+    //   // const content = 'Your file content here';
+
+    //   // Parse the binary data into an Excel workbook
+    //   const workbook = XLSX.read(data, { type: 'array' });
+
+    //   // Generate a binary Excel file
+    //   const excelFile = XLSX.write(workbook, { type: 'binary', bookType: 'xlsx' });
+      
+    //   // Convert the binary data to a Blob
+    //   const blob = new Blob([excelFile], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      
+    //   // Create a URL for the Blob
+    //   const blobUrl = window.URL.createObjectURL(blob);
+      
+    //   // Create an anchor element
+    //   const anchor = document.createElement('a');
+    //   anchor.href = blobUrl;
+      
+    //   // Set the download attribute
+    //   anchor.download = 'portfolio.xlsx';
+      
+    //   // Programmatically trigger a click event to initiate the download
+    //   document.body.appendChild(anchor);
+    //   anchor.click();
+    //   document.body.removeChild(anchor);
+      
+    //   // Clean up by revoking the Blob URL
+    //   window.URL.revokeObjectURL(blobUrl);
+    // } catch (error) {
+    //   console.log(error.message) 
+    // }
+  };
+
   return (
     <>
       <main>
@@ -178,6 +230,14 @@ const Dashboard = () => {
                   isDateDisabled={isDateBeforeCreatedAt}
                 />
               </div>
+              <button onClick={handleDownload} className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+                <span className="flex items-center justify-center">
+                  <span className="text-lg">
+                    <FaDownload  />
+                  </span>
+                  <span className="ml-2">Download</span>
+                </span>
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -227,7 +287,9 @@ const Dashboard = () => {
                     {historicData && <HistoricDataGraph data={historicData} />}
                     {!historicData && (
                       <div className="h-80 flex flex-col justify-center items-center">
-                        <p className="text-gray-400">Buy some assets!</p>
+                        {graphStatus === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                        {graphStatus === "LOADING" && <Loader />}
+                        {graphStatus === "IDLE" && <p className="flex justify-center">No activity yet!</p>}
                       </div>
                     )}
                   </div>

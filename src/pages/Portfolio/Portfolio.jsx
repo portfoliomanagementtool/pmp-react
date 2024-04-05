@@ -12,6 +12,7 @@ import { MdClose } from "react-icons/md";
 import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
+import Loader from "../../components/Loader/Loader";
 // import dateFormat from "dateformat";
 // import Modal from "./components/Modals/Modal";
 // import Metrics from "../Dashboard/components/Metrics";
@@ -55,6 +56,9 @@ const Portfolio = () => {
   const [personalCategories, setPersonalCategories] = useState({});
   const [status, setStatus] = useState("IDLE");
   const [barData, setBarData] = useState(null);
+  const [minDate, setMinDate] = useState(null);
+  const [maxDate, setMaxDate] = useState(null);
+  const [barStatus, setBarStatus] = useState("IDLE");
 
   useEffect(() => {
     if (rows.length !== 0) {
@@ -152,13 +156,19 @@ const Portfolio = () => {
     };
 
     const fetchBarData = async () => {
+      setBarStatus("LOADING");
       try {
         const { data } = await getHistoricData(
           user.primaryEmailAddress.emailAddress
         );
+        setMaxDate(data.data[0].timestamp)
+        setMinDate(data.data[data.data.length - 1].timestamp)
+        
         const formattedData = formatData(data.data);
         setBarData(formattedData);
+        setBarStatus("IDLE");
       } catch (error) {
+        setBarStatus("ERROR");
         console.log(error.message);
       }
     };
@@ -234,6 +244,14 @@ const Portfolio = () => {
                 isDateDisabled={isDateBeforeCreatedAt}
               />
             </div>
+            <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
+              <span className="flex items-center justify-center">
+                <span className="text-lg">
+                  <FaDownload />
+                </span>
+                <span className="ml-2">Download</span>
+              </span>
+            </button>
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -270,7 +288,7 @@ const Portfolio = () => {
             <div className="card-body">
               <div className="flex items-center justify-between">
                 <h4 className="text-xl font-semibold">Investments</h4>
-                <div className="segment flex gap-2">
+                {/* <div className="segment flex gap-2">
                   <button
                     className={`button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-500  active:text-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm ${
                       activeButton === "monthly"
@@ -301,14 +319,16 @@ const Portfolio = () => {
                   >
                     Daily
                   </button>
-                </div>
+                </div> */}
               </div>
               <div className="chartRef">
                 <div style={{ minHeight: "395px" }}>
-                  {barData && <Bar data={barData} />}
+                  {barData && <Bar data={barData} min={minDate} max={maxDate} />}
                   {!barData && (
                     <div className="h-80 flex flex-col justify-center items-center">
-                      <p className="text-gray-400">Buy some assets!</p>
+                      {barStatus === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                      {barStatus === "LOADING" && <Loader />}
+                      {barStatus === "IDLE" && <p className="flex justify-center">No activity yet!</p>}
                     </div>
                   )}
                 </div>

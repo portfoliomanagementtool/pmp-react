@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMode, toggleCollapsed } from "../../state/slices/configSlice";
+import { setActive, setMode, toggleCollapsed } from "../../state/slices/configSlice";
 import { Link, useNavigate } from "react-router-dom";
 import {
   HiOutlineMenuAlt2,
@@ -240,7 +240,7 @@ const Header = ({ openModal }) => {
                     )}
                   </Scrollbars>
                 </div>
-                <li className="menu-item-header">
+                <li className="menu-item-header" onClick={() => { dispatch(setActive("activity-logs")); showNotifyDropdown(false)}}>
                   <div className="flex justify-center border-t border-gray-200 dark:border-gray-600 px-4 py-2">
                     <Link
                       to="/app/activity-logs"
@@ -323,6 +323,7 @@ const Header = ({ openModal }) => {
                     <li
                       className={`menu-item menu-item-hoverable text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700 mb-1 px-0`}
                       style={{ height: "35px" }}
+                      onClick={() => { dispatch(setActive("profile")); showUserDropdown(false)}}
                     >
                       <Link
                         to="/app/profile"
@@ -339,9 +340,10 @@ const Header = ({ openModal }) => {
                     <li
                       className={`menu-item menu-item-hoverable text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700 mb-1 px-0`}
                       style={{ height: "35px" }}
+                      onClick={() => { dispatch(setActive("profile")); showUserDropdown(false)}}
                     >
                       <Link
-                        to="/app/account/settings/profile"
+                        to="/app/profile"
                         className="flex h-full w-full px-2"
                       >
                         <span className="flex gap-2 items-center w-full">
@@ -355,6 +357,7 @@ const Header = ({ openModal }) => {
                     <li
                       className={`menu-item menu-item-hoverable text-gray-600 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-100 dark:hover:bg-gray-700 mb-1 px-0`}
                       style={{ height: "35px" }}
+                      onClick={() => { dispatch(setActive("activity-logs")); showUserDropdown(false)}}
                     >
                       <Link
                         to="/app/activity-logs"
@@ -364,7 +367,7 @@ const Header = ({ openModal }) => {
                           <span className="text-xl opacity-50">
                             <FiActivity />
                           </span>
-                          <span>Activity Log</span>
+                          <span>Activity Logs</span>
                         </span>
                       </Link>
                     </li>

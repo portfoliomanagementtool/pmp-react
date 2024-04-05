@@ -127,9 +127,14 @@ const Bar = ({ data, min, max }) => {
       type: 'line',
       background:"transparent",
       height: 350,
+      toolbar: {
+        show: true,
+        offsetX: 0,
+        offsetY: -10,
+      },
     },
     stroke: {
-      curve: "smooth",
+      curve: "straight",
       width: [4, 4]
     },
     fill: {

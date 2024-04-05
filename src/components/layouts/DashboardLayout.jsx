@@ -30,7 +30,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (user) {
-      toast.success('🦄 Wow so easy!', {
+      toast.success('🦄 Hello there!', {
         style: {
           // backgroundColor: "#111827",
           backgroundColor: "#E2E4E7",

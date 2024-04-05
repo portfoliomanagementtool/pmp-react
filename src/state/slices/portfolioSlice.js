@@ -4,6 +4,7 @@ import {
   buyAsset as buyAssetAPI,
   sellAsset as sellAssetAPI,
   getNotifications,
+  getDateMetrics,
 } from "../../api";
 import { saveNotifications } from "./notificationSlice";
 
@@ -48,13 +49,14 @@ export const {
 export default portfolioSlice.reducer;
 
 export const fetchMetrics = (end, email) => async (dispatch) => {
+
   // const { start, end } = interval;
   //Keep the end date as it is
-  console.log(end)
+  console.log(end);
   end = new Date(end);
   end.setHours(6, 0, 0, 0);
   end = end.toISOString();
-
+  console.log(end);
   // console.log(start, end)
 
   try {

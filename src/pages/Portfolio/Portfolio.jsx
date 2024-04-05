@@ -44,7 +44,7 @@ const Portfolio = () => {
 
   const [value, setValue] = useState({
     startDate: currentDate,
-    endDate: null,
+    endDate: currentDate,
   });
   function handleValueChange(newValue) {
     console.log("newValue:", newValue);
@@ -125,12 +125,12 @@ const Portfolio = () => {
   }, [equityDistribution]);
 
   useEffect(() => {
-    console.log(selectedDate);
+    // console.log(selectedDate);
     if (user)
       dispatch(
-        fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress)
+        fetchMetrics(value?.startDate, user.primaryEmailAddress.emailAddress)
       );
-  }, [user, selectedDate, dispatch]);
+  }, [user, value?.startDate, dispatch]);
 
   useEffect(() => {
     const formatData = (data) => {
@@ -222,7 +222,7 @@ const Portfolio = () => {
             <p>View your current portfolio & summary</p>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div className="border border-gray-300 focus:outline-none active:outline-none">
+            <div className="border rounded-md border-gray-300 z-[40] focus:outline-none active:outline-none">
               <Datepicker
                 useRange={false}
                 asSingle={true}
@@ -234,20 +234,9 @@ const Portfolio = () => {
                 isDateDisabled={isDateBeforeCreatedAt}
               />
             </div>
-            {/* <button className="button bg-white border border-gray-300 dark:bg-gray-700 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 active:bg-gray-100 dark:active:bg-gray-500 dark:active:border-gray-500 text-gray-600 dark:text-gray-100 radius-round h-9 px-3 py-2 text-sm">
-              <span className="flex items-center justify-center">
-                <span className="text-lg">
-                  <FaDownload />
-                </span>
-                <span className="ml-2">Download</span>
-              </span>
-            </button> */}
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* {metrics.map((metric) => (
-            <Card key={metric.title} {...metric} />
-          ))} */}
           <Card title="Current Value" value={metrics.market_value.value} />
           <Card title="Invested Value" value={metrics.invested_value.value} />
           <Card

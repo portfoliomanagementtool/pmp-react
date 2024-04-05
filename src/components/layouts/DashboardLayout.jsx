@@ -5,33 +5,38 @@ import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
+import {
+  fetchDateMetrics,
+  fetchMetrics,
+  saveTimeInterval,
+} from "../../state/slices/portfolioSlice";
 import { fetchNotifcations } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
 
 const DashboardLayout = () => {
   const { user } = useUser();
-  const dispatch = useDispatch(); 
+  const dispatch = useDispatch();
   const { interval } = useSelector((state) => state.portfolio);
   const [modalIsOpen, setIsOpen] = useState(false);
-// console.log(user)
+  // console.log(user)
   useEffect(() => {
     const today = new Date();
     const startDate = new Date(today.setMonth(today.getMonth() - 3));
     const endDate = new Date();
 
-    dispatch(saveTimeInterval({ start: startDate.toString(), end: endDate.toString() }));
-  }, [dispatch])
+    dispatch(
+      saveTimeInterval({ start: startDate.toString(), end: endDate.toString() })
+    );
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
-      const endDate = new Date();
-      dispatch(fetchMetrics(endDate, user.primaryEmailAddress.emailAddress));
+      dispatch(fetchMetrics(user.primaryEmailAddress.emailAddress));
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress))
+    dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress));
   }, [user, dispatch]);
 
   useEffect(() => {

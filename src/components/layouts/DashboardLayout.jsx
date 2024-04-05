@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
 import { fetchNotifcations } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
+import { Bounce, toast } from 'react-toastify';
 
 const DashboardLayout = () => {
   const { user } = useUser();
@@ -22,6 +23,26 @@ const DashboardLayout = () => {
 
   //   dispatch(saveTimeInterval({ start: startDate.toString(), end: endDate.toString() }));
   // }, [dispatch])
+
+  useEffect(() => {
+    if (user) {
+      toast.success('🦄 Wow so easy!', {
+        style: {
+          // backgroundColor: "#111827",
+          backgroundColor: "#E2E4E7",
+        },
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     if (user) {

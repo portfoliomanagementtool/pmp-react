@@ -2,7 +2,7 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 
-const HistoricDataGraph = ({ data }) => {
+const HistoricDataGraph = ({ data, min, max }) => {
   const mode = useSelector((state) => state.config.mode);
 
   const series = [
@@ -32,7 +32,6 @@ const HistoricDataGraph = ({ data }) => {
         enabled: false,
       },
     },
-    
     theme: {
       mode: mode === "light" ? 'light' : 'dark',
     },
@@ -48,7 +47,9 @@ const HistoricDataGraph = ({ data }) => {
       categories: data.timestamps,
       tooltip: {
         enabled: false
-      }
+      },
+      min: min,
+      max: max,
     },
     yaxis: {
       title: {

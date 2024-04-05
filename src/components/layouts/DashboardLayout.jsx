@@ -13,10 +13,14 @@ import {
 import { fetchNotifcations } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
 import { Bounce, toast } from 'react-toastify';
+import { setActive } from "../../state/slices/configSlice";
+import { useNavigate } from "react-router";
 
 const DashboardLayout = () => {
   const { user } = useUser();
   const dispatch = useDispatch(); 
+  const navigate = useNavigate();
+  const { mode } = useSelector((state) => state.config);
   // const { interval } = useSelector((state) => state.portfolio);
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -29,24 +33,58 @@ const DashboardLayout = () => {
   // }, [dispatch])
 
   useEffect(() => {
+    let pathname = window.location.pathname;
+    let path = pathname.split('/')[2];
+
+    switch (path) {
+      case 'dashboard':
+        dispatch(setActive('dashboard'));
+        break;
+      case 'portfolio':
+        dispatch(setActive('my-portfolio'));
+        break;
+      case 'asset':
+        dispatch(setActive('assets'));
+        break;
+      case 'transactions':
+        dispatch(setActive('transactions'));
+        break;
+      case 'watchlist':
+        dispatch(setActive('watchlist'));
+        break;
+      case 'profile':
+        dispatch(setActive('profile'));
+        break;
+      case 'activity-logs':
+        dispatch(setActive('activity-logs'));
+        break;
+    
+      default:
+        navigate('/dashboard');
+        dispatch(setActive('dashboard'));
+        break;
+    }
+  }, []);
+
+  useEffect(() => {
     if (user) {
       toast.success('🦄 Hello there!', {
         style: {
-          // backgroundColor: "#111827",
-          backgroundColor: "#E2E4E7",
+          // backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
+          backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
         },
         position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
+        autoClose: 2000,
+        hideProgressBar: true,
         closeOnClick: true,
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: mode,
         transition: Bounce
       });
     }
-  }, [user]);
+  }, [user, mode]);
 
   useEffect(() => {
     if (user) {

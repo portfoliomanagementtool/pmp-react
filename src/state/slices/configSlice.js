@@ -18,7 +18,6 @@ export const configSlice = createSlice({
       state.collapsed = !state.collapsed;
     },
     setActive(state, action) {
-      console.log(action.payload);
       state.active = action.payload;
     }
   },

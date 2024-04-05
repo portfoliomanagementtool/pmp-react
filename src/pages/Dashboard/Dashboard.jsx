@@ -184,13 +184,27 @@ const Dashboard = () => {
       (label) => label.charAt(0).toUpperCase() + label.slice(1)
     );
   };
-
+  function downloadFile(content, filename, contentType) {
+    const blob = new Blob([content], { type: contentType });
+  
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = filename;
+    link.click();
+  
+    // Cleanup
+    window.URL.revokeObjectURL(link.href);
+  }
+  
   const handleDownload = async () => {
     // Not Working
 
-    // try {
+    try {
     //   // Content to be downloaded
-    //   const { data } = await downloadPortfolio(user.primaryEmailAddress.emailAddress);
+      const { data } = await downloadPortfolio(user.primaryEmailAddress.emailAddress);
+      downloadFile(data, 'portfolio.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+      // console.log(data);
+      // download(data, 'portfolio.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     //   // const content = 'Your file content here';
 
     //   // Parse the binary data into an Excel workbook
@@ -219,9 +233,9 @@ const Dashboard = () => {
       
     //   // Clean up by revoking the Blob URL
     //   window.URL.revokeObjectURL(blobUrl);
-    // } catch (error) {
-    //   console.log(error.message) 
-    // }
+    } catch (error) {
+      console.log(error.message) 
+    }
   };
 
   return (

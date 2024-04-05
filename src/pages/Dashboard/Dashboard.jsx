@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import { downloadPortfolio, getHistoricData, getTopGainersAndLosers } from "../../api";
 import TopListing from "./components/TopListing/TopListing";
-import HistoricDataGraph from "../Portfolio/components/Charts/HistoricDataGraph";
+import HistoricDataGraph from "./components/Charts/HistoricDataGraph";
 import { Card, Donut, Calendar } from "./components/components";
 import { MdClose } from "react-icons/md";
 import { HiOutlineFilter } from "react-icons/hi";
@@ -12,6 +12,7 @@ import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
 import * as XLSX from 'xlsx';
+import Loader from "../../components/Loader/Loader";
 // import { AiOutlineStock } from "react-icons/ai";
 // import { CiCalendar } from "react-icons/ci";
 
@@ -27,6 +28,9 @@ const Dashboard = () => {
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
+  const [graphStatus, setGraphStatus] = useState("IDLE");
+  const [minDate, setMinDate] = useState(null);
+  const [maxDate, setMaxDate] = useState(null);
   const createdDate = new Date(user.createdAt);
   const currentDate = new Date();
   const handleCalendarClose = (selectedDate) => {
@@ -61,13 +65,19 @@ const Dashboard = () => {
     };
 
     const fetchHistoricData = async () => {
+      setGraphStatus("LOADING");
       try {
         const { data } = await getHistoricData(
           user.primaryEmailAddress.emailAddress
         );
+        setMaxDate(data.data[0].timestamp)
+        setMinDate(data.data[data.data.length - 1].timestamp)
+        
         const formattedData = formatData(data.data);
         setHistoricData(formattedData);
+        setGraphStatus("IDLE");
       } catch (error) {
+        setGraphStatus("ERROR");
         console.log(error.message);
       }
     };
@@ -279,7 +289,9 @@ const Dashboard = () => {
                     {historicData && <HistoricDataGraph data={historicData} />}
                     {!historicData && (
                       <div className="h-80 flex flex-col justify-center items-center">
-                        <p className="text-gray-400">Buy some assets!</p>
+                        {graphStatus === "ERROR" && <p className="flex justify-center text-red-500">Oops, Something went wrong!</p>}
+                        {graphStatus === "LOADING" && <Loader />}
+                        {graphStatus === "IDLE" && <p className="flex justify-center">No activity yet!</p>}
                       </div>
                     )}
                   </div>

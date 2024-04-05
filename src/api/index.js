@@ -9,6 +9,7 @@ const API = axios.create({
 
 // Metrics
 export const getMetrics = (endDate, email) => API.get(`/portfolio/getmetrics?end_date=${endDate}`, {
+  
   headers: {
     "UserId": email,
   }
@@ -46,6 +47,7 @@ export const getDailyInvestments = (email) => API.get("/portfolio/get_daily_inve
   }
 }); //done
 export const downloadPortfolio = (email) => API.get("/portfolio/download_excel", {
+  responseType: 'blob',
   headers: {
     "UserId": email,
   }

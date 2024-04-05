@@ -52,6 +52,7 @@ export const fetchMetrics = (end, email) => async (dispatch) => {
   //Keep the end date as it is
   console.log(end)
   end = new Date(end);
+  //TODO: Temp Solutionn
   end.setHours(6, 0, 0, 0);
   end = end.toISOString();
 

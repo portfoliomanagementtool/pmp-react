@@ -1,14 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
-import { downloadPortfolio, getHistoricData, getTopGainersAndLosers } from "../../api";
+import { downloadPortfolio, getDateMetrics, getHistoricData, getTopGainersAndLosers } from "../../api";
 import TopListing from "./components/TopListing/TopListing";
 import HistoricDataGraph from "./components/Charts/HistoricDataGraph";
 import { Card, Donut, Calendar } from "./components/components";
 import { MdClose } from "react-icons/md";
 import { HiOutlineFilter } from "react-icons/hi";
 import { useUser } from "@clerk/clerk-react";
-import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
 import * as XLSX from 'xlsx';
@@ -20,9 +19,10 @@ const Dashboard = () => {
   const calendarRef = useRef(null);
   const { user } = useUser();
   const dispatch = useDispatch();
-  const { metrics, equityDistribution } = useSelector(
+  const { metrics: storedMetrics, equityDistribution } = useSelector(
     (state) => state.portfolio
   );
+  const [metrics, setMetrics] = useState(storedMetrics);
   const [showCalendar, setShowCalendar] = useState(false);
   const [historicData, setHistoricData] = useState(null);
   const [topGainers, setTopGainers] = useState([]);
@@ -33,15 +33,21 @@ const Dashboard = () => {
   const [maxDate, setMaxDate] = useState(null);
   const createdDate = new Date(user.createdAt);
   const currentDate = new Date();
-  const handleCalendarClose = (selectedDate) => {
-    setShowCalendar(false);
-    setSelectedDate(selectedDate);
-  };
 
-  console.log(selectedDate);
+  // useEffect(() => {
+  //   if (storedMetrics) {
+  //     setMetrics(storedMetrics);
+  //   }
+  // }, [storedMetrics]);
+
   const isDateBeforeCreatedAt = (date) => {
     return date < createdDate;
   };
+
+  const [value, setValue] = useState({
+    startDate: currentDate,
+    endDate: currentDate,
+  });
 
   useEffect(() => {
     const formatData = (data) => {
@@ -124,13 +130,13 @@ const Dashboard = () => {
     fetchTopGainersAndLosers();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedDate);
-    if (user)
-      dispatch(
-        fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress)
-      );
-  }, [user, selectedDate, dispatch]);
+  // useEffect(() => {
+  //   console.log(value);
+  //   if (user)
+  //     dispatch(
+  //       fetchMetrics(value?.startDate, user.primaryEmailAddress.emailAddress)
+  //     );
+  // }, [user, value?.startDate, dispatch]);
 
   useEffect(() => {
     if (showCalendar) {
@@ -150,14 +156,21 @@ const Dashboard = () => {
     }
   };
 
-  const [value, setValue] = useState({
-    startDate: null,
-    endDate: null,
-  });
-  function handleValueChange(newValue) {
-    console.log("newValue:", newValue);
+  const handleValueChange = async (newValue) => {
+    // console.log("newValue:", newValue);
     setValue(newValue);
+    const date = new Date(newValue.endDate);
+    date.setHours(23, 59, 59, 999);
+    const end = date.toISOString();
+
+    try {
+      const { data } = await getDateMetrics(end, user.primaryEmailAddress.emailAddress);
+      setMetrics(data.metrics);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
+
   const formatData = (data) => {
     const formattedData = [];
     for (let key in data) {
@@ -235,7 +248,7 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div className="border border-gray-300 focus:outline-none active:outline-none">
+              <div className="border rounded-md active:border-none border-gray-300 focus:outline-none active:outline-none">
                 <Datepicker
                   useRange={false}
                   asSingle={true}

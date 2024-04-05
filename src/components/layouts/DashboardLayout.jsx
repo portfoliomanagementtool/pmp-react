@@ -5,7 +5,11 @@ import Header from "./Header";
 import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMetrics, saveTimeInterval } from "../../state/slices/portfolioSlice";
+import {
+  fetchDateMetrics,
+  fetchMetrics,
+  saveTimeInterval,
+} from "../../state/slices/portfolioSlice";
 import { fetchNotifcations } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
 import { Bounce, toast } from 'react-toastify';
@@ -26,7 +30,7 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (user) {
-      toast.success('🦄 Wow so easy!', {
+      toast.success('🦄 Hello there!', {
         style: {
           // backgroundColor: "#111827",
           backgroundColor: "#E2E4E7",
@@ -46,13 +50,12 @@ const DashboardLayout = () => {
 
   useEffect(() => {
     if (user) {
-      const endDate = new Date();
-      dispatch(fetchMetrics(endDate, user.primaryEmailAddress.emailAddress));
+      dispatch(fetchMetrics(user.primaryEmailAddress.emailAddress));
     }
-  }, [user, dispatch])
+  }, [user, dispatch]);
 
   useEffect(() => {
-    dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress))
+    dispatch(fetchNotifcations(user.primaryEmailAddress.emailAddress));
   }, [user, dispatch]);
 
   useEffect(() => {

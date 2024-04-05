@@ -6,10 +6,9 @@ import Donut from "./components/Charts/Donut";
 import Bar from "./components/Charts/Bar";
 import SellBuyTable from "./components/SellBuyTable";
 import { Calendar, Card } from "../Dashboard/components/components";
-import { getDailyInvestments, getHistoricData, getPortfolio } from "../../api";
+import { getDailyInvestments, getDateMetrics, getHistoricData, getPortfolio } from "../../api";
 import { HiOutlineFilter } from "react-icons/hi";
 import { MdClose } from "react-icons/md";
-import { fetchMetrics } from "../../state/slices/portfolioSlice";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
 import Loader from "../../components/Loader/Loader";
@@ -27,9 +26,10 @@ const Portfolio = () => {
   const { user } = useUser();
   const dispatch = useDispatch();
   const { interval } = useSelector((state) => state.portfolio);
-  const { metrics, equityDistribution } = useSelector(
+  const { metrics: storedMetrics, equityDistribution } = useSelector(
     (state) => state.portfolio
   );
+  const [metrics, setMetrics] = useState(storedMetrics);
   const [rows, setRows] = useState([]);
   const [categories, setCategories] = useState([]);
   const [showCalendar, setShowCalendar] = useState(false);
@@ -45,12 +45,8 @@ const Portfolio = () => {
 
   const [value, setValue] = useState({
     startDate: currentDate,
-    endDate: null,
+    endDate: currentDate,
   });
-  function handleValueChange(newValue) {
-    console.log("newValue:", newValue);
-    setValue(newValue);
-  }
 
   const calendarRef = useRef(null);
   const [personalCategories, setPersonalCategories] = useState({});
@@ -59,6 +55,12 @@ const Portfolio = () => {
   const [minDate, setMinDate] = useState(null);
   const [maxDate, setMaxDate] = useState(null);
   const [barStatus, setBarStatus] = useState("IDLE");
+
+  useEffect(() => {
+    if (storedMetrics) {
+      setMetrics(storedMetrics);
+    }
+  }, [storedMetrics]);
 
   useEffect(() => {
     if (rows.length !== 0) {
@@ -128,13 +130,13 @@ const Portfolio = () => {
     setCategories(categories);
   }, [equityDistribution]);
 
-  useEffect(() => {
-    console.log(selectedDate);
-    if (user)
-      dispatch(
-        fetchMetrics(selectedDate, user.primaryEmailAddress.emailAddress)
-      );
-  }, [user, selectedDate, dispatch]);
+  // useEffect(() => {
+  //   // console.log(selectedDate);
+  //   if (user)
+  //     dispatch(
+  //       fetchMetrics(value?.startDate, user.primaryEmailAddress.emailAddress)
+  //     );
+  // }, [user, value?.startDate, dispatch]);
 
   useEffect(() => {
     const formatData = (data) => {
@@ -186,6 +188,21 @@ const Portfolio = () => {
     }
   }, [showCalendar]);
 
+  const handleValueChange = async (newValue) => {
+    // console.log("newValue:", newValue);
+    setValue(newValue);
+    const date = new Date(newValue.endDate);
+    date.setHours(23, 59, 59, 999);
+    const end = date.toISOString();
+
+    try {
+      const { data } = await getDateMetrics(end, user.primaryEmailAddress.emailAddress);
+      setMetrics(data.metrics);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   const handleClickOutside = (event) => {
     event.preventDefault();
 
@@ -232,7 +249,7 @@ const Portfolio = () => {
             <p>View your current portfolio & summary</p>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div className="border border-gray-300 focus:outline-none active:outline-none">
+            <div className="border rounded-md border-gray-300 z-[40] focus:outline-none active:outline-none">
               <Datepicker
                 useRange={false}
                 asSingle={true}
@@ -255,9 +272,6 @@ const Portfolio = () => {
           </div>
         </div>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* {metrics.map((metric) => (
-            <Card key={metric.title} {...metric} />
-          ))} */}
           <Card title="Current Value" value={metrics.market_value.value} />
           <Card title="Invested Value" value={metrics.invested_value.value} />
           <Card

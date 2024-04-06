@@ -10,7 +10,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="flex flex-col lg:flex-row  items-center p-4 lg:p-8">
+    <div className="flex flex-col lg:flex-row  items-center p-4 lg:p-8 dark:bg-white">
       <div className="flex justify-between w-full lg:w-auto">
         <h1 className="text-[#263238] text-3xl lg:text-3xl font-semibold mb-2 md:mb-0">
           Portfolio

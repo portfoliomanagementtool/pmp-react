@@ -24,8 +24,8 @@ const Dashboard = () => {
   const [topGainers, setTopGainers] = useState([]);
   const [topLosers, setTopLosers] = useState([]);
   const [selectedDate, setSelectedDate] = useState(dayjs());
-  const createdDate = new Date(user.createdAt).toISOString();
-  const currentDate = new Date().toISOString();
+  const createdDate = new Date(user.createdAt);
+  const currentDate = new Date();
 
   console.log(selectedDate);
   const isDateBeforeCreatedAt = (date) => {

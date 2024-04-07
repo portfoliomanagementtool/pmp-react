@@ -14,6 +14,7 @@ const BuySellModal = ({
   handleChangePortfolioAsset,
   defaultValue,
   initialChecked,
+  callChangePortfolio,
 }) => {
   const { user } = useUser();
   const dispatch = useDispatch();
@@ -61,8 +62,9 @@ const BuySellModal = ({
       }
     };
 
-    fetchPortfolioAssetDetails();
-  }, [ticker, user]);
+    if (callChangePortfolio)
+      fetchPortfolioAssetDetails();
+  }, [ticker, user, callChangePortfolio]);
 
   const validateForm = () => {
     let errorFields = [];
@@ -96,6 +98,9 @@ const BuySellModal = ({
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = user.primaryEmailAddress.emailAddress;
+    if(formState.quantity === 0) {
+      formState.quantity = 1;
+    }
 
     if (validateForm()) {
       closeModal();
@@ -104,7 +109,7 @@ const BuySellModal = ({
     const formData = {
       ticker: formState.ticker,
       quantity: parseInt(formState.quantity),
-      price: formState.market_value,
+      price: parseFloat(formState.market_value),
     };
 
     if (checked) {
@@ -113,7 +118,8 @@ const BuySellModal = ({
       dispatch(buyAsset(formData, email, interval));
     }
 
-    fetchPortfolioAssetDetails();
+    if(callChangePortfolio)
+      fetchPortfolioAssetDetails();
   };
 
   const isDisabled = checked && initialQuantity === 0;

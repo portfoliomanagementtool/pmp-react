@@ -85,13 +85,13 @@ const formatNotifications = (notifications) => {
   return formattedNotifications;
 };
 
-export const buyAsset = (data, email, interval) => async (dispatch) => {
-  console.log("buy", data);
+export const buyAsset = (data, email) => async (dispatch) => {
+  // console.log("buy", data);
   try {
     await buyAssetAPI(data, email);
 
     try {
-      const { data } = await getMetrics(interval.start, interval.end, email);
+      const { data } = await getMetrics(email);
       dispatch(saveMetrics(data.metrics));
       dispatch(saveEquityDistribution(data.categories));
     } catch (error) {
@@ -116,12 +116,12 @@ export const buyAsset = (data, email, interval) => async (dispatch) => {
 };
 
 export const sellAsset = (data, email, interval) => async (dispatch) => {
-  console.log("buy", data);
+  // console.log("sell", data);
   try {
     await sellAssetAPI(data, email);
 
     try {
-      const { data } = await getMetrics(interval.start, interval.end, email);
+      const { data } = await getMetrics(email);
       dispatch(saveMetrics(data.metrics));
       dispatch(saveEquityDistribution(data.categories));
     } catch (error) {

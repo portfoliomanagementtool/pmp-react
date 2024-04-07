@@ -64,27 +64,27 @@ const DashboardLayout = () => {
         dispatch(setActive('dashboard'));
         break;
     }
-  }, []);
+  }, [dispatch, navigate]);
 
-  useEffect(() => {
-    if (user) {
-      toast.success('🦄 Hello there!', {
-        style: {
-          // backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
-          backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
-        },
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: mode,
-        transition: Bounce
-      });
-    }
-  }, [user, mode]);
+  // useEffect(() => {
+  //   if (user) {
+  //     toast.success('🦄 Hello there!', {
+  //       style: {
+  //         // backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
+  //         backgroundColor: mode === "dark" ? "#111827" : "#E2E4E7",
+  //       },
+  //       position: "top-center",
+  //       autoClose: 2000,
+  //       hideProgressBar: true,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: mode,
+  //       transition: Bounce
+  //     });
+  //   }
+  // }, [user, mode]);
 
   useEffect(() => {
     if (user) {

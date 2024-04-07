@@ -96,6 +96,10 @@ const BuySellModal = ({
     e.preventDefault();
     const email = user.primaryEmailAddress.emailAddress;
 
+    if(formState.quantity !== quantity) {
+      formState.quantity = 1;
+    }
+
     if (validateForm()) {
       closeModal();
     }
@@ -103,10 +107,8 @@ const BuySellModal = ({
     const formData = {
       ticker: formState.ticker,
       quantity: parseInt(formState.quantity),
-      price: formState.market_value,
+      price: parseFloat(formState.market_value),
     }
-
-    // console.log(formData)
 
     if (checked) {
       dispatch(sellAsset(formData, email, interval));

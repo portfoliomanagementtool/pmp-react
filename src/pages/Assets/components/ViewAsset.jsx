@@ -290,6 +290,7 @@ const ViewAsset = () => {
           closeModal={closeModal}
           ticker={ticker}
           handleChangePortfolioAsset={handleChangePortfolioAsset}
+          callChangePortfolio={true}
           defaultValue={{
             category: assetDetails.category,
             ticker: assetDetails.ticker,

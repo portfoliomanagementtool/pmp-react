@@ -73,12 +73,12 @@ const columns = [
   {
     accessorKey: 'overall_gl',
     header: "Overall GL",
-    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+    cell: (props) => <p className={`${props.getValue() > 0 ? "text-green-500" : "text-red-500" }`}>{Number(props.getValue()).toFixed(2)}</p>
   },
   {
     accessorKey: 'day_gl',
     header: "Day's GL",
-    cell: (props) => <p>{Number(props.getValue()).toFixed(2)}</p>
+    cell: (props) => <p className={`${props.getValue() > 0 ? "text-green-500" : "text-red-500" }`}>{Number(props.getValue()).toFixed(2)}</p>
   },
 ];
 
@@ -253,7 +253,7 @@ const SellBuyTable = ({ title, status, handleStatusChange, rows, handleRowsChang
                   defaultValue={{
                     category: selectedRowData.category,
                     ticker: selectedRowData.ticker,
-                    market_value: selectedRowData.market_value,
+                    market_value: Number(selectedRowData.market_value).toFixed(2),
                     quantity: selectedRowData.quantity,
                   }}
                 />

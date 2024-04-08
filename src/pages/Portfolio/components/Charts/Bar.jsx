@@ -2,8 +2,7 @@ import React from 'react';
 import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
 
-const Bar = ({ data }) => {
-  console.log(data)
+const Bar = ({ data, min, max }) => {
   const mode = useSelector((state) => state.config.mode);
   // const series = [
   //   {
@@ -98,71 +97,81 @@ const Bar = ({ data }) => {
   //   // }
   // }
 
-  const generateColors = (data) => {
-    return data.map((d, idx) => {
-      let color = d > 0 ? '#22c55f': '#ef4544';
+  // const generateColors = (data) => {
+  //   return data.map((d, idx) => {
+  //     let color = d > 0 ? '#22c55f': '#ef4544';
 
-      return {
-        offset: idx / data.length * 100,
-        color,
-        opacity: 1
-      }
-    })
-  }
+  //     return {
+  //       offset: idx / data.length * 100,
+  //       color,
+  //       opacity: 1
+  //     }
+  //   })
+  // }
 
   const series = [
     {
-      name: 'Investments',
-      type: 'column',
-      data: data.investedValue
-    }, {
       name: 'Market Value',
-      type: 'line',
+      type: 'area',
       data: data.marketValue
-    }
+    },
+    {
+      name: 'Investments',
+      type: 'line',
+      data: data.investedValue
+    },
   ];
 
   const options = {
-    // colors: ["#47B4AF"],
     chart: {
       type: 'line',
       background:"transparent",
       height: 350,
     },
     stroke: {
-      width: [0, 4]
+      curve: "smooth",
+      width: [4, 4]
     },
-    // title: {
-    //   text: 'Traffic Sources'
-    // },
+    fill: {
+      type: 'solid',
+      opacity: [0.35, 1],
+      // gradient: {
+      //   opacityFrom: 0.91,
+      //   opacityTo: 0.1,
+      // }
+    },
     theme: {
       mode: mode === "light" ? 'light' : 'dark',
     },
-    dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1],
-      style: {
-        colors: [function ({ seriesIndex,dataPointIndex,  w }) {
-          if (w.config.series[seriesIndex].data[dataPointIndex] >= 0) {
-            return "#22c55f";
-          } else {
-            return "#ef4544";
-          }
-        },]
-      }
-    },
-    labels: data.timestamps,
-    // fill: {
-    //   type: 'gradient',
-    //   gradient: {
-    //     shadeIntensity: 1,
-    //     opacityFrom: 0.7,
-    //     opacityTo: 0.9,
-    //     colorStops: generateColors([23, 42, 35, 27, 43, 22, 17, -31, 22, 22, 12, 16])
+    // dataLabels: {
+    //   enabled: true,
+    //   enabledOnSeries: [1],
+    //   style: {
+    //     colors: [function ({ seriesIndex,dataPointIndex,  w }) {
+    //       if (w.config.series[seriesIndex].data[dataPointIndex] >= 0) {
+    //         return "#22c55f";
+    //       } else {
+    //         return "#ef4544";
+    //       }
+    //     },]
     //   }
     // },
+    colors: ['#008FFB', '#FEB019'],
+    labels: data.timestamps,
+    markers: {
+      size: 0
+    },
+    // plotOptions: {
+    //   bar: {
+    //     horizontal: false,
+    //     columnWidth: '55%',
+    //     endingShape: 'rounded'
+    //   },
+    // },
     xaxis: {
-      type: 'datetime'
+      type: 'datetime',
+      min: min,
+      max: max,
     },
     yaxis: [{
       title: {
@@ -175,6 +184,11 @@ const Bar = ({ data }) => {
       }
     }],
     tooltip: {
+      shared: true,
+      intersect: false,
+      x: {
+        format: 'dd MMM yyyy'
+      },
       y: {
         formatter: function (val) {
           return "$ " + val

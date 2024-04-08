@@ -5,7 +5,14 @@ const API = axios.create({
 });
 
 // Metrics
-export const getMetrics = (endDate, email) =>
+export const getMetrics = (email) =>
+  API.get(`/portfolio/getmetrics`, {
+    headers: {
+      UserId: email,
+    },
+  }); //done
+
+export const getDateMetrics = (endDate, email) =>
   API.get(`/portfolio/getmetrics?end_date=${endDate}`, {
     headers: {
       UserId: email,
@@ -20,36 +27,37 @@ export const getHistoricData = (email) =>
   }); //done
 
 // Portfolio
-export const getPortfolio = (email) =>
-  API.get("/portfolio/portfolios", {
-    headers: {
-      UserId: email,
-    },
-  }); // done
-export const buyAsset = (data, email) =>
-  API.post("/portfolio/buy", data, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const sellAsset = (data, email) =>
-  API.post("/portfolio/sell", data, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const getPortfolioAssetDetails = (ticker, email) =>
-  API.get(`/portfolio/portfolios?ticker=${ticker}`, {
-    headers: {
-      UserId: email,
-    },
-  }); //done
-export const getDailyInvestments = (email) =>
-  API.get("/portfolio/get_daily_investments", {
-    headers: {
-      UserId: email,
-    },
-  }); //done
+export const getPortfolio = (email) => API.get("/portfolio/portfolios", {
+  headers: {
+    "UserId": email,
+  }
+}); // done
+export const buyAsset = (data, email) => API.post("/portfolio/buy", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const sellAsset = (data, email) => API.post("/portfolio/sell", data, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getPortfolioAssetDetails = (ticker, email) => API.get(`/portfolio/portfolios?ticker=${ticker}`, {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const getDailyInvestments = (email) => API.get("/portfolio/get_daily_investments", {
+  headers: {
+    "UserId": email,
+  }
+}); //done
+export const downloadPortfolio = (email) => API.get("/portfolio/download_excel", {
+  responseType: 'blob',
+  headers: {
+    "UserId": email,
+  }
+}); //done
 
 // Asset
 export const getAssetDetails = (ticker) =>

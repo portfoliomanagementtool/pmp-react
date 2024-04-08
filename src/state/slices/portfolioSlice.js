@@ -48,21 +48,22 @@ export const {
 } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
 
-export const fetchMetrics = (end, email) => async (dispatch) => {
-
-  // const { start, end } = interval;
-  //Keep the end date as it is
-  console.log(end);
-  end = new Date(end);
-  end.setHours(6, 0, 0, 0);
-  end = end.toISOString();
-  console.log(end);
-  // console.log(start, end)
-
+export const fetchMetrics = (email) => async (dispatch) => {
   try {
-    const { data } = await getMetrics(end, email);
+    const { data } = await getMetrics(email);
     dispatch(saveMetrics(data.metrics));
     dispatch(saveEquityDistribution(data.categories));
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+export const fetchDateMetrics = (end, email) => async (dispatch) => {
+  end = end.toISOString();
+
+  try {
+    const { data } = await getDateMetrics(end, email);
+    dispatch(saveMetrics(data.metrics));
   } catch (error) {
     console.log(error.message);
   }

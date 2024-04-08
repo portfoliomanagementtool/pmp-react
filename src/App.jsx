@@ -12,6 +12,8 @@ import Portfolio from './pages/Portfolio/Portfolio';
 import routes from './routes';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
@@ -51,6 +53,15 @@ function App() {
   return (
     <BrowserRouter>
       <ClerkProviderWithRoutes />
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={true}
+        theme="light"
+        transition={Bounce}
+      />
     </BrowserRouter>
   );
 }

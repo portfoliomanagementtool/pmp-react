@@ -17,7 +17,7 @@ const Profile = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    console.log("Selected File:", selectedFile);
+    // console.log("Selected File:", selectedFile);
   };
 
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -25,7 +25,7 @@ const Profile = () => {
   const handleLanguageChange = (e) => {
     const newLanguage = e.target.value;
     setSelectedLanguage(newLanguage);
-    console.log("Selected Language:", newLanguage);
+    // console.log("Selected Language:", newLanguage);
   };
 
   return (

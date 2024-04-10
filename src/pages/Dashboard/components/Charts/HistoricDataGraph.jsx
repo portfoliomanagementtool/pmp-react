@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import abbreviate from "number-abbreviate";
 
 const HistoricDataGraph = ({ data, min, max }) => {
-  console.log(data)
   const mode = useSelector((state) => state.config.mode);
 
   const series = [

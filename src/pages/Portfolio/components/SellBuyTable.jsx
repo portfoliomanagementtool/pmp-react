@@ -253,7 +253,7 @@ const SellBuyTable = ({ title, status, handleStatusChange, rows, handleRowsChang
                   defaultValue={{
                     category: selectedRowData.category,
                     ticker: selectedRowData.ticker,
-                    market_value: Number(selectedRowData.market_value).toFixed(2),
+                    market_value: Number(selectedRowData.price).toFixed(2),
                     quantity: selectedRowData.quantity,
                   }}
                 />

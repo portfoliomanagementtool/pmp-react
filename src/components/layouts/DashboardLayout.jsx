@@ -6,9 +6,8 @@ import View from "./View";
 import ThemeConfigModal from "../Modals/ThemeConfigModal";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchDateMetrics,
   fetchMetrics,
-  saveTimeInterval,
+  fetchPortfolio,
 } from "../../state/slices/portfolioSlice";
 import { fetchNotifcations } from "../../state/slices/notificationSlice";
 import { fetchAllWatchlists } from "../../state/slices/watchlistSlice";
@@ -85,6 +84,12 @@ const DashboardLayout = () => {
   //     });
   //   }
   // }, [user, mode]);
+
+  useEffect(() => {
+    if (user) {
+      dispatch(fetchPortfolio(user.primaryEmailAddress.emailAddress));
+    }
+  }, [user, dispatch]);
 
   useEffect(() => {
     if (user) {

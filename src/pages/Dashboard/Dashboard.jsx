@@ -184,7 +184,8 @@ const Dashboard = () => {
       (label) => label.charAt(0).toUpperCase() + label.slice(1)
     );
   };
-  function downloadFile(content, filename, contentType) {
+  
+  const downloadFile = (content, filename, contentType) => {
     const blob = new Blob([content], { type: contentType });
   
     const link = document.createElement('a');
@@ -197,42 +198,10 @@ const Dashboard = () => {
   }
   
   const handleDownload = async () => {
-    // Not Working
-
     try {
-    //   // Content to be downloaded
+      // Content to be downloaded
       const { data } = await downloadPortfolio(user.primaryEmailAddress.emailAddress);
       downloadFile(data, 'portfolio.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      // console.log(data);
-      // download(data, 'portfolio.xlsx', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-    //   // const content = 'Your file content here';
-
-    //   // Parse the binary data into an Excel workbook
-    //   const workbook = XLSX.read(data, { type: 'array' });
-
-    //   // Generate a binary Excel file
-    //   const excelFile = XLSX.write(workbook, { type: 'binary', bookType: 'xlsx' });
-      
-    //   // Convert the binary data to a Blob
-    //   const blob = new Blob([excelFile], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-      
-    //   // Create a URL for the Blob
-    //   const blobUrl = window.URL.createObjectURL(blob);
-      
-    //   // Create an anchor element
-    //   const anchor = document.createElement('a');
-    //   anchor.href = blobUrl;
-      
-    //   // Set the download attribute
-    //   anchor.download = 'portfolio.xlsx';
-      
-    //   // Programmatically trigger a click event to initiate the download
-    //   document.body.appendChild(anchor);
-    //   anchor.click();
-    //   document.body.removeChild(anchor);
-      
-    //   // Clean up by revoking the Blob URL
-    //   window.URL.revokeObjectURL(blobUrl);
     } catch (error) {
       console.log(error.message) 
     }
@@ -248,7 +217,7 @@ const Dashboard = () => {
               <p>View your current portfolio & summary</p>
             </div>
             <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-              <div className="border rounded-md active:border-none border-gray-300 focus:outline-none active:outline-none">
+              <div className="border rounded-md active:border-none z-[20] border-gray-300 focus:outline-none active:outline-none">
                 <Datepicker
                   useRange={false}
                   asSingle={true}

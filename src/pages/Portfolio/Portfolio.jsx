@@ -12,6 +12,7 @@ import { MdClose } from "react-icons/md";
 import { FaDownload } from "react-icons/fa6";
 import Datepicker from "react-tailwindcss-datepicker";
 import Loader from "../../components/Loader/Loader";
+import { savePortfolio } from "../../state/slices/portfolioSlice";
 // import dateFormat from "dateformat";
 // import Modal from "./components/Modals/Modal";
 // import Metrics from "../Dashboard/components/Metrics";
@@ -26,7 +27,7 @@ const Portfolio = () => {
   const { user } = useUser();
   const dispatch = useDispatch();
   const { interval } = useSelector((state) => state.portfolio);
-  const { metrics: storedMetrics, equityDistribution } = useSelector(
+  const { metrics: storedMetrics, equityDistribution, portfolio } = useSelector(
     (state) => state.portfolio
   );
   const [metrics, setMetrics] = useState(storedMetrics);
@@ -80,10 +81,49 @@ const Portfolio = () => {
     }
   }, [rows]);
 
+  // useEffect(() => {
+  //   const formatData = (data) => {
+  //     return data.map((item, index) => {
+  //       return {
+  //         id: index,
+  //         ticker: item.portfolio_asset.ticker,
+  //         name: item.portfolio_asset.name,
+  //         category:
+  //           item.portfolio_asset.category.charAt(0).toUpperCase() +
+  //           item.portfolio_asset.category.slice(1),
+  //         quantity: item.quantity,
+  //         atp: item.avgBasis,
+  //         inv_amount: item.costBasis,
+  //         market_value: item.marketValue,
+  //         overall_gl: item.profitLoss,
+  //         day_gl: item.portfolio_asset.daypl,
+  //       };
+  //     });
+  //   };
+
+  //   const fetchPortfolio = async () => {
+  //     setStatus("LOADING");
+  //     try {
+  //       const { data } = await getPortfolio(
+  //         user.primaryEmailAddress.emailAddress
+  //       );
+  //       const formattedData = formatData(data.assets);
+  //       setRows(formattedData);
+  //       setStatus("IDLE");
+  //     } catch (error) {
+  //       setStatus("ERROR");
+  //       console.log(error.message);
+  //     }
+  //   };
+
+  //   fetchPortfolio();
+  // }, [user]);
+
   useEffect(() => {
     const formatData = (data) => {
-      return data.map((item, index) => {
-        return {
+      const formattedPortfolio = {};
+      data.forEach((item, index) => {
+         formattedPortfolio[item.portfolio_asset.ticker] = {
           id: index,
           ticker: item.portfolio_asset.ticker,
           name: item.portfolio_asset.name,
@@ -93,11 +133,14 @@ const Portfolio = () => {
           quantity: item.quantity,
           atp: item.avgBasis,
           inv_amount: item.costBasis,
+          price: item.price,
           market_value: item.marketValue,
           overall_gl: item.profitLoss,
           day_gl: item.portfolio_asset.daypl,
         };
       });
+
+      return formattedPortfolio;
     };
 
     const fetchPortfolio = async () => {
@@ -107,7 +150,7 @@ const Portfolio = () => {
           user.primaryEmailAddress.emailAddress
         );
         const formattedData = formatData(data.assets);
-        setRows(formattedData);
+        setRows(Object.values(formattedData));
         setStatus("IDLE");
       } catch (error) {
         setStatus("ERROR");
@@ -116,7 +159,7 @@ const Portfolio = () => {
     };
 
     fetchPortfolio();
-  }, [user]);
+  }, [user, portfolio]);
 
   useEffect(() => {
     let labels = Object.keys(equityDistribution);
@@ -249,7 +292,7 @@ const Portfolio = () => {
             <p>View your current portfolio & summary</p>
           </div>
           <div className="flex flex-col lg:flex-row lg:items-center gap-3">
-            <div className="border rounded-md border-gray-300 z-[40] focus:outline-none active:outline-none">
+            <div className="border rounded-md border-gray-300 z-[20] focus:outline-none active:outline-none">
               <Datepicker
                 useRange={false}
                 asSingle={true}

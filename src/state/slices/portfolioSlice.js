@@ -5,6 +5,7 @@ import {
   sellAsset as sellAssetAPI,
   getNotifications,
   getDateMetrics,
+  getPortfolio,
 } from "../../api";
 import { saveNotifications } from "./notificationSlice";
 
@@ -15,6 +16,7 @@ const initialState = {
     start: null,
     end: null,
   },
+  portfolio: {},
 };
 
 export const portfolioSlice = createSlice({
@@ -36,6 +38,9 @@ export const portfolioSlice = createSlice({
     saveEndDate: (state, action) => {
       state.interval.end = action.payload;
     },
+    savePortfolio: (state, action) => {
+      state.portfolio = action.payload;
+    }
   },
 });
 
@@ -45,6 +50,7 @@ export const {
   saveTimeInterval,
   saveStartDate,
   saveEndDate,
+  savePortfolio,
 } = portfolioSlice.actions;
 export default portfolioSlice.reducer;
 
@@ -85,10 +91,44 @@ const formatNotifications = (notifications) => {
   return formattedNotifications;
 };
 
+export const fetchPortfolio = (email) => async (dispatch) => {
+  const formatData = (data) => {
+    const formattedPortfolio = {};
+    data.forEach((item, index) => {
+        formattedPortfolio[item.portfolio_asset.ticker] = {
+        id: index,
+        ticker: item.portfolio_asset.ticker,
+        name: item.portfolio_asset.name,
+        category:
+          item.portfolio_asset.category.charAt(0).toUpperCase() +
+          item.portfolio_asset.category.slice(1),
+        quantity: item.quantity,
+        atp: item.avgBasis,
+        inv_amount: item.costBasis,
+        market_value: item.marketValue,
+        overall_gl: item.profitLoss,
+        day_gl: item.portfolio_asset.daypl,
+      };
+    });
+
+    return formattedPortfolio;
+  };
+
+  try {
+    const { data } = await getPortfolio(email);
+    const formattedData = formatData(data.assets);
+    dispatch(savePortfolio(formattedData));
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 export const buyAsset = (data, email) => async (dispatch) => {
   // console.log("buy", data);
   try {
     await buyAssetAPI(data, email);
+
+    dispatch(fetchPortfolio(email));
 
     try {
       const { data } = await getMetrics(email);
@@ -115,10 +155,12 @@ export const buyAsset = (data, email) => async (dispatch) => {
   }
 };
 
-export const sellAsset = (data, email, interval) => async (dispatch) => {
+export const sellAsset = (data, email) => async (dispatch) => {
   // console.log("sell", data);
   try {
     await sellAssetAPI(data, email);
+
+    dispatch(fetchPortfolio(email));
 
     try {
       const { data } = await getMetrics(email);

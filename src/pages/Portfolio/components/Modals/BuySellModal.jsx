@@ -4,7 +4,7 @@ import Switch from "@mui/material/Switch";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useDispatch, useSelector } from 'react-redux';
-import { buyAsset, sellAsset } from "../../../../state/slices/portfolioSlice";
+import { buyAsset, savePortfolio, sellAsset } from "../../../../state/slices/portfolioSlice";
 import { useUser } from "@clerk/clerk-react";
 import { getPortfolio } from "../../../../api";
 
@@ -35,12 +35,15 @@ const BuySellModal = ({
   const [errors, setErrors] = useState("");
 
   const formatData = (data) => {
-    return data.map((item, index) => {
-      return {
+    const formattedPortfolio = {};
+    data.forEach((item, index) => {
+        formattedPortfolio[item.portfolio_asset.ticker] = {
         id: index,
         ticker: item.portfolio_asset.ticker,
         name: item.portfolio_asset.name,
-        category: item.portfolio_asset.category.charAt(0).toUpperCase() + item.portfolio_asset.category.slice(1),
+        category:
+          item.portfolio_asset.category.charAt(0).toUpperCase() +
+          item.portfolio_asset.category.slice(1),
         quantity: item.quantity,
         atp: item.avgBasis,
         inv_amount: item.costBasis,
@@ -48,15 +51,17 @@ const BuySellModal = ({
         overall_gl: item.profitLoss,
         day_gl: item.portfolio_asset.daypl,
       };
-    })
-  }
+    });
+
+    return formattedPortfolio;
+  };
 
   const fetchPortfolio = async () => {
     handleStatusChange("LOADING");
     try {
       const { data } = await getPortfolio(user.primaryEmailAddress.emailAddress);
       const formattedData = formatData(data.assets);
-      handleRowsChange(formattedData);
+      dispatch(savePortfolio(formattedData));
       handleStatusChange("IDLE");
     } catch (error) {
       handleStatusChange("ERROR");
@@ -116,7 +121,7 @@ const BuySellModal = ({
       dispatch(buyAsset(formData, email, interval));
     }
 
-    fetchPortfolio();
+    // fetchPortfolio();
   };
 
   const isDisabled = checked && initialQuantity === 0;

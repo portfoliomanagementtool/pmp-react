@@ -1,8 +1,10 @@
 import React from "react";
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
+import abbreviate from "number-abbreviate";
 
 const HistoricDataGraph = ({ data, min, max }) => {
+  console.log(data)
   const mode = useSelector((state) => state.config.mode);
 
   const series = [
@@ -26,11 +28,13 @@ const HistoricDataGraph = ({ data, min, max }) => {
       type: "line",
       background:"transparent",
       toolbar: {
-        show: false,
+        show: true,
+        offsetX: 0,
+        offsetY: -5,
       },
-      zoom: {
-        enabled: false,
-      },
+      // zoom: {
+      //   enabled: false,
+      // },
     },
     theme: {
       mode: mode === "light" ? 'light' : 'dark',
@@ -59,8 +63,25 @@ const HistoricDataGraph = ({ data, min, max }) => {
         //   fontWeight: 600,
         // }
       },
+      labels: {
+        formatter: function (value) {
+          return abbreviate(value, 2);
+        },
+      },
       tickAmount: 6,
     },
+    tooltip: {
+      shared: true,
+      intersect: false,
+      x: {
+        format: 'dd MMM yyyy'
+      },
+      y: {
+        formatter: function (val) {
+          return "$ " + val
+        }
+      }
+    }
   };
 
   return (

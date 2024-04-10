@@ -18,7 +18,7 @@ const BuySellModal = ({
 }) => {
   const { user } = useUser();
   const dispatch = useDispatch();
-  const interval = useSelector((state) => state.portfolio.interval);
+  const { portfolio } = useSelector((state) => state.portfolio);
   const { mode } = useSelector((state) => state.config);
   const [checked, setChecked] = React.useState(initialChecked);
   const [formState, setFormState] = useState(
@@ -30,7 +30,7 @@ const BuySellModal = ({
     }
   );
   const [quantity, setQuantity] = useState(1);
-  const [initialQuantity, setInitialQuantity] = useState(formState.quantity);
+  const [initialQuantity, setInitialQuantity] = useState(portfolio[formState.ticker] ? portfolio[formState.ticker].quantity : 0 );
 
   const [errors, setErrors] = useState("");
 
@@ -113,9 +113,9 @@ const BuySellModal = ({
     };
 
     if (checked) {
-      dispatch(sellAsset(formData, email, interval));
+      dispatch(sellAsset(formData, email));
     } else {
-      dispatch(buyAsset(formData, email, interval));
+      dispatch(buyAsset(formData, email));
     }
 
     if(callChangePortfolio)

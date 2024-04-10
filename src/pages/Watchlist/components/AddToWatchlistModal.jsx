@@ -12,6 +12,15 @@ import Checkbox from '../../../components/Table/Checkbox';
 
 const columns = [
   {
+    accessorKey: 'id',
+    header: "Add",
+    size: 20,
+    cell: Checkbox,
+    enableSorting: false,
+    enableColumnFilter: true,
+    filterFn: "includesString",
+  },
+  {
     accessorKey: 'name',
     header: "Name",
     // size: 225,
@@ -35,15 +44,6 @@ const columns = [
     header: "Change",
     cell: Change,
     enableSorting: false,
-  },
-  {
-    accessorKey: 'id',
-    header: "",
-    size: 20,
-    cell: Checkbox,
-    enableSorting: false,
-    enableColumnFilter: true,
-    filterFn: "includesString",
   },
 ]
 

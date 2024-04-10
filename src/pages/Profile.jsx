@@ -33,10 +33,11 @@ const Profile = () => {
       <form action="#">
         <div className="form-container vertical">
           <div>
-            <h5>General</h5>
+            <h5>My Profile</h5>
             <p>
-              Basic info, like your name and address that will displayed in
-              public
+              {/* Basic info, like your name and address that will displayed in
+              public */}
+              Your general information is displayed here
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-4 py-8 border-b border-gray-200 dark:border-gray-600 items-center">

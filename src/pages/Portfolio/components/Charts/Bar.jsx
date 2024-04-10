@@ -1,6 +1,7 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 import { useSelector } from 'react-redux';
+import abbreviate from "number-abbreviate";
 
 const Bar = ({ data, min, max }) => {
   const mode = useSelector((state) => state.config.mode);
@@ -182,10 +183,20 @@ const Bar = ({ data, min, max }) => {
       title: {
         text: 'Total Investment (in Dollars)'
       },
+      labels: {
+        formatter: function (value) {
+          return abbreviate(value, 2);
+        },
+      }
     }, {
       opposite: true,
       title: {
         text: 'Market Value (in Dollars)'
+      },
+      labels: {
+        formatter: function (value) {
+          return abbreviate(value, 2);
+        },
       }
     }],
     tooltip: {
